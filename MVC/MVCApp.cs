@@ -8,23 +8,29 @@ using System.Threading.Tasks;
 
 namespace MVC
 {
-    class Program
+    public class MVCApp
     {
-        static ControllerFactory cFactory;
+        private ControllerFactory cFactory;
 
-        static void Main(string[] args)
+        public string ListenAddress { get; }
+
+        public MVCApp(string listenAddress)
         {
-            
+            ListenAddress = listenAddress;
+        }
+
+        public void Run()
+        {
             cFactory = new ControllerFactory(Assembly.GetEntryAssembly());
 
             HttpListener listner = new HttpListener();
-            listner.Prefixes.Add("http://127.0.0.1:8080/");
-            Console.WriteLine("listen on :8080");
+            listner.Prefixes.Add(ListenAddress);
+            Console.WriteLine($"listen on {ListenAddress}");
             listner.Start();
 
 
-            while(true)
-            { 
+            while (true)
+            {
 
                 var context = listner.GetContext();
 
@@ -50,8 +56,8 @@ namespace MVC
 
                 output.Close();
             }
-
-            
         }
+
+        
     }
 }

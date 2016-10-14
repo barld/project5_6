@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MVC.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVC.Controller
+namespace MVC.DevelopmentTest.Controller
 {
     class TestController : ControllerObject
     {

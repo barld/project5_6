@@ -24,7 +24,8 @@ namespace MVC
 
 
             while(true)
-            {
+            { 
+
                 var context = listner.GetContext();
 
                 var response = context.Response;
@@ -34,7 +35,7 @@ namespace MVC
                 System.IO.StreamReader reader = new System.IO.StreamReader(body, encoding);
                 Console.WriteLine(reader.ReadToEnd());
 
-                var controller = cFactory.GetByRawUrl(context.Request.RawUrl);
+                var controller = cFactory.GetByRawUrl(WebUtility.UrlDecode(context.Request.RawUrl));
 
                 var buffer = System.Text.Encoding.UTF8.GetBytes(controller.Get().ToString());
 

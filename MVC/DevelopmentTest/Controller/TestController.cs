@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVC.View;
+using MVC.Controller;
 
 namespace MVC.DevelopmentTest.Controller
 {
-    class TestController : ControllerObject
+    class TestController : MVC.Controller.Controller
     {
-        public override object Get()
+        public object Get()
         {
             return "<h1>Hello world</h1>";
         }
@@ -22,7 +23,7 @@ namespace MVC.DevelopmentTest.Controller
 
         public ViewObject GetExampleData()
         {
-            return new JsonDataView(new {Message= "hello world", Other = 25});
+            return Json(new {Message= "hello world", Other = 25});
         }
     }
 }

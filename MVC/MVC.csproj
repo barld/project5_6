@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerFactory.cs" />
+    <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerObject.cs" />
+    <Compile Include="Controller\ReturnViewsLayerController.cs" />
     <Compile Include="DevelopmentTest\Controller\SecondController.cs" />
     <Compile Include="DevelopmentTest\Controller\TestController.cs" />
     <Compile Include="Controller\NotFoundController.cs" />

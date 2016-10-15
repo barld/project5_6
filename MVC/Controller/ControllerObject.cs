@@ -8,8 +8,6 @@ namespace MVC.Controller
 {
     public abstract class ControllerObject : IDisposable
     {
-        public abstract object Get();
-
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

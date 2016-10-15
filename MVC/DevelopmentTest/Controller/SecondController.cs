@@ -9,7 +9,7 @@ namespace MVC.DevelopmentTest.Controller
 {
     class SecondController : ControllerObject
     {
-        public override object Get()
+        public object Get()
         {
             return "<h2>i'm Second</h2>";
         }

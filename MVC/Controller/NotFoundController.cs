@@ -5,7 +5,7 @@ namespace MVC.Controller
 {
     internal class NotFoundController : ControllerObject
     {
-        public override object Get()
+        public object Get()
         {
             return new NotFoundView("from not found controller");
         }

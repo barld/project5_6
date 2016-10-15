@@ -26,14 +26,16 @@ namespace MVC
         }
         private IEnumerable<Type> getControllers(Assembly assembly) => filterControllers(assembly.DefinedTypes);
 
-        private IEnumerable<Type> filterControllers(IEnumerable<Type> types) => types.Where(ti => ti.IsSubclassOf(typeof(ControllerObject)));
+        private IEnumerable<Type> filterControllers(IEnumerable<Type> types) => 
+            types.Where(ti => ti.IsSubclassOf(typeof(ControllerObject)));
         
 
-        internal ControllerObject GetByRawUrl(string RawUrl)
+        internal ControllerObject GetByRawUrl(string name)
         {
             try
             {
-                var cObject = Activator.CreateInstance(controllers.FirstOrDefault(t => t.Name.ToLower() == $"{RawUrl.Replace("/", "").ToLower()}controller"));
+                var cObject = Activator.CreateInstance(
+                    controllers.FirstOrDefault(t => t.Name.ToLower() == $"{name.ToLower()}controller"));
                 if (cObject != null)
                     return cObject as ControllerObject;
             }

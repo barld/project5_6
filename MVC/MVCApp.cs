@@ -41,20 +41,10 @@ namespace MVC
                 System.IO.StreamReader reader = new System.IO.StreamReader(body, encoding);
                 Console.WriteLine(reader.ReadToEnd());
 
+                var rHandler = new RequestHandler(cFactory, context);
+                rHandler.HandelToView().Respond(context.Response);
+
                 var controller = cFactory.GetByRawUrl(WebUtility.UrlDecode(context.Request.RawUrl));
-
-                var buffer = System.Text.Encoding.UTF8.GetBytes(controller.Get().ToString());
-
-                response.AppendHeader("Content-Type", "text/html; charset=utf-8");
-                response.ContentLength64 = buffer.Length;
-
-                var output = response.OutputStream;
-
-                output.Write(buffer, 0, buffer.Length);
-
-                //Console.WriteLine(output);
-
-                output.Close();
             }
         }
 

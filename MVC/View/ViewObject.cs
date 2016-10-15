@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace MVC.View
 {
     public abstract class ViewObject : IDisposable
     {
+
+        public abstract void Respond(HttpListenerResponse response);
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -35,7 +38,7 @@ namespace MVC.View
         // }
 
         // This code added to correctly implement the disposable pattern.
-        public virtual void Dispose()
+        public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);

@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace MVC.DevelopmentTest.Controller
 {
-    class TestController : ControllerObject
+    class SecondController : ControllerObject
     {
         public override object Get()
         {
-            return "<h1>Hello world</h1>";
-        }
-
-        public string GetTest()
-        {
-            return "this is a test";
+            return "<h2>i'm Second</h2>";
         }
     }
 }

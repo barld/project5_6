@@ -23,21 +23,21 @@ namespace MVC
         internal ViewObject HandelToView()
         {
             var deCodedRawUrl = WebUtility.UrlDecode(HttpContext.Request.RawUrl);
-            var UrlParts = deCodedRawUrl
+            var urlParts = deCodedRawUrl
                 .Split('?', '#')
                 .First().Split('/')
                 .Where(s => !String.IsNullOrWhiteSpace(s))
                 .Select(s => s.ToLower())
                 .ToList();
 
-            using (var controller = controllerFartory.GetByRawUrl(UrlParts[0]))
+            using (var controller = controllerFartory.GetByRawUrl(urlParts[0]))
             {
                 var controllerType = controller.GetType();
                 MethodInfo method;
-                if(UrlParts.Count > 1)
+                if(urlParts.Count > 1)
                 {
                     method = controllerType.GetMethods()
-                    .FirstOrDefault(mi => mi.Name.ToLower() == $"get{UrlParts[1]}");
+                    .FirstOrDefault(mi => mi.Name.ToLower() == $"get{urlParts[1]}");
                 }
                 else
                 {
@@ -48,6 +48,8 @@ namespace MVC
 
                 if (result != null && result is ViewObject)
                     return (result as ViewObject);
+                else if(method == null)
+                    return new NotFoundView("action not found");
                 else
                     return new RawObjectView(result);
             }

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace MVC.View
 {
-    public class DataView : ViewObject
+    public abstract class DataView : ViewObject
     {
-        public override void Respond(HttpListenerResponse response)
+        protected readonly object data;
+
+        public DataView(object data)
         {
-            throw new NotImplementedException();
+            this.data = data;
         }
     }
 }

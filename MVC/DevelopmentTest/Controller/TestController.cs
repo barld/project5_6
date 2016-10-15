@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MVC.View;
 
 namespace MVC.DevelopmentTest.Controller
 {
@@ -17,6 +18,11 @@ namespace MVC.DevelopmentTest.Controller
         public string GetTest()
         {
             return "this is a test";
+        }
+
+        public ViewObject GetExampleData()
+        {
+            return new JsonDataView(new {Message= "hello world", Other = 25});
         }
     }
 }

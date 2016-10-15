@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.View;
+using System;
 
 namespace MVC.Controller
 {
@@ -6,7 +7,7 @@ namespace MVC.Controller
     {
         public override object Get()
         {
-            return "<h1>404 Not Found</h1>";
+            return new NotFoundView("from not found controller");
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="RequestHandler.cs" />
     <Compile Include="View\DataView.cs" />
     <Compile Include="View\JsonDataView.cs" />
+    <Compile Include="View\NotFoundView.cs" />
     <Compile Include="View\RawObjectView.cs" />
     <Compile Include="View\ViewObject.cs" />
   </ItemGroup>

@@ -14,6 +14,7 @@ namespace MVC.DevelopmentTest
         {
             MVCApp app = new MVCApp("http://127.0.0.1:8080/");
             app.Run();
+
         }
     }
 }

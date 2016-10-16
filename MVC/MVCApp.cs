@@ -36,6 +36,8 @@ namespace MVC
 
                 var response = context.Response;
 
+                Console.WriteLine(context.Request.HttpMethod);
+
                 System.IO.Stream body = context.Request.InputStream;
                 System.Text.Encoding encoding = context.Request.ContentEncoding;
                 System.IO.StreamReader reader = new System.IO.StreamReader(body, encoding);

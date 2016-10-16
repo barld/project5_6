@@ -54,6 +54,7 @@
     <Compile Include="DevelopmentTest\Controller\SecondController.cs" />
     <Compile Include="DevelopmentTest\Controller\TestController.cs" />
     <Compile Include="Controller\NotFoundController.cs" />
+    <Compile Include="HttpMethods.cs" />
     <Compile Include="MVCApp.cs" />
     <Compile Include="DevelopmentTest\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

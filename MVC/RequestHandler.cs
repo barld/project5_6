@@ -32,17 +32,19 @@ namespace MVC
 
             using (var controller = controllerFartory.GetByRawUrl(urlParts[0]))
             {
+                var HttpMethod = HttpContext.Request.HttpMethod.ToLower();
+
                 var controllerType = controller.GetType();
                 MethodInfo method;
                 if(urlParts.Count > 1)
                 {
                     method = controllerType.GetMethods()
-                    .FirstOrDefault(mi => mi.Name.ToLower() == $"get{urlParts[1]}");
+                    .FirstOrDefault(mi => mi.Name.ToLower() == $"{HttpMethod}{urlParts[1]}");
                 }
                 else
                 {
                     method = controllerType.GetMethods()
-                    .FirstOrDefault(mi => mi.Name.ToLower() == "get");
+                    .FirstOrDefault(mi => mi.Name.ToLower() == $"{HttpMethod}");
                 }
                 var result = method?.Invoke(controller, new object[] { });
 

@@ -13,15 +13,22 @@ namespace MVC
         private ControllerFactory cFactory;
 
         public string ListenAddress { get; }
+        public MVCApp(string listenAddress) : this(listenAddress, Assembly.GetEntryAssembly()) { }
 
-        public MVCApp(string listenAddress)
+        public MVCApp(string listenAddress, Assembly assembly)
         {
             ListenAddress = listenAddress;
+            cFactory = new ControllerFactory(assembly);
+        }
+
+        public MVCApp(string listenAddress, IEnumerable<Type> controllers)
+        {
+            ListenAddress = listenAddress;
+            cFactory = new ControllerFactory(controllers);
         }
 
         public void Run()
         {
-            cFactory = new ControllerFactory(Assembly.GetEntryAssembly());
 
             HttpListener listner = new HttpListener();
             listner.Prefixes.Add(ListenAddress);

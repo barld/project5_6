@@ -12,7 +12,7 @@ namespace MVC.DevelopmentTest
     {
         static void Main(string[] args)
         {
-            MVCApp app = new MVCApp("http://127.0.0.1:8080/");
+            MVCApp app = new MVCApp("http://127.0.0.1:8080/", Assembly.GetEntryAssembly());
             app.Run();
 
         }

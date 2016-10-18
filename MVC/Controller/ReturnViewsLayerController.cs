@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Controller
 {
-    public class ReturnViewsLayerController : ControllerObject
+    public class ReturnViewsLayerController : DataLayerController
     {
         protected JsonDataView Json(object data) => new JsonDataView(data);
         /// <summary>

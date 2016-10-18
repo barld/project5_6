@@ -50,6 +50,7 @@
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerObject.cs" />
+    <Compile Include="Controller\DataLayerController.cs" />
     <Compile Include="Controller\ReturnViewsLayerController.cs" />
     <Compile Include="DevelopmentTest\Controller\SecondController.cs" />
     <Compile Include="DevelopmentTest\Controller\TestController.cs" />
@@ -69,6 +70,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

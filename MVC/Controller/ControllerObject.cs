@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace MVC.Controller
 {
     public abstract class ControllerObject : IDisposable
     {
+        internal HttpListenerContext _requestContext { set; get; }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

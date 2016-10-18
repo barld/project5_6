@@ -32,6 +32,7 @@ namespace MVC
 
             using (var controller = controllerFartory.GetByRawUrl(urlParts[0]))
             {
+                controller._requestContext = HttpContext;
                 var HttpMethod = HttpContext.Request.HttpMethod.ToLower();
 
                 var controllerType = controller.GetType();

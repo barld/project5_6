@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,5 +9,6 @@ namespace MVC.Routing
 {
     public interface IRoute
     {
+        View.ViewObject GetView(HttpListenerContext context);
     }
 }

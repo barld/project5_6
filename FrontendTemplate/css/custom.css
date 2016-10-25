@@ -20,7 +20,7 @@ a{
 
 #navbar > ul > li{
 	float:left;
-	width:200px;
+	width:150px;
 	height:50px;
 	text-align: center;
 	line-height: 50px;
@@ -41,6 +41,37 @@ a{
 	color:#FFFFFF;
 }
 
+.floating_menu_component{
+	float:right !important;
+}
+
+.floating_menu_component:hover .submenu{
+	display:block !important;
+}
+
+.submenu_parent:hover .submenu{
+	display:block !important;
+}
+
 .clear{
 	clear:both;
+}
+
+.submenu{
+	background-color:#FCC317;
+	list-style-type:none;
+	margin:auto;
+	display:none;
+}
+
+.submenu > li > a{
+	text-decoration:none;
+	color:#D64E04 !important;
+}
+
+.submenu > li > a:hover{
+	text-decoration:none;
+	background:#F28449;
+	color:#FFFFFF;
+	text-align:auto;
 }

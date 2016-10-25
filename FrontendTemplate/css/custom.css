@@ -1,0 +1,46 @@
+body{
+	background: #EDEDED;
+}
+
+a{
+	display:block;
+}
+
+#navbar{
+	position:fixed;
+	top:0px;
+	background:#FCC317;
+	width:100%;
+	height:50px;
+}
+
+#navbar > ul{
+	list-style-type: none;
+}
+
+#navbar > ul > li{
+	float:left;
+	width:200px;
+	height:50px;
+	text-align: center;
+	line-height: 50px;
+}
+
+#navbar > ul > li > a{
+	color:#D64E04;
+	text-decoration:none;
+	font-weight:600;
+}
+
+#navbar > ul > li > a:hover{
+	background:#F28449;
+	color:#FFFFFF;
+}
+
+#navbar > ul > li > ul > li > a{
+	color:#FFFFFF;
+}
+
+.clear{
+	clear:both;
+}

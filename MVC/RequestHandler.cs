@@ -32,10 +32,28 @@ namespace MVC
                 .Select(s => s.ToLower())
                 .ToList();
 
-            var view = routes.Where(r => r is DirectRouteAction).Select(r => r as DirectRouteAction).FirstOrDefault(dr => dr.UrlPath == path)?.GetView(HttpContext);
+            // DirectRouteAction
+            var view = routes.Where(r => r is DirectRouteAction)
+                .Select(r => r as DirectRouteAction)
+                .FirstOrDefault(dr => dr.UrlPath == path)?.GetView(HttpContext);
 
             if (view != null)
                 return view;
+
+            //DirectRouteController
+            view = routes.Where(r => r is DirectRouteController)
+                .Select(r => r as DirectRouteController)
+                .FirstOrDefault(drc => path.StartsWith(drc.UrlPath))?.GetView(HttpContext);
+            if (view != null)
+                return view;
+
+            view = routes.Where(r => r is RouteControllers)
+                .Select(r => r as RouteControllers)
+                .FirstOrDefault(rc => path.StartsWith(rc.UrlPath))?.GetView(HttpContext);
+
+            if (view != null)
+                return view;
+
             else
                 return new NotFoundView("action not found");
 

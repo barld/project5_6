@@ -9,6 +9,5 @@ namespace MVC.Routing
 {
     public interface IRoute
     {
-        View.ViewObject GetView(HttpListenerContext context);
     }
 }

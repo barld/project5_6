@@ -13,7 +13,7 @@ namespace MVCTestApplication
     {
         static void Main(string[] args)
         {
-            MVCApp app = new MVCApp("http://127.0.0.1:8080/", Assembly.GetEntryAssembly());
+            MVCApp app = new MVCApp("http://localhost:8080/", Assembly.GetEntryAssembly());
             app.Run();
 
         }

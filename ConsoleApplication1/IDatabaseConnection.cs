@@ -10,9 +10,9 @@ namespace ConsoleApplication1
     {
         public abstract bool isConnected { get; set; }
         public abstract bool isGeneratedWithSampleData { get; set; }
-        public abstract bool checkConnection();
+        public abstract void checkConnection();
         public abstract void initialize();
         public abstract void reset();
-        public abstract void setupSampleData();
+        public abstract bool setupSampleData();
     }
 }

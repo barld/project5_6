@@ -20,6 +20,10 @@ namespace DataModels
     public class UserAddress
     {
         public string city { get; set; }
+        public string country { get; set; }
+        public string postal_code { get; set; }
+        public string street { get; set; }
+        public int snumber { get; set; }
         public bool isDeliveryAddress { get; set; }
     }
 

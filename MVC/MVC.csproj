@@ -67,11 +67,15 @@
     <Compile Include="Routing\IRoute.cs" />
     <Compile Include="Routing\RouteControllers.cs" />
     <Compile Include="Routing\RouteWebFolder.cs" />
-    <Compile Include="View\CssView.cs" />
+    <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
-    <Compile Include="View\FileView.cs" />
+    <Compile Include="View\FileView\FileView.cs" />
+    <Compile Include="View\FileView\HtmlFileView.cs" />
+    <Compile Include="View\FileView\JsFileView.cs" />
+    <Compile Include="View\FileView\JpegFileView.cs" />
     <Compile Include="View\JsonDataView.cs" />
     <Compile Include="View\NotFoundView.cs" />
+    <Compile Include="View\FileView\PngFileView.cs" />
     <Compile Include="View\RawObjectView.cs" />
     <Compile Include="View\ViewObject.cs" />
   </ItemGroup>

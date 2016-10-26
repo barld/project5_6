@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\SecondController.cs" />
     <Compile Include="Controller\TestController.cs" />
     <Compile Include="Program.cs" />

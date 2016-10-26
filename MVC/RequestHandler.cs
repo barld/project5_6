@@ -1,4 +1,5 @@
-﻿using MVC.Routing;
+﻿using MVC.Helpers;
+using MVC.Routing;
 using MVC.View;
 using System;
 using System.Collections.Generic;
@@ -33,23 +34,27 @@ namespace MVC
                 .ToList();
 
             // DirectRouteAction
-            var view = routes.Where(r => r is DirectRouteAction)
-                .Select(r => r as DirectRouteAction)
-                .FirstOrDefault(dr => dr.UrlPath == path)?.GetView(HttpContext);
+            var view = routes.PickWhereType<IRoute, DirectRouteAction>()
+                .FirstOrDefault(dr => HttpMethods.fromHttpMethodsEnum(dr.Method) == HttpContext.Request.HttpMethod && dr.UrlPath == path)?.GetView(HttpContext);
 
             if (view != null)
                 return view;
 
             //DirectRouteController
-            view = routes.Where(r => r is DirectRouteController)
-                .Select(r => r as DirectRouteController)
+            view = routes.PickWhereType<IRoute, DirectRouteController>()
                 .FirstOrDefault(drc => path.StartsWith(drc.UrlPath))?.GetView(HttpContext);
             if (view != null)
                 return view;
 
-            view = routes.Where(r => r is RouteControllers)
-                .Select(r => r as RouteControllers)
+            view = routes.PickWhereType<IRoute,RouteControllers>()
                 .FirstOrDefault(rc => path.StartsWith(rc.UrlPath))?.GetView(HttpContext);
+
+            if (view != null)
+                return view;
+
+            view =
+                routes.PickWhereType<IRoute, RouteWebFolder>()
+                    .FirstOrDefault(rw => path.StartsWith(rw.UrlPath))?.GetView(HttpContext);
 
             if (view != null)
                 return view;

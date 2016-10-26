@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.Routing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,21 +11,13 @@ namespace MVC
 {
     public class MVCApp
     {
-        private ControllerFactory cFactory;
-
+        private readonly IEnumerable<IRoute> Routes;
         public string ListenAddress { get; }
-        public MVCApp(string listenAddress) : this(listenAddress, Assembly.GetEntryAssembly()) { }
 
-        public MVCApp(string listenAddress, Assembly assembly)
+        public MVCApp(string listenAddress, IEnumerable<IRoute> routes)
         {
             ListenAddress = listenAddress;
-            cFactory = new ControllerFactory(assembly);
-        }
-
-        public MVCApp(string listenAddress, IEnumerable<Type> controllers)
-        {
-            ListenAddress = listenAddress;
-            cFactory = new ControllerFactory(controllers);
+            Routes = routes;
         }
 
         public void Run()
@@ -45,10 +38,8 @@ namespace MVC
 
                 Console.WriteLine(context.Request.HttpMethod);
 
-                var rHandler = new RequestHandler(cFactory, context);
+                var rHandler = new RequestHandler(Routes, context);
                 rHandler.HandelToView().Respond(context.Response);
-
-                var controller = cFactory.GetByRawUrl(WebUtility.UrlDecode(context.Request.RawUrl));
             }
         }
 

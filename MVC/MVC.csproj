@@ -57,15 +57,25 @@
     <Compile Include="Controller\DataLayerController.cs" />
     <Compile Include="Controller\ReturnViewsLayerController.cs" />
     <Compile Include="Controller\NotFoundController.cs" />
+    <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="HttpMethods.cs" />
     <Compile Include="MVCApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHandler.cs" />
-    <Compile Include="Routing\DirectRoute.cs" />
+    <Compile Include="Routing\DirectRouteAction.cs" />
+    <Compile Include="Routing\DirectRouteController.cs" />
     <Compile Include="Routing\IRoute.cs" />
+    <Compile Include="Routing\RouteControllers.cs" />
+    <Compile Include="Routing\RouteWebFolder.cs" />
+    <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
+    <Compile Include="View\FileView\FileView.cs" />
+    <Compile Include="View\FileView\HtmlFileView.cs" />
+    <Compile Include="View\FileView\JsFileView.cs" />
+    <Compile Include="View\FileView\JpegFileView.cs" />
     <Compile Include="View\JsonDataView.cs" />
     <Compile Include="View\NotFoundView.cs" />
+    <Compile Include="View\FileView\PngFileView.cs" />
     <Compile Include="View\RawObjectView.cs" />
     <Compile Include="View\ViewObject.cs" />
   </ItemGroup>

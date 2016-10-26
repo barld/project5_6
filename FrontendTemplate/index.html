@@ -23,53 +23,97 @@
   <link rel="stylesheet" href="css/custom.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
 
+  <!-- JavaScript
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://unpkg.com/vue@next/dist/vue.js"></script>
+
+
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="images/favicon.png">
 
 </head>
 <body>
-
-	<nav>
-		<div id="navbar">
-			<ul>
-				<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-				<li class="submenu_parent">
-					<a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
-					<ul class="submenu">
-						<li><a href="#">PC</a></li>
-						<li><a href="#">PlayStation 4</a></li>
-						<li><a href="#">Xbox One</a></li>
-						<li><a href="#">Wii U</a></li>
-						<li><a href="#">3DS</a></li>
-						<li><a href="#">HTC Vive</a></li>	
-					</ul>
-				</li>
-				<li class="floating_menu_component">
-					<a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-					<ul class="submenu">
-						<li><a href="#">2x Battlefield 1 PC</a></li>
-						<li><a href="#">1x FIFA 2017 1 PC</a></li>
-					</ul>
-				</li>
-				<li class="floating_menu_component">
-					<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
-					<ul class="submenu">
-						<li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Orderhistorie</a></li>
-						<li><a href="#">Wenslijst</a></li>
-						<li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Instellingen</a></li>
-						<li><a href="#"><i class="fa fa-list-alt" aria-hidden="true"></i> Favorieten</a></li>
-						<li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container"><!-- Start container -->
-		<div class="row">
-		</div>
-	</div><!-- End container -->
-
+	<div id="app">
+		<nav><!-- Start menu -->
+			<div id="navbar">
+				<ul>
+					<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					<li class="submenu_parent">
+						<a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
+						<ul class="submenu">
+							<li><a href="#">PC</a></li>
+							<li><a href="#">PlayStation 4</a></li>
+							<li><a href="#">Xbox One</a></li>
+							<li><a href="#">Wii U</a></li>
+							<li><a href="#">3DS</a></li>
+							<li><a href="#">HTC Vive</a></li>	
+						</ul>
+					</li>
+					<li class="floating_menu_component">
+						<a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
+						<ul class="submenu">
+							<li><a href="#">2x Battlefield 1 PC</a></li>
+							<li><a href="#">1x FIFA 2017 1 PC</a></li>
+						</ul>
+					</li>
+					<li class="floating_menu_component">
+						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
+						<ul class="submenu">
+							<li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Orderhistorie</a></li>
+							<li><a href="#">Wenslijst</a></li>
+							<li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Instellingen</a></li>
+							<li><a href="#"><i class="fa fa-list-alt" aria-hidden="true"></i> Favorieten</a></li>
+							<li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav><!-- End menu -->
+		<div class="container margin-top"><!-- Start container -->
+			<div class="row">
+				<div id="games_overview">
+					<h1>Nu populair</h1>
+					<div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
+						<div class="three columns product" v-for="product in popularProducts">
+							<div class="product_title">{{ product.name }}</div>
+							<img src="images/product_sample.png" alt="" class="product_image"> <br />
+							<div class="product_price">EUR {{ product.price }}</div>
+							<a href="#">123</a>
+						</div>	
+					</div><br /><!-- End spotlight games -->
+					<h1>Aanbiedingen</h1>
+					<div class="sale_games"><!-- Start sale games -->
+						<div class="three columns product">
+							<div class="product_title">Product 1</div>
+							<img src="images/product_sample.png" alt="" class="product_image"> <br />
+							<div class="product_price">49,99</div>
+							<a href="#">Bekijk game</a>
+						</div>
+						<div class="three columns product">
+							<div class="product_title">Product 1</div>
+							<img src="images/product_sample.png" alt="" class="product_image"> <br />
+							<div class="product_price">49,99</div>
+							<a href="#">Bekijk game</a>
+						</div>
+						<div class="three columns product">
+							<div class="product_title">Product 1</div>
+							<img src="images/product_sample.png" alt="" class="product_image"> <br />
+							<div class="product_price">49,99</div>
+							<a href="#">Bekijk game</a>
+						</div>
+						<div class="three columns product">
+							<div class="product_title">Product 1</div>
+							<img src="images/product_sample.png" alt="" class="product_image"> <br />
+							<div class="product_price">49,99</div>
+							<a href="#">Bekijk game</a>
+						</div>	
+					</div><!-- End sale games -->
+				</div>
+			</div>
+		</div><!-- End container -->
+	</div>
+	<script src="js/classes/product.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

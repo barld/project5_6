@@ -37,28 +37,39 @@ namespace ConsoleApplication1
 
         private void createContraints()
         {
-            var options = new CreateIndexOptions() { Unique = true };
-            var field = new StringFieldDefinition<User>("userName");
-            var indexDefinition = new IndexKeysDefinitionBuilder<User>().Ascending(field);
-            db.GetCollection<User>("user").Indexes.CreateOne(indexDefinition, options);
+            if(isConnected)
+            {
+                var options = new CreateIndexOptions() { Unique = true };
+                var field = new StringFieldDefinition<User>("userName");
+                var indexDefinition = new IndexKeysDefinitionBuilder<User>().Ascending(field);
+                db.GetCollection<User>("user").Indexes.CreateOne(indexDefinition, options);
+            }
         }
 
         public override void checkConnection()
         {
             //Try to insert sample data, the database is online if this succeeded
-            if (db.Client.GetDatabase(databaseName) != null)
+            int retry = 50;
+            while(retry != 0)
             {
-                //Database connection succeeded
-                isConnected = true;
-            }
-            else
-            {
-                //Database connection failed
-                isConnected = false;
-            }
+                System.Threading.Thread.Sleep(100);
+                retry--;
+                if (db.Client.Cluster.Description.State.ToString() != "Disconnected")
+                {
 
-            //Remove the sample data
-            reset();
+                    //Database connection succeeded
+                    isConnected = true;
+
+                    //Clean the database
+                    reset();
+                    break;
+                }
+                else
+                {
+                    //Database connection failed
+                    isConnected = false;
+                }
+            }
         }
 
         public override void reset()

@@ -25,6 +25,11 @@ namespace ConsoleApplication1
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
                 simulateRegisterAccount();
+
+                /*
+                 * If dc.setupSampleData() was called, let the user know that the database is 
+                 * filled with example data.
+                 */
                 if (dc.isGeneratedWithSampleData)
                 {
                     Console.WriteLine("Database sample data generated");
@@ -36,7 +41,7 @@ namespace ConsoleApplication1
             }
             else
             {
-                Console.WriteLine("Database connection failed");
+                Console.WriteLine($"Could not connect to database {databaseName}");
             }
             Console.WriteLine("Press [ENTER] to exit..");
             Console.ReadLine();

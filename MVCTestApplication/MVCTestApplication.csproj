@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVCTestApplication</RootNamespace>
     <AssemblyName>MVCTestApplication</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -55,10 +55,10 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>0D6806B592D4082E8D3374DCC544DB34E7D94D89</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E2363E76B73F9BCF0F8A9FD1AFCD3AA90C268FF1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>MVCTestApplication_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>MVCTestApplication_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -67,6 +67,18 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.3.0\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.3.0\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.3.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -77,17 +89,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\LoginController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\SecondController.cs" />
     <Compile Include="Controller\TestController.cs" />
+    <Compile Include="Database\DatabaseConnection.cs" />
+    <Compile Include="Database\IDatabaseConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="MVCTestApplication_1_TemporaryKey.pfx" />
     <None Include="MVCTestApplication_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Class Diagram\DataModels.csproj">
+      <Project>{33e632cf-e921-45ac-8e53-05f6b86fb8d2}</Project>
+      <Name>DataModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVC\MVC.csproj">
       <Project>{662febcb-b68d-46a8-a4b8-c67f4c0fcc10}</Project>
       <Name>MVC</Name>

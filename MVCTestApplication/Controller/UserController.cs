@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVC.View;
-using MVCTestApplication.Model;
+//using MVCTestApplication.Model;
 namespace MVC.DevelopmentTest.Controller
 {
     public class AdressData
@@ -33,7 +33,7 @@ namespace MVC.DevelopmentTest.Controller
     class UserController : MVC.Controller.Controller
     {
         public DatabaseConnection db;
-        public UserModel model = new UserModel();
+        //public UserModel model = new UserModel();
         
         public void dbInit()
         {
@@ -71,7 +71,7 @@ namespace MVC.DevelopmentTest.Controller
         public object PostRegister()
         {
             var data = GetBodyFromJson<User>();
-            model.userRegister(this, data);
+            //model.userRegister(this, data);
             return Json(data);
         }
 

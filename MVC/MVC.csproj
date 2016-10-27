@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\IPreConstructingControllerObjectAtribute.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerObject.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Routing\RouteControllers.cs" />
     <Compile Include="Routing\RouteWebFolder.cs" />
     <Compile Include="Session\Session.cs" />
+    <Compile Include="View\AccesDeniedView.cs" />
     <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
     <Compile Include="View\FileView\FileView.cs" />

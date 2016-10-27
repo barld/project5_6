@@ -1,4 +1,5 @@
-﻿using MVC.Controller;
+﻿using MVC.Attribute;
+using MVC.Controller;
 using MVC.View;
 using System;
 using System.Collections.Generic;
@@ -40,13 +41,25 @@ namespace MVC.Routing
                 .Where(s => !String.IsNullOrWhiteSpace(s))
                 .Select(s => s.ToLower())
                 .ToList();
+            ControllerObject controller;
+            var ControllerType = factory.GetByRawUrl(urlParts[0], session);
 
-            using (var controller = factory.GetByRawUrl(urlParts[0], session))
+
+            var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IPreConstructingControllerObjectAttribute) as IPreConstructingControllerObjectAttribute;
+            bool hasPca = pca != null;
+            if (hasPca)
+                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session));
+            else
+                controller = ControllerFactory.CreateController(ControllerType, session);
+
+            Func<ViewObject> getView = () =>
             {
                 controller._requestContext = context;
                 var HttpMethod = context.Request.HttpMethod.ToLower();
 
                 var controllerType = controller.GetType();
+
+
                 MethodInfo method;
                 if (urlParts.Count > 1)
                 {
@@ -66,7 +79,13 @@ namespace MVC.Routing
                     return new NotFoundView("action not found");
                 else
                     return new RawObjectView(result);
-            }
+            };
+
+            if (hasPca)
+                return pca.HandeleAction(getView);
+            else
+                return getView();
+
         }
     }
 }

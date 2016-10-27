@@ -27,7 +27,7 @@ namespace ConsoleApplication1
                 //simulateRegisterAccount();
                 Console.WriteLine("Type in the email address to look for:");
                 string email = Console.ReadLine();
-                simulateFindEmail(email);
+                simulateFindUsernameByEmail(email);
             }
             else
             {
@@ -37,14 +37,18 @@ namespace ConsoleApplication1
             Console.ReadLine();
         }
 
-        private static void simulateFindEmail(string emailAddress)
+        private static void simulateFindUsernameByEmail(string emailAddress)
         {
             var listOfResults = dc.collectionSearchFor("user", "email", emailAddress);
             Console.WriteLine($"Found {listOfResults.Count} results for '{emailAddress}'");
 
             foreach(var x in listOfResults)
             {
-                Console.WriteLine(x.ToString());
+                //Index 4 is 'isMale' in the collection 'user'
+                BsonValue value;
+                x.TryGetValue("userName", out value);
+                string userName = value.AsString;
+                Console.WriteLine($"{emailAddress} and username is: {userName}");                
             }
         }
 

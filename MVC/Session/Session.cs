@@ -8,6 +8,6 @@ namespace MVC.Session
 {
     public class Session
     {
-        public dynamic Data { get; internal set; }
+        public Dictionary<string,object> Data { get; internal set; }
     }
 }

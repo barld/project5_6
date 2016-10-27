@@ -148,7 +148,7 @@ namespace ConsoleApplication1
             {
                 Console.WriteLine("Failed to retrieve user..");
                 Console.WriteLine(ex.Message);
-                return null;
+                return new List<BsonDocument>();
             }
         }
     }

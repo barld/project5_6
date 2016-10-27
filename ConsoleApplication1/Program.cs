@@ -47,6 +47,8 @@ namespace ConsoleApplication1
             Console.ReadLine();
         }
 
+
+        //simulateRegisterAccount() method creates 1 new user and 1 or more addresses to this user
         static List<UserAddress> myAddresses;
 
         //City, country and postalcode are shared between 'user' and 'address'
@@ -81,10 +83,11 @@ namespace ConsoleApplication1
             //Create new user
             User a = new User() { country=country, postalCode=postalcode, userName=userName, password=password, isMale=isMale, email=email, addresses=myAddresses};
 
-            //Add it to the database
-            dc.insertUser(a);
+            //Add the user to the database
+            dc.collectionInsertUser(a);
         }
 
+        //This is part of the simulateRegisterAccount() method
         static private List<UserAddress> createAddress()
         {
             //Create empty addresses list

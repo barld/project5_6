@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModels.Revisited
 {
-    public class Category
+    public class Platform
     {
         public string platformTitle { get; set; }
         public string brand { get; set; }

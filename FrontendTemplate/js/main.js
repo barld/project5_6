@@ -1,39 +1,112 @@
 window.onload = function(){
 
-	// var element = {
-	// 	type: "div",
-	// 	properties:{
-	// 		id: "product-parent",
-	// 		class: "container"
-	// 	},
-	// 	constructElement: function(){
-	// 		return this.properties.id;
-	// 	}
-	// }
-
-
-
-	// console.log(element.constructElement());
-
-	// Create a sample product list
-	var popularProducts = {
-		1: new Product(1, "Zeeland Rescue: Barld", 25.00, "GameBoy Color"),
-		2: new Product(2, "Pokemon Blue", 25.00, "GameBoy Color"),
-		3: new Product(3, "Pokemon Yellow", 30.00, "GameBoy Color"),
-		4: new Product(4, "Pokemon Mystery Dungeon", 45.00, "3DS")
-	}
-
-	
-	console.log(JSON.parse(JSON.stringify(popularProducts)));
-
-	var app = new Vue({
-		el: "#games_overview",
-		data:{
-			popularProducts: popularProducts
+	// Sampledata
+	var popularGames = {
+		1:{
+			id: 20172017,
+			name: "FIFA 2017",
+			image: "https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/7/9200000059237726.jpg",
+			platforms:{
+				1:{
+					name: "PC",
+					price: 60.00, 
+					release_date: "29-09-2016"
+				},
+				2:{
+					name: "PlayStation 4",
+					price: 65.00, 
+					release_date: "31-09-2016"
+				},
+				3:{
+					name: "3DS",
+					price: 45.00, 
+					release_date: "15-10-2016"
+				},
+			},
+		},
+		2:{
+			id: 3929029,
+			name: "Battlefield 1",
+			image: "https://upload.wikimedia.org/wikipedia/en/f/fc/Battlefield_1_cover_art.jpg",
+			platforms:{
+				1:{
+					name: "PC",
+					price: 65.00, 
+					release_date: "29-09-2016"
+				},
+				2:{
+					name: "PlayStation 4",
+					price: 65.00, 
+					release_date: "31-09-2016"
+				},
+				3:{
+					name: "Wii U",
+					price: 45.00, 
+					release_date: "15-10-2016"
+				},
+			}
+		},
+		3:{
+			id: 3929029,
+			name: "Battlefield 1",
+			image: "https://upload.wikimedia.org/wikipedia/en/f/fc/Battlefield_1_cover_art.jpg",
+			platforms:{
+				1:{
+					name: "PC",
+					price: 65.00, 
+					release_date: "29-09-2016"
+				},
+				2:{
+					name: "PlayStation 4",
+					price: 65.00, 
+					release_date: "31-09-2016"
+				},
+				3:{
+					name: "Wii U",
+					price: 45.00, 
+					release_date: "15-10-2016"
+				},
+			}
+		},
+		4:{
+			id: 3929029,
+			name: "Battlefield 1",
+			image: "https://upload.wikimedia.org/wikipedia/en/f/fc/Battlefield_1_cover_art.jpg",
+			platforms:{
+				1:{
+					name: "PC",
+					price: 65.00, 
+					release_date: "29-09-2016"
+				},
+				2:{
+					name: "PlayStation 4",
+					price: 65.00, 
+					release_date: "31-09-2016"
+				},
+				3:{
+					name: "Wii U",
+					price: 45.00, 
+					release_date: "15-10-2016"
+				},
+			}
 		}
+	};
+
+	var gamesList = [];
+
+	Object.keys(popularGames).forEach(function(key){
+		var game = new Game(popularGames[key]);
+		console.log(game);
+		gamesList.push({game});
 	});
 
-	// Loop through the object
-	// Object.keys(productList).forEach(function(key){
-	// });
+	// gamesList.forEach(game => console.log(game));
+
+	var app = new Vue({
+		el: "#app",
+		data:{
+			popularGames: gamesList,
+			message: "Hallo"
+		}
+	});
 }

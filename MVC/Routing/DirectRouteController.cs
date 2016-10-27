@@ -20,7 +20,7 @@ namespace MVC.Routing
             ControllerType = controllerType;
         }
 
-        public ViewObject GetView(HttpListenerContext context)
+        public ViewObject GetView(HttpListenerContext context, Session.Session session)
         {
             var restPath = context.Request.RawUrl.Substring(UrlPath.Length);
             var urlParts = restPath
@@ -28,7 +28,7 @@ namespace MVC.Routing
                 .Where(s => !String.IsNullOrWhiteSpace(s))
                 .Select(s => s.ToLower())
                 .ToList();
-            ControllerObject controller = Activator.CreateInstance(ControllerType, new object[] { }) as ControllerObject;
+            ControllerObject controller = ControllerFactory.CreateController(ControllerType, session);
 
             controller._requestContext = context;
             var HttpMethod = context.Request.HttpMethod.ToLower();

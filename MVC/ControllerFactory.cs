@@ -29,15 +29,25 @@ namespace MVC
         private IEnumerable<Type> filterControllers(IEnumerable<Type> types) => 
             types.Where(ti => ti.IsSubclassOf(typeof(ControllerObject)));
         
+        /// <summary>
+        /// insecure if you not realy sure it is a controllertype
+        /// </summary>
+        /// <param name="controllerType"></param>
+        /// <returns></returns>
+        internal static ControllerObject CreateController(Type controllerType, Session.Session session)
+        {
+            ControllerObject o = Activator.CreateInstance(controllerType) as ControllerObject;
+            o.Session = session;
+            return o;
+        }
 
-        internal ControllerObject GetByRawUrl(string name)
+        internal ControllerObject GetByRawUrl(string name, Session.Session session)
         {
             try
             {
-                var cObject = Activator.CreateInstance(
-                    controllers.FirstOrDefault(t => t.Name.ToLower() == $"{name.ToLower()}controller"));
+                var cObject = controllers.FirstOrDefault(t => t.Name.ToLower() == $"{name.ToLower()}controller");
                 if (cObject != null)
-                    return cObject as ControllerObject;
+                    return CreateController(cObject, session);
             }
             catch { }
 

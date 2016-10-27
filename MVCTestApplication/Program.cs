@@ -28,7 +28,9 @@ namespace MVCTestApplication
 
         static void Main(string[] args)
         {
-            MVCApp app = new MVCApp("http://localhost:8080/", getRoutes());
+            var adress = (args?.Length > 0) ? args[0] : "http://localhost:8080/";
+
+            MVCApp app = new MVCApp(adress, getRoutes());
             app.Run();
 
         }

@@ -51,7 +51,7 @@ namespace MVC
 
                     if (!sessions.ContainsKey(cookie.Value))
                         sessions.Remove(cookie.Value);
-                    sessions.Add(cookie.Value, new Session.Session { Data = new System.Dynamic.ExpandoObject() });
+                    sessions.Add(cookie.Value, new Session.Session { Data = new Dictionary<string, object>() });
                     cValue = cookie.Value;
                     Console.WriteLine(cookie);
                 }

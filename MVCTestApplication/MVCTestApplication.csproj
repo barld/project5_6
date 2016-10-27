@@ -95,6 +95,7 @@
     <Compile Include="Controller\TestController.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="Database\IDatabaseConnection.cs" />
+    <Compile Include="Model\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

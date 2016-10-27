@@ -18,14 +18,17 @@ namespace MVC.DevelopmentTest.Controller
         public ViewObject GetSession()
         {
             int count=1;
-            try
+            if(this.Session.Data.ContainsKey("count"))
             {
-                count += (int)this.Session.Data.count;
+                count += (int)this.Session.Data["count"];
+                this.Session.Data["count"] = count;
 
             }
-            catch { }
-            this.Session.Data.count = count;
-            return new RawObjectView(this.Session.Data.count);
+            else
+            {
+                this.Session.Data.Add("count", count);
+            }
+            return new RawObjectView(count);
         }
 
         public string GetTest()

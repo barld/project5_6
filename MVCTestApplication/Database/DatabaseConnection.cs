@@ -86,7 +86,7 @@ namespace ConsoleApplication1
             isGeneratedWithSampleData = false;
         }
 
-        public void collectionInsertUser (User user)
+        public void insertUser(User user)
         {
             try
             {
@@ -97,36 +97,6 @@ namespace ConsoleApplication1
             catch(Exception ex)
             {
                 Console.WriteLine("Failed to add user..");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public void collectionInsertCategory (Category category)
-        {
-            try
-            {
-                var collectionUser = db.GetCollection<Category>("category");
-                collectionUser.InsertOne(category);
-                Console.WriteLine("Category has been added!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to add category..");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public void collectionInsertGame(Game game)
-        {
-            try
-            {
-                var collectionUser = db.GetCollection<Game>("game");
-                collectionUser.InsertOne(game);
-                Console.WriteLine("Game has been added!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to add game..");
                 Console.WriteLine(ex.Message);
             }
         }

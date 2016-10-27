@@ -75,45 +75,22 @@
 				<div id="games_overview">
 					<h1>Nu populair</h1>
 					<div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
-						<div class="three columns product" v-for="product in popularProducts">
-							<div class="product_title">{{ product.name }}</div>
-							<img src="images/product_sample.png" alt="" class="product_image"> <br />
-							<div class="product_price">EUR {{ product.price }}</div>
-							<a href="#">123</a>
-						</div>	
+						<div class="three columns product" v-for="product in popularGames">
+							<div class="product_title">{{ product.game.data.name }}</div>
+							<img v-bind:src="product.game.data.image" alt="" class="product_image"> <br />
+							<!-- <div class="product_price">EUR {{ product.game.data.price }}</div> -->
+							<a v-bind:href="'product/' + product.game.data.id">Bekijk meer</a>
+						</div>
 					</div><br /><!-- End spotlight games -->
 					<h1>Aanbiedingen</h1>
 					<div class="sale_games"><!-- Start sale games -->
-						<div class="three columns product">
-							<div class="product_title">Product 1</div>
-							<img src="images/product_sample.png" alt="" class="product_image"> <br />
-							<div class="product_price">49,99</div>
-							<a href="#">Bekijk game</a>
-						</div>
-						<div class="three columns product">
-							<div class="product_title">Product 1</div>
-							<img src="images/product_sample.png" alt="" class="product_image"> <br />
-							<div class="product_price">49,99</div>
-							<a href="#">Bekijk game</a>
-						</div>
-						<div class="three columns product">
-							<div class="product_title">Product 1</div>
-							<img src="images/product_sample.png" alt="" class="product_image"> <br />
-							<div class="product_price">49,99</div>
-							<a href="#">Bekijk game</a>
-						</div>
-						<div class="three columns product">
-							<div class="product_title">Product 1</div>
-							<img src="images/product_sample.png" alt="" class="product_image"> <br />
-							<div class="product_price">49,99</div>
-							<a href="#">Bekijk game</a>
-						</div>	
-					</div><!-- End sale games -->
-				</div>
+					</div>	
+				</div><!-- End sale games -->
 			</div>
-		</div><!-- End container -->
-	</div>
-	<script src="js/classes/product.js"></script>
-	<script src="js/main.js"></script>
+		</div>
+	</div><!-- End container -->
+</div>
+<script src="js/classes/product.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

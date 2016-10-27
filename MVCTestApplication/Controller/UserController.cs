@@ -1,61 +1,59 @@
-﻿using System;
+﻿using MVC.Controller;
+using DataModels;
+using ConsoleApplication1;
+using System;
+using System.Web;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataModels;
-using MongoDB.Driver;
-using MongoDB.Bson;
-using System.Diagnostics;
+using MVC.View;
 
-namespace ConsoleApplication1
+namespace MVC.DevelopmentTest.Controller
 {
-    class Program
+    class UserController : MVC.Controller.Controller
     {
-        static DatabaseConnection dc;
-        static void Main(string[] args)
+        DatabaseConnection dc;
+
+        public string Get()
+        {
+            return "<h1>Login Page</h1>";
+        }
+
+        public class Login
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string response { get; set; }
+        }
+
+        public void GetRegister()
         {
             string databaseName = "project__5_6";
             dc = new DatabaseConnection("mongodb://localhost:27017", databaseName);
             Console.WriteLine("Connecting to database..");
             dc.initialize();
-            //dc.setupSampleData();
-
             if (dc.isConnected)
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
-                simulateRegisterAccount();
-
-                /*
-                 * If dc.setupSampleData() was called, let the user know that the database is 
-                 * filled with example data.
-                 */
-                if (dc.isGeneratedWithSampleData)
-                {
-                    Console.WriteLine("Database sample data generated");
-                }
-                else
-                {
-                    Console.WriteLine("Database is empty");
-                }
             }
             else
             {
                 Console.WriteLine($"Could not connect to database {databaseName}");
             }
-            Console.WriteLine("Press [ENTER] to exit..");
-            Console.ReadLine();
+
+            simulateRegisterAccount();
+
         }
 
-
-        //simulateRegisterAccount() method creates 1 new user and 1 or more addresses to this user
         static List<UserAddress> myAddresses;
 
         //City, country and postalcode are shared between 'user' and 'address'
-        static string city;
-        static string country;
-        static string postalcode;
-        static private void simulateRegisterAccount()
+        string city;
+        string country;
+        string postalcode;
+        private void simulateRegisterAccount()
         {
             //Ask user for account info to register
             Console.WriteLine("---ACCOUNT INFO---");
@@ -81,14 +79,13 @@ namespace ConsoleApplication1
             }
 
             //Create new user
-            User a = new User() { country=country, postalCode=postalcode, userName=userName, password=password, isMale=isMale, email=email, addresses=myAddresses};
+            User a = new User() { country = country, postalCode = postalcode, userName = userName, password = password, isMale = isMale, email = email, addresses = myAddresses };
 
-            //Add the user to the database
-            dc.collectionInsertUser(a);
+            //Add it to the database
+            dc.insertUser(a);
         }
 
-        //This is part of the simulateRegisterAccount() method
-        static private List<UserAddress> createAddress()
+        private List<UserAddress> createAddress()
         {
             //Create empty addresses list
             myAddresses = new List<UserAddress>();
@@ -109,9 +106,22 @@ namespace ConsoleApplication1
             bool isDeliveryAddress = Convert.ToBoolean(Console.ReadLine());
 
             //Add address info to the empty list
-            myAddresses.Add(new UserAddress { city=city, country=country, postal_code=postalcode, street=street, snumber=streetnr, isDeliveryAddress=isDeliveryAddress });
+            myAddresses.Add(new UserAddress { city = city, country = country, postal_code = postalcode, street = street, snumber = streetnr, isDeliveryAddress = isDeliveryAddress });
 
             return myAddresses;
+        }
+
+        public object PostLogin()
+        {
+            var data = GetBodyFromJson<Login>();
+
+            if (data.username == "user" && data.password == "secret")
+            {
+                Cookie cookie = new Cookie("test", "Authenticated");
+                data.response = cookie.Value;
+            }
+
+            return Json(data.response);
         }
     }
 }

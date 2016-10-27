@@ -13,7 +13,6 @@ namespace ConsoleApplication1
     class DatabaseConnection : IDatabaseConnection
     {
         public override bool isConnected { get; set; }
-        public override bool isGeneratedWithSampleData { get; set; }
 
         IMongoDatabase db;
         string connectionString;
@@ -59,9 +58,6 @@ namespace ConsoleApplication1
 
                     //Database connection succeeded
                     isConnected = true;
-
-                    //Clean the database
-                    //reset();
                     break;
                 }
                 else
@@ -83,7 +79,6 @@ namespace ConsoleApplication1
             }
 
             Debug.WriteLine("Database cleared..");
-            isGeneratedWithSampleData = false;
         }
 
         public void collectionInsertUser (User user)
@@ -131,54 +126,29 @@ namespace ConsoleApplication1
             }
         }
 
-        public override bool setupSampleData()
+        public List<BsonDocument> collectionSearchFor (string collectionName, string columnName, string searchTermValue)
         {
-            //Insert sample data
             try
             {
-                //Example data
-                List<UserAddress> myAddresses = new List<UserAddress>
+                var collection = db.GetCollection<BsonDocument>(collectionName);
+                var filter = Builders<BsonDocument>.Filter.Eq(columnName, searchTermValue);
+                var result = collection.Find(filter).ToList();
+                if(result.Count > 0)
                 {
-                    new UserAddress { city = "Rotterdam", isDeliveryAddress = true },
-                    new UserAddress { city = "Den Haag", isDeliveryAddress = false }
-                };
-                User valueUser1 = new User { userName = "Daniel Meer", password = "TestPW123", addresses = myAddresses };
-                User valueUser2 = new User { userName = "Daniel Meer", password = "alskd", addresses = myAddresses };
-                User valueUser3 = new User { userName = "Daniel Meer", password = "testst", addresses = myAddresses };
-                User valueUser4 = new User { userName = "Andy Meer", password = "alskd", addresses = myAddresses };
-
-                UserAddress valueUserAddress = new UserAddress();
-                Category valueCategory = new Category();
-                Game valueGame = new Game
+                    Console.WriteLine("***Found some results!***");
+                }
+                else
                 {
-                    title = "Fifa 2016",
-                    platforms = new List<Category> { new Category { platformTitle = "Playstation 4", brand = "Sony", description = "Playstation made by Sony" } },
-                    publisher = "EA",
-                    year = 2016
-                };
-                var collectionUser = db.GetCollection<User>("user");
-                var collectionUserAddress = db.GetCollection<UserAddress>("useraddress");
-                var collectionCategory = db.GetCollection<Category>("category");
-                var collectionGame = db.GetCollection<Game>("game");
-                collectionUser.InsertOne(valueUser1);
-                collectionUser.InsertOne(valueUser2);
-                collectionUserAddress.InsertOne(valueUserAddress);
-                collectionCategory.InsertOne(valueCategory);
-                collectionGame.InsertOne(valueGame);
-                Debug.WriteLine("Database generated!");
-                isGeneratedWithSampleData = true;
-                return true;
+                    Console.WriteLine("***No results found!***");
+                }
+                
+                return result;
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Failed to retrieve user..");
                 Console.WriteLine(ex.Message);
-                Debug.WriteLine("Database connection failed, make sure the database is running!");
-                isGeneratedWithSampleData = false;
-
-                //It went wrong while inserting the data, delete everything until the problem has been fixed
-                //e.g. remove duplicate unique indexes, check the log
-                reset();
-                return false;
+                return null;
             }
         }
     }

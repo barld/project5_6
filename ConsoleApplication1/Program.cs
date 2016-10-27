@@ -7,6 +7,7 @@ using DataModels;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace ConsoleApplication1
 {
@@ -19,25 +20,14 @@ namespace ConsoleApplication1
             dc = new DatabaseConnection("mongodb://localhost:27017", databaseName);
             Console.WriteLine("Connecting to database..");
             dc.initialize();
-            //dc.setupSampleData();
 
             if (dc.isConnected)
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
-                simulateRegisterAccount();
-
-                /*
-                 * If dc.setupSampleData() was called, let the user know that the database is 
-                 * filled with example data.
-                 */
-                if (dc.isGeneratedWithSampleData)
-                {
-                    Console.WriteLine("Database sample data generated");
-                }
-                else
-                {
-                    Console.WriteLine("Database is empty");
-                }
+                //simulateRegisterAccount();
+                Console.WriteLine("Type in the email address to look for:");
+                string email = Console.ReadLine();
+                simulateFindEmail(email);
             }
             else
             {
@@ -45,6 +35,12 @@ namespace ConsoleApplication1
             }
             Console.WriteLine("Press [ENTER] to exit..");
             Console.ReadLine();
+        }
+
+        private static void simulateFindEmail(string emailAddress)
+        {
+            var listOfResults = dc.collectionSearchFor("user", "email", emailAddress);
+            Console.WriteLine($"Found {listOfResults.Count} results with this email");
         }
 
 

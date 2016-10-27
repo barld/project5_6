@@ -40,7 +40,12 @@ namespace ConsoleApplication1
         private static void simulateFindEmail(string emailAddress)
         {
             var listOfResults = dc.collectionSearchFor("user", "email", emailAddress);
-            Console.WriteLine($"Found {listOfResults.Count} results with this email");
+            Console.WriteLine($"Found {listOfResults.Count} results for '{emailAddress}'");
+
+            foreach(var x in listOfResults)
+            {
+                Console.WriteLine(x.ToString());
+            }
         }
 
 

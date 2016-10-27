@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="DataModels.Revisited.Category">
+  <Class Name="DataModels.Revisited.Platform">
     <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
@@ -9,17 +9,31 @@
   </Class>
   <Class Name="DataModels.Revisited.Game">
     <Position X="6.5" Y="0.75" Width="1.5" />
+    <AssociationLine Name="gernes" Type="DataModels.Revisited.Gerne" FixedFromPoint="true">
+      <Path>
+        <Point X="8" Y="2.375" />
+        <Point X="9.5" Y="2.375" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAFAAAAQAAAAAQAAAAAACgAAAAAAQAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAIBAAAAQAAAAAQAAAAAACgAAAAAAQAAAAAAAAgAAAA=</HashCode>
       <FileName>Revisited\Game.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="platform" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="platforms" />
       <Property Name="gernes" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DataModels.Revisisted.Order">
+  <Class Name="DataModels.Revisited.Order">
     <Position X="0.5" Y="1.25" Width="1.5" />
+    <AssociationLine Name="OrderLines" Type="DataModels.Revisited.OrderLine" FixedFromPoint="true">
+      <Path>
+        <Point X="2" Y="1.812" />
+        <Point X="3.5" Y="1.812" />
+      </Path>
+    </AssociationLine>
     <AssociationLine Name="billingAddress" Type="DataModels.Revisited.Address" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="2" Y="2.161" />
@@ -77,6 +91,12 @@
   </Class>
   <Class Name="DataModels.Revisited.OrderLine">
     <Position X="3.5" Y="1.25" Width="1.5" />
+    <AssociationLine Name="Game" Type="DataModels.Revisited.Game" FixedFromPoint="true">
+      <Path>
+        <Point X="5" Y="1.812" />
+        <Point X="6.5" Y="1.812" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Revisited\OrderLine.cs</FileName>

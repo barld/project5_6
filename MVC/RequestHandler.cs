@@ -22,7 +22,7 @@ namespace MVC
             HttpContext = context;
         }
 
-        internal ViewObject HandelToView()
+        internal ViewObject HandelToView(Session.Session session)
         {
             var deCodedRawUrl = WebUtility.UrlDecode(HttpContext.Request.RawUrl);
             var path = deCodedRawUrl
@@ -42,12 +42,12 @@ namespace MVC
 
             //DirectRouteController
             view = routes.PickWhereType<IRoute, DirectRouteController>()
-                .FirstOrDefault(drc => path.StartsWith(drc.UrlPath))?.GetView(HttpContext);
+                .FirstOrDefault(drc => path.StartsWith(drc.UrlPath))?.GetView(HttpContext, session);
             if (view != null)
                 return view;
 
             view = routes.PickWhereType<IRoute,RouteControllers>()
-                .FirstOrDefault(rc => path.StartsWith(rc.UrlPath))?.GetView(HttpContext);
+                .FirstOrDefault(rc => path.StartsWith(rc.UrlPath))?.GetView(HttpContext, session);
 
             if (view != null)
                 return view;

@@ -57,6 +57,7 @@
     <Compile Include="Controller\DataLayerController.cs" />
     <Compile Include="Controller\ReturnViewsLayerController.cs" />
     <Compile Include="Controller\NotFoundController.cs" />
+    <Compile Include="Crypto\Keys.cs" />
     <Compile Include="Helpers\CollectionExtensions.cs" />
     <Compile Include="HttpMethods.cs" />
     <Compile Include="MVCApp.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Routing\IRoute.cs" />
     <Compile Include="Routing\RouteControllers.cs" />
     <Compile Include="Routing\RouteWebFolder.cs" />
+    <Compile Include="Session\Session.cs" />
     <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
     <Compile Include="View\FileView\FileView.cs" />

@@ -32,7 +32,7 @@ namespace MVC.Routing
 
         private IEnumerable<Type> filterControllers(IEnumerable<Type> controllerTypes) => controllerTypes.Where(ct => ct.IsSubclassOf(typeof(ControllerObject)));
 
-        public ViewObject GetView(HttpListenerContext context)
+        public ViewObject GetView(HttpListenerContext context, Session.Session session)
         {
             var restPath = context.Request.RawUrl.Substring(UrlPath.Length);
             var urlParts = restPath
@@ -41,7 +41,7 @@ namespace MVC.Routing
                 .Select(s => s.ToLower())
                 .ToList();
 
-            using (var controller = factory.GetByRawUrl(urlParts[0]))
+            using (var controller = factory.GetByRawUrl(urlParts[0], session))
             {
                 controller._requestContext = context;
                 var HttpMethod = context.Request.HttpMethod.ToLower();

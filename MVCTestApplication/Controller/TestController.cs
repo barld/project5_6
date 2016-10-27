@@ -15,6 +15,19 @@ namespace MVC.DevelopmentTest.Controller
             return "<h1>Hello world</h1>";
         }
 
+        public ViewObject GetSession()
+        {
+            int count=1;
+            try
+            {
+                count += (int)this.Session.Data.count;
+
+            }
+            catch { }
+            this.Session.Data.count = count;
+            return new RawObjectView(this.Session.Data.count);
+        }
+
         public string GetTest()
         {
             return "this is a test";

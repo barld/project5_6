@@ -22,8 +22,10 @@ namespace MVC.Routing
         public ViewObject GetView(HttpListenerContext context)
         {
             var restPath = context.Request.RawUrl.Substring(UrlPath.Length);
+            
+            var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Folder, restPath);
+            Console.WriteLine(file);
 
-            var file = Path.Combine(Environment.CurrentDirectory, Folder, restPath);
 
             if(File.Exists(file))
             {

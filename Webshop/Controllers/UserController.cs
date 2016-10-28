@@ -11,61 +11,75 @@ namespace Webshop.Controllers
 {
     public class UserController : MVC.Controller.Controller
     {
-        UserModel model = new UserModel();
+        UserModel usermodel = new UserModel();
 
-        public ViewObject PostLogin()
-        {
-            var data = GetBodyFromJson<LoginViewModel>();
-            var model = new UserLogedInStatus { Email = data.Email };
-
-            if (this.Session.Data.ContainsKey("loginStatus"))
-            {
-                Session.Data["loginStatus"] = model;
-            }
-            else
-            {
-                Session.Data.Add("loginStatus", model);
-            }
-            return Json(new LoginResultViewModel { Succes = true, message = "Succesvol ingelogd" });
-        }
-
-        public ViewObject GetLoginStatus()
-        {
-            if (Session.Data.ContainsKey("loginStatus"))
-            {
-                return Json(Session.Data["loginStatus"]);
-            }
-            else
-            {
-                return Json(new UserNotLogedInStatus());
-            }
-        }
-
-        //public string PostLogin()
+        //public ViewObject PostLogin()
         //{
-        //    var data = GetBodyFromJson<User>();
-        //    var users = model.userSearch(data.email);
-        //    User user = new User();
+        //    var data = GetBodyFromJson<LoginViewModel>();
+        //    var model = new UserLogedInStatus { Email = data.Email };
 
-        //    if (users.Count() > 0)
+
+        //    if (this.Session.Data.ContainsKey("loginStatus"))
         //    {
-        //        user = users[0];
+        //        Session.Data["loginStatus"] = model;
         //    }
-
-        //    if (user.password == data.password)
+        //    else
         //    {
-        //        this.Session.Data.Add("login", "true");
-        //        return "<h1>Success!</h1>";
+        //        Session.Data.Add("loginStatus", model);
         //    }
-
-        //    this.Session.Data.Add("login", "false");
-        //    return "<h1>Failed.</h1>";
-
+        //    return Json(new LoginResultViewModel { Succes = true, message = "Succesvol ingelogd" });
         //}
+
+        //public ViewObject GetLoginStatus()
+        //{
+        //    if (Session.Data.ContainsKey("loginStatus"))
+        //    {
+        //        return Json(Session.Data["loginStatus"]);
+        //    }
+        //    else
+        //    {
+        //        return Json(new UserNotLogedInStatus());
+        //    }
+        //}
+
+        public string PostLogin()
+        {
+            var data = GetBodyFromJson<User>();
+            var users = usermodel.userSearch(data.email);
+            User user = new User();
+
+            if (this.Session.Data.ContainsKey("login"))
+            {
+                return "<h1>Logged in : "+ this.Session.Data["login"].ToString() +"</h1>";
+            }
+
+            if (users.Count() == 1)
+            {
+                user = users[0];
+            }
+
+            if (user.password == data.password)
+            {
+                this.Session.Data.Add("login", user.email);
+                return "<h1>Success!</h1>";
+            }
+
+            return "<h1>Failed.</h1>";
+
+        }
+
+        public string GetLogout()
+        {
+            if (this.Session.Data.ContainsKey("login"))
+            {
+                this.Session.Data.Remove("login");
+            }
+            return "Logged out.";
+        }
 
         public string GetAllUsers()
         {
-            var userList = model.userAll();
+            var userList = usermodel.userAll();
             string response = "";
             int cnt = 0;
 
@@ -82,7 +96,7 @@ namespace Webshop.Controllers
         {
             var data = GetBodyFromJson<User>();
             string response = "";
-            var userList = model.userSearch(data.email);
+            var userList = usermodel.userSearch(data.email);
 
             foreach (User user in userList)
             {
@@ -95,7 +109,7 @@ namespace Webshop.Controllers
         public object PostRegister()
         {
             var data = GetBodyFromJson<User>();
-            model.userRegister(data);
+            usermodel.userRegister(data);
             return Json(data);
         }
 

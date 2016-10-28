@@ -9,32 +9,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVC.View;
-
+//using MVCTestApplication.Model;
 namespace MVC.DevelopmentTest.Controller
 {
+    public class AdressData
+    {
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string Street { get; set; }
+        public string Number { get; set; }
+    }
+
+    public class UserData
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public bool IsMale { get; set; }
+        public string Email { get; set; }
+        public List<AdressData> Adresses { get; set; }
+    }
+
     class UserController : MVC.Controller.Controller
     {
-        DatabaseConnection dc;
-
-        public string Get()
-        {
-            return "<h1>Login Page</h1>";
-        }
-
-        public class Login
-        {
-            public string username { get; set; }
-            public string password { get; set; }
-            public string response { get; set; }
-        }
-
-        public void GetRegister()
+        public DatabaseConnection db;
+        //public UserModel model = new UserModel();
+        
+        public void dbInit()
         {
             string databaseName = "project__5_6";
-            dc = new DatabaseConnection("mongodb://localhost:27017", databaseName);
+            db = new DatabaseConnection("mongodb://localhost:27017", databaseName);
             Console.WriteLine("Connecting to database..");
-            dc.initialize();
-            if (dc.isConnected)
+            db.initialize();
+            if (db.isConnected)
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
             }
@@ -42,9 +49,37 @@ namespace MVC.DevelopmentTest.Controller
             {
                 Console.WriteLine($"Could not connect to database {databaseName}");
             }
+        }
 
+        public void printValues(UserData user)
+        {
+            Console.WriteLine(user.Username);
+            Console.WriteLine(user.Password);
+            Console.WriteLine(user.IsMale);
+            Console.WriteLine(user.Email);
+            foreach (AdressData adress in user.Adresses)
+            {
+                Console.WriteLine(adress.Country);
+                Console.WriteLine(adress.City);
+                Console.WriteLine(adress.PostalCode);
+                Console.WriteLine(adress.Street);
+                Console.WriteLine(adress.Number);
+            }
+            Console.WriteLine(user.Username);
+        }
+
+        public object PostRegister()
+        {
+            var data = GetBodyFromJson<User>();
+            //model.userRegister(this, data);
+            return Json(data);
+        }
+
+        public void GetRegister()
+        {
+            dbInit();
             simulateRegisterAccount();
-
+            
         }
 
         static List<UserAddress> myAddresses;
@@ -56,7 +91,18 @@ namespace MVC.DevelopmentTest.Controller
         private void simulateRegisterAccount()
         {
             //Ask user for account info to register
+
             Console.WriteLine("---ACCOUNT INFO---");
+            Console.WriteLine("What is the email?");
+            string emailsearch = Console.ReadLine();
+            var x = db.collectionSearchFor("user", "email", emailsearch);
+
+            foreach (var b in x)
+            {
+                Console.WriteLine(b.ToString());
+            }
+            Console.WriteLine();
+            Console.WriteLine("We found " + x.Count() + "users");
             Console.WriteLine("Enter username:");
             string userName = Console.ReadLine();
             Console.WriteLine("Enter password:");
@@ -82,7 +128,7 @@ namespace MVC.DevelopmentTest.Controller
             User a = new User() { country = country, postalCode = postalcode, userName = userName, password = password, isMale = isMale, email = email, addresses = myAddresses };
 
             //Add it to the database
-            dc.insertUser(a);
+            db.collectionInsertUser(a);
         }
 
         private List<UserAddress> createAddress()
@@ -111,6 +157,13 @@ namespace MVC.DevelopmentTest.Controller
             return myAddresses;
         }
 
+        public class Login
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string response { get; set; }
+        }
+
         public object PostLogin()
         {
             var data = GetBodyFromJson<Login>();
@@ -122,6 +175,11 @@ namespace MVC.DevelopmentTest.Controller
             }
 
             return Json(data.response);
+        }
+
+        public string Get()
+        {
+            return "<h1>Login Page</h1>";
         }
     }
 }

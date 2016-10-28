@@ -41,17 +41,17 @@ namespace MVC
             return o;
         }
 
-        internal ControllerObject GetByRawUrl(string name, Session.Session session)
+        internal Type GetByRawUrl(string name, Session.Session session)
         {
             try
             {
                 var cObject = controllers.FirstOrDefault(t => t.Name.ToLower() == $"{name.ToLower()}controller");
                 if (cObject != null)
-                    return CreateController(cObject, session);
+                    return cObject;
             }
             catch { }
 
-            return new NotFoundController();
+            return typeof(NotFoundController);
 
         }
     }

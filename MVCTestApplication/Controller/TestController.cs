@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVC.View;
+using MVC.Attribute;
 
 namespace MVC.DevelopmentTest.Controller
 {
+    [AccesDenied]
     class TestController : MVC.Controller.Controller
     {
         public object Get()

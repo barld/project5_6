@@ -7,20 +7,13 @@ using System.Threading.Tasks;
 
 namespace MVC.View
 {
-    public class RawObjectView : ViewObject
+    public class AccesDeniedView : ViewObject
     {
-        object o;
-        public RawObjectView(object o)
-        {
-            this.o = o;
-        }
-
         public override void Respond(HttpListenerResponse response)
         {
-            if (o == null)
-                o = "NULL";
-            var buffer = System.Text.Encoding.UTF8.GetBytes(o.ToString());
+            var buffer = System.Text.Encoding.UTF8.GetBytes("<h1>Acces denied</h1>");
 
+            response.StatusCode = 403;
             response.ContentType = "text/html";
             response.ContentLength64 = buffer.Length;
 

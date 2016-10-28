@@ -9,10 +9,8 @@ namespace ConsoleApplication1
     abstract class IDatabaseConnection
     {
         public abstract bool isConnected { get; set; }
-        public abstract bool isGeneratedWithSampleData { get; set; }
         public abstract void checkConnection();
         public abstract void initialize();
         public abstract void reset();
-        public abstract bool setupSampleData();
     }
 }

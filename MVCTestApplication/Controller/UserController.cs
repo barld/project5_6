@@ -14,50 +14,51 @@ namespace MVC.DevelopmentTest.Controller
 {
     class UserController : MVC.Controller.Controller
     {
-        public DatabaseConnection db;
+        
         public UserModel model = new UserModel();
 
-        public void dbInit()
+        public string PostLogin()
         {
-            string databaseName = "project__5_6";
-            db = new DatabaseConnection("mongodb://localhost:27017", databaseName);
-            Console.WriteLine("Connecting to database..");
-            db.initialize();
-            if (db.isConnected)
+            var data = GetBodyFromJson<User>();
+            var users = model.userSearch(data.email);
+            User user = new User();
+            
+            if(users.Count() > 0)
             {
-                Console.WriteLine($"Database is connected to '{databaseName}'..");
+                user = users[0];
             }
-            else
+
+            if(user.password == data.password)
             {
-                Console.WriteLine($"Could not connect to database {databaseName}");
+                this.Session.Data.Add("login", "true");
+                return "<h1>Success!</h1>";
             }
+
+            this.Session.Data.Add("login", "false");
+            return "<h1>Failed.</h1>";
+           
         }
 
         public string GetAllUsers()
         {
-            var userList = model.userAll(this);
+            var userList = model.userAll();
             string response = "";
             int cnt = 0;
 
             foreach (User user in userList)
             {
                 cnt++;
-                response += "User " + cnt + " = " + user.userName + "<br>";
+                response += "<br> User " + cnt + " = " + user.userName;
             }
 
             return response;
         }
 
-        public class Email
-        {
-            public string email { get; set; }
-        }
-
         public object PostSearch()
         {
-            var data = GetBodyFromJson<Email>();
+            var data = GetBodyFromJson<User>();
             string response = "";
-            var userList = model.userSearch(this, data.email);
+            var userList = model.userSearch(data.email);
 
             foreach (User user in userList)
             {
@@ -70,28 +71,8 @@ namespace MVC.DevelopmentTest.Controller
         public object PostRegister()
         {
             var data = GetBodyFromJson<User>();
-            model.userRegister(this, data);
+            model.userRegister(data);
             return Json(data);
-        }
-
-        public class Login
-        {
-            public string username { get; set; }
-            public string password { get; set; }
-            public string response { get; set; }
-        }
-
-        public object PostLogin()
-        {
-            var data = GetBodyFromJson<Login>();
-
-            if (data.username == "user" && data.password == "secret")
-            {
-                Cookie cookie = new Cookie("test", "Authenticated");
-                data.response = cookie.Value;
-            }
-
-            return Json(data.response);
         }
 
         public string Get()

@@ -1,18 +1,9 @@
-﻿using MVC.Controller;
-using DataModels;
+﻿using DataModels;
 using ConsoleApplication1;
 using System;
-using System.Web;
-using System.Net;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MVC.View;
-using MVCTestApplication;
-using MVC.DevelopmentTest.Controller;
 
-namespace MVCTestApplication.Model
+namespace Webshop.Models
 {
     class UserModel
     {

@@ -84,6 +84,7 @@ namespace ConsoleApplication1
 
         public void collectionInsert<T>(string collectionName, T model)
         {
+            //Insert new data into a specific collection
             try
             {
                 var collection = db.GetCollection<T>(collectionName);
@@ -99,6 +100,7 @@ namespace ConsoleApplication1
 
         public List<T> collectionSearchFor<T> (string collectionName, string columnName, string searchTermValue)
         {
+            //Search for a specific value and retrieve a list with the collection(s) back
             try
             {
                 var collection = db.GetCollection<T>(collectionName);
@@ -117,11 +119,27 @@ namespace ConsoleApplication1
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to retrieve user..");
+                Console.WriteLine($"Failed to retrieve results for {searchTermValue}..");
                 Console.WriteLine(ex.Message);
                 return new List<T>();
             }
         }
 
+        public List<T> collectionRetrieveAll<T> (string collectionName)
+        {
+            //This will retrieve all data from a collection back into a list, without filtering the data first.
+            try
+            {
+                var collection = db.GetCollection<T>(collectionName);
+                Console.WriteLine($"***All results from '{collectionName}' has been retrieved!***");
+                return collection.Find(new BsonDocument()).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"***Failed to add {collectionName}..***");
+                Console.WriteLine(ex.Message);
+                return new List<T>();
+            }
+        }
     }
 }

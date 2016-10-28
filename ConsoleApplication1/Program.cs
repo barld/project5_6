@@ -26,6 +26,7 @@ namespace ConsoleApplication1
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
                 //simulateRegisterAccount();
                 //simulateFindUsernameByEmail();
+                retrieveAllUsers();
             }
             else
             {
@@ -33,6 +34,17 @@ namespace ConsoleApplication1
             }
             Console.WriteLine("Press [ENTER] to exit..");
             Console.ReadLine();
+        }
+
+        private static void retrieveAllUsers()
+        {
+            Console.WriteLine("Displaying every username...");
+            List<User> listOfUsers = dc.collectionRetrieveAll<User>("user");
+
+            foreach(User u in listOfUsers)
+            {
+                Console.WriteLine(u.userName);
+            }
         }
 
         private static void simulateFindUsernameByEmail()
@@ -51,7 +63,6 @@ namespace ConsoleApplication1
 
         //simulateRegisterAccount() method creates 1 new user and 1 or more addresses to this user
         static List<UserAddress> myAddresses;
-
         //City, country and postalcode are shared between 'user' and 'address'
         static string city;
         static string country;

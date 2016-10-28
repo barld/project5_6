@@ -40,9 +40,12 @@ namespace ConsoleApplication1
             if(isConnected)
             {
                 var options = new CreateIndexOptions() { Unique = true };
-                var field = new StringFieldDefinition<User>("userName");
-                var indexDefinition = new IndexKeysDefinitionBuilder<User>().Ascending(field);
-                db.GetCollection<User>("user").Indexes.CreateOne(indexDefinition, options);
+                var fieldUsername = new StringFieldDefinition<User>("userName");
+                var indexDefinitionUsername = new IndexKeysDefinitionBuilder<User>().Ascending(fieldUsername);
+                var fieldEmail = new StringFieldDefinition<User>("email");
+                var indexDefinitionEmail = new IndexKeysDefinitionBuilder<User>().Ascending(fieldEmail);
+                db.GetCollection<User>("user").Indexes.CreateOne(indexDefinitionUsername, options);
+                db.GetCollection<User>("user").Indexes.CreateOne(indexDefinitionEmail, options);
             }
         }
 
@@ -79,7 +82,7 @@ namespace ConsoleApplication1
                 db.DropCollection(collection);
             }
 
-            Debug.WriteLine("Database cleared..");
+            Console.WriteLine("Database cleared..");
         }
 
         public void collectionInsert<T>(string collectionName, T model)
@@ -131,7 +134,7 @@ namespace ConsoleApplication1
             try
             {
                 var collection = db.GetCollection<T>(collectionName);
-                Console.WriteLine($"***All results from '{collectionName}' has been retrieved!***");
+                Console.WriteLine($"***All results from '{collectionName}' have been retrieved***");
                 return collection.Find(new BsonDocument()).ToList();
             }
             catch (Exception ex)

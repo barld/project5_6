@@ -7,5 +7,7 @@ namespace ConsoleApplication1
 {
     public interface IContext
     {
+        UserGateway Users { get; }
+        GameGateway Games { get; }
     }
 }

@@ -8,7 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Diagnostics;
 using Newtonsoft.Json;
-
+using System.Security.Cryptography;
 namespace ConsoleApplication1
 {
     class Program
@@ -25,9 +25,7 @@ namespace ConsoleApplication1
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
                 //simulateRegisterAccount();
-                Console.WriteLine("Type in the email address to look for:");
-                string email = Console.ReadLine();
-                simulateFindUsernameByEmail(email);
+                //simulateFindUsernameByEmail();
             }
             else
             {
@@ -37,10 +35,12 @@ namespace ConsoleApplication1
             Console.ReadLine();
         }
 
-        private static void simulateFindUsernameByEmail(string emailAddress)
+        private static void simulateFindUsernameByEmail()
         {
-            var listOfResults = dc.collectionSearchFor<User>("user", "email", emailAddress);
-            Console.WriteLine($"Found {listOfResults.Count} results for '{emailAddress}'");
+            Console.WriteLine("Type in the email address to look for:");
+            string email = Console.ReadLine();
+            var listOfResults = dc.collectionSearchFor<User>("user", "email", email);
+            Console.WriteLine($"Found {listOfResults.Count} results for '{email}'");
 
             foreach(var x in listOfResults)
             {
@@ -48,7 +48,6 @@ namespace ConsoleApplication1
                 Console.WriteLine($"{x.email} and username is: {x.userName}");                
             }
         }
-
 
         //simulateRegisterAccount() method creates 1 new user and 1 or more addresses to this user
         static List<UserAddress> myAddresses;
@@ -86,7 +85,8 @@ namespace ConsoleApplication1
             User a = new User() { country=country, postalCode=postalcode, userName=userName, password=password, isMale=isMale, email=email, addresses=myAddresses};
 
             //Add the user to the database
-            dc.collectionInsertUser(a);
+            //dc.collectionInsertUser(a);
+            dc.collectionInsert("user", a);
         }
 
         //This is part of the simulateRegisterAccount() method

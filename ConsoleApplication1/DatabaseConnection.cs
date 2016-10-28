@@ -82,62 +82,17 @@ namespace ConsoleApplication1
             Debug.WriteLine("Database cleared..");
         }
 
-        public void collectionInsertUser (User user)
+        public void collectionInsert<T>(string collectionName, T model)
         {
             try
             {
-                var collectionUser = db.GetCollection<User>("user");
-                collectionUser.InsertOne(user);
-                Console.WriteLine("User has been added!");
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Failed to add user..");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public void collectionInsertCategory (Category category)
-        {
-            try
-            {
-                var collectionUser = db.GetCollection<Category>("category");
-                collectionUser.InsertOne(category);
-                Console.WriteLine("Category has been added!");
+                var collection = db.GetCollection<T>(collectionName);
+                collection.InsertOne(model);
+                Console.WriteLine($"{collectionName} has been added!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to add category..");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public void collectionInsertGame(Game game)
-        {
-            try
-            {
-                var collectionUser = db.GetCollection<Game>("game");
-                collectionUser.InsertOne(game);
-                Console.WriteLine("Game has been added!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to add game..");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public void collectionInsert<T>(T col)
-        {
-            try
-            {
-                var collectionUser = db.GetCollection<T>(this.collectionName);
-                collectionUser.InsertOne(col);
-                Console.WriteLine("Game has been added!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Failed to add game..");
+                Console.WriteLine($"Failed to add {collectionName}..");
                 Console.WriteLine(ex.Message);
             }
         }

@@ -33,38 +33,38 @@ namespace MVC.DevelopmentTest.Controller
             }
         }
 
-        //public object GetAllUsers()
-        //{
-        //    var userList = model.userAll(this);
+        public string GetAllUsers()
+        {
+            var userList = model.userAll(this);
+            string response = "";
+            int cnt = 0;
 
-        //    foreach (User user in userList)
-        //    {
+            foreach (User user in userList)
+            {
+                cnt++;
+                response += "User " + cnt + " = " + user.userName + "<br>";
+            }
 
-        //    }
-        //}
+            return response;
+        }
 
         public class Email
         {
             public string email { get; set; }
-            public string response { get; set; }
-        }
-
-        public string GetTest()
-        {
-            return "<h1>hoi daniel</h1>";
         }
 
         public object PostSearch()
         {
             var data = GetBodyFromJson<Email>();
+            string response = "";
             var userList = model.userSearch(this, data.email);
 
             foreach (User user in userList)
             {
-                data.response += user.userName + "<br>";
+                response += user.userName + "<br>";
             }
             
-            return data.response;
+            return response;
         }
 
         public object PostRegister()

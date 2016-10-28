@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace DataModels
 {
     public class User
     {
+        public ObjectId _id { get; set; }
         public string userName { get; set; }
         public string password { get; set; }
         public bool isMale { get; set; }

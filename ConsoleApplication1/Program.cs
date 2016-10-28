@@ -39,16 +39,13 @@ namespace ConsoleApplication1
 
         private static void simulateFindUsernameByEmail(string emailAddress)
         {
-            var listOfResults = dc.collectionSearchFor("user", "email", emailAddress);
+            var listOfResults = dc.collectionSearchFor<User>("user", "email", emailAddress);
             Console.WriteLine($"Found {listOfResults.Count} results for '{emailAddress}'");
 
             foreach(var x in listOfResults)
             {
                 //Index 4 is 'isMale' in the collection 'user'
-                BsonValue value;
-                x.TryGetValue("userName", out value);
-                string userName = value.AsString;
-                Console.WriteLine($"{emailAddress} and username is: {userName}");                
+                Console.WriteLine($"{x.email} and username is: {x.userName}");                
             }
         }
 

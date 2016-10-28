@@ -13,6 +13,7 @@ namespace ConsoleApplication1
     class DatabaseConnection : IDatabaseConnection
     {
         public override bool isConnected { get; set; }
+        public string collectionName { get; }
 
         IMongoDatabase db;
         string connectionString;
@@ -126,12 +127,27 @@ namespace ConsoleApplication1
             }
         }
 
-        public List<BsonDocument> collectionSearchFor (string collectionName, string columnName, string searchTermValue)
+        public void collectionInsert<T>(T col)
         {
             try
             {
-                var collection = db.GetCollection<BsonDocument>(collectionName);
-                var filter = Builders<BsonDocument>.Filter.Eq(columnName, searchTermValue);
+                var collectionUser = db.GetCollection<T>(this.collectionName);
+                collectionUser.InsertOne(col);
+                Console.WriteLine("Game has been added!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to add game..");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public List<T> collectionSearchFor<T> (string collectionName, string columnName, string searchTermValue)
+        {
+            try
+            {
+                var collection = db.GetCollection<T>(collectionName);
+                var filter = Builders<T>.Filter.Eq(columnName, searchTermValue);
                 var result = collection.Find(filter).ToList();
                 if(result.Count > 0)
                 {
@@ -148,8 +164,9 @@ namespace ConsoleApplication1
             {
                 Console.WriteLine("Failed to retrieve user..");
                 Console.WriteLine(ex.Message);
-                return new List<BsonDocument>();
+                return new List<T>();
             }
         }
+
     }
 }

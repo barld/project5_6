@@ -35,7 +35,6 @@
 </head>
 <body>
 	<div id="app">
-	{{popularGames}}
 		<nav><!-- Start menu -->
 			<div id="navbar">
 				<ul>
@@ -72,81 +71,7 @@
 		</nav><!-- End menu -->
 		<div class="container margin-top"><!-- Start container -->
 			<div class="row">
-				<div v-if="productDetails && chosenProductFilled" class="popup">
-					<div class="close_btn" @click="productDetails = false">
-						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>
-					</div>
-					<h1>Specificaties game.title</h1>
-					<table class="u-full-width">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Beschikbaar op</th>
-								<th>Prijs</th>
-								<th>Aantal</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>20172017</td>
-								<td>PC</td>
-								<td>EUR 65</td>
-								<td>
-									<select name="productAmountPC" id="productAmountPC">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>20172017</td>
-								<td>PlayStation 4</td>
-								<td>EUR 65</td>
-								<td>
-									<select name="productAmountPS" id="productAmountPS">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>20172017</td>
-								<td>Wii U</td>
-								<td>EUR 40</td>
-								<td>
-									<select name="productAmountWii" id="productAmountWii">
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-							</tr>
-						</tbody>
-					</table>
-					{{chosenProduct.data.platforms}}
-					<table class="u-full-width">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Beschikbaar op</th>
-								<th>Prijs</th>
-								<th>Aantal</th>
-							</tr>
-						</thead>
-						<tbody v-for="product in chosenProduct.data.platforms">
-							{{product}}
-						</tbody>
-					</table>
-					<span class="total_current_games">Totaal: EUR 0.00</span> <br />
-					<button class="button-primary"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Toevoegen aan winkelwagen</button>
-				</div>
+			<div v-if="productDetails" class="popup">Yes</div>
 				<div id="games_overview">
 					<h1>Nu populair</h1>
 					<div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
@@ -154,7 +79,7 @@
 							<div class="product_title">{{ product.game.data.name }}</div>
 							<img v-bind:src="product.game.data.image" alt="" class="product_image"> <br />
 							<!-- <div class="product_price">EUR {{ product.game.data.price }}</div> -->
-							<a v-bind:href="'#product/#' + product.game.data.id" @click="showProductDetails(product)">Bekijk meer</a>
+							<a v-bind:href="'#product/#' + product.game.data.id" @click="showBox(product)">Bekijk meer</a>
 						</div>
 					</div><br /><!-- End spotlight games -->
 				</div>

@@ -116,22 +116,3 @@ a{
 	left:       0; 
 	position:   fixed;
 }
-
-.close_btn{
-	float:right;
-	top:0px;
-	padding:10px;
-	text-align:center;
-	background:#BD1122;
-	color:#FFFFFF;
-}
-
-.close_btn:hover{
-	background:#690A14;
-	color:#FFFFFF;
-}
-
-.total_current_games{
-	font-size:32px;
-	text-transform: uppercase;
-}

@@ -107,16 +107,12 @@ window.onload = function(){
 		data:{
 			popularGames: gamesList,
 			message: "Hallo",
-			productDetails: false,
-			chosenProduct: "",
-			chosenProductFilled: false
+			productDetails: false
 		},
 		methods:{
-			showProductDetails: function(product){
-				this.productDetails = true;
+			showBox: function(product){
 				var game = new Game({id: product.game.data.id, name: product.game.data.name, image: product.game.image, platforms: product.game.data.platforms});
-				this.chosenProduct = game;
-				this.chosenProductFilled = true;
+				console.log(game);
 			}
 		}
 	});

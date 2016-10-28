@@ -33,93 +33,45 @@ namespace MVC.DevelopmentTest.Controller
             }
         }
 
+        //public object GetAllUsers()
+        //{
+        //    var userList = model.userAll(this);
+
+        //    foreach (User user in userList)
+        //    {
+
+        //    }
+        //}
+
+        public class Email
+        {
+            public string email { get; set; }
+            public string response { get; set; }
+        }
+
+        public string GetTest()
+        {
+            return "<h1>hoi daniel</h1>";
+        }
+
+        public object PostSearch()
+        {
+            var data = GetBodyFromJson<Email>();
+            var userList = model.userSearch(this, data.email);
+
+            foreach (User user in userList)
+            {
+                data.response += user.userName + "<br>";
+            }
+            
+            return data.response;
+        }
+
         public object PostRegister()
         {
             var data = GetBodyFromJson<User>();
             model.userRegister(this, data);
             return Json(data);
-        }
-
-        public void GetRegister()
-        {
-            dbInit();
-            simulateRegisterAccount();
-            
-        }
-
-        static List<UserAddress> myAddresses;
-
-        //City, country and postalcode are shared between 'user' and 'address'
-        string city;
-        string country;
-        string postalcode;
-        private void simulateRegisterAccount()
-        {
-            //Ask user for account info to register
-
-            Console.WriteLine("---ACCOUNT INFO---");
-            Console.WriteLine("What is the email?");
-            string emailsearch = Console.ReadLine();
-            var x = db.collectionSearchFor("user", "email", emailsearch);
-
-            foreach (var b in x)
-            {
-                Console.WriteLine(b.ToString());
-            }
-            Console.WriteLine();
-            Console.WriteLine("We found " + x.Count() + "users");
-            Console.WriteLine("Enter username:");
-            string userName = Console.ReadLine();
-            Console.WriteLine("Enter password:");
-            string password = Console.ReadLine();
-            Console.WriteLine("Are you a male? True/False");
-            bool isMale = Convert.ToBoolean(Console.ReadLine());
-            Console.WriteLine("Enter email:");
-            string email = Console.ReadLine();
-            Console.WriteLine();
-            createAddress();
-            Console.WriteLine("Add address? True/False");
-            bool addExtraAddress = Convert.ToBoolean(Console.ReadLine());
-
-            //Zolang de user extra addressen wilt toevoegen, roep createAddress() weer aan
-            while (addExtraAddress)
-            {
-                createAddress();
-                Console.WriteLine("Add extra address? True/False");
-                addExtraAddress = Convert.ToBoolean(Console.ReadLine());
-            }
-
-            //Create new user
-            User a = new User() { country = country, postalCode = postalcode, userName = userName, password = password, isMale = isMale, email = email, addresses = myAddresses };
-
-            //Add it to the database
-            db.collectionInsertUser(a);
-        }
-
-        private List<UserAddress> createAddress()
-        {
-            //Create empty addresses list
-            myAddresses = new List<UserAddress>();
-
-            //Ask user for address info
-            Console.WriteLine("---ADDRESS INFO---");
-            Console.WriteLine("Enter city:");
-            city = Console.ReadLine();
-            Console.WriteLine("Enter country:");
-            country = Console.ReadLine();
-            Console.WriteLine("Enter postalcode:");
-            postalcode = Console.ReadLine();
-            Console.WriteLine("Enter street:");
-            string street = Console.ReadLine();
-            Console.WriteLine("Enter street number:");
-            int streetnr = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Is this you delivery address? True/False");
-            bool isDeliveryAddress = Convert.ToBoolean(Console.ReadLine());
-
-            //Add address info to the empty list
-            myAddresses.Add(new UserAddress { city = city, country = country, postal_code = postalcode, street = street, snumber = streetnr, isDeliveryAddress = isDeliveryAddress });
-
-            return myAddresses;
         }
 
         public class Login

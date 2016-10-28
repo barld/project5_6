@@ -16,7 +16,7 @@ namespace MVC.Attribute
     /// </remarks>
     public interface IPreConstructingControllerObjectAttribute
     {
-        ControllerObject Construct(Func<ControllerObject> constructFunc);
+        ControllerObject Construct(Func<ControllerObject> constructFunc, Session.Session session);
         ViewObject HandeleAction(Func<ViewObject> action);
     }
 
@@ -33,7 +33,7 @@ namespace MVC.Attribute
         /// </summary>
         /// <param name="constructFunc"></param>
         /// <returns></returns>
-        public ControllerObject Construct(Func<ControllerObject> constructFunc) => null;
+        public ControllerObject Construct(Func<ControllerObject> constructFunc, Session.Session session) => null;
 
         public ViewObject HandeleAction(Func<ViewObject> action) => new AccesDeniedView();
     }

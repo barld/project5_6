@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModels", "Class Diagram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld MongoDB", "ConsoleApplication1\HelloWorld MongoDB.csproj", "{3AF9A75D-4647-4497-AC06-3FB05ABADD83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop", "Webshop\Webshop.csproj", "{3875F2D9-F90E-4351-B904-61CA6874813C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3AF9A75D-4647-4497-AC06-3FB05ABADD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF9A75D-4647-4497-AC06-3FB05ABADD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF9A75D-4647-4497-AC06-3FB05ABADD83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3875F2D9-F90E-4351-B904-61CA6874813C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3875F2D9-F90E-4351-B904-61CA6874813C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3875F2D9-F90E-4351-B904-61CA6874813C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3875F2D9-F90E-4351-B904-61CA6874813C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

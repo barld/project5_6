@@ -9,32 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MVC.View;
-//using MVCTestApplication.Model;
+using MVCTestApplication.Model;
 namespace MVC.DevelopmentTest.Controller
 {
-    public class AdressData
-    {
-        public string Country { get; set; }
-        public string City { get; set; }
-        public string PostalCode { get; set; }
-        public string Street { get; set; }
-        public string Number { get; set; }
-    }
-
-    public class UserData
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool IsMale { get; set; }
-        public string Email { get; set; }
-        public List<AdressData> Adresses { get; set; }
-    }
-
     class UserController : MVC.Controller.Controller
     {
         public DatabaseConnection db;
-        //public UserModel model = new UserModel();
-        
+        public UserModel model = new UserModel();
+
         public void dbInit()
         {
             string databaseName = "project__5_6";
@@ -51,27 +33,10 @@ namespace MVC.DevelopmentTest.Controller
             }
         }
 
-        public void printValues(UserData user)
-        {
-            Console.WriteLine(user.Username);
-            Console.WriteLine(user.Password);
-            Console.WriteLine(user.IsMale);
-            Console.WriteLine(user.Email);
-            foreach (AdressData adress in user.Adresses)
-            {
-                Console.WriteLine(adress.Country);
-                Console.WriteLine(adress.City);
-                Console.WriteLine(adress.PostalCode);
-                Console.WriteLine(adress.Street);
-                Console.WriteLine(adress.Number);
-            }
-            Console.WriteLine(user.Username);
-        }
-
         public object PostRegister()
         {
             var data = GetBodyFromJson<User>();
-            //model.userRegister(this, data);
+            model.userRegister(this, data);
             return Json(data);
         }
 

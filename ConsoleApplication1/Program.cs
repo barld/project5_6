@@ -24,9 +24,10 @@ namespace ConsoleApplication1
             if (dc.isConnected)
             {
                 Console.WriteLine($"Database is connected to '{databaseName}'..");
-                //simulateRegisterAccount();
+                simulateRegisterAccount();
                 //simulateFindUsernameByEmail();
-                retrieveAllUsers();
+                //retrieveAllUsers();
+                //dc.reset();
             }
             else
             {

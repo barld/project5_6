@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    abstract class IDatabaseConnection
+    public abstract class IDatabaseConnection
     {
         public abstract bool isConnected { get; set; }
         public abstract void checkConnection();

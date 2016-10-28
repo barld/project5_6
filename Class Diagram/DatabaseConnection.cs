@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    class DatabaseConnection : IDatabaseConnection
+    public class DatabaseConnection : IDatabaseConnection
     {
         public override bool isConnected { get; set; }
         public string collectionName { get; }

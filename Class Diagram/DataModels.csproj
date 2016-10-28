@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections.cs" />
+    <Compile Include="DatabaseConnection.cs" />
+    <Compile Include="IDatabaseConnection.cs" />
     <Compile Include="Revisited\Gerne.cs" />
     <Compile Include="Revisited\OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

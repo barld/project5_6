@@ -60,11 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="GameGateway.cs" />
     <Compile Include="Gateway.cs" />
     <Compile Include="IContext.cs" />
-    <Compile Include="IDatabaseConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserGateway.cs" />

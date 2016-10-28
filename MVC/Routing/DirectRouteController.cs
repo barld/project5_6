@@ -36,7 +36,7 @@ namespace MVC.Routing
             var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IPreConstructingControllerObjectAttribute) as IPreConstructingControllerObjectAttribute;
             bool hasPca = pca != null;
             if (hasPca)
-                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session));
+                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session), session);
             else
                 controller = ControllerFactory.CreateController(ControllerType, session);
 

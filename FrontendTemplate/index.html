@@ -26,6 +26,7 @@
   <!-- JavaScript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://unpkg.com/vue@next/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 
   <!-- Favicon
@@ -35,7 +36,6 @@
 </head>
 <body>
 	<div id="app">
-	{{popularGames}}
 		<nav><!-- Start menu -->
 			<div id="navbar">
 				<ul>
@@ -58,6 +58,13 @@
 						</ul>
 					</li>
 					<li class="floating_menu_component">
+						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Log in / Registreren</a>
+						<ul class="submenu">
+							<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true" @click="showLogin = true"></i> Inloggen</a></li>
+							<li><a href="#"><i class="fa fa-pencil-square" aria-hidden="true"></i> Registreren</a></li>
+						</ul>
+					</li>
+					<li class="floating_menu_component">
 						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
 						<ul class="submenu">
 							<li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Orderhistorie</a></li>
@@ -72,11 +79,32 @@
 		</nav><!-- End menu -->
 		<div class="container margin-top"><!-- Start container -->
 			<div class="row">
-				<div v-if="productDetails && chosenProductFilled" class="popup">
+				<pre>{{popularGames}}</pre>
+				<div v-if="showLogin" class="popup login_screen"><!-- Start login screen -->
 					<div class="close_btn" @click="productDetails = false">
 						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>
 					</div>
-					<h1>Specificaties game.title</h1>
+					<div class="inner_padding">
+						<h1>Login</h1>
+						<form action="">
+							<div class="twelve columns">
+								<label for="login_email">Uw email:</label><input class="u-full-width" type="email" placeholder="test@mail.nl" name="login_email" id="login_email">
+							</div>
+							<div class="twelve columns">
+								<label for="login_password">Uw wachtwoord</label>
+								<input class="u-full-width" type="password" placeholder="Wachtwoord" name="login_password" id="login_password">
+							</div>
+							<input class="button-primary login_button" type="submit" value="Log in" @click="ajaxLogin">
+						</form>
+					</div>
+				</div><!-- End login screen -->
+				<div v-if="productDetails && chosenProductFilled" class="popup"><!-- Start product details -->
+					<div class="close_btn" @click="productDetails = false">
+						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>
+					</div>
+					<h1>Specificaties {{chosenProduct.data.name}}</h1>
+					<img v-bind:src="chosenProduct.data.image" alt="" class="product_image_overview"> <br />
+					Beschrijving: {{chosenProduct.data}}
 					<table class="u-full-width">
 						<thead>
 							<tr>
@@ -141,12 +169,11 @@
 							</tr>
 						</thead>
 						<tbody v-for="product in chosenProduct.data.platforms">
-							{{product}}
 						</tbody>
 					</table>
 					<span class="total_current_games">Totaal: EUR 0.00</span> <br />
 					<button class="button-primary"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Toevoegen aan winkelwagen</button>
-				</div>
+				</div><!-- End product details screen -->
 				<div id="games_overview">
 					<h1>Nu populair</h1>
 					<div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
@@ -162,6 +189,7 @@
 		</div><!-- End container -->
 	</div>
 	<script src="js/classes/product.js"></script>
+	<script src="js/classes/formdata.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

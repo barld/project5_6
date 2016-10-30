@@ -21,7 +21,7 @@ a{
 
 #navbar > ul > li{
 	float:left;
-	width:150px;
+	width:180px;
 	height:50px;
 	text-align: center;
 	line-height: 50px;
@@ -115,6 +115,7 @@ a{
 	top:        0; 
 	left:       0; 
 	position:   fixed;
+	overflow:auto;
 }
 
 .close_btn{
@@ -134,4 +135,25 @@ a{
 .total_current_games{
 	font-size:32px;
 	text-transform: uppercase;
+}
+
+.product_image_overview{
+	width:150px;
+	height:150px;
+}
+
+.login_screen{
+	font-size:24px;
+}
+
+.inner_padding{
+	padding:40px;
+}
+
+.login_button{
+	width:100%;
+}
+
+input:focus{
+	border:2px solid #000000 !important;
 }

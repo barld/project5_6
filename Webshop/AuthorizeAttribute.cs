@@ -29,7 +29,7 @@ namespace Webshop
         {
             authModule = new AuthModule(session);
 
-            if (!authModule.IsLogedIn)
+            if (!authModule.LoggedIn)
                 return null;
             else
                 return constructFunc();
@@ -37,7 +37,7 @@ namespace Webshop
 
         ViewObject IFilterControllerAttribute.HandeleAction(Func<ViewObject> action)
         {
-            if (!authModule.IsLogedIn)
+            if (!authModule.LoggedIn)
                 return new AccesDeniedView();
             else
                 return action();

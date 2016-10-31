@@ -6,53 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Webshop.Models;
 using DataModels;
+using MVC;
 
 namespace Webshop.Controllers
 {
     public class UserController : MVC.Controller.Controller
     {
         UserModel usermodel = new UserModel();
-        Authentication Auth = new Authentication();
-
-        //public ViewObject PostLogin()
-        //{
-        //    var data = GetBodyFromJson<LoginViewModel>();
-        //    var model = new UserLogedInStatus { Email = data.Email };
-
-
-        //    if (this.Session.Data.ContainsKey("loginStatus"))
-        //    {
-        //        Session.Data["loginStatus"] = model;
-        //    }
-        //    else
-        //    {
-        //        Session.Data.Add("loginStatus", model);
-        //    }
-        //    return Json(new LoginResultViewModel { Succes = true, message = "Succesvol ingelogd" });
-        //}
-
-        //public ViewObject GetLoginStatus()
-        //{
-        //    if (Session.Data.ContainsKey("loginStatus"))
-        //    {
-        //        return Json(Session.Data["loginStatus"]);
-        //    }
-        //    else
-        //    {
-        //        return Json(new UserNotLogedInStatus());
-        //    }
-        //}
 
         public string PostLogin()
         {
+            AuthModule Auth = new AuthModule(this.Session);
             var data = GetBodyFromJson<User>();
             var users = usermodel.userSearch(data.email);
             User user = new User();
-
-            if (Auth.LoggedIn)
-            {
-                return Auth.LoginStatus();
-            }
 
             if (users.Count() == 1)
             {
@@ -70,12 +37,8 @@ namespace Webshop.Controllers
 
         public string GetLogout()
         {
-            if (this.Session.Data.ContainsKey("login"))
-            {
-                return Auth.Logout();
-            }
-
-            return "Not Logged in.";
+            AuthModule Auth = new AuthModule(this.Session);
+            return Auth.Logout();
         }
 
         public string GetAll()

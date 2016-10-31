@@ -27,9 +27,10 @@ namespace DataModels
         private void createContraints()
         {
             var options = new CreateIndexOptions() { Unique = true };
+
+            //Email attribute must be unique in the User collection
             var fieldEmail = new StringFieldDefinition<User>("Email");
-            var indexDefinitionEmail = new IndexKeysDefinitionBuilder<User>().Ascending(fieldEmail);
-            database.GetCollection<User>("User").Indexes.CreateOne(indexDefinitionEmail, options);
+            database.GetCollection<User>("User").Indexes.CreateOne(new IndexKeysDefinitionBuilder<User>().Ascending(fieldEmail), options);
         }
 
         //Clear the database

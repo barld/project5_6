@@ -78,6 +78,5 @@ namespace DataModels.Gateways
             };
             await this.Insert(user);
         }
-        
     }
 }

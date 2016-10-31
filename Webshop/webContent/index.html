@@ -99,7 +99,7 @@
 				</div><!-- End login screen -->
 				<div v-if="productDetails && chosenProductFilled" class="popup"><!-- Start product details -->
 					<div class="close_btn" @click="productDetails = false">
-						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>
+						<i class="fa fa-times fa-5x" aria-hidden="true"></i>
 					</div>
 					<h1>Specificaties {{chosenProduct.data.name}}</h1>
 					<img v-bind:src="chosenProduct.data.image" alt="" class="product_image_overview"> <br />

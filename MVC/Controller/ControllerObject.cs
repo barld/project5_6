@@ -4,13 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using MVC.Session;
 
 namespace MVC.Controller
 {
     public abstract class ControllerObject : IDisposable
     {
-        public Session.Session Session { get; internal set; }
+        public Session Session { get; internal set; }
         internal HttpListenerContext _requestContext { set; get; }
 
         #region IDisposable Support

@@ -11,7 +11,7 @@ namespace MVC
 {
     public class MVCApp
     {
-        private Dictionary<string, Session.Session> sessions = new Dictionary<string, Session.Session>();
+        private Dictionary<string, Session> sessions = new Dictionary<string, Session>();
 
         private readonly IEnumerable<IRoute> Routes;
         public string ListenAddress { get; }
@@ -51,7 +51,7 @@ namespace MVC
 
                     if (!sessions.ContainsKey(cookie.Value))
                         sessions.Remove(cookie.Value);
-                    sessions.Add(cookie.Value, new Session.Session { Data = new Dictionary<string, object>() });
+                    sessions.Add(cookie.Value, new Session { Data = new Dictionary<string, object>() });
                     cValue = cookie.Value;
                     Console.WriteLine(cookie);
                 }

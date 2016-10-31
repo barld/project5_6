@@ -15,13 +15,13 @@ namespace Webshop.Models
             db.collectionInsert("user", userdata);
         }
 
-        public List<DataModels.User> userSearch(string email)
+        public List<User> userSearch(string email)
         {
             dbInit();
             return db.collectionSearchFor<User>("user", "email", email);
         }
 
-        public List<DataModels.User> userAll()
+        public List<User> userAll()
         {
             dbInit();
             return db.collectionRetrieveAll<User>("user");

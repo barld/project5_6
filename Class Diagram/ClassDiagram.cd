@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Comment CommentText="This is how our database is structured, you can see this as our &quot;ERD&quot; but this time for a non-relational database">
-    <Position X="1.337" Y="0.843" Height="0.75" Width="1.7" />
+    <Position X="1.337" Y="0.843" Height="1.177" Width="1.7" />
   </Comment>
   <Class Name="DataModels.Platform">
     <Position X="11.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAQAoAAAAAABAAAAAAAAAAAAAAAEAAAAhAAA=</HashCode>
-      <FileName>Category.cs</FileName>
+      <FileName>Platform.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DataModels.Game">
@@ -17,8 +17,8 @@
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Genres" />
       <Property Name="Platform" />
+      <Property Name="Genres" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DataModels.Order">

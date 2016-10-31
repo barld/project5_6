@@ -34,7 +34,7 @@ namespace DataModels
         }
 
         //Clear the database
-        public void reset()
+        public void Reset()
         {
             //Clear the database by deleting the following collections
             List<string> listOfCollections = new List<string>() { "user", "useraddress", "category", "game" };

@@ -9,7 +9,7 @@ namespace DataModels.Gateways
 {
     public class GameGateway : Gateway<Game>
     {
-        public GameGateway(IMongoDatabase connection) : base("game", connection)
+        public GameGateway(IMongoDatabase connection) : base("Game", connection)
         {
         }
     }

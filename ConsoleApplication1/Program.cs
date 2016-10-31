@@ -41,13 +41,13 @@ namespace DataModels
             Console.WriteLine($"Database is connected to '{databaseName}'..");
 
             //**To reset/clean the database, uncomment the following:**//
-            //context.reset();
+            //context.Reset();
 
             //**Examples that make use of the gateways that are provided**//
-            //simulateRegisterAccount();
-            simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
+            simulateRegisterAccount();
+            //simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
             //simulateFindUsernameByEmail();
-            //retrieveAllUsers();
+            retrieveAllUsers();
 
             Console.WriteLine("Press [ENTER] to exit..");
             Console.ReadLine();
@@ -56,19 +56,19 @@ namespace DataModels
         private static void simulateLoginAccount(string email, string password)
         {
             User a = context.Users.Login("dhbreedeveld@gmail.com", "geheim123").Result;
-            Console.WriteLine($"user is logedin: {a != null}");
+            Console.WriteLine($"User logged in status: {a != null}");
         }
 
-        //private static void retrieveAllUsers()
-        //{
-        //    Console.WriteLine("Displaying every username...");
-        //    List<User> listOfUsers = dc.collectionRetrieveAll<User>("user");
+        private static void retrieveAllUsers()
+        {
+            Console.WriteLine("Displaying every username...");
+            IEnumerable<User> listOfUsers = context.Users.SelectAll(new User()).Result;
 
-        //    foreach(User u in listOfUsers)
-        //    {
-        //        Console.WriteLine(u.Email);
-        //    }
-        //}
+            foreach (User u in listOfUsers)
+            {
+                Console.WriteLine(u.Email);
+            }
+        }
 
         //private static void simulateFindUsernameByEmail()
         //{
@@ -84,7 +84,7 @@ namespace DataModels
         //    }
         //}
 
-        static private void simulateRegisterAccount()
+        static async private void simulateRegisterAccount()
         {
             //Ask user for account info to register
             Console.WriteLine("---ACCOUNT INFO---");
@@ -106,10 +106,9 @@ namespace DataModels
                     gender = Gender.Unknown;
                     break;
             }
-            bool isMale = Convert.ToBoolean(Console.ReadLine());
 
             //Add the user to the database
-            context.Users.Register(email, password, gender);
+            await context.Users.Register(email, password, gender);
         }
     }
 }

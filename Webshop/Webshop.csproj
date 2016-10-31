@@ -46,7 +46,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="AuthModule.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <None Include="Controllers\UserController.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />
@@ -114,6 +114,9 @@
     <Content Include="webContent\js\classes\game.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="webContent\js\classes\helpers.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="webContent\js\classes\New Text Document.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -121,6 +124,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="webContent\js\classes\routing.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webContent\js\functions.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="webContent\js\main.js">

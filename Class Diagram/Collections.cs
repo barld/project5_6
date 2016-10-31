@@ -16,6 +16,7 @@ namespace DataModels
         public string email { get; set; }
         public string country { get; set; }
         public string postalCode { get; set; }
+        public string role { get; set; }
         public IEnumerable<UserAddress> addresses;
     }
 

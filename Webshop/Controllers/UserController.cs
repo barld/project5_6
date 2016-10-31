@@ -1,4 +1,5 @@
 ﻿using MVC.View;
+using MVC.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Webshop.Controllers
     public class UserController : MVC.Controller.Controller
     {
         UserModel usermodel = new UserModel();
+        Authentication Auth = new Authentication();
 
         //public ViewObject PostLogin()
         //{
@@ -48,9 +50,9 @@ namespace Webshop.Controllers
             var users = usermodel.userSearch(data.email);
             User user = new User();
 
-            if (this.Session.Data.ContainsKey("login"))
+            if (Auth.LoggedIn)
             {
-                return "<h1>Logged in : "+ this.Session.Data["login"].ToString() +"</h1>";
+                return Auth.LoginStatus();
             }
 
             if (users.Count() == 1)
@@ -60,11 +62,10 @@ namespace Webshop.Controllers
 
             if (user.password == data.password)
             {
-                this.Session.Data.Add("login", user.email);
-                return "<h1>Success!</h1>";
+                return Auth.Login(user);
             }
 
-            return "<h1>Failed.</h1>";
+            return "Login Failed";
 
         }
 
@@ -72,12 +73,13 @@ namespace Webshop.Controllers
         {
             if (this.Session.Data.ContainsKey("login"))
             {
-                this.Session.Data.Remove("login");
+                return Auth.Logout();
             }
-            return "Logged out.";
+
+            return "Not Logged in.";
         }
 
-        public string GetAllUsers()
+        public string GetAll()
         {
             var userList = usermodel.userAll();
             string response = "";

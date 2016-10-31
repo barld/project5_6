@@ -31,6 +31,11 @@ namespace DataModels
 
             
             Console.WriteLine($"Database is connected to '{databaseName}'..");
+            //context.reset();
+            //context.Users.register("barld@gmail.com", "geheim123", Gender.Male);
+            User a = context.Users.login("dhbreedeveld@gmail.com", "geheim123").Result;
+            Console.WriteLine($"user is logedin: {a != null}");
+
             //simulateRegisterAccount();
             //simulateFindUsernameByEmail();
             //retrieveAllUsers();

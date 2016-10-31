@@ -16,7 +16,6 @@ namespace DataModels
         public Context()
         {
             string databaseName = "project__5_6";
-            //MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl("mongodb://localhost:27017"));
             mongoClient = new MongoClient("mongodb://localhost:27017");
             database = mongoClient.GetDatabase(databaseName);
             createContraints();
@@ -28,12 +27,9 @@ namespace DataModels
         private void createContraints()
         {
             var options = new CreateIndexOptions() { Unique = true };
-            var fieldUsername = new StringFieldDefinition<User>("userName");
-            var indexDefinitionUsername = new IndexKeysDefinitionBuilder<User>().Ascending(fieldUsername);
-            var fieldEmail = new StringFieldDefinition<User>("email");
+            var fieldEmail = new StringFieldDefinition<User>("Email");
             var indexDefinitionEmail = new IndexKeysDefinitionBuilder<User>().Ascending(fieldEmail);
-            database.GetCollection<User>("user").Indexes.CreateOne(indexDefinitionUsername, options);
-            database.GetCollection<User>("user").Indexes.CreateOne(indexDefinitionEmail, options);
+            database.GetCollection<User>("User").Indexes.CreateOne(indexDefinitionEmail, options);
         }
 
         //Clear the database

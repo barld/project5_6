@@ -126,6 +126,7 @@
     <Content Include="webContent\js\main.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="webContent\js\sampledata.js" />
     <Content Include="webContent\less\animated.less">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

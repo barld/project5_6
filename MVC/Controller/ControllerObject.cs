@@ -12,6 +12,8 @@ namespace MVC.Controller
         public Session Session { get; internal set; }
         internal HttpListenerContext _requestContext { set; get; }
 
+        public virtual void AfterConstruct() { }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

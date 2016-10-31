@@ -1,18 +1,19 @@
 ﻿function Login() {
-    var userInformation = { username: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
+    var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
     var formHandler = new FormHandler();
     console.log(userInformation.username);
     console.log(userInformation.password);
 
-    formHandler.addValue('username', userInformation.username.value);
-    formHandler.addValue('password', userInformation.password.value);
+    formHandler.addValue('username', userInformation.username);
+    formHandler.addValue('password', userInformation.password);
 
     formHandler.startCall({
         requestHeader: 'application/json',
         method: 'POST',
-        url: 'http://localhost:8080/index.html',
-        data: formHandler,
-        ajaxFunction: function () {
+        url: 'http://localhost:8080/api/user/Login',
+        data: JSON.stringify(userInformation),
+        ajaxFunction: function (data) {
+            console.log(data)
             console.log(userInformation.username, userInformation.password);
         }
     });

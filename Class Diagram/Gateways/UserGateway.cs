@@ -33,7 +33,7 @@ namespace DataModels.Gateways
             return hash;
         }
 
-        public async Task<User> login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
             var user = await GetByEmail(email);
             if(user != null)
@@ -62,7 +62,7 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async void register(string email, string pwd, Gender gender)
+        public async Task<User> Register(string email, string pwd, Gender gender)
         {
             string salt = getRandomPasswordSalt();
             string hash = sha256(salt + pwd);
@@ -77,6 +77,8 @@ namespace DataModels.Gateways
                 MyLists = new List<MyLists>()
             };
             await this.Insert(user);
+
+            return await GetByEmail(email);
         }
         
     }

@@ -1,6 +1,5 @@
 ﻿using MVC.Controller;
 using DataModels;
-using DataModels;
 using System;
 using System.Web;
 using System.Net;

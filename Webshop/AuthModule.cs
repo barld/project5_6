@@ -7,6 +7,7 @@ namespace Webshop
     {
         private Session session;
         bool loggedIn;
+        private readonly Context context;
 
         public bool LoggedIn
         {
@@ -16,6 +17,7 @@ namespace Webshop
         public AuthModule(Session session)
         {
             this.session = session;
+            this.context = new Context();
         }
 
         public string Login(User user)
@@ -23,6 +25,11 @@ namespace Webshop
             if (session.Data.ContainsKey("login"))
             {
                 return "<h1>Logged in : " + session.Data["login"].ToString() + "</h1>";
+            }
+            var logedinUser = context.Users.login(user.Email, user.Password).Result;
+            if(logedinUser != null)
+            {
+                session.Data.Add("currentUser", logedinUser);
             }
             session.Data.Add("login", user.Email);
             this.loggedIn = true;

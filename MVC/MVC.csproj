@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVC</RootNamespace>
     <AssemblyName>MVC</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\IPreConstructingControllerObjectAtribute.cs" />
+    <Compile Include="Authentication\Authentication.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerObject.cs" />
@@ -88,7 +89,12 @@
     <None Include="Routing\ClassDiagramRouting.cd" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Class Diagram\DataModels.csproj">
+      <Project>{33e632cf-e921-45ac-8e53-05f6b86fb8d2}</Project>
+      <Name>DataModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

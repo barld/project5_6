@@ -63,6 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\HTMLPage1.html" />
     <Content Include="webContent\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

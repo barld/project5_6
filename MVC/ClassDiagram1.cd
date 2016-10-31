@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="MVC.HttpMethods" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAIBAEAAAAAAACAEAABAAAAAAAABAAAg=</HashCode>
+      <FileName>HttpMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.ControllerFactory">
+    <Position X="0.5" Y="1.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAABAAAAAACIAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ControllerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.MVCApp">
+    <Position X="4" Y="2.75" Width="3" />
+    <AssociationLine Name="sessions" Type="MVC.Session.Session" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="4.346" />
+        <Point X="7.375" Y="4.346" />
+        <Point X="7.375" Y="0.375" />
+        <Point X="12.292" Y="0.375" />
+        <Point X="12.292" Y="0.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAEAAAAAAAAgAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>MVCApp.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="sessions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MVC.RequestHandler">
+    <Position X="4" Y="0.5" Width="3" />
+    <AssociationLine Name="routes" Type="MVC.Routing.IRoute" ManuallyRouted="true">
+      <Path>
+        <Point X="7" Y="1.375" />
+        <Point X="7.292" Y="1.375" Type="JumpStart" />
+        <Point X="7.458" Y="1.375" Type="JumpEnd" />
+        <Point X="8.016" Y="1.375" />
+        <Point X="8.016" Y="5.818" />
+        <Point X="11.094" Y="5.818" />
+        <Point X="11.094" Y="7" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAIAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>RequestHandler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="routes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MVC.Routing.DirectRouteAction" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="8.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAQAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAQ=</HashCode>
+      <FileName>Routing\DirectRouteAction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Routing.DirectRouteController" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Routing\DirectRouteController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Routing.RouteControllers" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="11.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAACAAAAAAAIAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Routing\RouteControllers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Routing.RouteWebFolder" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="11.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABAA=</HashCode>
+      <FileName>Routing\RouteWebFolder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Session.Session">
+    <Position X="11.25" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Session\Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.AccesDeniedView" Collapsed="true">
+    <Position X="9" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>View\AccesDeniedView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.DataView" Collapsed="true">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>View\DataView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.CssFileView" Collapsed="true">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\FileView\CssFileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.FileView" Collapsed="true">
+    <Position X="22.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAACAAAAABAAAA=</HashCode>
+      <FileName>View\FileView\FileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.HtmlFileView" Collapsed="true">
+    <Position X="18" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\FileView\HtmlFileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.JpegFileView" Collapsed="true">
+    <Position X="20.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\FileView\JpegFileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.JsFileView" Collapsed="true">
+    <Position X="24.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\FileView\JsFileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.PngFileView" Collapsed="true">
+    <Position X="27" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\FileView\PngFileView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.JsonDataView" Collapsed="true">
+    <Position X="11.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>View\JsonDataView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.NotFoundView" Collapsed="true">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAACA=</HashCode>
+      <FileName>View\NotFoundView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.RawObjectView" Collapsed="true">
+    <Position X="15.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAAA=</HashCode>
+      <FileName>View\RawObjectView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.View.ViewObject" Collapsed="true">
+    <Position X="18" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAgBAAAA=</HashCode>
+      <FileName>View\ViewObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Controller.Controller">
+    <Position X="3" Y="14.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\Controller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.Controller.ControllerObject">
+    <Position X="2.75" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAAAAAAABAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Controller\ControllerObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MVC.Controller.DataLayerController">
+    <Position X="3.25" Y="9.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Controller\DataLayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.Controller.NotFoundController" Collapsed="true">
+    <Position X="1" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controller\NotFoundController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC.Controller.ReturnViewsLayerController">
+    <Position X="3" Y="11.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAgAgA=</HashCode>
+      <FileName>Controller\ReturnViewsLayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MVC.Routing.IRoute" Collapsed="true">
+    <Position X="11" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Routing\IRoute.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MVC.HttpMethodsEnum" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIBAAAAAAAAACAEAABAAAAAAAABAAAg=</HashCode>
+      <FileName>HttpMethods.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -19,6 +19,7 @@ namespace ConsoleApplication1
             connection = mongoClient.GetDatabase(databaseName);
 
             Games = new GameGateway(connection);
+            Users = new UserGateway(connection);
         }
 
         public GameGateway Games { get; }

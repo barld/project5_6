@@ -110,7 +110,7 @@ window.onload = function(){
 			productDetails: false,
 			chosenProduct: "",
 			chosenProductFilled: false,
-			showLogin: true
+			showLogin: false
 		},
 		methods:{
 			closePopup: function(){
@@ -133,10 +133,11 @@ window.onload = function(){
 	});
 
 	app.closePopup();
+
 	var userInformation = {username: "Andy", password: "password"};
 	var formHandler = new FormHandler();
+
 	formHandler.addValue('username', userInformation.username);
 	formHandler.addValue('password', userInformation.password);
-	console.log(formHandler.getValue('username'));
-	console.log(formHandler.getValue('password'));
+	getHashValue();
 }

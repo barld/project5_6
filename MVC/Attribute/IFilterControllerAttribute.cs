@@ -14,14 +14,14 @@ namespace MVC.Attribute
     /// <remarks>
     /// should also implement Attribute
     /// </remarks>
-    public interface IPreConstructingControllerObjectAttribute
+    public interface IFilterControllerAttribute
     {
-        ControllerObject Construct(Func<ControllerObject> constructFunc, Session.Session session);
+        ControllerObject Construct(Func<ControllerObject> constructFunc, Session session);
         ViewObject HandeleAction(Func<ViewObject> action);
     }
 
     [System.AttributeUsage(System.AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public sealed class AccesDeniedAttribute : System.Attribute, IPreConstructingControllerObjectAttribute
+    public sealed class AccesDeniedAttribute : System.Attribute, IFilterControllerAttribute
     {
         public AccesDeniedAttribute()
         {
@@ -33,7 +33,7 @@ namespace MVC.Attribute
         /// </summary>
         /// <param name="constructFunc"></param>
         /// <returns></returns>
-        public ControllerObject Construct(Func<ControllerObject> constructFunc, Session.Session session) => null;
+        public ControllerObject Construct(Func<ControllerObject> constructFunc, Session session) => null;
 
         public ViewObject HandeleAction(Func<ViewObject> action) => new AccesDeniedView();
     }

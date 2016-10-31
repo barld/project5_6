@@ -51,8 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\IPreConstructingControllerObjectAtribute.cs" />
-    <Compile Include="Authentication\Authentication.cs" />
+    <Compile Include="Attribute\IFilterControllerAttribute.cs" />
+    <Compile Include="Attribute\IFilterActionAttribute.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerObject.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Routing\IRoute.cs" />
     <Compile Include="Routing\RouteControllers.cs" />
     <Compile Include="Routing\RouteWebFolder.cs" />
-    <Compile Include="Session\Session.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="View\AccesDeniedView.cs" />
     <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Routing\ClassDiagramRouting.cd" />
     <None Include="packages.config" />
   </ItemGroup>

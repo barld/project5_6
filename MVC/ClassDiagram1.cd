@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="MVC.HttpMethods" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Class Name="MVC.HttpMethods">
+    <Position X="0.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAIBAEAAAAAAACAEAABAAAAAAAABAAAg=</HashCode>
       <FileName>HttpMethods.cs</FileName>
@@ -10,36 +10,22 @@
   <Class Name="MVC.ControllerFactory">
     <Position X="0.5" Y="1.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAABAAAAAACIAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAABAAAAAACIAAAAAAAAAAABAAgAAAA=</HashCode>
       <FileName>ControllerFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MVC.MVCApp">
     <Position X="4" Y="2.75" Width="3" />
-    <AssociationLine Name="sessions" Type="MVC.Session.Session" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="7" Y="4.346" />
-        <Point X="7.375" Y="4.346" />
-        <Point X="7.375" Y="0.375" />
-        <Point X="12.292" Y="0.375" />
-        <Point X="12.292" Y="0.75" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAEAAAAAAAAgAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>MVCApp.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="sessions" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="MVC.RequestHandler">
     <Position X="4" Y="0.5" Width="3" />
     <AssociationLine Name="routes" Type="MVC.Routing.IRoute" ManuallyRouted="true">
       <Path>
         <Point X="7" Y="1.375" />
-        <Point X="7.292" Y="1.375" Type="JumpStart" />
-        <Point X="7.458" Y="1.375" Type="JumpEnd" />
         <Point X="8.016" Y="1.375" />
         <Point X="8.016" Y="5.818" />
         <Point X="11.094" Y="5.818" />
@@ -85,13 +71,6 @@
       <FileName>Routing\RouteWebFolder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MVC.Session.Session">
-    <Position X="11.25" Y="0.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
-      <FileName>Session\Session.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="MVC.View.AccesDeniedView" Collapsed="true">
     <Position X="9" Y="3.25" Width="1.5" />
@@ -191,6 +170,9 @@
       <HashCode>AAAAAAAAACAAAQAAAAAAAAAABAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Controller\ControllerObject.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Session" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MVC.Controller.DataLayerController">
@@ -201,7 +183,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MVC.Controller.NotFoundController" Collapsed="true">
-    <Position X="1" Y="9.25" Width="1.5" />
+    <Position X="1.25" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Controller\NotFoundController.cs</FileName>
@@ -214,6 +196,13 @@
       <FileName>Controller\ReturnViewsLayerController.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MVC.Session">
+    <Position X="7" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="MVC.Routing.IRoute" Collapsed="true">
     <Position X="11" Y="7" Width="1.5" />
     <TypeIdentifier>
@@ -221,8 +210,8 @@
       <FileName>Routing\IRoute.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="MVC.HttpMethodsEnum" Collapsed="true">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+  <Enum Name="MVC.HttpMethodsEnum">
+    <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIBAAAAAAAAACAEAABAAAAAAAABAAAg=</HashCode>
       <FileName>HttpMethods.cs</FileName>

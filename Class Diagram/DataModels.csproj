@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountRole.cs" />
     <Compile Include="Collections.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Revisited\GameList.cs" />

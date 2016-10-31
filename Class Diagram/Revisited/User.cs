@@ -11,18 +11,6 @@ namespace DataModels.Revisited
         public string password { get; set; }
         public string email { get; set; }
 
-        public System.Collections.Generic.List<DataModels.Revisited.Address> userAddresses
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
         public DataModels.Revisited.Gender Gender
         {
             get
@@ -59,7 +47,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public string role
+        public Class_Diagram.AccountRole AccountRole
         {
             get
             {

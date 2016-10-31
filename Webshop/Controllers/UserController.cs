@@ -19,16 +19,15 @@ namespace Webshop.Controllers
             AuthModule Auth = new AuthModule(this.Session);
             var data = GetBodyFromJson<User>();
             var users = usermodel.userSearch(data.email);
-            User user = new User();
 
             if (users.Count() == 1)
             {
-                user = users[0];
-            }
+                User user = users[0];
 
-            if (user.password == data.password)
-            {
-                return Auth.Login(user);
+                if (user.password == data.password)
+                {
+                    return Auth.Login(user);
+                }
             }
 
             return "Login Failed";

@@ -54,13 +54,11 @@
   <ItemGroup>
     <Compile Include="AccountRole.cs" />
     <Compile Include="Gateways\Context.cs" />
-    <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Gateways\GameGateway.cs" />
     <Compile Include="GameList.cs" />
-    <Compile Include="Gateway.cs" />
+    <Compile Include="Gateways\Gateway.cs" />
     <Compile Include="Gender.cs" />
     <Compile Include="Gateways\IContext.cs" />
-    <Compile Include="IDatabaseConnection.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,11 +70,10 @@
     <Compile Include="Gateways\UserGateway.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagramRevisited.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

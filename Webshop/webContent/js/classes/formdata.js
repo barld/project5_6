@@ -28,12 +28,13 @@ class FormHandler{
 	    // The RequestHeader can be any, by the server accepted, file
 	    xhr.setRequestHeader('Content-type', options.requestHeader, true);
 
-	    xhr.send(options.data !== null ? options.data : null);
+	    xhr.send(options.data !== null ? JSON.stringify(options.data) : null);
 
 		// Function to fire off when the server has send a response
 	    xhr.onload = function () {
+	        console.log("TEST!");
 	        options.ajaxFunction();
-	        //console.log(xhr.response);
+	        console.log(xhr.response);
 		}
 	}
 }

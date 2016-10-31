@@ -97,7 +97,6 @@ window.onload = function(){
 
 	Object.keys(popularGames).forEach(function(key){
 		var game = new Game(popularGames[key]);
-		console.log(game);
 		gamesList.push({game});
 	});
 
@@ -134,4 +133,10 @@ window.onload = function(){
 	});
 
 	app.closePopup();
+	var userInformation = {username: "Andy", password: "password"};
+	var formHandler = new FormHandler();
+	formHandler.addValue('username', userInformation.username);
+	formHandler.addValue('password', userInformation.password);
+	console.log(formHandler.getValue('username'));
+	console.log(formHandler.getValue('password'));
 }

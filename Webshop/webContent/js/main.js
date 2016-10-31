@@ -1,4 +1,5 @@
-window.onload = function(){
+window.onload = function () {
+
 	// Sampledata
 	var popularGames = {
 		1:{
@@ -100,8 +101,6 @@ window.onload = function(){
 		gamesList.push({game});
 	});
 
-	// gamesList.forEach(game => console.log(game));
-
 	var app = new Vue({
 		el: "#app",
 		data:{
@@ -115,7 +114,7 @@ window.onload = function(){
 		methods:{
 			closePopup: function(){
 				document.body.addEventListener("keydown", function(e){
-					if(e.keyCode == 27){
+					if(e.keyCode === 27){
 						this.productDetails = false;
 						this.chosenProductFilled = false;
 					}
@@ -139,5 +138,13 @@ window.onload = function(){
 
 	formHandler.addValue('username', userInformation.username);
 	formHandler.addValue('password', userInformation.password);
-	getHashValue();
+
+	formHandler.startCall({
+	    requestHeader: 'application/json',
+        method: 'GET',
+	    url: 'http://localhost:8080/api/product',
+	    ajaxFunction: function () {
+	        console.log("Hoi, Barld! Dit is een callback function!");
+	    }
+	});
 }

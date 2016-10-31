@@ -33,7 +33,7 @@ namespace MVC.Routing
 
         private IEnumerable<Type> filterControllers(IEnumerable<Type> controllerTypes) => controllerTypes.Where(ct => ct.IsSubclassOf(typeof(ControllerObject)));
 
-        public ViewObject GetView(HttpListenerContext context, Session.Session session)
+        public ViewObject GetView(HttpListenerContext context, Session session)
         {
             var restPath = context.Request.RawUrl.Substring(UrlPath.Length);
             var urlParts = restPath
@@ -45,41 +45,14 @@ namespace MVC.Routing
             var ControllerType = factory.GetByRawUrl(urlParts[0], session);
 
 
-            var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IPreConstructingControllerObjectAttribute) as IPreConstructingControllerObjectAttribute;
+            var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IFilterControllerAttribute) as IFilterControllerAttribute;
             bool hasPca = pca != null;
             if (hasPca)
                 controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session), session);
             else
                 controller = ControllerFactory.CreateController(ControllerType, session);
 
-            Func<ViewObject> getView = () =>
-            {
-                controller._requestContext = context;
-                var HttpMethod = context.Request.HttpMethod.ToLower();
-
-                var controllerType = controller.GetType();
-
-
-                MethodInfo method;
-                if (urlParts.Count > 1)
-                {
-                    method = controllerType.GetMethods()
-                    .FirstOrDefault(mi => mi.Name.ToLower() == $"{HttpMethod}{urlParts[1]}");
-                }
-                else
-                {
-                    method = controllerType.GetMethods()
-                    .FirstOrDefault(mi => mi.Name.ToLower() == $"{HttpMethod}");
-                }
-                var result = method?.Invoke(controller, new object[] { });
-
-                if (result != null && result is ViewObject)
-                    return (result as ViewObject);
-                else if (method == null)
-                    return new NotFoundView("action not found");
-                else
-                    return new RawObjectView(result);
-            };
+            Func<ViewObject> getView = ControllerFactory.GetView(context, controller, urlParts.Skip(1).ToList());
 
             if (hasPca)
                 return pca.HandeleAction(getView);

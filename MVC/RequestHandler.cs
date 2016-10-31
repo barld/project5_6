@@ -22,7 +22,7 @@ namespace MVC
             HttpContext = context;
         }
 
-        internal ViewObject HandelToView(Session.Session session)
+        internal ViewObject HandelToView(Session session)
         {
             var deCodedRawUrl = WebUtility.UrlDecode(HttpContext.Request.RawUrl);
             var path = deCodedRawUrl

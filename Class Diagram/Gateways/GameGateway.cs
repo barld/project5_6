@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 
-namespace ConsoleApplication1
+namespace DataModels.Gateways
 {
     public class GameGateway : Gateway<Game>
     {

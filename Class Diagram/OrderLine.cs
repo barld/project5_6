@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MongoDB.Bson;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
     public class OrderLine
     {
-        public DataModels.Revisited.Game Game
+        public DataModels.Game Game
         {
             get
             {
@@ -19,7 +20,19 @@ namespace DataModels.Revisited
             }
         }
 
-        public int amount
+        public int Amount
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ObjectId _id
         {
             get
             {

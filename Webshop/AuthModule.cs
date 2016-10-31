@@ -24,7 +24,7 @@ namespace Webshop
             {
                 return "<h1>Logged in : " + session.Data["login"].ToString() + "</h1>";
             }
-            session.Data.Add("login", user.email);
+            session.Data.Add("login", user.Email);
             this.loggedIn = true;
             return "Login Successful";
         }
@@ -54,9 +54,9 @@ namespace Webshop
             }
         }
 
-        public string UserRole(User user)
+        public AccountRole UserRole(User user)
         {
-            return user.role;
+            return user.AccountRole;
         }
 
     }

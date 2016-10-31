@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MongoDB.Bson;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
     public class Order
     {
-        public int orderNumber
+        public int OrderNumber
         {
             get
             {
@@ -19,7 +20,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public DateTime orderDate
+        public DateTime OrderDate
         {
             get
             {
@@ -31,7 +32,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public DataModels.Revisited.User customer
+        public DataModels.User Customer
         {
             get
             {
@@ -43,7 +44,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public System.Collections.Generic.ICollection<DataModels.Revisited.OrderLine> OrderLines
+        public System.Collections.Generic.ICollection<DataModels.OrderLine> OrderLines
         {
             get
             {
@@ -55,7 +56,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public DataModels.Revisited.Address billingAddress
+        public DataModels.Address BillingAddress
         {
             get
             {
@@ -67,7 +68,19 @@ namespace DataModels.Revisited
             }
         }
 
-        public DataModels.Revisited.Address deliveryAddress
+        public DataModels.Address DeliveryAddress
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ObjectId _id
         {
             get
             {

@@ -2,6 +2,7 @@
 using MVC.Routing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,6 +25,12 @@ namespace Webshop
 
         static void Main(string[] args)
         {
+            if (Debugger.IsAttached)
+            {
+                System.Diagnostics.Process.Start("mongod");
+                System.Threading.Thread.Sleep(1000);
+            }
+
             var adress = (args?.Length > 0) ? args[0] : "http://localhost:8080/";
 
             MVCApp app = new MVCApp(adress, getRoutes());

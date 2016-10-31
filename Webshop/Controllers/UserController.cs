@@ -18,13 +18,13 @@ namespace Webshop.Controllers
         {
             AuthModule Auth = new AuthModule(this.Session);
             var data = GetBodyFromJson<User>();
-            var users = usermodel.userSearch(data.email);
+            var users = usermodel.userSearch(data.Email);
 
             if (users.Count() == 1)
             {
                 User user = users[0];
 
-                if (user.password == data.password)
+                if (user.Password == data.Password)
                 {
                     return Auth.Login(user);
                 }
@@ -49,7 +49,7 @@ namespace Webshop.Controllers
             foreach (User user in userList)
             {
                 cnt++;
-                response += "<br> User " + cnt + " = " + user.userName;
+                response += "<br> User " + cnt + " = " + user.Email;
             }
 
             return response;
@@ -59,11 +59,11 @@ namespace Webshop.Controllers
         {
             var data = GetBodyFromJson<User>();
             string response = "";
-            var userList = usermodel.userSearch(data.email);
+            var userList = usermodel.userSearch(data.Email);
 
             foreach (User user in userList)
             {
-                response += user.userName + "<br>";
+                response += user.Email + "<br>";
             }
 
             return response;

@@ -2,11 +2,12 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace DataModels
 {
     public abstract class Gateway<Model>
     {
@@ -30,6 +31,17 @@ namespace ConsoleApplication1
         {
             var filter = Builders<Model>.Filter.Eq("_id", id);
             return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task Insert(Model model)
+        {
+            //Insert new data into a specific collection
+            await Collection.InsertOneAsync(model);
+        }
+
+        public async Task InsertMany(IEnumerable<Model> collection)
+        {
+            await Collection.InsertManyAsync(collection);
         }
     }
 }

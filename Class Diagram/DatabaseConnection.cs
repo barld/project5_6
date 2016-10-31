@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace DataModels
 {
     public class DatabaseConnection : IDatabaseConnection
     {
@@ -53,7 +53,7 @@ namespace ConsoleApplication1
         {
             //Try to insert sample data, the database is online if this succeeded
             int retry = 50;
-            while(retry != 0)
+            while (retry != 0)
             {
                 System.Threading.Thread.Sleep(100);
                 retry--;

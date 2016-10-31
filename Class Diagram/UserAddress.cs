@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataModels.Revisited;
+using MongoDB.Bson;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
-    public class Game
+    public class Address
     {
-        public string gameTitle { get; set; }
-        public List<Platform> platform { get; set; }
-        public int ratingPEGI { get; set; }
-        public string publisher { get; set; }
+        public string City { get; set; }
 
-        public List<Genre> genres
+        public string Streetname
         {
             get
             {
@@ -26,7 +23,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public string image
+        public int Housenumber
         {
             get
             {
@@ -38,7 +35,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public int minPlayers
+        public string Country
         {
             get
             {
@@ -50,7 +47,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public int maxPlayers
+        public string PostalCode
         {
             get
             {
@@ -62,7 +59,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public string description
+        public ObjectId _id
         {
             get
             {

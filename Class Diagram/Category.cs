@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace DataModels.Revisited
+using MongoDB.Bson;
+namespace DataModels
 {
-    public class User
+    public class Platform
     {
-        public string password { get; set; }
-        public string email { get; set; }
+        public string PlatformTitle { get; set; }
+        public string Brand { get; set; }
+        public string Description { get; set; }
 
-        public DataModels.Revisited.Gender Gender
+        public int Price
         {
             get
             {
@@ -23,7 +24,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public DataModels.Revisited.MyLists gameList
+        public int EAN
         {
             get
             {
@@ -35,7 +36,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public List<MyLists> myLists
+        public DateTime ReleaseDate
         {
             get
             {
@@ -47,7 +48,19 @@ namespace DataModels.Revisited
             }
         }
 
-        public Class_Diagram.AccountRole AccountRole
+        public bool IsVRCompatible
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ObjectId _id
         {
             get
             {

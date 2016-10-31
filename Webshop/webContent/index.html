@@ -81,19 +81,19 @@
 			<div class="row">
 				<div v-if="showLogin" class="popup login_screen"><!-- Start login screen -->
 					<div class="close_btn" @click="productDetails = false">
-						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>
+						<i class="fa fa-times fa-5x" aria-hidden="true"></i>
 					</div>
 					<div class="inner_padding">
 						<h1>Login</h1>
-						<form action="">
+						<form action="" method="post">
 							<div class="twelve columns">
-								<label for="login_email">Uw email:</label><input class="u-full-width" type="email" placeholder="test@mail.nl" name="login_email" id="login_email">
+								<label for="login_email">Uw email:</label><input class="u-full-width" type="email" placeholder="test@mail.nl" name="login_email" id="login_email" @blur="storeUsername">
 							</div>
 							<div class="twelve columns">
 								<label for="login_password">Uw wachtwoord</label>
 								<input class="u-full-width" type="password" placeholder="Wachtwoord" name="login_password" id="login_password">
 							</div>
-							<input class="button-primary login_button" type="submit" value="Log in" @click="ajaxLogin">
+							<button class="button-primary login_button" type="submit" value="Log in" @click="ajaxLogin">Log in</button>
 						</form>
 					</div>
 				</div><!-- End login screen -->
@@ -190,6 +190,7 @@
 	<script src="js/classes/product.js"></script>
 	<script src="js/classes/formdata.js"></script>
 	<script src="js/classes/routing.js"></script>
+    <script src="js/functions.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

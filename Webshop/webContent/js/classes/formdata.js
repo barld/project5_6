@@ -18,8 +18,6 @@ class FormHandler{
 
 	// Start asynchronous interaction with the server
 	startCall(options){
-
-
 	    var xhr = new XMLHttpRequest();
 
 	    console.log("XMLHttpRequest started!");
@@ -30,12 +28,12 @@ class FormHandler{
 	    // The RequestHeader can be any, by the server accepted, file
 	    xhr.setRequestHeader('Content-type', options.requestHeader, true);
 
-	    xhr.send();
+	    xhr.send(options.data !== null ? options.data : null);
 
 		// Function to fire off when the server has send a response
 	    xhr.onload = function () {
 	        options.ajaxFunction();
-	        console.log(xhr.response);
+	        //console.log(xhr.response);
 		}
 	}
 }

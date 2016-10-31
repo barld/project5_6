@@ -139,5 +139,15 @@ window.onload = function(){
 
 	formHandler.addValue('username', userInformation.username);
 	formHandler.addValue('password', userInformation.password);
-	getHashValue();
+
+	var startCall = formHandler.startCall({
+	    requestHeader: 'application/json',
+        method: 'GET',
+	    url: 'http://localhost:8080/api/product',
+	    ajaxFunction: function () {
+	        console.log("Hoi, Barld! Dit is een callback function!");
+	    }
+	});
+
+	console.log(startCall);
 }

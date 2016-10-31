@@ -74,6 +74,7 @@ namespace ConsoleApplication1
 
         public override void reset()
         {
+            //Clear the database by deleting the following collections
             List<string> listOfCollections = new List<string>() { "user", "useraddress", "category", "game" };
             
             foreach(string collection in listOfCollections)

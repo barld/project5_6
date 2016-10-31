@@ -1,55 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DataModels.Revisited.Platform">
-    <Position X="9.5" Y="0.5" Width="1.5" />
+    <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAIAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <HashCode>AAEBAAAQAAAAAAAAKAAAAAAAAAAAAQAAACAAAAAAAAA=</HashCode>
       <FileName>Revisited\Category.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DataModels.Revisited.Game">
-    <Position X="6.5" Y="0.75" Width="1.5" />
-    <AssociationLine Name="gernes" Type="DataModels.Revisited.Gerne" FixedFromPoint="true">
-      <Path>
-        <Point X="8" Y="2.375" />
-        <Point X="9.5" Y="2.375" />
-      </Path>
-    </AssociationLine>
+    <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIBAAAAQAAAAAQAAAAAACgAAAAAAQAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAIAAAAAgCEAAACAAAAAAIAAoAAAA=</HashCode>
       <FileName>Revisited\Game.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="platform" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="gernes" />
+      <Property Name="platform" />
+      <Property Name="genres" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DataModels.Revisited.Order">
-    <Position X="0.5" Y="1.25" Width="1.5" />
+    <Position X="3.25" Y="1" Width="1.5" />
     <AssociationLine Name="OrderLines" Type="DataModels.Revisited.OrderLine" FixedFromPoint="true">
       <Path>
-        <Point X="2" Y="1.812" />
-        <Point X="3.5" Y="1.812" />
+        <Point X="4.75" Y="1.562" />
+        <Point X="6.25" Y="1.562" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="billingAddress" Type="DataModels.Revisited.Address" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2" Y="2.161" />
-        <Point X="2.375" Y="2.161" />
-        <Point X="2.375" Y="4.123" />
-        <Point X="3.5" Y="4.123" />
+        <Point X="4.75" Y="1.911" />
+        <Point X="5.125" Y="1.911" />
+        <Point X="5.125" Y="3.873" />
+        <Point X="6.25" Y="3.873" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="deliveryAddress" Type="DataModels.Revisited.Address" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2" Y="1.938" />
-        <Point X="2.124" Y="1.938" />
-        <Point X="2.124" Y="1.95" />
-        <Point X="2.688" Y="1.95" />
-        <Point X="2.688" Y="3.853" />
-        <Point X="3.5" Y="3.853" />
+        <Point X="4.75" Y="1.688" />
+        <Point X="5.125" Y="1.688" />
+        <Point X="5.125" Y="3.603" />
+        <Point X="6.25" Y="3.603" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -67,34 +57,38 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DataModels.Revisited.User">
-    <Position X="0.5" Y="3.5" Width="1.5" />
+    <Position X="3.25" Y="3.25" Width="1.5" />
     <AssociationLine Name="userAddresses" Type="DataModels.Revisited.Address" FixedToPoint="true">
       <Path>
-        <Point X="2" Y="4.52" />
-        <Point X="3.5" Y="4.52" />
+        <Point X="4.75" Y="4.27" />
+        <Point X="6.25" Y="4.27" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAABAgAAAAAAAAAAAAAAAAAIAAAgEAAAA=</HashCode>
+      <HashCode>AAAAAAEAAAAAABCgAAAAABAAAAAAAAAACAAAAgAAAAA=</HashCode>
       <FileName>Revisited\User.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Gender" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="userAddresses" />
+      <Property Name="myLists" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DataModels.Revisited.Address">
-    <Position X="3.5" Y="3.5" Width="1.5" />
+    <Position X="6.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAACCAAAAAAAABCAAAAAAAAAAA=</HashCode>
       <FileName>Revisited\UserAddress.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DataModels.Revisited.OrderLine">
-    <Position X="3.5" Y="1.25" Width="1.5" />
+    <Position X="6.25" Y="1" Width="1.5" />
     <AssociationLine Name="Game" Type="DataModels.Revisited.Game" FixedFromPoint="true">
       <Path>
-        <Point X="5" Y="1.812" />
-        <Point X="6.5" Y="1.812" />
+        <Point X="7.75" Y="1.562" />
+        <Point X="9.25" Y="1.562" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -105,12 +99,29 @@
       <Property Name="Game" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="DataModels.Revisited.Gerne">
-    <Position X="9.5" Y="2" Width="1.5" />
+  <Class Name="DataModels.Revisited.Genre">
+    <Position X="9.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Revisited\Gerne.cs</FileName>
+      <FileName>Revisited\Genre.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="DataModels.Revisited.MyLists">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Revisited\GameList.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="games" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="DataModels.Revisited.Gender">
+    <Position X="3.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAABA=</HashCode>
+      <FileName>Revisited\Gender.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

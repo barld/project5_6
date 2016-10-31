@@ -9,14 +9,12 @@ namespace DataModels.Revisited
 {
     public class Game
     {
-        public string title { get; set; }
-        public Platform platform { get; set; }
+        public string gameTitle { get; set; }
+        public List<Platform> platform { get; set; }
         public int ratingPEGI { get; set; }
-        public DateTime releaseData { get; set; }
         public string publisher { get; set; }
-        public bool isVRCompatible { get; set; }
 
-        public decimal price
+        public List<Genre> genres
         {
             get
             {
@@ -28,7 +26,43 @@ namespace DataModels.Revisited
             }
         }
 
-        public ICollection<Gerne> gernes
+        public string image
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public int minPlayers
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public int maxPlayers
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public string description
         {
             get
             {

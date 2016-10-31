@@ -14,8 +14,8 @@
       <FileName>Context.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Users" />
       <Property Name="Games" />
+      <Property Name="Users" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -41,7 +41,7 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="ConsoleApplication1.IContext">
-    <Position X="10.5" Y="2.75" Width="1.5" />
+    <Position X="9.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IContext.cs</FileName>

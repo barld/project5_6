@@ -26,7 +26,7 @@ namespace Webshop
             {
                 return "<h1>Logged in : " + session.Data["login"].ToString() + "</h1>";
             }
-            var logedinUser = context.Users.login(user.Email, user.Password).Result;
+            var logedinUser = context.Users.Login(user.Email, user.Password).Result;
             if(logedinUser != null)
             {
                 session.Data.Add("currentUser", logedinUser);

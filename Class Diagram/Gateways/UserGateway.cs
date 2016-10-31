@@ -21,7 +21,7 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        string sha256(string password)
+        string Sha256(string password)
         {
             SHA256Managed crypt = new SHA256Managed();
             string hash = String.Empty;
@@ -33,12 +33,12 @@ namespace DataModels.Gateways
             return hash;
         }
 
-        public async Task<User> login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
             var user = await GetByEmail(email);
             if(user != null)
             {
-                if(sha256(user.Salt + password) == user.Password)
+                if(Sha256(user.Salt + password) == user.Password)
                 {
                     return user;
                 }
@@ -46,7 +46,7 @@ namespace DataModels.Gateways
             return null;
         }
 
-        private string getRandomPasswordSalt()
+        private string GetRandomPasswordSalt()
         {
             byte[] randBytes;
 
@@ -62,10 +62,10 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async void register(string email, string pwd, Gender gender)
+        public async void Register(string email, string pwd, Gender gender)
         {
-            string salt = getRandomPasswordSalt();
-            string hash = sha256(salt + pwd);
+            string salt = GetRandomPasswordSalt();
+            string hash = Sha256(salt + pwd);
             var user = new User
             {
                 AccountRole = AccountRole.User,

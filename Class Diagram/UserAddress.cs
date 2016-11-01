@@ -23,7 +23,7 @@ namespace DataModels
             }
         }
 
-        public int Housenumber
+        public string Housenumber
         {
             get
             {

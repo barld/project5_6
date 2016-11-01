@@ -218,13 +218,9 @@
     <Content Include="webContent\scss\_variables.scss">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-<<<<<<< HEAD
-    <Content Include="webContent\templates\popup.html" />
-=======
     <Content Include="webContent\shoppingcart.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
->>>>>>> master
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

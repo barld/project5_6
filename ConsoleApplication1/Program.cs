@@ -34,12 +34,13 @@ namespace DataModels
                 System.Threading.Thread.Sleep(1000);
             }
             context = new Context();
+            Console.WriteLine("**The following options are all examples that interact with the database**\n**You can copy/paste examples to your own project**\n");
             showMenuOptions();
         }
 
         private static void showMenuOptions()
         {
-            Console.WriteLine("Which example would you like to run?:\n1. Reset database\n2. Register user account\n3. Update user account\n4. Add new game\n5. Login with existing user account\n6. Find username by searching the email\n7. Display all users\n8. Display all games");
+            Console.WriteLine("Which example would you like to run?:\n1. Reset database\n2. Register user account\n3. Update user account\n4. Add new game\n5. Login system\n6. Find username by searching the email\n7. Display all users\n8. Display all games");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -57,7 +58,7 @@ namespace DataModels
                     addNewGame();
                     break;
                 case "5":
-                    simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
+                    simulateLoginAccount();
                     break;
                 case "6":
                     simulateFindUsernameByEmail();
@@ -125,9 +126,14 @@ namespace DataModels
             }
         }
 
-        private static void simulateLoginAccount(string email, string password)
+        private static void simulateLoginAccount()
         {
-            User a = context.Users.Login("dhbreedeveld@gmail.com", "geheim123").Result;
+            Console.WriteLine("Please login with your user account, you will see at the end whether it was succesfull or not.");
+            Console.WriteLine("Enter your email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Enter your password:");
+            string pwd = Console.ReadLine();
+            User a = context.Users.Login(email, pwd).Result;
             Console.WriteLine($"User logged in status: {a != null}");
         }
 

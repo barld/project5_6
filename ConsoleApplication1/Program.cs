@@ -45,7 +45,8 @@ namespace DataModels
 
             //**Examples that make use of the gateways that are provided**//
             //simulateRegisterAccount();
-            new Program().updateUserAccount();
+            //updateUserAccount();
+            addNewGame();
             //simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
             //simulateFindUsernameByEmail();
             //retrieveAllUsers();
@@ -55,7 +56,16 @@ namespace DataModels
             Console.ReadLine();
         }
 
-        private async void updateUserAccount()
+        static async void addNewGame()
+        {
+            Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
+            Console.WriteLine("Game Title:");
+            string GameTitle = Console.ReadLine();
+            Game game = new Game { GameTitle = GameTitle };
+            await context.Games.Insert(game);
+        }
+
+        static async void updateUserAccount()
         {
             try
             {

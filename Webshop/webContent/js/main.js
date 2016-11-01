@@ -108,7 +108,7 @@ window.onload = function () {
 			productDetails: false,
 			chosenProduct: "",
 			chosenProductFilled: false,
-			showLogin: false
+			showLogin: true
 		},
 		methods:{
 			closePopup: function(){

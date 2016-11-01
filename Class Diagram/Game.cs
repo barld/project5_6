@@ -11,80 +11,28 @@ namespace DataModels
     public class Game
     {
         public string GameTitle { get; set; }
-        public List<Platform> Platform { get; set; }
+        public Platform Platform { get; set; }
         public int RatingPEGI { get; set; }
         public string Publisher { get; set; }
 
-        public List<Genre> Genres
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public List<Genre> Genres { get; set; }
 
-            set
-            {
-            }
-        }
+        public string Image { get; set; }
 
-        public string Image
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public int MinPlayers { get; set; }
 
-            set
-            {
-            }
-        }
+        public int MaxPlayers { get; set; }
 
-        public int MinPlayers
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public string Description { get; set; }
 
-            set
-            {
-            }
-        }
+        public ObjectId _id { get; set; }
 
-        public int MaxPlayers
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public int EAN { get; set; }
 
-            set
-            {
-            }
-        }
+        public int Price { get; set; }
 
-        public string Description
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public bool IsVRCompatible { get; set; }
 
-            set
-            {
-            }
-        }
-
-        public ObjectId _id
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
+        public DateTime ReleaseDate { get; set; }
     }
 }

@@ -26,8 +26,6 @@
   <!-- JavaScript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://unpkg.com/vue@next/dist/vue.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -97,6 +95,7 @@
 						</form>
 					</div>
 				</div><!-- End login screen -->
+                <input type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
 				<div v-if="productDetails && chosenProductFilled" class="popup"><!-- Start product details -->
 					<div class="close_btn" @click="productDetails = false">
 						<i class="fa fa-times fa-5x" aria-hidden="true" class=""></i>

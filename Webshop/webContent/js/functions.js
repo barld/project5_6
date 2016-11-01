@@ -1,6 +1,7 @@
-﻿function Login() {
+﻿var formHandler = new FormHandler();
+
+function Login() {
     var userInformation = { username: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
-    var formHandler = new FormHandler();
 
     formHandler.addValue('username', userInformation.username.value);
     formHandler.addValue('password', userInformation.password.value);
@@ -12,6 +13,8 @@
         data: formHandler,
         ajaxFunction: function () {
             console.log(userInformation.username, userInformation.password);
+            formHandler.removeValue('username');
+            formhandler.removeValue('password');
         }
     });
 }
@@ -26,4 +29,18 @@ function displayUsername() {
             document.getElementById("login_password").focus();
         }
     }
+}
+
+function SearchGame(query) {
+    formHandler.addValue('query', query);
+    formHandler.startCall({
+        requestHeader: 'application/json',
+        method: 'GET',
+        url: 'http://localhost:8080/index.html',
+        data: formHandler,
+        ajaxFunction: function () {
+            console.log(query);
+            formHandler.removeValue('query');
+        }
+    });
 }

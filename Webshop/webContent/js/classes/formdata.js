@@ -32,9 +32,7 @@ class FormHandler{
 
 		// Function to fire off when the server has send a response
 	    xhr.onload = function () {
-	        console.log("TEST!");
-	        options.ajaxFunction();
-	        console.log(xhr.response);
+	        options.ajaxFunction(xhr.response);
 		}
 	}
 }

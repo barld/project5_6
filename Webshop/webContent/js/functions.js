@@ -14,9 +14,7 @@
         url: 'http://localhost:8080/api/user/login',
         data: formHandler,
         ajaxFunction: function (data) {
-            if (data.Success) {
-                console.log("Login successful!");
-            }
+            console.log(data);
         }
     });
 }

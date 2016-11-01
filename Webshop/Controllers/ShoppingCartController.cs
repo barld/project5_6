@@ -24,7 +24,7 @@ namespace Webshop.Controllers
             {
                 if (!Session.Data.ContainsKey(shoppingCartKey))
                     Session.Data.Add(shoppingCartKey, new Cart());
-                return (Cart)Session.Data[shoppingCartKey];
+                return Session.Data[shoppingCartKey] as Cart;
             }
             set
             {
@@ -59,5 +59,6 @@ namespace Webshop.Controllers
             currentShoppingCart = new Cart();
             return Json(new Models.ActionResultViewModel { Succes = true, Message = "shoppingcart deleted" });
         }
+
     }
 }

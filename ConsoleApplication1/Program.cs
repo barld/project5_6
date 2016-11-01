@@ -33,24 +33,96 @@ namespace DataModels
                 
                 System.Threading.Thread.Sleep(1000);
             }
-
-            string databaseName = "project__5_6";
             context = new Context();
+            showMenuOptions();
+        }
 
-            
-            Console.WriteLine($"Database is connected to '{databaseName}'..");
+        private static void showMenuOptions()
+        {
+            Console.WriteLine("Which example would you like to run?:\n1. Reset database\n2. Register user account\n3. Update user account\n4. Add new game\n5. Login with existing user account\n6. Find username by searching the email\n7. Display all users\n8. Display all games");
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    //To reset/clean the database
+                    //If its not working, make sure the column names are still correct (found in the Reset method)
+                    context.Reset();
+                    break;
+                case "2":
+                    simulateRegisterAccount();
+                    break;
+                case "3":
+                    updateUserAccount();
+                    break;
+                case "4":
+                    addNewGame();
+                    break;
+                case "5":
+                    simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
+                    break;
+                case "6":
+                    simulateFindUsernameByEmail();
+                    break;
+                case "7":
+                    retrieveAllUsers();
+                    break;
+                case "8":
+                    retrieveAllGames();
+                    break;
+                default:
+                    Console.WriteLine("No valid choice given, try again...");
+                    break;
+            }
+            Console.WriteLine("Would you like to exit the application? Y/N");
+            string answer = Console.ReadLine();
+            if(answer == "N" || answer == "n")
+            {
+                showMenuOptions();
+            }
+            else
+            {
+                Console.WriteLine("Press [ENTER] to exit..");
+                Console.ReadLine();
+            }
+        }
 
-            //**To reset/clean the database, uncomment the following:**//
-            //context.Reset();
+        static async void addNewGame()
+        {
+            Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
+            Console.WriteLine("Game Title:");
+            string GameTitle = Console.ReadLine();
+            Game game = new Game { GameTitle = GameTitle, EAN = 122 };
+            await context.Games.Insert(game);
+        }
 
-            //**Examples that make use of the gateways that are provided**//
-            simulateRegisterAccount();
-            //simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
-            //simulateFindUsernameByEmail();
-            retrieveAllUsers();
+        static void retrieveAllGames()
+        {
+            Console.WriteLine("Displaying every game..");
+            foreach(Game g in context.Games.GetAll().Result)
+            {
+                Console.WriteLine(g.GameTitle);
+            }
+        }
 
-            Console.WriteLine("Press [ENTER] to exit..");
-            Console.ReadLine();
+        static async void updateUserAccount()
+        {
+            try
+            {
+                retrieveAllUsers();
+                Console.WriteLine("What is the email of the user that needs to be updated?");
+                string oldEmail = Console.ReadLine();
+                Console.WriteLine("What is the new email of the user?");
+                string newEmail = Console.ReadLine();
+                var user = context.Users.GetByEmail(oldEmail).Result;
+                user.Email = newEmail;
+                await context.Users.Replace("Email", oldEmail, user);
+                Console.WriteLine("Update sent, these are the results:");
+                retrieveAllUsers();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not update the user, make sure the email exists!");
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
         private static void simulateLoginAccount(string email, string password)
@@ -62,7 +134,7 @@ namespace DataModels
         private static void retrieveAllUsers()
         {
             Console.WriteLine("Displaying every username...");
-            IEnumerable<User> listOfUsers = context.Users.SelectAll(new User()).Result;
+            IEnumerable<User> listOfUsers = context.Users.GetAll().Result;
 
             foreach (User u in listOfUsers)
             {
@@ -70,19 +142,14 @@ namespace DataModels
             }
         }
 
-        //private static void simulateFindUsernameByEmail()
-        //{
-        //    Console.WriteLine("Type in the email address to look for:");
-        //    string email = Console.ReadLine();
-        //    var listOfResults = dc.collectionSearchFor<User>("user", "email", email);
-        //    Console.WriteLine($"Found {listOfResults.Count} results for '{email}'");
-
-        //    foreach(var x in listOfResults)
-        //    {
-        //        //Index 4 is 'isMale' in the collection 'user'
-        //        Console.WriteLine($"{x.Email} and username is: {x.Email}");                
-        //    }
-        //}
+        private static void simulateFindUsernameByEmail()
+        {
+            Console.WriteLine("Type in the email address to look for:");
+            string email = Console.ReadLine();
+            var user = context.Users.GetByEmail(email).Result;
+            Console.WriteLine($"{user.Email} and the role is: {user.AccountRole}");
+            
+        }
 
         static async private void simulateRegisterAccount()
         {

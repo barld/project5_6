@@ -4,7 +4,7 @@
     <Position X="1.337" Y="0.843" Height="1.177" Width="1.7" />
   </Comment>
   <Class Name="DataModels.Platform">
-    <Position X="11.75" Y="0.5" Width="1.5" />
+    <Position X="11.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAABAAAAAAAAAAAAAAAAAAAAhAAA=</HashCode>
       <FileName>Platform.cs</FileName>

@@ -11,7 +11,7 @@ namespace DataModels
     public class Game
     {
         public string GameTitle { get; set; }
-        public List<Platform> Platform { get; set; }
+        public Platform Platform { get; set; }
         public int RatingPEGI { get; set; }
         public string Publisher { get; set; }
 
@@ -76,6 +76,54 @@ namespace DataModels
         }
 
         public ObjectId _id
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public int EAN
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public int Price
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public bool IsVRCompatible
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public DateTime ReleaseDate
         {
             get
             {

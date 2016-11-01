@@ -11,7 +11,7 @@ namespace DataModels.Gateways
 {
     public class UserGateway : Gateway<User>
     {
-        public UserGateway(IMongoDatabase database) : base("user", database)
+        public UserGateway(IMongoDatabase database) : base("User", database)
         {
         }
 

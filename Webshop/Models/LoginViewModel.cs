@@ -15,7 +15,7 @@ namespace Webshop.Models
     public class ActionResultViewModel
     {
         public bool Succes { get; set; }
-        public string message { get; set; }
+        public string Message { get; set; }
     }
 
     public interface IUserLoginStatus

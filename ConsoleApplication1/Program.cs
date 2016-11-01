@@ -61,7 +61,7 @@ namespace DataModels
             Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
             Console.WriteLine("Game Title:");
             string GameTitle = Console.ReadLine();
-            Game game = new Game { GameTitle = GameTitle };
+            Game game = new Game { GameTitle = GameTitle, EAN = 122 };
             await context.Games.Insert(game);
         }
 

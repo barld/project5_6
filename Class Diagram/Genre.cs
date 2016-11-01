@@ -11,16 +11,6 @@ namespace DataModels
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public ObjectId _id
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
+        public ObjectId _id { get; set; }
     }
 }

@@ -8,40 +8,10 @@ namespace DataModels
 {
     public class MyLists
     {
-        public string TitleOfList
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public string TitleOfList { get; set; }
 
-            set
-            {
-            }
-        }
+        public List<Game> Games { get; set; }
 
-        public List<Game> Games
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public ObjectId _id
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
+        public ObjectId _id { get; set; }
     }
 }

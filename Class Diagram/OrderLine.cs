@@ -8,40 +8,10 @@ namespace DataModels
 {
     public class OrderLine
     {
-        public DataModels.Game Game
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public DataModels.Game Game { get; set; }
 
-            set
-            {
-            }
-        }
+        public int Amount { get; set; }
 
-        public int Amount
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public ObjectId _id
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
+        public ObjectId _id { get; set; }
     }
 }

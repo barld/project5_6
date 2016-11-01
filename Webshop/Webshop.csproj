@@ -47,6 +47,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="AuthModule.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Program.cs" />

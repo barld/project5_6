@@ -1,4 +1,4 @@
-var formHandler = new FormHandler();
+﻿var formHandler = new FormHandler();
 ﻿function Login() {
     var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
     var formHandler = new FormHandler();
@@ -14,7 +14,9 @@ var formHandler = new FormHandler();
         url: 'http://localhost:8080/api/user/login',
         data: formHandler,
         ajaxFunction: function (data) {
-            console.log(data)
+            if (data.Success) {
+                console.log("Login successful!");
+            }
         }
     });
 }

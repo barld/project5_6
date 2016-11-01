@@ -43,5 +43,18 @@ namespace DataModels.Gateways
         {
             await Collection.InsertManyAsync(collection);
         }
+
+        /// <summary>
+        /// To replace/update a user, the whole object in the database will be replaced.
+        /// </summary>
+        /// <param name="model">The model of the collection such as 'User'</param>
+        /// <param name="searchField">e.g. 'email' to search for the column 'email'</param>
+        /// <param name="searchValue">e.g. 'test@example.com' to find an object with this email</param>
+        /// <returns>Returns the result of this operation</returns>
+        public async Task Replace(string searchField, string searchValue, Model model)
+        {
+            var filter = Builders<Model>.Filter.Eq(searchField, searchValue);
+            await Collection.ReplaceOneAsync(filter, model);
+        }
     }
 }

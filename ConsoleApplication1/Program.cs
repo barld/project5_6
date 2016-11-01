@@ -44,13 +44,37 @@ namespace DataModels
             //context.Reset();
 
             //**Examples that make use of the gateways that are provided**//
-            simulateRegisterAccount();
+            //simulateRegisterAccount();
+            new Program().updateUserAccount();
             //simulateLoginAccount("dhbreedeveld@gmail.com", "geheim123");
             //simulateFindUsernameByEmail();
-            retrieveAllUsers();
+            //retrieveAllUsers();
+
 
             Console.WriteLine("Press [ENTER] to exit..");
             Console.ReadLine();
+        }
+
+        private async void updateUserAccount()
+        {
+            try
+            {
+                retrieveAllUsers();
+                Console.WriteLine("What is the email of the user that needs to be updated?");
+                string oldEmail = Console.ReadLine();
+                Console.WriteLine("What is the new email of the user?");
+                string newEmail = Console.ReadLine();
+                var user = context.Users.GetByEmail(oldEmail).Result;
+                user.Email = newEmail;
+                await context.Users.Replace("Email", oldEmail, user);
+                Console.WriteLine("Update sent, these are the results:");
+                retrieveAllUsers();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not update the user, make sure the email exists!");
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
         private static void simulateLoginAccount(string email, string password)
@@ -62,7 +86,7 @@ namespace DataModels
         private static void retrieveAllUsers()
         {
             Console.WriteLine("Displaying every username...");
-            IEnumerable<User> listOfUsers = context.Users.SelectAll(new User()).Result;
+            IEnumerable<User> listOfUsers = context.Users.GetAll().Result;
 
             foreach (User u in listOfUsers)
             {

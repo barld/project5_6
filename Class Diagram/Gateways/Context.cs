@@ -42,7 +42,7 @@ namespace DataModels
         public void Reset()
         {
             //Clear the database by deleting the following collections
-            List<string> listOfCollections = new List<string>() { "user", "useraddress", "category", "game" };
+            List<string> listOfCollections = new List<string>() { "User", "Address", "Platform", "Game" };
 
             foreach (string collection in listOfCollections)
             {

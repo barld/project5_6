@@ -66,6 +66,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="ShoppingCart\Cart.cs" />
+    <Compile Include="ShoppingCart\CartLine.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserAddress.cs" />
     <Compile Include="Gateways\UserGateway.cs" />

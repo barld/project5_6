@@ -8,6 +8,7 @@ namespace Class_Diagram.ShoppingCart
 {
     public class Cart
     {
-        public int TotalPrice;
+        //public int TotalPrice => CartLines.Sum(cl => cl.Product.Price * cl.Amount);
+        public IEnumerable<CartLine> CartLines { get; set; }
     }
 }

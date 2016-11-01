@@ -11,64 +11,14 @@ namespace DataModels
     {
         public string City { get; set; }
 
-        public string Streetname
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public string Streetname { get; set; }
 
-            set
-            {
-            }
-        }
+        public string Housenumber { get; set; }
 
-        public string Housenumber
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+        public string Country { get; set; }
 
-            set
-            {
-            }
-        }
+        public string PostalCode { get; set; }
 
-        public string Country
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public string PostalCode
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public ObjectId _id
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
+        public ObjectId _id { get; set; }
     }
 }

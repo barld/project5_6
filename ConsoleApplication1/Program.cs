@@ -65,6 +65,15 @@ namespace DataModels
             await context.Games.Insert(game);
         }
 
+        static void retrieveAllGames()
+        {
+            Console.WriteLine("Displaying every game..");
+            foreach(Game g in context.Games.GetAll().Result)
+            {
+                Console.WriteLine(g.GameTitle);
+            }
+        }
+
         static async void updateUserAccount()
         {
             try

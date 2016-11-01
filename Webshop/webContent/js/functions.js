@@ -1,20 +1,20 @@
-﻿var formHandler = new FormHandler();
+var formHandler = new FormHandler();
+﻿function Login() {
+    var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
+    var formHandler = new FormHandler();
+    console.log(userInformation.username);
+    console.log(userInformation.password);
 
-function Login() {
-    var userInformation = { username: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
-
-    formHandler.addValue('username', userInformation.username.value);
-    formHandler.addValue('password', userInformation.password.value);
+    formHandler.addValue('username', userInformation.username);
+    formHandler.addValue('password', userInformation.password);
 
     formHandler.startCall({
         requestHeader: 'application/json',
         method: 'POST',
         url: 'http://localhost:8080/api/user/login',
         data: formHandler,
-        ajaxFunction: function () {
-            console.log(userInformation.username, userInformation.password);
-            formHandler.removeValue('username');
-            formhandler.removeValue('password');
+        ajaxFunction: function (data) {
+            console.log(data)
         }
     });
 }

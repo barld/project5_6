@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
     public enum Gender
     {

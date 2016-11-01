@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MongoDB.Bson;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
-    public class Address
+    public class MyLists
     {
-        public string city { get; set; }
-
-        public string streetname
+        public string TitleOfList
         {
             get
             {
@@ -22,7 +20,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public int housenumber
+        public List<Game> Games
         {
             get
             {
@@ -34,19 +32,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public string country
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public string postalCode
+        public ObjectId _id
         {
             get
             {

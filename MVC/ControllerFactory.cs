@@ -72,6 +72,7 @@ namespace MVC
         {
             ControllerObject o = Activator.CreateInstance(controllerType) as ControllerObject;
             o.Session = session;
+            o.AfterConstruct();
             return o;
         }
 

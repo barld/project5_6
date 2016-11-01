@@ -53,26 +53,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountRole.cs" />
-    <Compile Include="Collections.cs" />
-    <Compile Include="DatabaseConnection.cs" />
-    <Compile Include="Revisited\GameList.cs" />
-    <Compile Include="Revisited\Gender.cs" />
-    <Compile Include="IDatabaseConnection.cs" />
-    <Compile Include="Revisited\Genre.cs" />
-    <Compile Include="Revisited\OrderLine.cs" />
+    <Compile Include="Gateways\Context.cs" />
+    <Compile Include="Gateways\GameGateway.cs" />
+    <Compile Include="GameList.cs" />
+    <Compile Include="Gateways\Gateway.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="Gateways\IContext.cs" />
+    <Compile Include="Genre.cs" />
+    <Compile Include="OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Revisited\Category.cs" />
-    <Compile Include="Revisited\Game.cs" />
-    <Compile Include="Revisited\Order.cs" />
-    <Compile Include="Revisited\User.cs" />
-    <Compile Include="Revisited\UserAddress.cs" />
+    <Compile Include="Platform.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserAddress.cs" />
+    <Compile Include="Gateways\UserGateway.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Revisited\ClassDiagramRevisited.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

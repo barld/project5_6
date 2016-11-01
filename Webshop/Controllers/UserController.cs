@@ -12,69 +12,65 @@ namespace Webshop.Controllers
 {
     public class UserController : MVC.Controller.Controller
     {
-        UserModel usermodel = new UserModel();
+        private AuthModule Auth;
+        private readonly Context context;
 
-        public string PostLogin()
+        public UserController()
         {
-            AuthModule Auth = new AuthModule(this.Session);
+            context = new Context();
+         }
+        public override void AfterConstruct()
+        {
+            Auth = new AuthModule(Session, context);
+        }
+
+        public ViewObject PostLogin()
+        {
             var data = GetBodyFromJson<User>();
-            var users = usermodel.userSearch(data.email);
-            User user = new User();
-
-            if (users.Count() == 1)
-            {
-                user = users[0];
-            }
-
-            if (user.password == data.password)
-            {
-                return Auth.Login(user);
-            }
-
-            return "Login Failed";
+            return Json(Auth.Login(data));
 
         }
 
-        public string GetLogout()
+        public bool GetLogout()
         {
-            AuthModule Auth = new AuthModule(this.Session);
             return Auth.Logout();
         }
 
-        public string GetAll()
+        //public string GetAll()
+        //{
+        //    var userList = usermodel.userAll();
+        //    string response = "";
+        //    int cnt = 0;
+
+        //    foreach (User user in userList)
+        //    {
+        //        cnt++;
+        //        response += "<br> User " + cnt + " = " + user.Email;
+        //    }
+
+        //    return response;
+        //}
+
+        //public object PostSearch()
+        //{
+        //    var data = GetBodyFromJson<User>();
+        //    string response = "";
+        //    var userList = usermodel.userSearch(data.Email);
+
+        //    foreach (User user in userList)
+        //    {
+        //        response += user.Email + "<br>";
+        //    }
+
+        //    return response;
+        //}
+
+        public ViewObject PostRegister()
         {
-            var userList = usermodel.userAll();
-            string response = "";
-            int cnt = 0;
+            var user = GetBodyFromJson<User>();
 
-            foreach (User user in userList)
-            {
-                cnt++;
-                response += "<br> User " + cnt + " = " + user.userName;
-            }
 
-            return response;
-        }
-
-        public object PostSearch()
-        {
-            var data = GetBodyFromJson<User>();
-            string response = "";
-            var userList = usermodel.userSearch(data.email);
-
-            foreach (User user in userList)
-            {
-                response += user.userName + "<br>";
-            }
-
-            return response;
-        }
-
-        public object PostRegister()
-        {
-            var data = GetBodyFromJson<User>();
-            usermodel.userRegister(data);
-            return Json(data);
+            return Json(Auth.Register(user));
         }
 
         public string Get()

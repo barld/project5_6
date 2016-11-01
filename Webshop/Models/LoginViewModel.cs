@@ -12,7 +12,7 @@ namespace Webshop.Models
         public string Password { get; set; }
     }
 
-    public class LoginResultViewModel
+    public class ActionResultViewModel
     {
         public bool Succes { get; set; }
         public string message { get; set; }

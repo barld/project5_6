@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataModels;
+using MongoDB.Bson;
 
-namespace DataModels.Revisited
+namespace DataModels
 {
-    public class Platform
+    public class Game
     {
-        public string platformTitle { get; set; }
-        public string brand { get; set; }
-        public string description { get; set; }
+        public string GameTitle { get; set; }
+        public List<Platform> Platform { get; set; }
+        public int RatingPEGI { get; set; }
+        public string Publisher { get; set; }
 
-        public int price
+        public List<Genre> Genres
         {
             get
             {
@@ -24,7 +27,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public int EAN
+        public string Image
         {
             get
             {
@@ -36,7 +39,7 @@ namespace DataModels.Revisited
             }
         }
 
-        public DateTime releaseDate
+        public int MinPlayers
         {
             get
             {
@@ -48,7 +51,31 @@ namespace DataModels.Revisited
             }
         }
 
-        public bool isVRCompatible
+        public int MaxPlayers
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
+        public ObjectId _id
         {
             get
             {

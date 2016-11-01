@@ -1,62 +1,104 @@
 ﻿using MVC;
 using DataModels;
+using Webshop.Models;
+using System;
 
 namespace Webshop
 {
     internal class AuthModule
     {
+        const string currentUserKey = "currentUser";
+
         private Session session;
-        bool loggedIn;
+        private readonly Context context;
+        public User CurrentUser
+        {
+            get
+            {
+                if (session.Data.ContainsKey(currentUserKey))
+                    return session.Data[currentUserKey] as User;
+                else
+                    return default(User);
+            }
+            set
+            {
+                if (session.Data.ContainsKey(currentUserKey))
+                    session.Data[currentUserKey] = value;
+                else
+                    session.Data.Add(currentUserKey, value);
+            }
+        }
 
         public bool LoggedIn
         {
-            get { return this.loggedIn; }
+            get
+            {
+                return CurrentUser != null && CurrentUser.AccountRole != AccountRole.Guest;
+            }
         }
 
-        public AuthModule(Session session)
+        public AuthModule(Session session, Context context)
         {
             this.session = session;
+            this.context = new Context();
         }
 
-        public string Login(User user)
+        public ActionResultViewModel Login(User user)
         {
-            if (session.Data.ContainsKey("login"))
+            if (session.Data.ContainsKey("currentUser"))
             {
-                return "<h1>Logged in : " + session.Data["login"].ToString() + "</h1>";
-            }
-            session.Data.Add("login", user.email);
-            this.loggedIn = true;
-            return "Login Successful";
-        }
-
-        public string Logout()
-        {
-            if (session.Data.ContainsKey("login"))
-            {
-                session.Data.Remove("login");
-                this.loggedIn = false;
-                return "Logout Successful";
-            }
-
-            return "Not Logged in.";
-            
-        }
-
-        public string LoginStatus()
-        {
-            if (session.Data.ContainsKey("login"))
-            {
-                return "<h1>Logged in : " + session.Data["login"].ToString() + "</h1>";
+                return new ActionResultViewModel { Succes = false, message = "user already loged in" };
             }
             else
             {
-                return "<h1>Not Logged in.</h1>";
+                var logedinUser = context.Users.Login(user.Email, user.Password).Result;
+                if (logedinUser != null)
+                {
+                    session.Data.Add("currentUser", logedinUser);
+                    return new ActionResultViewModel { Succes = true, message = "user succesfoly logged in" };
+                }
+                else
+                {
+                    return new ActionResultViewModel { Succes = false, message = "no correct login data" };
+                }
+            }            
+        }
+
+        public ActionResultViewModel Register(User user)
+        {
+            try
+            {
+                CurrentUser = context.Users.Register(user.Email, user.Password, user.Gender).Result;
+                return new ActionResultViewModel { Succes = true, message = "succes registerd user" };
+            }
+            catch(Exception e)
+            {
+                return new ActionResultViewModel { Succes = false, message = "sommthing went wrong" };
             }
         }
 
-        public string UserRole(User user)
+        public bool Logout()
         {
-            return user.role;
+            if (CurrentUser == null || CurrentUser.AccountRole == AccountRole.Guest)
+                return true;
+            else
+            {
+                CurrentUser = new User { AccountRole = AccountRole.Guest };
+                return true;
+            }
+            
+        }
+
+        public IUserLoginStatus LoginStatus()
+        {
+            if (LoggedIn)
+            {
+                return new UserLogedInStatus { Email = CurrentUser.Email };
+            }
+            else
+            {
+                return new UserNotLogedInStatus();
+            }
         }
 
     }

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 
-namespace ConsoleApplication1
+namespace DataModels.Gateways
 {
     public class GameGateway : Gateway<Game>
     {
-        public GameGateway(IMongoDatabase connection) : base("game", connection)
+        public GameGateway(IMongoDatabase connection) : base("Game", connection)
         {
         }
     }

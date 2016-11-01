@@ -26,7 +26,12 @@ namespace DataModels
         //Create the constrains for the database
         private void createContraints()
         {
+            //All of the defined contraints below must be unique
             var options = new CreateIndexOptions() { Unique = true };
+
+            //EAN attribute must be unique in the Game collection
+            var fieldEAN = new StringFieldDefinition<Game>("EAN");
+            database.GetCollection<Game>("Game").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Game>().Ascending(fieldEAN), options);
 
             //Email attribute must be unique in the User collection
             var fieldEmail = new StringFieldDefinition<User>("Email");

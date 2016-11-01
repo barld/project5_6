@@ -134,6 +134,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="webContent\js\sampledata.js" />
+    <Content Include="webContent\js\vue.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="webContent\less\animated.less">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

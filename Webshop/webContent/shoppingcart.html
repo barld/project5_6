@@ -6,22 +6,39 @@
     <title>shopping cart</title>
 </head>
 <body>
+    <ul id="app">
+        <li v-for="cartLine in cartLines">
+            {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
+        </li>
+    </ul>
+
+    <script src="js/vue.js"></script>
     <script>
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/api/shoppingcart");
+       
+        var app = new Vue({
+            el: '#app',
+            data: {
+                cartLines : []
+            },
+            created: function () {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/api/shoppingcart");
 
-        // The RequestHeader can be any, by the server accepted, file
-        xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
 
-        // Function to fire off when the server has send a response
-        xhr.onload = function () {
-            console.log("TEST!");
-            //options.ajaxFunction();
-            console.log(xhr.response);
-        }
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    console.log(xhr.response);
+                    app.cartLines = JSON.parse(xhr.response).CartLines;
+                }
 
-        xhr.send();
+                xhr.send();
+            }
+        })
+
     </script>
+    
 </body>
 </html>

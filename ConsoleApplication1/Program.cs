@@ -13,7 +13,13 @@ namespace DataModels
 {
     class Program
     {
+        //context has access to all gateways
         static Context context;
+
+        //These 2 variables are here to pass the objects from addNewPlatform()/addNewGenre() to addNewGame()
+        static Platform tempPlatform = new Platform();
+        static Genre tempGenre = new Genre();
+
         static void Main(string[] args)
         {
             if (Debugger.IsAttached)
@@ -43,18 +49,22 @@ namespace DataModels
 1. Reset database
 2. Register user account
 3. Update user account
-4. Add new game
-5. Login system
-6. Find username by searching the email
-7. Display all users
-8. Display all games
-9. Delete user by email
-10. Exit application");
+4. Add new platform
+5. Add new genre
+5. Add new game
+6. Login system
+7. Find username by searching the email
+8. Display all users
+9. Display all games
+10. Delete user by email
+11. Exit application");
             Console.WriteLine("-----------------------");
             List<Action> actions = new List<Action> {
                 context.Reset,
                 simulateRegisterAccount,
                 updateUserAccount,
+                addNewPlatform,
+                addNewGenre,
                 addNewGame,
                 simulateLoginAccount,
                 simulateFindUsernameByEmail,
@@ -78,7 +88,7 @@ namespace DataModels
         }
 
         #region A game needs a platform and 1 or more genres
-        static async Task<Platform> addNewPlatform()
+        static async void addNewPlatform()
         {
             try
             {
@@ -89,27 +99,37 @@ namespace DataModels
                 string brand = Console.ReadLine();
                 Console.WriteLine("Description:");
                 string description = Console.ReadLine();
-                Platform platform = new Platform { PlatformTitle=platformTitle, Brand = brand, Description=description};
-                await context.Platforms.Insert(platform);
-                return platform;
+                Platform newPlatform = new Platform { PlatformTitle=platformTitle, Brand = brand, Description=description};
+                await context.Platforms.Insert(newPlatform);
+                tempPlatform = newPlatform;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Could not add the platform");
                 Console.WriteLine("Error: " + ex.Message);
+                tempPlatform = new Platform();
             }
-            return new Platform();
         }
 
-        private static Genre addNewGenre()
+        static async void addNewGenre()
         {
-            Console.WriteLine("***ADD NEW GENRE TO THE DATABASE***");
-            Console.WriteLine("Name of genre:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Description of this genre:");
-            string description = Console.ReadLine();
-            Genre genre = new Genre { Name = name, Description = description };
-            return genre;
+            try
+            {
+                Console.WriteLine("***ADD NEW GENRE TO THE DATABASE***");
+                Console.WriteLine("Name of genre:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Description of this genre:");
+                string description = Console.ReadLine();
+                Genre newGenre = new Genre { Name = name, Description = description };
+                await context.Genres.Insert(newGenre);
+                tempGenre = newGenre;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not add the genre");
+                Console.WriteLine("Error: " + ex.Message);
+                tempGenre = new Genre();
+            }
         }
 
         static async void addNewGame()
@@ -128,7 +148,8 @@ namespace DataModels
                 if (answer == "y" || answer == "Y")
                 {
                     //Create new platform
-                    platform = addNewPlatform().Result;
+                    addNewPlatform();
+                    platform = tempPlatform;
                 }
                 else
                 {
@@ -152,7 +173,8 @@ namespace DataModels
                 if (answer == "y" || answer == "Y")
                 {
                     //Create new genre
-                    genres.Add(addNewGenre());
+                    addNewGenre();
+                    genres.Add(tempGenre);
                 }
                 else
                 {
@@ -170,8 +192,15 @@ namespace DataModels
                 }
 
                 //Game related
-                Console.WriteLine("Image URL:");
-                string imageURL = Console.ReadLine();
+                answer = "y";
+                List<string> imageURL = new List<string>();
+                while (answer == "y" || answer == "Y")
+                {
+                    Console.WriteLine("Image URL:");
+                    imageURL.Add(Console.ReadLine());
+                    Console.WriteLine("Add another URL? Y/N");
+                    answer = Console.ReadLine();
+                }
 
                 Console.WriteLine("Min Players:");
                 int minPlayers = Convert.ToInt16(Console.ReadLine());

@@ -13,6 +13,10 @@ namespace DataModels
         private readonly IMongoDatabase database;
         private readonly MongoClient mongoClient;
 
+        public GameGateway Games { get; }
+        public PlatformGateway Platforms { get; }
+        public GenreGateway Genres { get; }
+        public UserGateway Users { get; }
         public Context()
         {
             string databaseName = "project__5_6";
@@ -57,11 +61,6 @@ namespace DataModels
             }
             Console.WriteLine("Database cleared..");
         }
-
-        public GameGateway Games { get; }
-        public PlatformGateway Platforms { get; }
-        public GenreGateway Genres { get; }
-        public UserGateway Users { get; }
 
         public void Dispose()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Impl
 {
-    class IGDBGameImporter : GameImporter
+    public class IGDBGameImporter : GameImporter
     {
         public void importGames()
         {

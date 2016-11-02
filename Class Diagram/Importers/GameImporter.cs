@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers
 {
-    interface GameImporter
+    public interface GameImporter
     {
         void importGames();
     }

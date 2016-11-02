@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Diagram.Importers
+namespace Class_Diagram.Importers.Impl
 {
-    public interface GerneImporter
+    public class IGDBGerneImporter
     {
-        void importGernes();
     }
 }

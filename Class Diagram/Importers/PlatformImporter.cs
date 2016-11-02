@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers
 {
-    interface PlatformImporter
+    public interface PlatformImporter
     {
         void importPlatforms();
     }

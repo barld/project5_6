@@ -43,6 +43,18 @@ namespace DataModels.Gateways
         {
             await Collection.InsertManyAsync(collection);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnToMatch"></param>
+        /// <param name="valueToMatch"></param>
+        /// <returns></returns>
+        public virtual async Task Delete(string columnToMatch, string valueToMatch)
+        {
+            var filter = Builders<Model>.Filter.Eq(columnToMatch, valueToMatch);
+            var result = await Collection.DeleteManyAsync(filter);
+        }
 
         /// <summary>
         /// To replace/update a user, the whole object in the database will be replaced.

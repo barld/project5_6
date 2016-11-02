@@ -38,9 +38,20 @@ namespace DataModels
             showMenuOptions();
         }
 
-        private static void showMenuOptions()
+        static void showMenuOptions()
         {
-            Console.WriteLine("Which example would you like to run?:\n1. Reset database\n2. Register user account\n3. Update user account\n4. Add new game\n5. Login system\n6. Find username by searching the email\n7. Display all users\n8. Display all games");
+            Console.WriteLine(@"Which example would you like to run?:
+1. Reset database
+2. Register user account
+3. Update user account
+4. Add new game
+5. Login system
+6. Find username by searching the email
+7. Display all users
+8. Display all games
+9. Delete user by email
+10. Exit application");
+            Console.WriteLine("-----------------------");
             switch (Console.ReadLine())
             {
                 case "1":
@@ -69,30 +80,41 @@ namespace DataModels
                 case "8":
                     retrieveAllGames();
                     break;
+                case "9":
+                    deleteUserAccount();
+                    break;
+                case "10":
+                    Console.WriteLine("Press [ENTER] to exit..");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                    break;
                 default:
                     Console.WriteLine("No valid choice given, try again...");
                     break;
             }
-            Console.WriteLine("Would you like to exit the application? Y/N");
-            string answer = Console.ReadLine();
-            if(answer == "N" || answer == "n")
-            {
-                showMenuOptions();
-            }
-            else
-            {
-                Console.WriteLine("Press [ENTER] to exit..");
-                Console.ReadLine();
-            }
+            Console.WriteLine("-----------------------");
+            showMenuOptions();
+            Console.WriteLine("-----------------------");
         }
 
         static async void addNewGame()
         {
-            Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
-            Console.WriteLine("Game Title:");
-            string GameTitle = Console.ReadLine();
-            Game game = new Game { GameTitle = GameTitle, EAN = 122 };
-            await context.Games.Insert(game);
+            try
+            {
+                Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
+                Console.WriteLine("Game Title:");
+                string GameTitle = Console.ReadLine();
+                Console.WriteLine("Game EAN (unique):");
+                long GameEAN = Convert.ToInt64(Console.ReadLine());
+
+                Game game = new Game { GameTitle = GameTitle, EAN = GameEAN };
+                await context.Games.Insert(game);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not add the new game");
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
         static void retrieveAllGames()
@@ -126,7 +148,7 @@ namespace DataModels
             }
         }
 
-        private static void simulateLoginAccount()
+        static void simulateLoginAccount()
         {
             Console.WriteLine("Please login with your user account, you will see at the end whether it was succesfull or not.");
             Console.WriteLine("Enter your email:");
@@ -137,27 +159,36 @@ namespace DataModels
             Console.WriteLine($"User logged in status: {a != null}");
         }
 
-        private static void retrieveAllUsers()
+        static void retrieveAllUsers()
         {
             Console.WriteLine("Displaying every username...");
             IEnumerable<User> listOfUsers = context.Users.GetAll().Result;
 
             foreach (User u in listOfUsers)
             {
-                Console.WriteLine(u.Email);
+                Console.WriteLine($"{u.Email} has the following active status: {u.IsActive}");
             }
         }
 
-        private static void simulateFindUsernameByEmail()
+        static void simulateFindUsernameByEmail()
         {
-            Console.WriteLine("Type in the email address to look for:");
-            string email = Console.ReadLine();
-            var user = context.Users.GetByEmail(email).Result;
-            Console.WriteLine($"{user.Email} and the role is: {user.AccountRole}");
+            try
+            {
+                Console.WriteLine("Type in the email address to look for:");
+                string email = Console.ReadLine();
+                var user = context.Users.GetByEmail(email).Result;
+                Console.WriteLine($"{user.Email} and the role is: {user.AccountRole}");
+            }
+            catch
+            {
+                Console.WriteLine("Could not find the e-mail");
+                showMenuOptions();
+            }
+            
             
         }
 
-        static async private void simulateRegisterAccount()
+        static async void simulateRegisterAccount()
         {
             //Ask user for account info to register
             Console.WriteLine("---ACCOUNT INFO---");
@@ -182,6 +213,21 @@ namespace DataModels
 
             //Add the user to the database
             await context.Users.Register(email, password, gender);
+        }
+
+        static async void deleteUserAccount()
+        {
+            try
+            {
+                Console.WriteLine("What is the e-mail address of the person you're looking for?");
+                string email = Console.ReadLine();
+                await context.Users.Delete("Email", email);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("No accounts have been deleted");
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
     }
 }

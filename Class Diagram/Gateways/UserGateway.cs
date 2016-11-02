@@ -80,5 +80,20 @@ namespace DataModels.Gateways
 
             return await GetByEmail(email);
         }
+
+        public async override Task Delete(string columnToMatch, string valueToMatch)
+        {
+            try
+            {
+                var user = GetByEmail(valueToMatch).Result;
+                user.IsActive = false;
+                await Replace(columnToMatch, valueToMatch, user);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not delete user, make sure the email was correct");
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace DataModels
         public PlatformGateway Platforms { get; }
         public GenreGateway Genres { get; }
         public UserGateway Users { get; }
+        public OrderGateway Orders { get; }
+        public AddressGateway Addresses { get; }
         public Context()
         {
             string databaseName = "project__5_6";
@@ -27,6 +29,8 @@ namespace DataModels
             Users = new UserGateway(database);
             Platforms = new PlatformGateway(database);
             Genres = new GenreGateway(database);
+            Orders = new OrderGateway(database);
+            Addresses = new AddressGateway(database);
         }
 
         //Create the constrains for the database

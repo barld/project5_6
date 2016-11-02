@@ -72,6 +72,7 @@
     <Compile Include="Routing\RouteWebFolder.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="View\AccesDeniedView.cs" />
+    <Compile Include="View\ErrorView.cs" />
     <Compile Include="View\FileView\CssFileView.cs" />
     <Compile Include="View\DataView.cs" />
     <Compile Include="View\FileView\FileView.cs" />

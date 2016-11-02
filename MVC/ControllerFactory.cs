@@ -68,11 +68,41 @@ namespace MVC
         /// </summary>
         /// <param name="controllerType"></param>
         /// <returns></returns>
-        internal static ControllerObject CreateController(Type controllerType, Session session)
+        internal static ControllerObject CreateController(Type controllerType, Session session, HttpListenerContext context)
         {
+            int indexQuestion = context.Request.RawUrl.IndexOf('?');
+            int indexHastag = context.Request.RawUrl.IndexOf('#');
+            string parameterpart = string.Empty;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            if (indexQuestion == -1)
+            {
+
+            }
+            else
+            {
+                if (indexQuestion > indexHastag)
+                {
+                    parameterpart = context.Request.RawUrl.Split('?')[1];
+                }
+                else
+                {
+                    parameterpart = context.Request.RawUrl.Split('?', '#')[1];
+                }
+
+                foreach (string part in parameterpart.Split('&'))
+                {
+                    parameters.Add(part.Split('=')[0], part.Split('=')[1]);
+                }
+            }
+            
+
+
+
             ControllerObject o = Activator.CreateInstance(controllerType) as ControllerObject;
             o.Session = session;
             o.AfterConstruct();
+            o.Parameters = parameters;
             return o;
         }
 

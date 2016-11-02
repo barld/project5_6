@@ -3,20 +3,20 @@ var router = new Router();
 
 ﻿function Login() {
     var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
-    var formHandler = new FormHandler();
-
-    formHandler.addValue('username', userInformation.username);
-    formHandler.addValue('password', userInformation.password);
 
     formHandler.startCall({
         requestHeader: 'application/json',
-        method: 'POST',
-        url: 'http://localhost:8080/api/user/login',
-        data: formHandler,
+        method: 'GET',
+        url: 'http://localhost:8080/api/user/login/',
+        data: {email: formHandler.getValue('email'), password: formHandler.getValue('password')},
         ajaxFunction: function (data) {
-            formHandler.removeValue('username');
-            formHandler.removeValue('password');
-            console.log(data);
+            var feedback = JSON.parse(data);
+
+            if (!feedback.Success) {
+                document.getElementById("loginFeedback").innerHTML = feedback.Message;
+            } else {
+                document.getElementById("loginFeedback").innerHTML = "Login successful!";
+            }
         }
     });
 }

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="package.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Class Diagram\DataModels.csproj">
@@ -67,6 +68,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="gruntfile.js" />
     <Content Include="webContent\css\custom.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

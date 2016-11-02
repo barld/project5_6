@@ -46,18 +46,18 @@ namespace Webshop.Controllers
             try
             {
                 currentShoppingCart = GetBodyFromJson<Cart>();
-                return Json(new Models.ActionResultViewModel { Succes = true, Message = "shoppingcart succesvol updated" });
+                return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart succesvol updated" });
             }
             catch
             {
-                return Json(new Models.ActionResultViewModel { Succes = false, Message = "something went wrong" });
+                return Json(new Models.ActionResultViewModel { Success = false, Message = "something went wrong" });
             }
         }
 
         public ViewObject Delete()
         {
             currentShoppingCart = new Cart();
-            return Json(new Models.ActionResultViewModel { Succes = true, Message = "shoppingcart deleted" });
+            return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart deleted" });
         }
 
     }

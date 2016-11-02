@@ -19,7 +19,7 @@ namespace DataModels
             mongoClient = new MongoClient("mongodb://localhost:27017");
             database = mongoClient.GetDatabase(databaseName);
             createContraints();
-            Games = new GameGateway(database);
+            Games = new Gateways.GameGateway(database);
             Users = new UserGateway(database);
         }
 
@@ -53,7 +53,10 @@ namespace DataModels
         }
 
         public GameGateway Games { get; }
+        public PlatformGateway Platforms { get; }
+        public GenreGateway Genres { get; }
         public UserGateway Users { get; }
+
         public void Dispose()
         {
             

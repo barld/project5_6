@@ -75,11 +75,7 @@ namespace MVC
             string parameterpart = string.Empty;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            if (indexQuestion == -1)
-            {
-
-            }
-            else
+            if (indexQuestion != -1)
             {
                 if (indexQuestion > indexHastag)
                 {

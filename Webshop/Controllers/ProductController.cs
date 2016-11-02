@@ -20,7 +20,7 @@ namespace Webshop.Controllers
 
         public ViewObject GetAll()
         {
-            Console.WriteLine(this.Parameters["id"]);
+            //Console.WriteLine(this.Parameters["id"]);
             IEnumerable<Game> games = context.Games.GetAll().Result;
             return Json(games);
         }

@@ -135,6 +135,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="webContent\js\sampledata.js" />
+    <Content Include="webContent\js\shoppingcartComponent.js" />
     <Content Include="webContent\js\vue.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -220,9 +221,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="webContent\scss\_variables.scss">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="webContent\shoppingcart.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

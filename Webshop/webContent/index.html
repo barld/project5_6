@@ -51,25 +51,18 @@
 					</li>
 					<li class="floating_menu_component">
 						<a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-						<ul class="submenu">
-							<li><a href="#">2x Battlefield 1 PC</a></li>
-							<li><a href="#">1x FIFA 2017 1 PC</a></li>
-						</ul>
+                        <shopcart></shopcart>
 					</li>
-					<li class="floating_menu_component">
+					<li class="floating_menu_component" id="user_login_nav">
 						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Log in / Registreren</a>
 						<ul class="submenu">
 							<li><a href="#" @click="showLogin = true"><i class="fa fa-sign-in" aria-hidden="true"></i> Inloggen</a></li>
-							<li><a href="#"><i class="fa fa-pencil-square" aria-hidden="true"></i> Registreren</a></li>
+							<li><a href="#" @click="showRegister = true"><i class="fa fa-pencil-square" aria-hidden="true"></i> Registreren</a></li>
 						</ul>
 					</li>
-					<li class="floating_menu_component">
+					<li class="floating_menu_component" id="user_profile">
 						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
 						<ul class="submenu">
-							<li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Orderhistorie</a></li>
-							<li><a href="#">Wenslijst</a></li>
-							<li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Instellingen</a></li>
-							<li><a href="#"><i class="fa fa-list-alt" aria-hidden="true"></i> Favorieten</a></li>
 							<li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
 						</ul>
 					</li>
@@ -78,7 +71,7 @@
 		</nav><!-- End menu -->
 		<div class="container margin-top"><!-- Start container -->
 			<div class="row">
-				<!----><div v-show="showLogin" class="popup login_screen"><!-- Start login screen -->
+                <div v-show="showLogin" class="popup login_screen" id="login_screen"><!-- Start login screen -->
 					<div class="close_btn" @click="showLogin = false">
 						<i class="fa fa-times fa-5x" aria-hidden="true"></i>
 					</div>
@@ -97,6 +90,30 @@
                         <div id="loginFeedback"></div>
 					</div>
 				</div><!-- End login screen -->
+                <div class="popup" v-show="showRegister">
+                    <div class="close_btn" @click="showRegister = false">
+                        <i class="fa fa-times fa-5x" aria-hidden="true"></i>
+                    </div>
+                   <div class="inner_padding">
+                       <h1>Registreren</h1>
+                       <div class="twelve columns">
+                           <label for="register_email">Email</label>
+                           <input class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
+                       </div>
+                       <div class="twelve columns">
+                           <label for="register_password">Wachtwoord</label>
+                           <input class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
+                       </div>
+                       <div class="twelve columns">
+                           <label for="register_password">Geslacht</label>
+                           <select id="register_gender">
+                               <option value="0">Man</option>
+                               <option value="1">Vrouw</option>
+                           </select>
+                       </div>
+                       <button class="button-primary register_button" type="submit" value="Registreren">Registreren</button>
+                   </div>
+                </div>
                 <input type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
 				<div v-if="productDetails && chosenProductFilled" class="popup"><!-- Start product details -->
 					<div class="close_btn" @click="productDetails = false">
@@ -188,6 +205,14 @@
 			</div>
 		</div><!-- End container -->
 	</div>
+    <script type="text/x-template" id="shopcart-template">
+        <ul class="submenu">
+            <li v-for="cartLine in cartLines">
+                {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
+            </li>
+        </ul>
+    </script>
+    <script src="js/shoppingcartComponent.js"></script>
 	<script src="js/classes/product.js"></script>
 	<script src="js/classes/formdata.js"></script>
 	<script src="js/classes/routing.js"></script>

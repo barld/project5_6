@@ -14,7 +14,7 @@ namespace Webshop.Models
 
     public class ActionResultViewModel
     {
-        public bool Succes { get; set; }
+        public bool Success { get; set; }
         public string Message { get; set; }
     }
 

@@ -51,30 +51,47 @@ namespace DataModels
 3. Update user account
 4. Add new platform
 5. Add new genre
-5. Add new game
-6. Login system
-7. Find username by searching the email
-8. Display all users
-9. Display all games
-10. Delete user by email
-11. Exit application");
+6. Add new game
+7. Add new order
+8. Add new address
+9. Login system
+10. Find username by searching the email
+11. Find order by delivery address
+12. Find order by billing address
+13. Display all users
+14. Display all games
+15. Display all platforms
+16. Display all genres
+17. Display all orders
+18. Display all addresses
+19. Delete user by email
+20. Exit application");
             Console.WriteLine("-----------------------");
             List<Action> actions = new List<Action> {
                 context.Reset,
-                simulateRegisterAccount,
+                registerAccount,
                 updateUserAccount,
                 addNewPlatform,
                 addNewGenre,
                 addNewGame,
-                simulateLoginAccount,
-                simulateFindUsernameByEmail,
+                addNewOrder,
+                addNewAddress,
+                loginAccount,
+                findUsernameByEmail,
+                findOrdersByDeliveryAddress,
+                findOrdersByBillingAddress,
                 retrieveAllUsers,
                 retrieveAllGames,
-                deleteUserAccount,
+                retrieveAllPlatforms,
+                retrieveAllGenres,
+                retrieveAllOrders,
+                retrieveAllAddresses,
+                deleteUserAccountByEmail,
                 () => {
                     Console.WriteLine("Press [ENTER] to exit..");
                     Console.ReadLine();
-                    Environment.Exit(0); }
+                    Environment.Exit(0); },
+
             };
             try
             {
@@ -86,13 +103,69 @@ namespace DataModels
             showMenuOptions();
             Console.WriteLine("-----------------------");
         }
+        
+        static async void addNewOrder()
+        {
+            try
+            {
+                Console.WriteLine("***ADDING NEW ORDER (EXAMPLE)***");
+                Console.WriteLine("Create an unique order number:");
+                int orderNumber = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("What is the date of the order?:");
+                DateTime orderDate = Convert.ToDateTime(Console.ReadLine());
+                Console.WriteLine("What is the the email address of the user?:");
+                User user = context.Users.GetByEmail(Console.ReadLine()).Result;
+                Console.WriteLine("What is the the id of the billing address?:");
+                Address billingAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                Console.WriteLine("What is the the id of the delivery address?:");
+                Address deliveryAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+
+                List<OrderLine> listOfOrderLines = new List<OrderLine>();
+                string answer = "y";
+                while(answer == "y" || answer == "Y")
+                {
+                    Console.WriteLine("What is the the id of the game?:");
+                    Game game = context.Games.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                    Console.WriteLine("What is the amount?");
+                    int amount = Convert.ToInt16(Console.ReadLine());
+                    listOfOrderLines.Add(new OrderLine { Game=game, Amount=amount });
+                    Console.WriteLine("Do you want to add a new game to the order?");
+                    answer = Console.ReadLine();
+                }
+                Order order = new Order {OrderNumber=orderNumber, OrderDate=orderDate, Customer=user, BillingAddress=billingAddress, DeliveryAddress=deliveryAddress, OrderLines=listOfOrderLines };
+                await context.Orders.Insert(order);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not add the order");
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        static async void addNewAddress()
+        {
+            Console.WriteLine("***ADDING NEW ADDRESS (EXAMPLE)***");
+            Console.WriteLine("What is the city?:");
+            string city = Console.ReadLine();
+            Console.WriteLine("What is the streetname?:");
+            string streetname = Console.ReadLine();
+            Console.WriteLine("What is the housenumber?:");
+            string houseNumber = Console.ReadLine();
+            Console.WriteLine("What is the country?:");
+            string country = Console.ReadLine();
+            Console.WriteLine("What is the postalcode?:");
+            string postalcode = Console.ReadLine();
+
+            await context.Addresses.Insert(new Address { City=city, Streetname=streetname, Housenumber=houseNumber, Country=country, PostalCode=postalcode });
+            Console.WriteLine("Address has been added to the database");
+        }
 
         #region A game needs a platform and 1 or more genres
         static async void addNewPlatform()
         {
             try
             {
-                Console.WriteLine("***ADD NEW PLATFORM TO THE DATABASE***");
+                Console.WriteLine("***ADD NEW PLATFORM TO THE DATABASE EXAMPLE***");
                 Console.WriteLine("Platform title:");
                 string platformTitle = Console.ReadLine();
                 Console.WriteLine("Brand:");
@@ -137,7 +210,7 @@ namespace DataModels
             try
             {
                 //Game related
-                Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
+                Console.WriteLine("***ADD NEW GAME TO THE DATABASE EXAMPLE***");
                 Console.WriteLine("Game Title:");
                 string gameTitle = Console.ReadLine();
 
@@ -248,30 +321,21 @@ namespace DataModels
         }
         #endregion
 
-        static void retrieveAllPlatforms()
-        {
-            Console.WriteLine("Displaying every platform..");
-            foreach (Platform p in context.Platforms.GetAll().Result)
-            {
-                Console.WriteLine($"Title: {p.PlatformTitle} - Brand: {p.Brand}");
-            }
-        }
-
-        static void retrieveAllGenres()
-        {
-            Console.WriteLine("Displaying every genre..");
-            foreach (Genre g in context.Genres.GetAll().Result)
-            {
-                Console.WriteLine($"Title: {g.Name}");
-            }
-        }
-
         static void retrieveAllGames()
         {
             Console.WriteLine("Displaying every game..");
             foreach(Game g in context.Games.GetAll().Result)
             {
                 Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform}");
+            }
+        }
+
+        static void retrieveAllOrders()
+        {
+            Console.WriteLine("Displaying every order..");
+            foreach (Order o in context.Orders.GetAll().Result)
+            {
+                Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email} on {o.OrderDate}");
             }
         }
 
@@ -297,7 +361,7 @@ namespace DataModels
             }
         }
 
-        static void simulateLoginAccount()
+        static void loginAccount()
         {
             Console.WriteLine("Please login with your user account, you will see at the end whether it was succesfull or not.");
             Console.WriteLine("Enter your email:");
@@ -319,7 +383,38 @@ namespace DataModels
             }
         }
 
-        static void simulateFindUsernameByEmail()
+        static void retrieveAllPlatforms()
+        {
+            Console.WriteLine("Displaying every platform...");
+            IEnumerable<Platform> listOfUsers = context.Platforms.GetAll().Result;
+
+            foreach (Platform u in listOfUsers)
+            {
+                Console.WriteLine($"{u.PlatformTitle} has the following brand: {u.Brand}");
+            }
+        }
+
+        static void retrieveAllGenres()
+        {
+            Console.WriteLine("Displaying every genre...");
+            IEnumerable<Genre> listOfUsers = context.Genres.GetAll().Result;
+
+            foreach (Genre u in listOfUsers)
+            {
+                Console.WriteLine($"{u.Name}");
+            }
+        }
+
+        static void retrieveAllAddresses()
+        {
+            Console.WriteLine("Displaying all addresses...");
+            foreach (var address in context.Addresses.GetAll().Result)
+            {
+                Console.WriteLine($"id: {address._id} and the city is: {address.City}");
+            }
+        }
+
+        static void findUsernameByEmail()
         {
             try
             {
@@ -333,11 +428,49 @@ namespace DataModels
                 Console.WriteLine("Could not find the e-mail");
                 showMenuOptions();
             }
-            
-            
         }
 
-        static async void simulateRegisterAccount()
+        static void findOrdersByDeliveryAddress()
+        {
+            try
+            {
+                Console.WriteLine("Type in the _id of the address that you want to look for:");
+                string id = Console.ReadLine();
+                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                foreach (Order o in context.Orders.GetAllByDeliveryAddress(a).Result)
+                {
+                    Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Could not find any orders..make sure the address id was correct");
+                showMenuOptions();
+            }
+        }
+
+        static void findOrdersByBillingAddress()
+        {
+            try
+            {
+                Console.WriteLine("Type in the _id of the address that you want to look for:");
+                string id = Console.ReadLine();
+                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                foreach(Order o in context.Orders.GetAllByBillingAddress(a).Result)
+                {
+                    Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Could not find any orders..make sure the address id was correct");
+                showMenuOptions();
+            }
+        }
+
+        
+
+        static async void registerAccount()
         {
             try
             {
@@ -372,10 +505,11 @@ namespace DataModels
             }
         }
 
-        static async void deleteUserAccount()
+        static async void deleteUserAccountByEmail()
         {
             try
             {
+                Console.WriteLine("***DELETING USER ACCOUNT EXAMPLE***");
                 Console.WriteLine("What is the e-mail address of the person you're looking for?");
                 string email = Console.ReadLine();
                 await context.Users.Delete("Email", email);

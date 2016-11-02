@@ -6,5 +6,6 @@ namespace DataModels
     {   
         UserGateway Users { get; }
         GameGateway Games { get; }
+        PlatformGateway Platforms { get; }
     }
 }

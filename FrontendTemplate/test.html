@@ -1,0 +1,81 @@
+<div class="popup" id="login_screen">
+
+<h1>Login screen</h1>
+	<input type="text">
+	<input type="text">
+	<button id="hideLogin">Close</button>
+</div>
+
+<div class="popup" id="product_screen">
+<h1>Product screen</h1>
+	<input type="text">
+	<input type="text">
+	<button id="hideProduct">Close</button>
+</div>
+
+<button id="showLogin">Show login</button>
+<button id="showProductScreen">Show product</button>
+
+<style>
+
+	.popup{
+		display:none;
+		width:100%;
+		height:100%;
+		background:#FFFFFF;
+		width:      100%;
+		height:     100%; 
+		z-index:    10;
+		top:        0; 
+		left:       0; 
+		position:   fixed;
+		overflow:auto;
+		border:1px solid #000000;
+	}
+</style>
+
+<script>
+	class Popup{
+		constructor(data){
+
+		}
+	}
+
+	window.onload = function(){
+
+		var popup = new Popup({
+			title: "Title",
+			content:{
+				input1: "<input type='text'>",
+				input2: "<input type='password'>",
+				button: "<button>Log in</button>"
+			},
+			open: function(){
+				console.log("Opening this popup!");
+			},
+			close: function(){
+				console.log("Closing this");
+			}
+		});
+
+		document.getElementById("showLogin").addEventListener("click", function(){
+			console.log("TEST");
+			document.getElementById("login_screen").style.display = "block";
+		});
+
+		document.getElementById("hideLogin").addEventListener("click", function(){
+			document.getElementById("login_screen").style.display = "none";
+		});
+
+		document.getElementById("showProductScreen").addEventListener("click", function(){
+			console.log("TEST");
+			document.getElementById("product_screen").style.display = "block";
+		});
+
+		document.getElementById("hideProduct").addEventListener("click", function(){
+			document.getElementById("product_screen").style.display = "none";
+		});
+
+		console.log("JavaScript executing!");
+	}
+</script>

@@ -34,18 +34,19 @@
 </head>
 <body>
 	<div id="app">
+
 		<nav><!-- Start menu -->
 			<div id="navbar">
 				<ul>
 					<li class="submenu_parent">
 						<a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
 						<ul class="submenu">
-							<li><a href="#">PC</a></li>
-							<li><a href="#">PlayStation 4</a></li>
-							<li><a href="#">Xbox One</a></li>
-							<li><a href="#">Wii U</a></li>
-							<li><a href="#">3DS</a></li>
-							<li><a href="#">HTC Vive</a></li>	
+							<li><a href="#platform/pc" @click="getProductPlatform">PC</a></li>
+							<li><a href="#platform/playstation4" @click="getProductPlatform">PlayStation 4</a></li>
+							<li><a href="#platform/xboxone" @click="getProductPlatform">Xbox One</a></li>
+							<li><a href="#platform/wiiu" @click="getProductPlatform">Wii U</a></li>
+							<li><a href="#platform/3ds" @click="getProductPlatform">3DS</a></li>
+							<li><a href="#platform/htcvive" @click="getProductPlatform">HTC Vive</a></li>	
 						</ul>
 					</li>
 					<li class="floating_menu_component">
@@ -58,7 +59,7 @@
 					<li class="floating_menu_component">
 						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Log in / Registreren</a>
 						<ul class="submenu">
-							<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true" @click="showLogin = true"></i> Inloggen</a></li>
+							<li><a href="#" @click="showLogin = true"><i class="fa fa-sign-in" aria-hidden="true"></i> Inloggen</a></li>
 							<li><a href="#"><i class="fa fa-pencil-square" aria-hidden="true"></i> Registreren</a></li>
 						</ul>
 					</li>
@@ -77,8 +78,8 @@
 		</nav><!-- End menu -->
 		<div class="container margin-top"><!-- Start container -->
 			<div class="row">
-				<div v-if="showLogin" class="popup login_screen"><!-- Start login screen -->
-					<div class="close_btn" @click="productDetails = false">
+				<!----><div v-show="showLogin" class="popup login_screen"><!-- Start login screen -->
+					<div class="close_btn" @click="showLogin = false">
 						<i class="fa fa-times fa-5x" aria-hidden="true"></i>
 					</div>
 					<div class="inner_padding">
@@ -93,6 +94,7 @@
 							</div>
 							<button class="button-primary login_button" type="submit" value="Log in" @click="ajaxLogin">Log in</button>
 						</form>
+                        <div id="loginFeedback"></div>
 					</div>
 				</div><!-- End login screen -->
                 <input type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>

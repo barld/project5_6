@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="AccountRole.cs" />
     <Compile Include="Gateways\Context.cs" />
+    <Compile Include="Gateways\GenreGateway.cs" />
+    <Compile Include="Gateways\PlatformGateway.cs" />
     <Compile Include="Gateways\GameGateway.cs" />
     <Compile Include="GameList.cs" />
     <Compile Include="Gateways\Gateway.cs" />

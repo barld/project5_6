@@ -1,6 +1,7 @@
 ﻿using MVC.Controller;
 using MVC.View;
 using System;
+using DataModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,17 @@ namespace Webshop.Controllers
 {
     class ProductController : Controller
     {
+        Context context = new Context();
+
         public ViewObject Get()
         {
             return Json(new {IsVRCompatible = true, Price = 45.00f, Publisher = "EA", RatingPegi = ".", ReleaseDate = new DateTime()});
+        }
+
+        public object GetAll()
+        {
+            IEnumerable<Game> games = context.Games.GetAll().Result;
+            return Json(games);
         }
     }
 }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataModels.Gateways
 {
-    public class GameGateway : Gateway<Game>
+    public class PlatformGateway : Gateway<Platform>
     {
-        public GameGateway(IMongoDatabase connection) : base("Game", connection)
+        public PlatformGateway(IMongoDatabase connection) : base("Platform", connection)
         {
         }
 
@@ -19,9 +19,9 @@ namespace DataModels.Gateways
         /// </summary>
         /// <param name="searchTitle">The title of the game</param>
         /// <returns>The first result it matched</returns>
-        public async Task<Game> GetByTitle(string searchTitle)
+        public async Task<Platform> GetByTitle(string searchTitle)
         {
-            var filter = Builders<Game>.Filter.Eq(g => g.GameTitle, searchTitle);
+            var filter = Builders<Platform>.Filter.Eq(g => g.PlatformTitle, searchTitle);
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -30,9 +30,9 @@ namespace DataModels.Gateways
         /// </summary>
         /// <param name="searchTitle">The title of the game</param>
         /// <returns>All results that match</returns>
-        public async Task<IEnumerable<Game>> GetAllByTitle(string searchTitle)
+        public async Task<IEnumerable<Platform>> GetAllByTitle(string searchTitle)
         {
-            var filter = Builders<Game>.Filter.Eq(g => g.GameTitle, searchTitle);
+            var filter = Builders<Platform>.Filter.Eq(g => g.PlatformTitle, searchTitle);
             return await Collection.Find(filter).ToListAsync();
         }
     }

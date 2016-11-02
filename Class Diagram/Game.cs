@@ -27,7 +27,7 @@ namespace DataModels
 
         public ObjectId _id { get; set; }
 
-        public int EAN { get; set; }
+        public long EAN { get; set; }
 
         public int Price { get; set; }
 

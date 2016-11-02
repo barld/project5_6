@@ -24,7 +24,7 @@ namespace DataModels.Gateways
 
         public async virtual Task<IEnumerable<Model>> GetAll()
         {
-            return await Collection.Find(new BsonDocument { }).ToListAsync();
+            return await Collection.Find(new BsonDocument()).ToListAsync();
         }
 
         public async virtual Task<Model> GetById(ObjectId id)
@@ -43,21 +43,30 @@ namespace DataModels.Gateways
         {
             await Collection.InsertManyAsync(collection);
         }
-
-        public async Task<IEnumerable<Model>> SelectAll(Model model)
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnToMatch"></param>
+        /// <param name="valueToMatch"></param>
+        /// <returns></returns>
+        public virtual async Task Delete(string columnToMatch, string valueToMatch)
         {
-            //This will retrieve all data from a collection back into a list, without filtering the data first.
-            try
-            {
-                Console.WriteLine($"***All results from '{collectionName}' have been retrieved***");
-                return await Collection.Find(new BsonDocument()).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"***Failed to add {collectionName}..***");
-                Console.WriteLine(ex.Message);
-                return new List<Model>();
-            }
+            var filter = Builders<Model>.Filter.Eq(columnToMatch, valueToMatch);
+            var result = await Collection.DeleteManyAsync(filter);
+        }
+
+        /// <summary>
+        /// To replace/update a user, the whole object in the database will be replaced.
+        /// </summary>
+        /// <param name="model">The model of the collection such as 'User'</param>
+        /// <param name="searchField">e.g. 'email' to search for the column 'email'</param>
+        /// <param name="searchValue">e.g. 'test@example.com' to find an object with this email</param>
+        /// <returns>Returns the result of this operation</returns>
+        public async Task Replace(string searchField, string searchValue, Model model)
+        {
+            var filter = Builders<Model>.Filter.Eq(searchField, searchValue);
+            await Collection.ReplaceOneAsync(filter, model);
         }
     }
 }

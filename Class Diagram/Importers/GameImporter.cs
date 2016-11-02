@@ -8,6 +8,6 @@ namespace Class_Diagram.Importers
 {
     public interface GameImporter
     {
-        void importGames();
+        void importGames(int desiredAmount);
     }
 }

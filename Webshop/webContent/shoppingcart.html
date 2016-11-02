@@ -32,6 +32,7 @@
                 methods:{
                     getData: function () {
                         var base = this;
+
                         var xhr = new XMLHttpRequest();
                         xhr.open("GET", "/api/shoppingcart");
 
@@ -41,8 +42,6 @@
 
                         // Function to fire off when the server has send a response
                         xhr.onload = function () {
-                            console.log(this);
-                            console.log(xhr.response);
                             base.cartLines = JSON.parse(xhr.response).CartLines;
                         }
 

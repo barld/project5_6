@@ -6,39 +6,59 @@
     <title>shopping cart</title>
 </head>
 <body>
-    <ul id="app">
-        <li v-for="cartLine in cartLines">
-            {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
-        </li>
-    </ul>
-
+    <div id="app">
+        <shopcart></shopcart>
+        <shopcart></shopcart>
+    </div>
+    
     <script src="js/vue.js"></script>
-    <script>
-       
-        var app = new Vue({
-            el: '#app',
-            data: {
-                cartLines : []
-            },
-            created: function () {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "/api/shoppingcart");
+    <div class="component" id="shoppingcartSection">
+        <script type="text/x-template" id="shopcart-template">
+            <ul>
+                <li v-for="cartLine in cartLines">
+                    {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
+                </li>
+            </ul>
+        </script>
+        
+        <script>
+            Vue.component('shopcart', {
+                template: '#shopcart-template',
+                data: function () {
+                    return {
+                        cartLines: []
+                    }
+                },
+                methods:{
+                    getData: function () {
+                        var base = this;
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "/api/shoppingcart");
 
-                // The RequestHeader can be any, by the server accepted, file
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                        // The RequestHeader can be any, by the server accepted, file
+                        xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
 
-                // Function to fire off when the server has send a response
-                xhr.onload = function () {
-                    console.log(xhr.response);
-                    app.cartLines = JSON.parse(xhr.response).CartLines;
+                        // Function to fire off when the server has send a response
+                        xhr.onload = function () {
+                            console.log(this);
+                            console.log(xhr.response);
+                            base.cartLines = JSON.parse(xhr.response).CartLines;
+                        }
+
+                        xhr.send();
+                    }
+                },
+                created: function () {
+                    this.getData();
                 }
+            });
+            var app = new Vue({
+                el: '#app'
+            });
 
-                xhr.send();
-            }
-        })
-
-    </script>
+        </script>
+    </div>
     
 </body>
 </html>

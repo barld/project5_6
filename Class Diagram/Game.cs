@@ -17,7 +17,7 @@ namespace DataModels
 
         public List<Genre> Genres { get; set; }
 
-        public string Image { get; set; }
+        public List<string> Image { get; set; }
 
         public int MinPlayers { get; set; }
 

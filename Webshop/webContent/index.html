@@ -51,10 +51,7 @@
 					</li>
 					<li class="floating_menu_component">
 						<a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-						<ul class="submenu">
-							<li><a href="#">2x Battlefield 1 PC</a></li>
-							<li><a href="#">1x FIFA 2017 1 PC</a></li>
-						</ul>
+                        <shopcart></shopcart>
 					</li>
 					<li class="floating_menu_component" id="user_login_nav">
 						<a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Log in / Registreren</a>
@@ -208,6 +205,14 @@
 			</div>
 		</div><!-- End container -->
 	</div>
+    <script type="text/x-template" id="shopcart-template">
+        <ul class="submenu">
+            <li v-for="cartLine in cartLines">
+                {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
+            </li>
+        </ul>
+    </script>
+    <script src="js/shoppingcartComponent.js"></script>
 	<script src="js/classes/product.js"></script>
 	<script src="js/classes/formdata.js"></script>
 	<script src="js/classes/routing.js"></script>

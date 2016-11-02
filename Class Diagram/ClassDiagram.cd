@@ -63,7 +63,7 @@
   <Class Name="DataModels.User">
     <Position X="3.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAACAAAACAgABAAAAAAAAIAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAACAAAACAkABAAAAAAAAIAAACAAAAAAAAAAA=</HashCode>
       <FileName>User.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

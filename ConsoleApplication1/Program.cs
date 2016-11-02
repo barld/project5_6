@@ -13,8 +13,13 @@ namespace DataModels
 {
     class Program
     {
+        //context has access to all gateways
         static Context context;
-        //static DatabaseConnection dc;
+
+        //These 2 variables are here to pass the objects from addNewPlatform()/addNewGenre() to addNewGame()
+        static Platform tempPlatform = new Platform();
+        static Genre tempGenre = new Genre();
+
         static void Main(string[] args)
         {
             if (Debugger.IsAttached)
@@ -38,61 +43,227 @@ namespace DataModels
             showMenuOptions();
         }
 
-        private static void showMenuOptions()
+        static void showMenuOptions()
         {
-            Console.WriteLine("Which example would you like to run?:\n1. Reset database\n2. Register user account\n3. Update user account\n4. Add new game\n5. Login system\n6. Find username by searching the email\n7. Display all users\n8. Display all games");
-            switch (Console.ReadLine())
+            Console.WriteLine(@"Which example would you like to run?:
+1. Reset database
+2. Register user account
+3. Update user account
+4. Add new platform
+5. Add new genre
+5. Add new game
+6. Login system
+7. Find username by searching the email
+8. Display all users
+9. Display all games
+10. Delete user by email
+11. Exit application");
+            Console.WriteLine("-----------------------");
+            List<Action> actions = new List<Action> {
+                context.Reset,
+                simulateRegisterAccount,
+                updateUserAccount,
+                addNewPlatform,
+                addNewGenre,
+                addNewGame,
+                simulateLoginAccount,
+                simulateFindUsernameByEmail,
+                retrieveAllUsers,
+                retrieveAllGames,
+                deleteUserAccount,
+                () => {
+                    Console.WriteLine("Press [ENTER] to exit..");
+                    Console.ReadLine();
+                    Environment.Exit(0); }
+            };
+            try
             {
-                case "1":
-                    //To reset/clean the database
-                    //If its not working, make sure the column names are still correct (found in the Reset method)
-                    context.Reset();
-                    break;
-                case "2":
-                    simulateRegisterAccount();
-                    break;
-                case "3":
-                    updateUserAccount();
-                    break;
-                case "4":
-                    addNewGame();
-                    break;
-                case "5":
-                    simulateLoginAccount();
-                    break;
-                case "6":
-                    simulateFindUsernameByEmail();
-                    break;
-                case "7":
-                    retrieveAllUsers();
-                    break;
-                case "8":
-                    retrieveAllGames();
-                    break;
-                default:
-                    Console.WriteLine("No valid choice given, try again...");
-                    break;
+                int choice = int.Parse(Console.ReadLine());
+                actions[choice - 1]();
             }
-            Console.WriteLine("Would you like to exit the application? Y/N");
-            string answer = Console.ReadLine();
-            if(answer == "N" || answer == "n")
+            catch { Console.WriteLine("No valid choice given.."); }
+            Console.WriteLine("-----------------------");
+            showMenuOptions();
+            Console.WriteLine("-----------------------");
+        }
+
+        #region A game needs a platform and 1 or more genres
+        static async void addNewPlatform()
+        {
+            try
             {
-                showMenuOptions();
+                Console.WriteLine("***ADD NEW PLATFORM TO THE DATABASE***");
+                Console.WriteLine("Platform title:");
+                string platformTitle = Console.ReadLine();
+                Console.WriteLine("Brand:");
+                string brand = Console.ReadLine();
+                Console.WriteLine("Description:");
+                string description = Console.ReadLine();
+                Platform newPlatform = new Platform { PlatformTitle=platformTitle, Brand = brand, Description=description};
+                await context.Platforms.Insert(newPlatform);
+                tempPlatform = newPlatform;
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Press [ENTER] to exit..");
-                Console.ReadLine();
+                Console.WriteLine("Could not add the platform");
+                Console.WriteLine("Error: " + ex.Message);
+                tempPlatform = new Platform();
+            }
+        }
+
+        static async void addNewGenre()
+        {
+            try
+            {
+                Console.WriteLine("***ADD NEW GENRE TO THE DATABASE***");
+                Console.WriteLine("Name of genre:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Description of this genre:");
+                string description = Console.ReadLine();
+                Genre newGenre = new Genre { Name = name, Description = description };
+                await context.Genres.Insert(newGenre);
+                tempGenre = newGenre;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not add the genre");
+                Console.WriteLine("Error: " + ex.Message);
+                tempGenre = new Genre();
             }
         }
 
         static async void addNewGame()
         {
-            Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
-            Console.WriteLine("Game Title:");
-            string GameTitle = Console.ReadLine();
-            Game game = new Game { GameTitle = GameTitle, EAN = 122 };
-            await context.Games.Insert(game);
+            try
+            {
+                //Game related
+                Console.WriteLine("***ADD NEW GAME TO THE DATABASE***");
+                Console.WriteLine("Game Title:");
+                string gameTitle = Console.ReadLine();
+
+                //Platform related
+                Console.WriteLine("Create new platform? Y/N");
+                string answer = Console.ReadLine();
+                Platform platform = new Platform();
+                if (answer == "y" || answer == "Y")
+                {
+                    //Create new platform
+                    addNewPlatform();
+                    platform = tempPlatform;
+                }
+                else
+                {
+                    //Show existing platforms
+                    retrieveAllPlatforms();
+                    Console.WriteLine("Type in the title of the platform:");
+                    platform = context.Platforms.GetByTitle(Console.ReadLine()).Result;
+                }
+                
+
+                //Game related
+                Console.WriteLine("PEGI Rating:");
+                int ratingPEGI = Convert.ToInt16(Console.ReadLine());
+                Console.WriteLine("Publisher:");
+                string publisher = Console.ReadLine();
+
+                //Genre related
+                Console.WriteLine("Create new genre(s)? Y/N");
+                answer = Console.ReadLine();
+                List<Genre> genres = new List<Genre>();
+                if (answer == "y" || answer == "Y")
+                {
+                    //Create new genre
+                    addNewGenre();
+                    genres.Add(tempGenre);
+                }
+                else
+                {
+                    //Show existing genres
+                    //While the user wants to keep adding genres..add a new genre
+                    answer = "y";
+                    while(answer == "y" || answer == "Y")
+                    {
+                        retrieveAllGenres();
+                        Console.WriteLine("Type in the title of the genre:");
+                        genres.Add(context.Genres.GetByTitle(Console.ReadLine()).Result);
+                        Console.WriteLine("Add another genre? Y/N");
+                        answer = Console.ReadLine();
+                    }
+                }
+
+                //Game related
+                answer = "y";
+                List<string> imageURL = new List<string>();
+                while (answer == "y" || answer == "Y")
+                {
+                    Console.WriteLine("Image URL:");
+                    imageURL.Add(Console.ReadLine());
+                    Console.WriteLine("Add another URL? Y/N");
+                    answer = Console.ReadLine();
+                }
+
+                Console.WriteLine("Min Players:");
+                int minPlayers = Convert.ToInt16(Console.ReadLine());
+
+                Console.WriteLine("max Players:");
+                int maxPlayers = Convert.ToInt16(Console.ReadLine());
+
+                Console.WriteLine("Description of the game:");
+                string gameDescription = Console.ReadLine();
+
+                Console.WriteLine("Unique Game EAN:");
+                long gameEAN = Convert.ToInt64(Console.ReadLine());
+
+                Console.WriteLine("Is VR Compatible? True/False:");
+                bool isVRCompatible = Convert.ToBoolean(Console.ReadLine());
+
+                Console.WriteLine("Game Price:");
+                int price = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Release date (31/01/2016):");
+                DateTime releaseDate = Convert.ToDateTime(Console.ReadLine());
+
+                Game game = new Game {
+                    GameTitle = gameTitle,
+                    Platform = platform,
+                    RatingPEGI = ratingPEGI,
+                    Publisher = publisher,
+                    Genres = genres,
+                    Image = imageURL,
+                    MinPlayers = minPlayers,
+                    MaxPlayers = maxPlayers,
+                    Description = gameDescription,
+                    EAN = gameEAN,
+                    Price = price,
+                    IsVRCompatible = isVRCompatible,
+                    ReleaseDate = releaseDate
+                };
+                await context.Games.Insert(game);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not add the new game");
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+        #endregion
+
+        static void retrieveAllPlatforms()
+        {
+            Console.WriteLine("Displaying every platform..");
+            foreach (Platform p in context.Platforms.GetAll().Result)
+            {
+                Console.WriteLine($"Title: {p.PlatformTitle} - Brand: {p.Brand}");
+            }
+        }
+
+        static void retrieveAllGenres()
+        {
+            Console.WriteLine("Displaying every genre..");
+            foreach (Genre g in context.Genres.GetAll().Result)
+            {
+                Console.WriteLine($"Title: {g.Name}");
+            }
         }
 
         static void retrieveAllGames()
@@ -100,7 +271,7 @@ namespace DataModels
             Console.WriteLine("Displaying every game..");
             foreach(Game g in context.Games.GetAll().Result)
             {
-                Console.WriteLine(g.GameTitle);
+                Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform}");
             }
         }
 
@@ -126,7 +297,7 @@ namespace DataModels
             }
         }
 
-        private static void simulateLoginAccount()
+        static void simulateLoginAccount()
         {
             Console.WriteLine("Please login with your user account, you will see at the end whether it was succesfull or not.");
             Console.WriteLine("Enter your email:");
@@ -137,51 +308,83 @@ namespace DataModels
             Console.WriteLine($"User logged in status: {a != null}");
         }
 
-        private static void retrieveAllUsers()
+        static void retrieveAllUsers()
         {
             Console.WriteLine("Displaying every username...");
             IEnumerable<User> listOfUsers = context.Users.GetAll().Result;
 
             foreach (User u in listOfUsers)
             {
-                Console.WriteLine(u.Email);
+                Console.WriteLine($"{u.Email} has the following active status: {u.IsActive}");
             }
         }
 
-        private static void simulateFindUsernameByEmail()
+        static void simulateFindUsernameByEmail()
         {
-            Console.WriteLine("Type in the email address to look for:");
-            string email = Console.ReadLine();
-            var user = context.Users.GetByEmail(email).Result;
-            Console.WriteLine($"{user.Email} and the role is: {user.AccountRole}");
+            try
+            {
+                Console.WriteLine("Type in the email address to look for:");
+                string email = Console.ReadLine();
+                var user = context.Users.GetByEmail(email).Result;
+                Console.WriteLine($"{user.Email} and the role is: {user.AccountRole}");
+            }
+            catch
+            {
+                Console.WriteLine("Could not find the e-mail");
+                showMenuOptions();
+            }
+            
             
         }
 
-        static async private void simulateRegisterAccount()
+        static async void simulateRegisterAccount()
         {
-            //Ask user for account info to register
-            Console.WriteLine("---ACCOUNT INFO---");
-            Console.WriteLine("Enter email:");
-            string email = Console.ReadLine();
-            Console.WriteLine("Enter password:");
-            string password = Console.ReadLine();
-            Console.WriteLine("Choose your gender:\n1. Male\n2. Female\n3. Unknown");
-            Gender gender;
-            switch(Console.ReadLine())
+            try
             {
-                case "1":
-                    gender = Gender.Male;
-                    break;
-                case "2":
-                    gender = Gender.Male;
-                    break;
-                default:
-                    gender = Gender.Unknown;
-                    break;
-            }
+                //Ask user for account info to register
+                Console.WriteLine("---ACCOUNT INFO---");
+                Console.WriteLine("Enter email:");
+                string email = Console.ReadLine();
+                Console.WriteLine("Enter password:");
+                string password = Console.ReadLine();
+                Console.WriteLine("Choose your gender:\n1. Male\n2. Female\n3. Unknown");
+                Gender gender;
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        gender = Gender.Male;
+                        break;
+                    case "2":
+                        gender = Gender.Male;
+                        break;
+                    default:
+                        gender = Gender.Unknown;
+                        break;
+                }
 
-            //Add the user to the database
-            await context.Users.Register(email, password, gender);
+                //Add the user to the database
+                await context.Users.Register(email, password, gender);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Could not register account, make sure the email does not exist already!");
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        static async void deleteUserAccount()
+        {
+            try
+            {
+                Console.WriteLine("What is the e-mail address of the person you're looking for?");
+                string email = Console.ReadLine();
+                await context.Users.Delete("Email", email);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("No accounts have been deleted");
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
     }
 }

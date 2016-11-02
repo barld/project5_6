@@ -13,14 +13,20 @@ namespace DataModels
         private readonly IMongoDatabase database;
         private readonly MongoClient mongoClient;
 
+        public GameGateway Games { get; }
+        public PlatformGateway Platforms { get; }
+        public GenreGateway Genres { get; }
+        public UserGateway Users { get; }
         public Context()
         {
             string databaseName = "project__5_6";
             mongoClient = new MongoClient("mongodb://localhost:27017");
             database = mongoClient.GetDatabase(databaseName);
             createContraints();
-            Games = new GameGateway(database);
+            Games = new Gateways.GameGateway(database);
             Users = new UserGateway(database);
+            Platforms = new PlatformGateway(database);
+            Genres = new GenreGateway(database);
         }
 
         //Create the constrains for the database
@@ -32,6 +38,10 @@ namespace DataModels
             //EAN attribute must be unique in the Game collection
             var fieldEAN = new StringFieldDefinition<Game>("EAN");
             database.GetCollection<Game>("Game").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Game>().Ascending(fieldEAN), options);
+
+            //PlatformTitle attribute must be unique in the Platform collection
+            var fieldPlatformTitle = new StringFieldDefinition<Platform>("PlatformTitle");
+            database.GetCollection<Platform>("Platform").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Platform>().Ascending(fieldPlatformTitle), options);
 
             //Email attribute must be unique in the User collection
             var fieldEmail = new StringFieldDefinition<User>("Email");
@@ -52,8 +62,6 @@ namespace DataModels
             Console.WriteLine("Database cleared..");
         }
 
-        public GameGateway Games { get; }
-        public UserGateway Users { get; }
         public void Dispose()
         {
             

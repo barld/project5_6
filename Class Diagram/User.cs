@@ -20,5 +20,7 @@ namespace DataModels
         public string Salt { get; set; }
 
         public ObjectId _id { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
 }

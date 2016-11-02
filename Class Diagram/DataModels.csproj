@@ -54,11 +54,13 @@
   <ItemGroup>
     <Compile Include="AccountRole.cs" />
     <Compile Include="Gateways\Context.cs" />
+    <Compile Include="Gateways\GenreGateway.cs" />
+    <Compile Include="Gateways\PlatformGateway.cs" />
     <Compile Include="Gateways\GameGateway.cs" />
     <Compile Include="GameList.cs" />
     <Compile Include="Gateways\Gateway.cs" />
     <Compile Include="Gender.cs" />
-    <Compile Include="Gateways\IContext.cs" />
+    <Compile Include="Gateways\Interfaces\IContext.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

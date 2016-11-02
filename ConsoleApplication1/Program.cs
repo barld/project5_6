@@ -14,7 +14,6 @@ namespace DataModels
     class Program
     {
         static Context context;
-        //static DatabaseConnection dc;
         static void Main(string[] args)
         {
             if (Debugger.IsAttached)
@@ -52,46 +51,27 @@ namespace DataModels
 9. Delete user by email
 10. Exit application");
             Console.WriteLine("-----------------------");
-            switch (Console.ReadLine())
-            {
-                case "1":
-                    //To reset/clean the database
-                    //If its not working, make sure the column names are still correct (found in the Reset method)
-                    context.Reset();
-                    break;
-                case "2":
-                    simulateRegisterAccount();
-                    break;
-                case "3":
-                    updateUserAccount();
-                    break;
-                case "4":
-                    addNewGame();
-                    break;
-                case "5":
-                    simulateLoginAccount();
-                    break;
-                case "6":
-                    simulateFindUsernameByEmail();
-                    break;
-                case "7":
-                    retrieveAllUsers();
-                    break;
-                case "8":
-                    retrieveAllGames();
-                    break;
-                case "9":
-                    deleteUserAccount();
-                    break;
-                case "10":
+            List<Action> actions = new List<Action> {
+                context.Reset,
+                simulateRegisterAccount,
+                updateUserAccount,
+                addNewGame,
+                simulateLoginAccount,
+                simulateFindUsernameByEmail,
+                retrieveAllUsers,
+                retrieveAllGames,
+                deleteUserAccount,
+                () => {
                     Console.WriteLine("Press [ENTER] to exit..");
                     Console.ReadLine();
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("No valid choice given, try again...");
-                    break;
+                    Environment.Exit(0); }
+            };
+            try
+            {
+                int choice = int.Parse(Console.ReadLine());
+                actions[choice - 1]();
             }
+            catch { Console.WriteLine("No valid choice given.."); }
             Console.WriteLine("-----------------------");
             showMenuOptions();
             Console.WriteLine("-----------------------");

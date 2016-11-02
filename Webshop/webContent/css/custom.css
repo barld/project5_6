@@ -42,6 +42,10 @@ a{
 	color:#FFFFFF;
 }
 
+#user_profile{
+    display:none;
+}
+
 .floating_menu_component{
 	float:right !important;
 }

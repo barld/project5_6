@@ -29,7 +29,7 @@ class FormHandler{
 	    xhr.setRequestHeader('Content-type', options.requestHeader, true);
 
 	    //xhr.send(options.data !== null ? JSON.stringify(options.data) : null);
-	    xhr.send(options.data);
+	    xhr.send(JSON.stringify(options.data));
 
 		// Function to fire off when the server has send a response
 	    xhr.onload = function () {

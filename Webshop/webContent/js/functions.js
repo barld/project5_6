@@ -2,23 +2,6 @@
 var router = new Router();
 
 ﻿function Login() {
-    var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
-
-    formHandler.startCall({
-        requestHeader: 'application/json',
-        method: 'GET',
-        url: 'http://localhost:8080/api/user/login/',
-        data: {email: formHandler.getValue('email'), password: formHandler.getValue('password')},
-        ajaxFunction: function (data) {
-            var feedback = JSON.parse(data);
-
-            if (!feedback.Success) {
-                document.getElementById("loginFeedback").innerHTML = feedback.Message;
-            } else {
-                document.getElementById("loginFeedback").innerHTML = "Login successful!";
-            }
-        }
-    });
 }
 
 // Display the username in the username textbox (saved with localStorage)

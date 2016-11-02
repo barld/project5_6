@@ -17,14 +17,6 @@ var app = new Vue({
 		getProductPlatform: function(){
 		    LoadProductsByPlatform();
 		},
-		closePopup: function(){
-			document.body.addEventListener("keydown", function(e){
-				if(e.keyCode === 27){
-					this.productDetails = false;
-					this.chosenProductFilled = false;
-				}
-			});
-		},
 		showProductDetails: function(product){
 			this.productDetails = true;
 			var game = new Game({id: product.game.data.id, name: product.game.data.name, image: product.game.image, platforms: product.game.data.platforms});
@@ -35,8 +27,27 @@ var app = new Vue({
 			this.showLogin = true;
 		},
 		ajaxLogin: function (e) {
-			e.preventDefault();
-			Login();
+		    e.preventDefault();
+		    var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
+
+		    formHandler.startCall({
+		        requestHeader: 'application/json',
+		        method: 'POST',
+		        url: 'http://localhost:8080/api/user/login/',
+		        data: { email: userInformation.email, password: userInformation.password },
+		        ajaxFunction: function (data) {
+		            var feedback = JSON.parse(data);
+
+		            if (feedback.Success) {
+		                document.getElementById("loginFeedback").innerHTML = "Login successful!";
+		                document.getElementById("login_screen").style.display = "none";
+		                document.getElementById("user_login_nav").style.display = "none";
+		                document.getElementById("user_profile").style.display = "block";
+		            } else {
+		                document.getElementById("loginFeedback").innerHTML = feedback.Message;
+		            }
+		        }
+		    });
 		},
 		storeUsername: function () {
 			localStorage.setItem("login_email", document.getElementById("login_email").value);

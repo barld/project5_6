@@ -64,8 +64,10 @@
     <Compile Include="Gender.cs" />
     <Compile Include="Gateways\IContext.cs" />
     <Compile Include="Genre.cs" />
+    <Compile Include="Importers\Dataclasses\JsonPlatform.cs" />
     <Compile Include="Importers\GameImporter.cs" />
     <Compile Include="Importers\GerneImporter.cs" />
+    <Compile Include="Importers\Helpers\WebHelper.cs" />
     <Compile Include="Importers\Impl\IGDBGameImporter.cs" />
     <Compile Include="Importers\Impl\IGDBGerneImporter.cs" />
     <Compile Include="Importers\Impl\IGDBPlatformImporter.cs" />

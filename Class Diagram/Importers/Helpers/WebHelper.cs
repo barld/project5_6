@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Helpers
 {
-    public static class UrlCreator
+    public static class WebHelper
     {
         public static string createUrlWithParameters (string baseUrl, Dictionary<string, string> urlParameters)
         {
@@ -31,6 +32,16 @@ namespace Class_Diagram.Importers.Helpers
             }
 
             return urlBuilder.ToString();
+        }
+
+        public static HttpClient getDefaultImporterHttpClient()
+        {
+            HttpClient client = new HttpClient();
+
+            client.Timeout = TimeSpan.FromMilliseconds(5000);
+            client.DefaultRequestHeaders.Add("User-Agent", "HR Project5_6 App");
+
+            return client;
         }
     }
 }

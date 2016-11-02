@@ -1,4 +1,5 @@
-﻿using Class_Diagram.Importers.Helpers;
+﻿using Class_Diagram.Importers.Dataclasses;
+using Class_Diagram.Importers.Helpers;
 using DataModels;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,7 +18,7 @@ namespace Class_Diagram.Importers.Impl
         private string BASE_URL = "http://www.giantbomb.com/api/platforms/";
         private Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
         {
-            {"api_key", "" },
+            {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
             { "format", "json" },
             { "field_list", "name,company,release_date" },
             { "filter","release_date:2012-01-01 01:01:01|2017-01-01 01:01:01" }
@@ -26,20 +27,50 @@ namespace Class_Diagram.Importers.Impl
         public void importPlatforms()
         {
             bool finished = false;
-            List<Platform> platforms;
+            List<Platform> platforms = new List<Platform>();
+            Platform platform;
 
-            HttpClient httpClient = new HttpClient();
-            httpClient.Timeout = TimeSpan.FromMilliseconds(5000);
             JObject jsonResponse;
             JArray jsonPlatformArray;
-            JObject jsonPlatformObject;
+
+            string platformName, platformBrand;
+
+            HttpClient httpClient = WebHelper.getDefaultImporterHttpClient();
 
             while (finished == false)
             {
-                HttpResponseMessage response = httpClient.GetAsync(UrlCreator.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+                HttpResponseMessage response = httpClient.GetAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+                string resultString = response.Content.ReadAsStringAsync().Result;
+                jsonResponse = JObject.Parse(resultString);
+                jsonPlatformArray = (JArray) jsonResponse["results"];
+
+                foreach(JObject jsonPlatformObject in jsonPlatformArray)
+                {
+
+                    if (jsonPlatformObject["name"].Type == JTokenType.String) {
+                        platformName = (string)jsonPlatformObject["name"];
+
+                        if (jsonPlatformObject["company"].Type == JTokenType.Object)
+                        {
+                            platformBrand = (string)jsonPlatformObject["company"]["name"];
+                        }
+                        else
+                        {
+                            platformBrand = "NA";
+                        }
+
+                        platform = new Platform()
+                        {
+                            PlatformTitle = platformName,
+                            Brand = platformBrand,
+                            Description = ""
+                        };
+
+                        platforms.Add(platform);
+                    }
+                }
                 //string jsonString = response.Content.ReadAsStringAsync().Result;
-                //Debug.WriteLine(jsonString);
-                
+                Debug.WriteLine("finished");
             }
         }
     }

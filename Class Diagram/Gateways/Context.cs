@@ -21,6 +21,8 @@ namespace DataModels
             createContraints();
             Games = new Gateways.GameGateway(database);
             Users = new UserGateway(database);
+            Platforms = new PlatformGateway(database);
+            Genres = new GenreGateway(database);
         }
 
         //Create the constrains for the database
@@ -32,6 +34,10 @@ namespace DataModels
             //EAN attribute must be unique in the Game collection
             var fieldEAN = new StringFieldDefinition<Game>("EAN");
             database.GetCollection<Game>("Game").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Game>().Ascending(fieldEAN), options);
+
+            //PlatformTitle attribute must be unique in the Platform collection
+            var fieldPlatformTitle = new StringFieldDefinition<Platform>("PlatformTitle");
+            database.GetCollection<Platform>("Platform").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Platform>().Ascending(fieldPlatformTitle), options);
 
             //Email attribute must be unique in the User collection
             var fieldEmail = new StringFieldDefinition<User>("Email");

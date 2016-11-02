@@ -78,18 +78,19 @@ namespace DataModels
         }
 
         #region A game needs a platform and 1 or more genres
-        static Platform addNewPlatform()
+        static async Task<Platform> addNewPlatform()
         {
             try
             {
                 Console.WriteLine("***ADD NEW PLATFORM TO THE DATABASE***");
-                Console.WriteLine("Platform tittle:");
+                Console.WriteLine("Platform title:");
                 string platformTitle = Console.ReadLine();
                 Console.WriteLine("Brand:");
                 string brand = Console.ReadLine();
                 Console.WriteLine("Description:");
                 string description = Console.ReadLine();
                 Platform platform = new Platform { PlatformTitle=platformTitle, Brand = brand, Description=description};
+                await context.Platforms.Insert(platform);
                 return platform;
             }
             catch (Exception ex)
@@ -127,7 +128,7 @@ namespace DataModels
                 if (answer == "y" || answer == "Y")
                 {
                     //Create new platform
-                    platform = addNewPlatform();
+                    platform = addNewPlatform().Result;
                 }
                 else
                 {

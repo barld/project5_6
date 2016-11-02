@@ -8,10 +8,9 @@ namespace DataModels
 {
     public class Platform
     {
+        public ObjectId _id { get; set; }
         public string PlatformTitle { get; set; }
         public string Brand { get; set; }
         public string Description { get; set; }
-
-        public ObjectId _id { get; set; }
     }
 }

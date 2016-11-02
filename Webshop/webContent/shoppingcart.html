@@ -6,22 +6,58 @@
     <title>shopping cart</title>
 </head>
 <body>
-    <script>
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/api/shoppingcart");
+    <div id="app">
+        <shopcart></shopcart>
+        <shopcart></shopcart>
+    </div>
+    
+    <script src="js/vue.js"></script>
+    <div class="component" id="shoppingcartSection">
+        <script type="text/x-template" id="shopcart-template">
+            <ul>
+                <li v-for="cartLine in cartLines">
+                    {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}
+                </li>
+            </ul>
+        </script>
+        
+        <script>
+            Vue.component('shopcart', {
+                template: '#shopcart-template',
+                data: function () {
+                    return {
+                        cartLines: []
+                    }
+                },
+                methods:{
+                    getData: function () {
+                        var base = this;
 
-        // The RequestHeader can be any, by the server accepted, file
-        xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", "/api/shoppingcart");
+
+                        // The RequestHeader can be any, by the server accepted, file
+                        xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
 
-        // Function to fire off when the server has send a response
-        xhr.onload = function () {
-            console.log("TEST!");
-            //options.ajaxFunction();
-            console.log(xhr.response);
-        }
+                        // Function to fire off when the server has send a response
+                        xhr.onload = function () {
+                            base.cartLines = JSON.parse(xhr.response).CartLines;
+                        }
 
-        xhr.send();
-    </script>
+                        xhr.send();
+                    }
+                },
+                created: function () {
+                    this.getData();
+                }
+            });
+            var app = new Vue({
+                el: '#app'
+            });
+
+        </script>
+    </div>
+    
 </body>
 </html>

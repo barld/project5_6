@@ -1,4 +1,5 @@
 ﻿using Class_Diagram.ShoppingCart;
+using DataModels;
 using MVC.View;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,16 @@ namespace Webshop.Controllers
     {
         #region logic
         const string shoppingCartKey = "shoppingCart";
+        private Context context;
 
         Cart currentShoppingCart
         {
             get
             {
                 if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, new Cart());
+                    Session.Data.Add(shoppingCartKey, new Cart() {
+                        CartLines =  context.Games.GetAll().Result.Select((g, i) => new CartLine { Amount = i+1, Product = g } )
+                    });
                 return Session.Data[shoppingCartKey] as Cart;
             }
             set
@@ -35,6 +39,11 @@ namespace Webshop.Controllers
         }
 
         #endregion
+
+        public override void AfterConstruct()
+        {
+            this.context = new Context();
+        }
 
         public ViewObject Get()
         {

@@ -1,9 +1,9 @@
 ﻿var formHandler = new FormHandler();
+var router = new Router();
+
 ﻿function Login() {
     var userInformation = { email: document.getElementById("login_email").value, password: document.getElementById("login_password").value };
     var formHandler = new FormHandler();
-    console.log(userInformation.username);
-    console.log(userInformation.password);
 
     formHandler.addValue('username', userInformation.username);
     formHandler.addValue('password', userInformation.password);
@@ -14,6 +14,8 @@
         url: 'http://localhost:8080/api/user/login',
         data: formHandler,
         ajaxFunction: function (data) {
+            formHandler.removeValue('username');
+            formHandler.removeValue('password');
             console.log(data);
         }
     });
@@ -43,4 +45,22 @@ function SearchGame(query) {
             formHandler.removeValue('query');
         }
     });
+}
+
+function LoadProducts() {
+    formHandler.startCall({
+        requestHeader: 'application/json',
+        method: 'GET',
+        url: 'http://localhost:8080/api/product/all/',
+        data: formHandler,
+        ajaxFunction: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function LoadProductsByPlatform() {
+    setTimeout(function () {
+        console.log(router.getProductByPlatform());
+    }, 250);
 }

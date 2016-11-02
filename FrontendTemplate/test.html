@@ -35,7 +35,28 @@
 </style>
 
 <script>
+	class Popup{
+		constructor(data){
+
+		}
+	}
+
 	window.onload = function(){
+
+		var popup = new Popup({
+			title: "Title",
+			content:{
+				input1: "<input type='text'>",
+				input2: "<input type='password'>",
+				button: "<button>Log in</button>"
+			},
+			open: function(){
+				console.log("Opening this popup!");
+			},
+			close: function(){
+				console.log("Closing this");
+			}
+		});
 
 		document.getElementById("showLogin").addEventListener("click", function(){
 			console.log("TEST");

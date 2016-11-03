@@ -25,7 +25,6 @@
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="./dist/build.js"></script>
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -34,13 +33,12 @@
 </head>
 <body>
 <div id="app">
-
     <nav><!-- Start menu -->
         <div id="navbar">
             <ul>
                 <li class="submenu_parent">
                     <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
-
+                    <menu></menu>
                 </li>
                 <li class="floating_menu_component">
                     <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
@@ -64,146 +62,10 @@
     </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
-            <div v-show="showLogin" class="popup login_screen" id="login_screen"><!-- Start login screen -->
-                <div class="close_btn" @click="showLogin = false">
-                    <i class="fa fa-times fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="inner_padding">
-                    <h1>Login</h1>
-                    <form action="" method="post">
-                        <div class="twelve columns">
-                            <label for="login_email">Uw email:</label><input class="u-full-width" type="email" placeholder="test@mail.nl" name="login_email" id="login_email" @blur="storeUsername">
-                        </div>
-                        <div class="twelve columns">
-                            <label for="login_password">Uw wachtwoord</label>
-                            <input class="u-full-width" type="password" placeholder="Wachtwoord" name="login_password" id="login_password">
-                        </div>
-                        <button class="button-primary login_button" type="submit" value="Log in" @click="ajaxLogin">Log in</button>
-                    </form>
-                    <div id="loginFeedback"></div>
-                </div>
-            </div><!-- End login screen -->
-            <div class="popup" v-show="showRegister">
-                <div class="close_btn" @click="showRegister = false">
-                    <i class="fa fa-times fa-5x" aria-hidden="true"></i>
-                </div>
-                <div class="inner_padding">
-                    <h1>Registreren</h1>
-                    <div class="twelve columns">
-                        <label for="register_email">Email</label>
-                        <input class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
-                    </div>
-                    <div class="twelve columns">
-                        <label for="register_password">Wachtwoord</label>
-                        <input class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
-                    </div>
-                    <div class="twelve columns">
-                        <label for="register_password">Geslacht</label>
-                        <select id="register_gender">
-                            <option value="0">Man</option>
-                            <option value="1">Vrouw</option>
-                        </select>
-                    </div>
-                    <button class="button-primary register_button" type="submit" value="Registreren">Registreren</button>
-                </div>
-            </div>
-            <input type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
-            <div v-if="productDetails && chosenProductFilled" class="popup"><!-- Start product details -->
-                <div class="close_btn" @click="productDetails = false">
-                    <i class="fa fa-times fa-5x" aria-hidden="true"></i>
-                </div>
-                <h1>Specificaties {{chosenProduct.data.name}}</h1>
-                <img v-bind:src="chosenProduct.data.image" alt="" class="product_image_overview"> <br />
-                Beschrijving: {{chosenProduct.data}}
-                <table class="u-full-width">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Beschikbaar op</th>
-                        <th>Prijs</th>
-                        <th>Aantal</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>20172017</td>
-                        <td>PC</td>
-                        <td>EUR 65</td>
-                        <td>
-                            <select name="productAmountPC" id="productAmountPC">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>20172017</td>
-                        <td>PlayStation 4</td>
-                        <td>EUR 65</td>
-                        <td>
-                            <select name="productAmountPS" id="productAmountPS">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>20172017</td>
-                        <td>Wii U</td>
-                        <td>EUR 40</td>
-                        <td>
-                            <select name="productAmountWii" id="productAmountWii">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    </tbody>
-                </table>
-                {{chosenProduct.data.platforms}}
-                <table class="u-full-width">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Beschikbaar op</th>
-                        <th>Prijs</th>
-                        <th>Aantal</th>
-                    </tr>
-                    </thead>
-                    <tbody v-for="product in chosenProduct.data.platforms">
-                    </tbody>
-                </table>
-                <span class="total_current_games">Totaal: EUR 0.00</span> <br />
-                <button class="button-primary"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Toevoegen aan winkelwagen</button>
-            </div><!-- End product details screen -->
-            <div id="games_overview">
-                <h1>Nu populair</h1>
-                <div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
-                    <div class="three columns product" v-for="product in popularGames">
-                        <div class="product_title">{{ product.game.data.name }}</div>
-                        <img v-bind:src="product.game.data.image" alt="" class="product_image"> <br />
-                        <!-- <div class="product_price">EUR {{ product.game.data.price }}</div> -->
-                        <a v-bind:href="'#product/#' + product.game.data.id" @click="showProductDetails(product)">Bekijk meer</a>
-                    </div>
-                </div><br /><!-- End spotlight games -->
-            </div>
+
         </div>
     </div><!-- End container -->
 </div>
 <script src="./dist/build.js"></script>
-<script src="js/shoppingcartComponent.js"></script>
-<script src="js/classes/product.js"></script>
-<script src="js/classes/formdata.js"></script>
-<script src="js/classes/routing.js"></script>
-<script src="js/functions.js"></script>
-<script src="js/main.js"></script>
 </body>
 </html>

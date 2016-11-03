@@ -80,7 +80,7 @@ function GenerateData() {
             id: 3929029,
             name: "Pokemon Sun/Moon",
             image: "https://s.aolcdn.com/hss/storage/midas/4196e577c51940e12ffb2ecbc9106bb6/203799629/pokemonsunmoon.png",
-            description: "EEN NIEUW POKEMON SPEL, DIE MOET IEDEREEN.",
+            description: "EEN NIEUW POKEMON SPEL, DIE MOET IEDEREEN HEBBEN.",
             pegi_rating: "",
             min_players: 1,
             max_players: 4,

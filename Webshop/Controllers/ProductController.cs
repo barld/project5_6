@@ -27,7 +27,6 @@ namespace Webshop.Controllers
         public ViewObject PostSearch()
         {
             var data = GetBodyFromJson<Game>();
-            //Game game = context.Games.GetByTitle(data.GameTitle).Result;
             IEnumerable<Game> game = context.Games.GetByTitleLike(data.GameTitle).Result;
 
             return Json(game);

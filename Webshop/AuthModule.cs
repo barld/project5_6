@@ -47,7 +47,7 @@ namespace Webshop
         {
             if (session.Data.ContainsKey("currentUser"))
             {
-                return new ActionResultViewModel { Success = false, Message = "user already loged in" };
+                return new ActionResultViewModel { Success = false, Message = "User already logged in" };
             }
             else
             {
@@ -55,11 +55,11 @@ namespace Webshop
                 if (logedinUser != null)
                 {
                     session.Data.Add("currentUser", logedinUser);
-                    return new ActionResultViewModel { Success = true, Message = "user succesfoly logged in" };
+                    return new ActionResultViewModel { Success = true, Message = "User succesfully logged in" };
                 }
                 else
                 {
-                    return new ActionResultViewModel { Success = false, Message = "no correct login data" };
+                    return new ActionResultViewModel { Success = false, Message = "Incorrect login data" };
                 }
             }            
         }
@@ -69,11 +69,11 @@ namespace Webshop
             try
             {
                 CurrentUser = context.Users.Register(user.Email, user.Password, user.Gender).Result;
-                return new ActionResultViewModel { Success = true, Message = "succes registerd user" };
+                return new ActionResultViewModel { Success = true, Message = "Succesfully registered user" };
             }
             catch(Exception e)
             {
-                return new ActionResultViewModel { Success = false, Message = "sommthing went wrong" };
+                return new ActionResultViewModel { Success = false, Message = "Something went wrong" };
             }
         }
 

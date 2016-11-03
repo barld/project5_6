@@ -26,11 +26,12 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task<Game> GetByTitleLike(string searchTitle)
+        public async Task<IEnumerable<Game>> GetByTitleLike(string searchTitle)
         {
             //var filter = Builders<Game>.Filter.Regex("GameTitle", new BsonRegularExpression(searchTitle, "i"));
-            var filter = Builders<Game>.Filter.Regex("Symbol", string.Format("/(^{0}.*)|(.*{0}$)/", searchTitle));
-            return await Collection.Find(filter).FirstOrDefaultAsync();
+            var builder = Builders<Game>.Filter;
+            var filter = builder.Regex("GameTitle", searchTitle);
+            return await Collection.Find(filter).ToListAsync();
         }
 
         /// <summary>a

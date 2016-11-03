@@ -1,6 +1,9 @@
 import Vue from 'vue'
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
+import dc from './dc/dc.vue'
+
+Vue.component('dc', dc);
 
 Vue.component('shopcart', require('./ShoppingcartMenu.vue'));
 Vue.component('platform_menu', require('./PlatformMenu.vue'));

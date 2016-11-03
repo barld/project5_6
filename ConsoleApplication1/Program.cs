@@ -236,8 +236,22 @@ namespace DataModels
                 //Game related
                 Console.WriteLine("PEGI Rating:");
                 int ratingPEGI = Convert.ToInt16(Console.ReadLine());
+
+                List<string> publisher = new List<string>();
                 Console.WriteLine("Publisher:");
-                string publisher = Console.ReadLine();
+                publisher.Add(Console.ReadLine());
+                answer = "y";
+                while(answer == "y" || answer == "Y")
+                {
+                    Console.WriteLine("Add another publisher? Y/N");
+                    answer = Console.ReadLine();
+                    if(answer == "y" || answer == "Y")
+                    {
+                        Console.WriteLine("Publisher:");
+                        publisher.Add(Console.ReadLine());
+                    }
+                }
+                
 
                 //Genre related
                 Console.WriteLine("Create new genre(s)? Y/N");

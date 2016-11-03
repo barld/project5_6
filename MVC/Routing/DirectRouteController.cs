@@ -36,9 +36,9 @@ namespace MVC.Routing
             var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IFilterControllerAttribute) as IFilterControllerAttribute;
             bool hasPca = pca != null;
             if (hasPca)
-                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session), session);
+                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session, context), session);
             else
-                controller = ControllerFactory.CreateController(ControllerType, session);
+                controller = ControllerFactory.CreateController(ControllerType, session, context);
 
             Func<ViewObject> getView = ControllerFactory.GetView(context, controller, urlParts.Skip(2).ToList());
 

@@ -35,7 +35,7 @@ namespace MVC.Routing
 
         public ViewObject GetView(HttpListenerContext context, Session session)
         {
-            var restPath = context.Request.RawUrl.Substring(UrlPath.Length);
+            var restPath = context.Request.RawUrl.Substring(UrlPath.Length).Split('?', '#')[0];
             var urlParts = restPath
                 .Split('/')
                 .Where(s => !String.IsNullOrWhiteSpace(s))
@@ -48,9 +48,9 @@ namespace MVC.Routing
             var pca = ControllerType.GetCustomAttributes(true).FirstOrDefault(at => at is IFilterControllerAttribute) as IFilterControllerAttribute;
             bool hasPca = pca != null;
             if (hasPca)
-                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session), session);
+                controller = pca.Construct(() => ControllerFactory.CreateController(ControllerType, session, context), session);
             else
-                controller = ControllerFactory.CreateController(ControllerType, session);
+                controller = ControllerFactory.CreateController(ControllerType, session, context);
 
             Func<ViewObject> getView = ControllerFactory.GetView(context, controller, urlParts.Skip(1).ToList());
 

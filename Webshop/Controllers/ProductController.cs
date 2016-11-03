@@ -18,8 +18,9 @@ namespace Webshop.Controllers
             return Json(new {IsVRCompatible = true, Price = 45.00f, Publisher = "EA", RatingPegi = ".", ReleaseDate = new DateTime()});
         }
 
-        public object GetAll()
+        public ViewObject GetAll()
         {
+            //Console.WriteLine(this.Parameters["id"]);
             IEnumerable<Game> games = context.Games.GetAll().Result;
             return Json(games);
         }

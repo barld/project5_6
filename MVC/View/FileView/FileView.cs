@@ -26,6 +26,9 @@ namespace MVC.View
 
             stream.CopyTo(response.OutputStream);
             response.OutputStream.Close();
+
+            stream.Close();
+            stream.Dispose();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MVC.Controller
     {
         public Session Session { get; internal set; }
         internal HttpListenerContext _requestContext { set; get; }
+        public Dictionary<string, string> Parameters { get; internal set; }
 
         public virtual void AfterConstruct() { }
 

@@ -120,6 +120,7 @@ a{
 	left:       0; 
 	position:   fixed;
 	overflow:auto;
+	display:none;
 }
 
 .close_btn{

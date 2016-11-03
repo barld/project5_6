@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Webshop.Models;
 
 namespace Webshop.Controllers
 {
@@ -26,8 +27,9 @@ namespace Webshop.Controllers
 
         public ViewObject PostSearch()
         {
-            var data = GetBodyFromJson<Game>();
-            IEnumerable<Game> game = context.Games.GetByTitleLike(data.GameTitle).Result;
+            var data = GetBodyFromJson<ValueModel>();
+            //Game game = context.Games.GetByTitle(data.GameTitle).Result;
+            IEnumerable<Game> game = context.Games.GetByTitleLike(data.Value).Result;
 
             return Json(game);
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Impl
@@ -64,7 +65,7 @@ namespace Class_Diagram.Importers.Impl
             return null;
         }
 
-        private void getDetailedGameData(JsonGameInfoContainer gameInfoContainer)
+        private bool getDetailedGameData(JsonGameInfoContainer gameInfoContainer)
         {
             string BASE_URL = "http://www.giantbomb.com/api/games/" + gameInfoContainer.ApiId + "/";
             Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
@@ -76,25 +77,52 @@ namespace Class_Diagram.Importers.Impl
             HttpClient client = WebHelper.getDefaultImporterHttpClient();
 
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+            JObject jsonResponseObject = JObject.Parse(responseText);
+            JArray jsonPublisherArray;
+            if((jsonPublisherArray = (JArray)jsonResponseObject["publishers"]).Type != JTokenType.Null)
+            {
+                gameInfoContainer.Publisher = (string) jsonPublisherArray[0]["name"];
+                return true;
+            }
+            return false;
         }
 
-        private void getReleaseData(JsonGameInfoContainer gameInfoContainer)
+        private bool isReleasedInRegion(int gameId, Region region)
         {
-            string BASE_URL = "http://www.giantbomb.com/api/games/" + gameInfoContainer.ApiId + "/";
+            string BASE_URL = "http://www.giantbomb.com/api/releases/";
             Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
             {
                 {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
                 { "format", "json" },
-                { "field_list", "publishers" }
+                { "filter", "region:" + Region.EU + ",game:"+ gameId }
             };
             HttpClient client = WebHelper.getDefaultImporterHttpClient();
 
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+            JObject jsonResponseObject = JObject.Parse(responseText);
+
+            return jsonResponseObject["results"].Type != JTokenType.Null;
         }
 
-        private string transformRating(string originalRating)
+        private int transformRating(string originalRating)
         {
-            return "10+";
+            Dictionary<string, int> ratingDictionary = new Dictionary<string, int>()
+            {
+                { "ERSB E", 10 }
+            };
+            int ratingValue = ratingDictionary.TryGetValue(originalRating, out ratingValue) ? ratingValue : 10;
+
+            return ratingValue;
+        }
+
+        private void wait(int milliseconds)
+        {
+            Thread.Sleep(milliseconds);
+        }
+
+        private enum Region
+        {
+            EU = 1
         }
 
         private class JsonGameInfoContainer

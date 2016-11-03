@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace DataModels.Gateways
 {
@@ -25,7 +26,14 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        /// <summary>
+        public async Task<Game> GetByTitleLike(string searchTitle, string like)
+        {
+            //var filter = Builders<Game>.Filter.Regex("GameTitle", new BsonRegularExpression(searchTitle, "i"));
+            var filter = Builders<Game>.Filter.Regex(searchTitle, "^");
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        /// <summary>a
         /// Receives all games in a list that matches the title that was given
         /// </summary>
         /// <param name="searchTitle">The title of the game</param>

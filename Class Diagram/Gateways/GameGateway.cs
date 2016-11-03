@@ -28,9 +28,8 @@ namespace DataModels.Gateways
 
         public async Task<IEnumerable<Game>> GetByTitleLike(string searchTitle)
         {
-            //var filter = Builders<Game>.Filter.Regex("GameTitle", new BsonRegularExpression(searchTitle, "i"));
             var builder = Builders<Game>.Filter;
-            var filter = builder.Regex("GameTitle", searchTitle);
+            var filter = builder.Regex("GameTitle", new BsonRegularExpression(searchTitle, "i"));
             return await Collection.Find(filter).ToListAsync();
         }
 

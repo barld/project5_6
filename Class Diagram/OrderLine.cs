@@ -8,7 +8,7 @@ namespace DataModels
 {
     public class OrderLine
     {
-        public DataModels.Game Game { get; set; }
+        public Game Game { get; set; }
 
         public int Amount { get; set; }
 

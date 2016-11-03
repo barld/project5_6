@@ -26,6 +26,12 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
+        public async Task<Game> GetByEAN(long EAN)
+        {
+            var filter = Builders<Game>.Filter.Eq(g => g.EAN, EAN);
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Game>> GetByTitleLike(string searchTitle)
         {
             var builder = Builders<Game>.Filter;

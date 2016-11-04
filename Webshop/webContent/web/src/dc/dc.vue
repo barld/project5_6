@@ -24,7 +24,7 @@
         methods:{
             click: function () {
                 this.cc++;
-                this.cc = this.cc%2;
+                this.cc %= 2;
                 this.currentView = 't'+(this.cc+1);
             }
         }

@@ -1,28 +1,23 @@
 <template>
-    <div class="popup">
-        <div class="close_btn">
-            <i class="fa fa-times fa-5x" aria-hidden="true"></i>
+    <popup v-on:close="close" >
+        <h1>Registreren</h1>
+        <div class="twelve columns">
+            <label for="register_email">Email</label>
+            <input class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
         </div>
-        <div class="inner_padding">
-            <h1>Registreren</h1>
-            <div class="twelve columns">
-                <label for="register_email">Email</label>
-                <input class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
-            </div>
-            <div class="twelve columns">
-                <label for="register_password">Wachtwoord</label>
-                <input class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
-            </div>
-            <div class="twelve columns">
-                <label for="register_password">Geslacht</label>
-                <select id="register_gender">
-                    <option value="0">Man</option>
-                    <option value="1">Vrouw</option>
-                </select>
-            </div>
-            <button class="button-primary register_button" type="submit" value="Registreren" @click="register">Registreren</button>
+        <div class="twelve columns">
+            <label for="register_password">Wachtwoord</label>
+            <input class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
         </div>
-    </div>
+        <div class="twelve columns">
+            <label for="register_password">Geslacht</label>
+            <select id="register_gender">
+                <option value="0">Man</option>
+                <option value="1">Vrouw</option>
+            </select>
+        </div>
+        <button class="button-primary register_button" type="submit" value="Registreren" @click="register">Registreren</button>
+    </popup>
 </template>
 
 <script>
@@ -54,6 +49,9 @@
                 };
 
                 xhr.send(JSON.stringify(userInformation));
+            },
+            close: function () {
+                this.$emit('close')
             }
         }
     }

@@ -100,9 +100,9 @@ namespace Class_Diagram.Importers.Impl
                         MaxPlayers = gic.MinimumPlayers,
                         IsVRCompatible = false,
                         Platform = platforms.Find(a => a.PlatformTitle == rel.PlatformName),
-                        Image = gic.ImagerHref,
+                        Image = new List<string>() { gic.ThumbnailImageHref, gic.ImagerHref},
                         Price = rel.Price,
-                        Publisher = gic.Publisher[0],
+                        Publisher = gic.Publisher,
                         RatingPEGI = gic.RatingPEGI,
                         ReleaseDate = rel.ReleaseDate 
                     };

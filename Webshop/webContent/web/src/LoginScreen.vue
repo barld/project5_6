@@ -29,7 +29,7 @@
                 login_email: '',
                 login_password: ''
             }
-        },i
+        },
         methods:{
             login: function(e){
                 e.preventDefault();

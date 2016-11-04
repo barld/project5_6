@@ -41,8 +41,11 @@ namespace Webshop.Controllers
                 }
                 amount_index = -1;
             }
-
-            Order order = new Order { OrderLines = orderlineList, OrderDate = DateTime.Now };
+            User customer = context.Users.GetByEmail(data.Email).Result;
+            int newOrderNumber = context.Orders.GetLatestOrderNumber() + 1;
+            Address deliveryAddress = new Address { City=data.DeliveryCity, Country=data.DeliveryCountry, Housenumber=data.DeliveryHousenumber, PostalCode=data.DeliveryPostalCode, Streetname=data.DeliveryStreetname };
+            Address billingAddress = new Address { City=data.BillingCity, Country=data.BillingCountry, Housenumber=data.BillingHousenumber, PostalCode=data.BillingPostalCode, Streetname=data.DeliveryStreetname };
+            Order order = new Order { OrderLines = orderlineList, OrderDate = DateTime.Now, Customer=customer, OrderNumber=newOrderNumber, DeliveryAddress=deliveryAddress, BillingAddress=billingAddress};
             await context.Orders.Insert(order); 
         }
     }

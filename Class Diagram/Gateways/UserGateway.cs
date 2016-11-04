@@ -71,7 +71,6 @@ namespace DataModels.Gateways
                 AccountRole = AccountRole.User,
                 Email = email,
                 Gender = gender,
-                // TODO: hashing
                 Password = hash,
                 Salt = salt,
                 MyLists = new List<MyLists>()

@@ -2,13 +2,33 @@
     <li class="floating_menu_component" id="user_profile">
         <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
         <ul class="submenu">
-            <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
+            <li><a href="#" @click="logout"><i class="fa fa-sign-out"
+                               aria-hidden="true"
+            ></i> Uitloggen</a></li>
         </ul>
     </li>
 </template>
 
 <script>
     export default{
+        methods:{
+            logout:function () {
+                var base = this;
 
+                var xhr = new XMLHttpRequest();
+                xhr.open("PUT", "/api/user/logout");
+
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    base.$emit('logedout')
+                };
+
+                xhr.send();
+            }
+        }
     }
 </script>

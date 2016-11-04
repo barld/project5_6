@@ -31,39 +31,10 @@ namespace Webshop.Controllers
 
         }
 
-        public bool GetLogout()
+        public bool PutLogout()
         {
             return Auth.Logout();
         }
-
-        //public string GetAll()
-        //{
-        //    var userList = usermodel.userAll();
-        //    string response = "";
-        //    int cnt = 0;
-
-        //    foreach (User user in userList)
-        //    {
-        //        cnt++;
-        //        response += "<br> User " + cnt + " = " + user.Email;
-        //    }
-
-        //    return response;
-        //}
-
-        //public object PostSearch()
-        //{
-        //    var data = GetBodyFromJson<User>();
-        //    string response = "";
-        //    var userList = usermodel.userSearch(data.Email);
-
-        //    foreach (User user in userList)
-        //    {
-        //        response += user.Email + "<br>";
-        //    }
-
-        //    return response;
-        //}
 
         public ViewObject PostRegister()
         {

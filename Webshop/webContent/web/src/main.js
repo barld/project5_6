@@ -34,7 +34,7 @@ new Vue({
             console.log('failed');
         },
         login_success:function () {
-            console.log('success');
+            this.LogedIn = true;
             this.closeLogin();
         },
         showRegister:function(){

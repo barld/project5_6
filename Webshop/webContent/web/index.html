@@ -44,7 +44,15 @@
                     <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
                     <shopcart></shopcart>
                 </li>
-                <UserNav v-on:showlogin="showLogin" v-on:showregister="showRegister"></UserNav>
+                <UserNav
+                        v-bind:logedin="LogedIn"
+                        v-on:showlogin="showLogin"
+                        v-on:showregister="showRegister"
+                        v-on:login_succes="login_success"
+                        v-on:login_failed="login_failed"
+                >
+
+                </UserNav>
             </ul>
         </div>
     </nav><!-- End menu -->

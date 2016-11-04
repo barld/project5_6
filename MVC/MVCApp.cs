@@ -35,13 +35,13 @@ namespace MVC
             {
 
                 var context = listner.GetContext();
+                Console.WriteLine(context.Request.Url);
 
                 var response = context.Response;
                 string cValue = string.Empty;
 
                 if(context.Request.Cookies["id"] == null || (context.Request.Cookies["id"] != null && !sessions.ContainsKey(context.Request.Cookies["id"].Value)))
                 {
-                    Console.WriteLine("no cookie");
                     var cookie = new Cookie("id", WebUtility.UrlEncode(Crypto.Keys.GetRandomKey(20)));
 
                     cookie.Secure = true;
@@ -53,7 +53,6 @@ namespace MVC
                         sessions.Remove(cookie.Value);
                     sessions.Add(cookie.Value, new Session { Data = new Dictionary<string, object>() });
                     cValue = cookie.Value;
-                    Console.WriteLine(cookie);
                 }
                 else
                 {

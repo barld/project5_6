@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_Diagram.Importers.Impl;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Class_Diagram.Importers
 {
     public interface GameImporter
     {
-        void importGames(int desiredAmount);
+        void importGames(List<PlatformId> desiredPlatforms, int desiredAmount);
     }
 }

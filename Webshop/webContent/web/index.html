@@ -60,8 +60,6 @@
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
             <search></search>
-            <login></login>
-            <register></register>
             <product></product>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="closeRegister"  v-if="show_register" ></register>

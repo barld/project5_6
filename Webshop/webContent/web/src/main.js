@@ -37,6 +37,9 @@ new Vue({
             this.LogedIn = true;
             this.closeLogin();
         },
+        logedout:function () {
+            this.LogedIn = false;
+        },
         showRegister:function(){
             this.show_register = true;
         },

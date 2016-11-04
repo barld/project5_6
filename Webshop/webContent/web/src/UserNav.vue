@@ -1,6 +1,6 @@
 <script></script>
 <template>
-    <userlogedinnav v-if="logedin"></userlogedinnav>
+    <userlogedinnav v-if="logedin" v-on:logedout="logedout"></userlogedinnav>
     <userlogedoutnav
             v-on:showLogin="showLogin"
             v-on:showRegister="showRegister"
@@ -25,6 +25,10 @@
             },
             login_failed: function () {
                 this.$emit('login_failed');
+            },
+            logedout: function () {
+                console.log('log out');
+                this.$emit('logedout');
             }
         }
     }

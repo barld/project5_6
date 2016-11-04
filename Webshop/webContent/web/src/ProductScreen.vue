@@ -8,6 +8,7 @@
                 Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
                 Genre: {{product.Genres.name}} <br />
                 <span class="product_price">EUR {{product.Price / 100}} </span>
+                <a v-bind:href="'#product/' + product.EAN">Bekijk meer</a>
                 <!--<img v-bind:src="product.Image" alt="">-->
             </div>
         </div><br /><!-- End spotlight games -->

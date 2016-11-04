@@ -50,7 +50,7 @@
                     console.log(xhr.response);
                 };
 
-                xhr.send(userInformation);
+                xhr.send(JSON.stringify(userInformation));
             }
         }
     }

@@ -13,7 +13,7 @@ namespace DataModels
         public string GameTitle { get; set; }
         public Platform Platform { get; set; }
         public int RatingPEGI { get; set; }
-        public string Publisher { get; set; }
+        public List<string> Publisher { get; set; }
 
         public List<Genre> Genres { get; set; }
 

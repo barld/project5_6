@@ -42,6 +42,10 @@
       <HintPath>..\packages\MongoDB.Driver.Core.2.3.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +68,18 @@
     <Compile Include="Gender.cs" />
     <Compile Include="Gateways\Interfaces\IContext.cs" />
     <Compile Include="Genre.cs" />
+    <Compile Include="Importers\DataContainers\JsonGame.cs" />
+    <Compile Include="Importers\DataContainers\JsonRelease.cs" />
+    <Compile Include="Importers\GameImporter.cs" />
+    <Compile Include="Importers\GerneImporter.cs" />
+    <Compile Include="Importers\Helpers\WebHelper.cs" />
+    <Compile Include="Importers\Impl\IGDBGameImporter.cs" />
+    <Compile Include="Importers\Impl\IGDBGerneImporter.cs" />
+    <Compile Include="Importers\Impl\IGDBPlatformImporter.cs" />
+    <Compile Include="Importers\Impl\ImportMode.cs" />
+    <Compile Include="Importers\Impl\PlatformId.cs" />
+    <Compile Include="Importers\PlatformImporter.cs" />
+	<Compile Include="JsonOrder.cs" />
     <Compile Include="OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Platform.cs" />

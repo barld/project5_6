@@ -44,19 +44,15 @@
                     <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
                     <shopcart></shopcart>
                 </li>
-                <li class="floating_menu_component" id="user_login_nav">
-                    <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Log in / Registreren</a>
-                    <ul class="submenu">
-                        <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i> Inloggen</a></li>
-                        <li><a href="#"><i class="fa fa-pencil-square" aria-hidden="true"></i> Registreren</a></li>
-                    </ul>
-                </li>
-                <li class="floating_menu_component" id="user_profile">
-                    <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
-                    <ul class="submenu">
-                        <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a></li>
-                    </ul>
-                </li>
+                <UserNav
+                        v-bind:logedin="LogedIn"
+                        v-on:showlogin="showLogin"
+                        v-on:showregister="showRegister"
+                        v-on:login_succes="login_success"
+                        v-on:login_failed="login_failed"
+                >
+
+                </UserNav>
             </ul>
         </div>
     </nav><!-- End menu -->
@@ -66,6 +62,8 @@
             <login></login>
             <register></register>
             <product></product>
+            <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
+            <register v-on:close="closeRegister"  v-if="show_register" ></register>
         </div>
     </div><!-- End container -->
 </div>

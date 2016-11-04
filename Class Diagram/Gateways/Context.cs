@@ -39,6 +39,10 @@ namespace DataModels
             //All of the defined contraints below must be unique
             var options = new CreateIndexOptions() { Unique = true };
 
+            //OrderNumber attribute must be unique in the Order collection
+            var fieldOrderNumber = new StringFieldDefinition<Order>("OrderNumber");
+            database.GetCollection<Order>("Order").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Order>().Ascending(fieldOrderNumber), options);
+
             //EAN attribute must be unique in the Game collection
             var fieldEAN = new StringFieldDefinition<Game>("EAN");
             database.GetCollection<Game>("Game").Indexes.CreateOne(new IndexKeysDefinitionBuilder<Game>().Ascending(fieldEAN), options);
@@ -56,7 +60,7 @@ namespace DataModels
         public void Reset()
         {
             //Clear the database by deleting the following collections
-            List<string> listOfCollections = new List<string>() { "User", "Address", "Platform", "Game" };
+            List<string> listOfCollections = new List<string>() { "User", "Address", "Platform", "Game", "Genre", "Order" };
 
             foreach (string collection in listOfCollections)
             {

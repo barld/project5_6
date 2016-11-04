@@ -1,45 +1,40 @@
 <template>
-    <div class="popup">
-        <div class="close_btn">
-            <i class="fa fa-times fa-5x" aria-hidden="true"></i>
+    <popup v-on:close="close" >
+        <h1>Registreren</h1>
+        <h2 style="color: red;" v-show="showwarning">{{warning_message}}</h2>
+        <div class="twelve columns">
+            <label for="register_email">Email</label>
+            <input v-model="email" class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
         </div>
-        <div class="inner_padding">
-            <h1>Registreren</h1>
-            <div class="twelve columns">
-                <label for="register_email">Email</label>
-                <input class="u-full-width" type="email" placeholder="test@example.com" id="register_email">
-            </div>
-            <div class="twelve columns">
-                <label for="register_password">Wachtwoord</label>
-                <input class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
-            </div>
-            <div class="twelve columns">
-                <label for="register_password">Geslacht</label>
-                <select id="register_gender">
-                    <option value="0">Man</option>
-                    <option value="1">Vrouw</option>
-                </select>
-            </div>
-            <button class="button-primary register_button" type="submit" value="Registreren" @click="register">Registreren</button>
+        <div class="twelve columns">
+            <label for="register_password">Wachtwoord</label>
+            <input v-model="password" class="u-full-width" type="password" placeholder="Wachtwoord" id="register_password">
         </div>
-    </div>
+        <div class="twelve columns">
+            <label for="register_password">Geslacht</label>
+            <select id="register_gender">
+                <option value="0">Man</option>
+                <option value="1">Vrouw</option>
+            </select>
+        </div>
+        <button class="button-primary register_button" type="submit" value="Registreren" @click="register">Registreren</button>
+    </popup>
 </template>
 
 <script>
     export default{
         data: function() {
             return {
+                email:'',
+                password:'',
+                showwarning:false,
+                warning_message:''
             }
         },
         methods:{
             register: function(e){
                 e.preventDefault();
-                var userInformation = {email:document.getElementById("register_email").value, password:
-                document.getElementById("register_password").value};
-                this.getData(userInformation);
-            },
-            getData: function (userInformation) {
-                console.log(userInformation);
+                var userInformation = {email:this.email, password:this.password};
                 var base = this;
 
                 var xhr = new XMLHttpRequest();
@@ -50,10 +45,18 @@
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    console.log(xhr.response);
+                    if(JSON.parse(xhr.response).Succes){
+                        base.$emit('close');
+                    }else{
+                        base.warning_message = JSON.parse(xhr.response).message;
+                        base.showwarning = true;
+                    }
                 };
 
                 xhr.send(JSON.stringify(userInformation));
+            },
+            close: function () {
+                this.$emit('close')
             }
         }
     }

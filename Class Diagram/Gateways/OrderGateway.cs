@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace DataModels.Gateways
 {
@@ -30,6 +31,18 @@ namespace DataModels.Gateways
         {
             var filter = Builders<Order>.Filter.Eq(g => g.BillingAddress, address);
             return await Collection.Find(filter).ToListAsync();
+        }
+
+        public int GetLatestOrderNumber()
+        {
+            try{
+                var order = Collection.Find(new BsonDocument()).SortByDescending(x => x.OrderNumber).FirstOrDefault();
+                return order.OrderNumber;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

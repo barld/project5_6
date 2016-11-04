@@ -26,7 +26,8 @@ namespace MVC.Routing
             var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Folder, restPath);
             Console.WriteLine(file);
 
-
+            if(Directory.Exists(file) && File.GetAttributes(file).HasFlag(FileAttributes.Directory))
+                file += "index.html";
             if(File.Exists(file))
             {
                 var s = File.OpenRead(file);

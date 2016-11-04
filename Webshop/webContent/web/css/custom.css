@@ -43,7 +43,7 @@ a{
 }
 
 #user_profile{
-    display:none;
+
 }
 
 .floating_menu_component{
@@ -120,7 +120,6 @@ a{
 	left:       0; 
 	position:   fixed;
 	overflow:auto;
-	display:none;
 }
 
 .close_btn{

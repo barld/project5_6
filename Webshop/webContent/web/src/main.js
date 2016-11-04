@@ -5,6 +5,10 @@ import dc from './dc/dc.vue'
 
 Vue.component('dc', dc);
 
+Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
+Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
+Vue.component('usernav', require('./UserNav.vue'));
+Vue.component('popup', require('./popup.vue'));
 Vue.component('shopcart', require('./ShoppingcartMenu.vue'));
 Vue.component('platform_menu', require('./PlatformMenu.vue'));
 Vue.component('login', require('./LoginScreen.vue'));
@@ -13,6 +17,33 @@ Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 
 new Vue({
-  el: '#app',
-  //render: h => {h(App)}
+    el: '#app',
+    data :{
+        show_login:false,
+        show_register:false,
+        LogedIn:false,
+    },
+    methods:{
+        showLogin:function(){
+            console.log('test');
+            this.show_login = true;
+        },
+        closeLogin:function () {
+            this.show_login = false;
+        },
+        login_failed:function () {
+            console.log('failed');
+        },
+        login_success:function () {
+            this.LogedIn = true;
+            this.closeLogin();
+        },
+        showRegister:function(){
+            this.show_register = true;
+        },
+        closeRegister:function () {
+            this.show_register = false;
+        },
+
+    }
 });

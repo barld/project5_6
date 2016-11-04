@@ -35,8 +35,14 @@ namespace DataModels.Gateways
 
         public int GetLatestOrderNumber()
         {
-            var order = Collection.Find(new BsonDocument()).SortByDescending(x => x.OrderNumber).FirstOrDefault();
-            return order.OrderNumber;
+            try{
+                var order = Collection.Find(new BsonDocument()).SortByDescending(x => x.OrderNumber).FirstOrDefault();
+                return order.OrderNumber;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

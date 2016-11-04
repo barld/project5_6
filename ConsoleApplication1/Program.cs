@@ -65,7 +65,8 @@ namespace DataModels
 17. Display all orders
 18. Display all addresses
 19. Delete user by email
-20. Exit application");
+20. Create sample database
+21. Exit application");
             Console.WriteLine("-----------------------");
             List<Action> actions = new List<Action> {
                 context.Reset,
@@ -87,6 +88,7 @@ namespace DataModels
                 retrieveAllOrders,
                 retrieveAllAddresses,
                 deleteUserAccountByEmail,
+                createSampleDatabase,
                 () => {
                     Console.WriteLine("Press [ENTER] to exit..");
                     Console.ReadLine();
@@ -103,7 +105,60 @@ namespace DataModels
             showMenuOptions();
             Console.WriteLine("-----------------------");
         }
-        
+
+        static async void createSampleDatabase()
+        {
+            //Create addresses
+            Address address1 = new Address { City = "Rotterdam", Country = "The Netherlands", Housenumber = "99XB", PostalCode = "3099PA", Streetname = "Wijnhaven" };
+            Address address2 = new Address { City = "Amsterdam", Country = "The Netherlands", Housenumber = "862", PostalCode = "8629PA", Streetname = "Schiekade" };
+            Address address3 = new Address { City = "Den Haag", Country = "The Netherlands", Housenumber = "301", PostalCode = "5182JW", Streetname = "Coolsingel" };
+            await context.Addresses.Insert(address1);
+            await context.Addresses.Insert(address2);
+            await context.Addresses.Insert(address3);
+
+            //Create platforms
+            Platform platform1 = new Platform { Brand = "SONY", Description = "Japan for the win!", PlatformTitle = "Playstation 4" };
+            Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "XBOX One" };
+            Platform platform3 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "Wii U" };
+            Platform platform4 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "3DS" };
+            await context.Platforms.InsertMany(new List<Platform> { platform1, platform2, platform3, platform4 });
+
+            //Create genres
+            Genre genre1 = new Genre { Name="Action", Description="Boom boom!" };
+            Genre genre2 = new Genre { Name = "Fantasy", Description = "Smexy hihi!" };
+            Genre genre3 = new Genre { Name = "RPG", Description = "Every cool nerd wants to live his own digital life!" };
+            await context.Genres.InsertMany( new List<Genre> { genre1, genre2, genre3 });
+
+            //Create games
+            Game game1 = new Game { GameTitle = "Battlefield 1", Description = "Full of action!", EAN = 00000001, Image = new List<string>() { "https://content.pulse.ea.com/content/battlefield-portal/nl_NL/news/battlefield-1/battlefield-1-beta-thank-you/_jcr_content/featuredImage/renditions/rendition1.img.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = { genre1 }, Platform = platform1 };
+            Game game2 = new Game { GameTitle = "Battlefront", Description = "Explosions everywhere!", EAN = 00000002, Image = new List<string>() { "https://media.starwars.ea.com/content/starwars-ea-com/nl_NL/starwars/battlefront/_jcr_content/ogimage.img.jpeg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = { genre2, genre3 }, Platform = platform2 };
+            Game game3 = new Game { GameTitle = "Fifa 2016", Description = "Soccer soccer soccer!", EAN = 00000003, Image = new List<string>() { "http://image.sambafoot.co.uk/screenshot-fifa-2016-game.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible =false, MinPlayers=1, MaxPlayers=12, Price=60000, RatingPEGI=13, ReleaseDate=DateTime.Now, Genres = { genre2, genre1, genre3 }, Platform = platform3};
+            await context.Games.InsertMany(new List<Game> { game1, game2, game3 });
+
+            //Create users
+            User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male).Result;
+            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female).Result;
+            User user3 = context.Users.Register("mynameis@jeff.nl", "geheim321", Gender.Unknown).Result;
+            await context.Users.InsertMany(new List<User> { user1, user2, user3 });
+
+            //Create order lines
+            OrderLine ol1 = new OrderLine { Amount=1, Game=game1 };
+            OrderLine ol2 = new OrderLine { Amount = 5, Game = game2 };
+            List<OrderLine> listOfOrderLines1 = new List<OrderLine>() { ol1, ol2};
+
+            OrderLine ol3 = new OrderLine { Amount = 3, Game = game3 };
+            OrderLine ol4 = new OrderLine { Amount = 2, Game = game1 };
+            OrderLine ol5 = new OrderLine { Amount = 2, Game = game2 };
+            List<OrderLine> listOfOrderLines2 = new List<OrderLine>() { ol3, ol4, ol5 };
+
+            //Create orders that connects the users to different orders, also created 1 user without any orders
+            Order order1 = new Order { BillingAddress = address1, Customer = user1, DeliveryAddress = address1, OrderDate = DateTime.Now.AddDays(-1), OrderNumber = context.Orders.GetLatestOrderNumber() + 1, OrderLines = listOfOrderLines1 };
+            await context.Orders.Insert(order1);
+
+            Order order2 = new Order { BillingAddress = address2, Customer = user2, DeliveryAddress = address3, OrderDate = DateTime.Now.AddDays(-9), OrderNumber = context.Orders.GetLatestOrderNumber() + 1, OrderLines = listOfOrderLines2 };
+            await context.Orders.Insert(order2);
+        }
+
         static async void addNewOrder()
         {
             try
@@ -502,7 +557,7 @@ namespace DataModels
                         gender = Gender.Male;
                         break;
                     case "2":
-                        gender = Gender.Male;
+                        gender = Gender.Female;
                         break;
                     default:
                         gender = Gender.Unknown;

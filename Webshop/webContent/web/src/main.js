@@ -21,9 +21,14 @@ new Vue({
     data :{
         show_login:false,
         show_register:false,
+        show_product_detail: false,
         LogedIn:false,
     },
     methods:{
+        showProductDetails:function(product){
+            this.show_product_detail = true;
+            console.log(product.GameTitle);
+        },
         showLogin:function(){
             console.log('test');
             this.show_login = true;

@@ -66,7 +66,8 @@
     <Compile Include="Gender.cs" />
     <Compile Include="Gateways\IContext.cs" />
     <Compile Include="Genre.cs" />
-    <Compile Include="Importers\Dataclasses\JsonPlatform.cs" />
+    <Compile Include="Importers\DataContainers\JsonGame.cs" />
+    <Compile Include="Importers\DataContainers\JsonRelease.cs" />
     <Compile Include="Importers\GameImporter.cs" />
     <Compile Include="Importers\GerneImporter.cs" />
     <Compile Include="Importers\Helpers\WebHelper.cs" />

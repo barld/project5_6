@@ -1,4 +1,4 @@
-﻿using Class_Diagram.Importers.Dataclasses;
+﻿using Class_Diagram.Importers.DataContainers;
 using Class_Diagram.Importers.Helpers;
 using DataModels;
 using Newtonsoft.Json.Linq;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Impl
@@ -20,20 +21,21 @@ namespace Class_Diagram.Importers.Impl
         {
             {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
             { "format", "json" },
-            { "field_list", "name,company,release_date" },
-            { "filter","release_date:2012-01-01 01:01:01|2017-01-01 01:01:01" }
+            { "field_list", "name,description,company,release_date" },
+            { "filter","release_date:2012-01-01 01:01:01|2017-01-01 01:01:01" },
+            { "sort", "release_date:desc" }
         };
 
-        public void importPlatforms()
+        public List<Platform> importPlatforms()
         {
             bool finished = false;
             List<Platform> platforms = new List<Platform>();
             Platform platform;
 
             JObject jsonResponse;
-            JArray jsonPlatformArray;
+            JArray jra;
 
-            string platformName, platformBrand;
+            string platformName, platformBrand, platformDescription;
 
             HttpClient httpClient = WebHelper.getDefaultImporterHttpClient();
 
@@ -42,36 +44,38 @@ namespace Class_Diagram.Importers.Impl
                 HttpResponseMessage response = httpClient.GetAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
                 string resultString = response.Content.ReadAsStringAsync().Result;
                 jsonResponse = JObject.Parse(resultString);
-                jsonPlatformArray = (JArray) jsonResponse["results"];
+                jra = (JArray) jsonResponse["results"];
 
-                foreach(JObject jsonPlatformObject in jsonPlatformArray)
+                foreach(JObject jro in jra)
                 {
 
-                    if (jsonPlatformObject["name"].Type == JTokenType.String) {
-                        platformName = (string)jsonPlatformObject["name"];
+                    if (jro["name"].Type == JTokenType.String) {
+                        platformName = (string)jro["name"];
 
-                        if (jsonPlatformObject["company"].Type == JTokenType.Object)
+                        if (jro["company"].Type == JTokenType.Object)
                         {
-                            platformBrand = (string)jsonPlatformObject["company"]["name"];
+                            platformBrand = (string)jro["company"]["name"];
                         }
                         else
                         {
                             platformBrand = "NA";
                         }
 
+                        platformDescription = jro["description"].Type != JTokenType.Null ? Regex.Replace((string)jro["description"], "<.*?>", String.Empty) : "";
+
                         platform = new Platform()
                         {
                             PlatformTitle = platformName,
                             Brand = platformBrand,
-                            Description = ""
+                            Description = platformDescription
                         };
 
                         platforms.Add(platform);
                     }
                 }
-                //string jsonString = response.Content.ReadAsStringAsync().Result;
-                Debug.WriteLine("finished");
+                finished = true;
             }
+            return platforms;
         }
     }
 }

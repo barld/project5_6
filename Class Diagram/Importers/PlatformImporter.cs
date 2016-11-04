@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Class_Diagram.Importers
 {
     public interface PlatformImporter
     {
-        void importPlatforms();
+        List<Platform> importPlatforms();
     }
 }

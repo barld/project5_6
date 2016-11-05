@@ -1,7 +1,9 @@
 <template>
     <div>
-        <input v-model="searchValue" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
-        <datalist></datalist>
+        <input v-model="searchValue" list="GameSearchList" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
+        <datalist id="GameSearchList" v-for="game in searchResult">
+            <option :value="game.GameTitle"></option>
+        </datalist>
     </div>
 </template>
 
@@ -25,8 +27,8 @@
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    this.searchValue = JSON.parse(xhr.response);
-                    console.log(this.searchValue);
+                    base.searchResult = JSON.parse(xhr.response);
+                    console.log(base.searchResult);
                 };
 
                 xhr.send(JSON.stringify({value: this.searchValue}));

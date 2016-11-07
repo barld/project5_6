@@ -162,6 +162,11 @@ a{
     display:block;
 }
 
+.thumbnail{
+	width:150px;
+	height:150px;
+}
+
 input:focus{
 	border:2px solid #000000 !important;
 }

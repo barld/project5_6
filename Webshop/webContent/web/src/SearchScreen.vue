@@ -28,7 +28,7 @@
                     console.log(base.searchResult);
                 };
                 xhr.send(JSON.stringify({value: this.searchValue}));
-            }s
+            }
         }
     }
 </script>

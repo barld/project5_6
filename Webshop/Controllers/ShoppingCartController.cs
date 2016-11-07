@@ -25,9 +25,7 @@ namespace Webshop.Controllers
             get
             {
                 if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, new Cart() {
-                        CartLines =  context.Games.GetAll().Result.Select((g, i) => new CartLine { Amount = i+1, Product = g } )
-                    });
+                    Session.Data.Add(shoppingCartKey, new Cart());
                 return Session.Data[shoppingCartKey] as Cart;
             }
             set

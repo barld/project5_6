@@ -56,11 +56,8 @@ namespace MVC
                 }
                 else
                 {
-                    Console.WriteLine(context.Request.Cookies["id"]);
-                    Console.WriteLine("cookie is already set");
                     cValue = context.Request.Cookies["id"].Value;
                 }
-
 
                 Console.WriteLine(context.Request.HttpMethod);
 

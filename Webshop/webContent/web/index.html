@@ -40,10 +40,8 @@
                     <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
                     <platform_menu></platform_menu>
                 </li>
-                <li class="floating_menu_component">
-                    <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-                    <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
-                </li>
+                <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
+
                 <UserNav
                         v-bind:logedin="LogedIn"
                         v-on:showlogin="showLogin"

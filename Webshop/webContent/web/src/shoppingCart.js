@@ -8,7 +8,7 @@ export default
         constructor(){
             this._refreshData();
             this.OnChangedshoppingCartEvents = [];
-            this.cartLines = [];
+            this.cart = {};
         }
 
         _refreshData() {
@@ -23,7 +23,7 @@ export default
 
             // Function to fire off when the server has send a response
             xhr.onload = function () {
-                base.cartLines = JSON.parse(xhr.response).CartLines;
+                base.cart = JSON.parse(xhr.response);
                 base._triggerOnChangedshoppingCart();
             };
 

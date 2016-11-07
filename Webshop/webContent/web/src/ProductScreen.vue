@@ -2,14 +2,8 @@
     <div>
         <div id="games_overview">
             <h1>Nieuwe games</h1>
-            <div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
-                <div class="three columns product" v-for="product in products">
-                    Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
-                    <span class="product_price">EUR {{product.Price / 100}} </span>
-                    <a v-bind:href="'#product/' + product.EAN" @click="productDetails(product)">Bekijk meer</a>
-                    <img v-bind:src="product.Image[0]" alt="" class="thumbnail">
-                </div>
-            </div><br class="clear"/><!-- End spotlight games -->
+            <productbox v-for="product in products" v-bind:product="product"></productbox>
+            <br class="clear"/><!-- End spotlight games -->
         </div>
         <div v-show="showProductDetails" class="popup" ><!-- Start login screen -->
             <div class="close_btn" @click="closeProductDetails">

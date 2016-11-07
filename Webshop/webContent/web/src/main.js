@@ -18,6 +18,8 @@ Vue.component('productbox', require('./ProductBox.vue'));
 Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 
+window.shoppingcart = new shoppingCart();
+
 new Vue({
     el: '#app',
     data :{
@@ -25,7 +27,7 @@ new Vue({
         show_register:false,
         show_product_detail: false,
         LogedIn:false,
-        shoppingcart: new shoppingCart()
+        shoppingcart: shoppingcart
     },
     methods:{
         showProductDetails:function(product){

@@ -64,7 +64,7 @@ namespace MVC
                 else
                     return new NotFoundView("action not found");
             }
-            catch
+            catch(Exception e)
             {
                 return new ErrorView();
             }

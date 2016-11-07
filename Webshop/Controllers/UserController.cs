@@ -44,9 +44,9 @@ namespace Webshop.Controllers
             return Json(Auth.Register(user));
         }
 
-        public string Get()
+        public ViewObject GetStatus()
         {
-            return "<h1>Login Page</h1>";
+            return Json(this.Auth.LoginStatus());
         }
     }
 }

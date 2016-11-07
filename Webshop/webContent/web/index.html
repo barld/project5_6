@@ -42,7 +42,7 @@
                 </li>
                 <li class="floating_menu_component">
                     <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-                    <shopcart></shopcart>
+                    <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
                 </li>
                 <UserNav
                         v-bind:logedin="LogedIn"

@@ -2,6 +2,7 @@ import Vue from 'vue'
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
 import dc from './dc/dc.vue'
+import shoppingCart from './shoppingCart'
 
 Vue.component('dc', dc);
 
@@ -23,6 +24,7 @@ new Vue({
         show_register:false,
         show_product_detail: false,
         LogedIn:false,
+        shoppingcart: new shoppingCart()
     },
     methods:{
         showProductDetails:function(product){
@@ -53,5 +55,22 @@ new Vue({
             this.show_register = false;
         },
 
+    },
+    created: function () {
+        var base = this;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/api/user/status/");
+
+        // The RequestHeader can be any, by the server accepted, file
+        xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+        // Function to fire off when the server has send a response
+        xhr.onload = function () {
+            var result = JSON.parse(xhr.response);
+            base.LogedIn = result.IsLogedIn;
+        };
+
+        xhr.send();
     }
 });

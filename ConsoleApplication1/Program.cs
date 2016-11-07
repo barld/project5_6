@@ -633,7 +633,9 @@ namespace DataModels
             Console.WriteLine("List of game names:");
             foreach(Game game in result)
             {
-                Console.WriteLine(game.GameTitle);
+                Console.Write(game.EAN + " ");
+                Console.Write(game.GameTitle + " ");
+                Console.Write(game.Platform.PlatformTitle + " ");
             }
 
             context.Games.InsertMany(result);

@@ -14,24 +14,31 @@ namespace Class_Diagram.Importers.Impl
 {
     public class IGDBGameImporter : GameImporter
     {
-        private TimeSpan delay = TimeSpan.FromMilliseconds(1050);
+        private TimeSpan delay;
         private List<Platform> platforms;
+        private HashSet<int> generatedNumbers;
 
-        public List<Game> importGames(List<PlatformId> desiredPlatforms,int desiredAmount)
+        public IGDBGameImporter()
+        {
+            generatedNumbers = new HashSet<int>();
+            delay = TimeSpan.FromMilliseconds(1050);
+        }
+
+        public List<Game> importGames(List<PlatformId> desiredPlatforms, int desiredAmount)
         {
             int importedAmount = 0;
             int foundAmount;
             string BASE_URL = "http://www.giantbomb.com/api/games/";
 
             var platformIds = new List<int>();
-            foreach(PlatformId id in desiredPlatforms)
+            foreach (PlatformId id in desiredPlatforms)
             {
                 platformIds.Add((int)id);
             }
 
             PlatformImporter pImporter = new IGDBPlatformImporter();
             platforms = pImporter.importPlatforms();
-            
+
 
             Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
             {
@@ -49,7 +56,6 @@ namespace Class_Diagram.Importers.Impl
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
             JObject responseJsonObject = JObject.Parse(responseText);
             List<JsonGame> gicList = new List<JsonGame>();
-            Random rnd = new Random();
             JsonGame gic;
 
             foreach (JObject jro in responseJsonObject["results"].Children())
@@ -61,7 +67,7 @@ namespace Class_Diagram.Importers.Impl
 
                 gic = new JsonGame();
                 gic.ApiId = (string)jro["id"];
-                gic.Description = Regex.Replace((string)jro["description"], "<.*?>", String.Empty) ;
+                gic.Description = Regex.Replace((string)jro["description"], "<.*?>", String.Empty);
                 gic.GameTitle = (string)jro["name"];
 
                 if (!jsonIsNull(jro["image"]))
@@ -72,7 +78,6 @@ namespace Class_Diagram.Importers.Impl
 
                 gic.RatingPEGI = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
 
-                gic.Eann = "8710400" + rnd.Next(999999).ToString().PadLeft(6, '0');
                 getDetailedGameData(gic);
                 getReleases(platformIds, gic, Region.EU);
                 gicList.Add(gic);
@@ -88,25 +93,30 @@ namespace Class_Diagram.Importers.Impl
         private List<Game> createGames(List<JsonGame> gicList)
         {
             List<Game> gameList = new List<Game>();
-            foreach(JsonGame gic in gicList)
+            Random rnd = new Random();
+            foreach (JsonGame gic in gicList)
             {
-                foreach(JsonRelease rel in gic.Releases)
+                foreach (JsonRelease rel in gic.Releases)
                 {
+                    int rndNumber = 0;
+                    do {
+                        rndNumber = rnd.Next(99999999);
+                    } while (!generatedNumbers.Add(rndNumber));
                     Game game = new Game()
                     {
                         Description = gic.Description,
-                        EAN = 0,
+                        EAN = long.Parse("87104" + rndNumber.ToString().PadLeft(8, '0')),
                         GameTitle = rel.ReleaseName,
                         Genres = createGenres(gic),
                         MinPlayers = gic.MinimumPlayers,
                         MaxPlayers = gic.MinimumPlayers,
                         IsVRCompatible = false,
                         Platform = platforms.Find(a => a.PlatformTitle == rel.PlatformName),
-                        Image = new List<string>() { gic.ThumbnailImageHref, gic.ImagerHref},
+                        Image = new List<string>() { gic.ThumbnailImageHref, gic.ImagerHref },
                         Price = rel.Price,
                         Publisher = gic.Publisher,
                         RatingPEGI = gic.RatingPEGI,
-                        ReleaseDate = rel.ReleaseDate 
+                        ReleaseDate = rel.ReleaseDate
                     };
                     gameList.Add(game);
                 }
@@ -140,9 +150,9 @@ namespace Class_Diagram.Importers.Impl
             HttpClient client = WebHelper.getDefaultImporterHttpClient();
             wait();
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
-            JObject jro = (JObject) JObject.Parse(responseText)["results"];
+            JObject jro = (JObject)JObject.Parse(responseText)["results"];
 
-            if (!jsonIsNull(jro["publishers"]) || !jsonIsNull(jro["platforms"])  || !jsonIsNull(jro["gernes"]))
+            if (!jsonIsNull(jro["publishers"]) || !jsonIsNull(jro["platforms"]) || !jsonIsNull(jro["gernes"]))
             {
                 JArray jsonPublishers = (JArray)jro["publishers"];
                 gic.Publisher.Add((string)jsonPublishers.First()["name"]);
@@ -172,11 +182,11 @@ namespace Class_Diagram.Importers.Impl
             HttpClient client = WebHelper.getDefaultImporterHttpClient();
             wait();
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
-            JArray jra = (JArray) JObject.Parse(responseText)["results"];
+            JArray jra = (JArray)JObject.Parse(responseText)["results"];
 
-            foreach(JObject jro in jra)
+            foreach (JObject jro in jra)
             {
-                if(jro["platform"].Type == JTokenType.Null) { continue; }
+                if (jro["platform"].Type == JTokenType.Null) { continue; }
 
                 gameData.MinimumPlayers = !jsonIsNull(jro["minimum_players"]) ? Int32.Parse((string)jro["minimum_players"]) : 1;
                 gameData.MaximumPlayers = !jsonIsNull(jro["maximum_players"]) ? Int32.Parse((string)jro["maximum_players"]) : 4;

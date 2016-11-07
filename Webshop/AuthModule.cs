@@ -15,10 +15,11 @@ namespace Webshop
         {
             get
             {
-                if (session.Data.ContainsKey(currentUserKey))
-                    return session.Data[currentUserKey] as User;
-                else
-                    return default(User);
+                if (!session.Data.ContainsKey(currentUserKey))
+                {
+                    session.Data.Add(currentUserKey, new User { AccountRole = AccountRole.Guest });
+                }
+                return session.Data[currentUserKey] as User;
             }
             set
             {
@@ -45,7 +46,7 @@ namespace Webshop
 
         public ActionResultViewModel Login(User user)
         {
-            if (session.Data.ContainsKey("currentUser"))
+            if (LoggedIn)
             {
                 return new ActionResultViewModel { Success = false, Message = "User already logged in" };
             }
@@ -54,7 +55,7 @@ namespace Webshop
                 var logedinUser = context.Users.Login(user.Email, user.Password).Result;
                 if (logedinUser != null)
                 {
-                    session.Data.Add("currentUser", logedinUser);
+                    CurrentUser = logedinUser;
                     return new ActionResultViewModel { Success = true, Message = "User succesfully logged in" };
                 }
                 else

@@ -1,10 +1,7 @@
 <template>
     <div>
-        <input v-model="searchValue" list="search_suggestions" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
-        <datalist id="search_suggestions">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+        <input v-model="searchValue" list="GameSearchList" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
+        <datalist id="GameSearchList" v-for="game in searchResult">
         </datalist>
     </div>
 </template>
@@ -27,10 +24,8 @@
 
                     // The RequestHeader can be any, by the server accepted, file
                     xhr.setRequestHeader('Content-type', "Application/JSON", true);
-
                     // Function to fire off when the server has send a response
                     xhr.onload = function () {
-                        var result = JSON.parse(xhr.response);
 
                         for(var i = 0; i < result.length; i ++){
                             var gameTitle = result[i].GameTitle;

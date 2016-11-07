@@ -164,6 +164,10 @@ namespace DataModels
 
             Order order2 = new Order { BillingAddress = address2, Customer = user2, DeliveryAddress = address3, OrderDate = DateTime.Now.AddDays(-9), OrderNumber = context.Orders.GetLatestOrderNumber() + 1, OrderLines = listOfOrderLines2 };
             await context.Orders.Insert(order2);
+
+
+            //Show confirmation message
+            Console.WriteLine("Database has been setup successfully!");
         }
 
         static async void addNewOrder()
@@ -440,7 +444,7 @@ namespace DataModels
 
         static void loginAccount()
         {
-            Console.WriteLine("Please login with your user account, you will see at the end whether it was succesfull or not.");
+            Console.WriteLine("Please login with your user account, you will see at the end whether it was successfull or not.");
             Console.WriteLine("Enter your email:");
             string email = Console.ReadLine();
             Console.WriteLine("Enter your password:");

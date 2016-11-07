@@ -6,6 +6,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the details of an orderline
     public class OrderLine
     {
         public Game Game { get; set; }

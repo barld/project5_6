@@ -126,7 +126,10 @@ namespace DataModels
             Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "XBOX One" };
             Platform platform3 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "Wii U" };
             Platform platform4 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "3DS" };
-            await context.Platforms.InsertMany(new List<Platform> { platform1, platform2, platform3, platform4 });
+            await context.Platforms.Insert(platform1);
+            await context.Platforms.Insert(platform2);
+            await context.Platforms.Insert(platform3);
+            await context.Platforms.Insert(platform4);
 
             //Create genres
             Genre genre1 = new Genre { Name = "Action", Description = "Boom boom!" };
@@ -135,16 +138,15 @@ namespace DataModels
             await context.Genres.InsertMany(new List<Genre> { genre1, genre2, genre3 });
 
             //Create games
-            Game game1 = new Game { GameTitle = "Battlefield 1", Description = "Full of action!", EAN = 00000001, Image = new List<string>() { "https://content.pulse.ea.com/content/battlefield-portal/nl_NL/news/battlefield-1/battlefield-1-beta-thank-you/_jcr_content/featuredImage/renditions/rendition1.img.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = { genre1 }, Platform = platform1 };
-            Game game2 = new Game { GameTitle = "Battlefront", Description = "Explosions everywhere!", EAN = 00000002, Image = new List<string>() { "https://media.starwars.ea.com/content/starwars-ea-com/nl_NL/starwars/battlefront/_jcr_content/ogimage.img.jpeg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = { genre2, genre3 }, Platform = platform2 };
-            Game game3 = new Game { GameTitle = "Fifa 2016", Description = "Soccer soccer soccer!", EAN = 00000003, Image = new List<string>() { "http://image.sambafoot.co.uk/screenshot-fifa-2016-game.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = { genre2, genre1, genre3 }, Platform = platform3 };
+            Game game1 = new Game { GameTitle = "Battlefield 1", Description = "Full of action!", EAN = 0000001, Image = new List<string>() { "https://content.pulse.ea.com/content/battlefield-portal/nl_NL/news/battlefield-1/battlefield-1-beta-thank-you/_jcr_content/featuredImage/renditions/rendition1.img.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre>{ genre1 }, Platform = platform1 };
+            Game game2 = new Game { GameTitle = "Battlefront", Description = "Explosions everywhere!", EAN = 00000002, Image = new List<string>() { "https://media.starwars.ea.com/content/starwars-ea-com/nl_NL/starwars/battlefront/_jcr_content/ogimage.img.jpeg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre>{ genre2, genre3 }, Platform = platform2 };
+            Game game3 = new Game { GameTitle = "Fifa 2016", Description = "Soccer soccer soccer!", EAN = 00000003, Image = new List<string>() { "http://image.sambafoot.co.uk/screenshot-fifa-2016-game.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 60000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre>{ genre2, genre1, genre3 }, Platform = platform3 };
             await context.Games.InsertMany(new List<Game> { game1, game2, game3 });
 
             //Create users
             User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male).Result;
             User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female).Result;
             User user3 = context.Users.Register("mynameis@jeff.nl", "geheim321", Gender.Unknown).Result;
-            await context.Users.InsertMany(new List<User> { user1, user2, user3 });
 
             //Create order lines
             OrderLine ol1 = new OrderLine { Amount = 1, Game = game1 };
@@ -401,7 +403,7 @@ namespace DataModels
             Console.WriteLine("Displaying every game..");
             foreach (Game g in context.Games.GetAll().Result)
             {
-                Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform}");
+                Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform.PlatformTitle}");
             }
         }
 
@@ -629,6 +631,8 @@ namespace DataModels
             {
                 Console.WriteLine(game.GameTitle);
             }
+
+            context.Games.InsertMany(result);
         }
     }
 }

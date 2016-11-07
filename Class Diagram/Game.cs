@@ -8,6 +8,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the attributes for a game (Title, platform etc.)
     public class Game
     {
         public string GameTitle { get; set; }

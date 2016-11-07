@@ -7,6 +7,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the details of a user (Email, gender etc.)
     public class User
     {
         public string Password { get; set; }

@@ -48,6 +48,7 @@ namespace Webshop
         {
             if (LoggedIn)
             {
+                //Return an error if the user is already logged in
                 return new ActionResultViewModel { Success = false, Message = "User already logged in" };
             }
             else
@@ -56,10 +57,12 @@ namespace Webshop
                 if (logedinUser != null)
                 {
                     CurrentUser = logedinUser;
+                    //Return a succes message when the user succesfully logs in
                     return new ActionResultViewModel { Success = true, Message = "User succesfully logged in" };
                 }
                 else
                 {
+                    //Return an error when the login fails
                     return new ActionResultViewModel { Success = false, Message = "Incorrect login data" };
                 }
             }            
@@ -70,16 +73,19 @@ namespace Webshop
             try
             {
                 CurrentUser = context.Users.Register(user.Email, user.Password, user.Gender).Result;
+                //Return a succes message when the user succesfully registers a new account
                 return new ActionResultViewModel { Success = true, Message = "Succesfully registered user" };
             }
             catch(Exception e)
             {
+                //Return an error when the registration fails
                 return new ActionResultViewModel { Success = false, Message = "Something went wrong" };
             }
         }
 
         public bool Logout()
         {
+            //Check what role the user has when they want to logout
             if (CurrentUser == null || CurrentUser.AccountRole == AccountRole.Guest)
                 return true;
             else
@@ -92,6 +98,7 @@ namespace Webshop
 
         public IUserLoginStatus LoginStatus()
         {
+            //Check if the user is logged in
             if (LoggedIn)
             {
                 return new UserLogedInStatus { Email = CurrentUser.Email };

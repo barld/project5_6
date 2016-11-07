@@ -49,6 +49,7 @@ namespace Class_Diagram.Importers.Impl
             string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
             JObject responseJsonObject = JObject.Parse(responseText);
             List<JsonGame> gicList = new List<JsonGame>();
+            Random rnd = new Random();
             JsonGame gic;
 
             foreach (JObject jro in responseJsonObject["results"].Children())
@@ -71,6 +72,7 @@ namespace Class_Diagram.Importers.Impl
 
                 gic.RatingPEGI = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
 
+                gic.Eann = "8710400" + rnd.Next(999999).ToString().PadLeft(6, '0');
                 getDetailedGameData(gic);
                 getReleases(platformIds, gic, Region.EU);
                 gicList.Add(gic);

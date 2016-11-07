@@ -37,44 +37,39 @@ namespace Class_Diagram.Importers.Impl
 
             string platformName, platformBrand, platformDescription;
 
-            HttpClient httpClient = WebHelper.getDefaultImporterHttpClient();
+            string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
+            jsonResponse = JObject.Parse(responseText);
+            jra = (JArray)jsonResponse["results"];
 
-            while (finished == false)
+            foreach (JObject jro in jra)
             {
-                HttpResponseMessage response = httpClient.GetAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
-                string resultString = response.Content.ReadAsStringAsync().Result;
-                jsonResponse = JObject.Parse(resultString);
-                jra = (JArray) jsonResponse["results"];
 
-                foreach(JObject jro in jra)
+                if (jro["name"].Type == JTokenType.String)
                 {
+                    platformName = (string)jro["name"];
 
-                    if (jro["name"].Type == JTokenType.String) {
-                        platformName = (string)jro["name"];
-
-                        if (jro["company"].Type == JTokenType.Object)
-                        {
-                            platformBrand = (string)jro["company"]["name"];
-                        }
-                        else
-                        {
-                            platformBrand = "NA";
-                        }
-
-                        platformDescription = jro["description"].Type != JTokenType.Null ? Regex.Replace((string)jro["description"], "<.*?>", String.Empty) : "";
-
-                        platform = new Platform()
-                        {
-                            PlatformTitle = platformName,
-                            Brand = platformBrand,
-                            Description = platformDescription
-                        };
-
-                        platforms.Add(platform);
+                    if (jro["company"].Type == JTokenType.Object)
+                    {
+                        platformBrand = (string)jro["company"]["name"];
                     }
+                    else
+                    {
+                        platformBrand = "NA";
+                    }
+
+                    platformDescription = jro["description"].Type != JTokenType.Null ? Regex.Replace((string)jro["description"], "<.*?>", String.Empty) : "";
+
+                    platform = new Platform()
+                    {
+                        PlatformTitle = platformName,
+                        Brand = platformBrand,
+                        Description = platformDescription
+                    };
+
+                    platforms.Add(platform);
                 }
-                finished = true;
             }
+
             return platforms;
         }
     }

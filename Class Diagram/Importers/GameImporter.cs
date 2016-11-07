@@ -10,6 +10,6 @@ namespace Class_Diagram.Importers
 {
     public interface GameImporter
     {
-        List<Game> importGames(List<PlatformId> desiredPlatforms, int desiredAmount);
+        List<Game> importGames(int desiredAmount);
     }
 }

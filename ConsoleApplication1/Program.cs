@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Security.Cryptography;
 using Class_Diagram.Importers;
 using Class_Diagram.Importers.Impl;
+using static Class_Diagram.Importers.Impl.Platforms;
 
 namespace DataModels
 {
@@ -606,14 +607,14 @@ namespace DataModels
         {
             int amount = 0;
             bool validInput = false; ;
-            Console.WriteLine("Please insert how much games you want to request from the API");
+            Console.WriteLine("Please insert the minimum amount of games you want to request from the API");
             Console.WriteLine("-Any value higher than 100 will be discarded and replaced by 100");
             Console.WriteLine("-The amount of games returned can differ dependent on the releases of a game and the completeness of the object returned by the API");
             Console.WriteLine("-This is a long operation as each API call requires a 1.2 second delay.");
 
             while (!validInput)
             {
-                Console.Write("Request amount: ");
+                Console.Write("Request minimum amount: ");
 
                 try
                 {
@@ -627,7 +628,11 @@ namespace DataModels
             }
 
             GameImporter gameImporter = new IGDBGameImporter();
-            var result = gameImporter.importGames(new List<PlatformId>() { PlatformId.PC, PlatformId.PS4, PlatformId.WIU, PlatformId.XBO }, amount);
+            Platforms.addDesiredPlatform(PlatformId.PC);
+            Platforms.addDesiredPlatform(PlatformId.PS4);
+            Platforms.addDesiredPlatform(PlatformId.XBO);
+            Platforms.addDesiredPlatform(PlatformId.WIU);
+            var result = gameImporter.importGames(amount);
 
             Console.WriteLine("Imported " + result.Count + "games");
             Console.WriteLine("List of game names:");

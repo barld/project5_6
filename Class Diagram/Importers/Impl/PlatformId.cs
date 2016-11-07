@@ -6,8 +6,27 @@ using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Impl
 {
-    public enum PlatformId
+    public static class Platforms
     {
-        PS4 = 146, XBO = 145, WIU = 139, PC = 94
+        public enum PlatformId
+        {
+            PS4 = 146, XBO = 145, WIU = 139, PC = 94
+        }
+
+        static List<PlatformId> desiredPlatforms = new List<PlatformId>();
+        public static void addDesiredPlatform(PlatformId platform)
+        {
+            desiredPlatforms.Add(platform);
+        }
+
+        public static List<int> getPlatformIds()
+        {
+            var platformIds = new List<int>();
+            foreach (PlatformId id in desiredPlatforms)
+            {
+                platformIds.Add((int)id);
+            }
+            return platformIds;
+        }
     }
 }

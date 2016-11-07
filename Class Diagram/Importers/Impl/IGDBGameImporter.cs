@@ -24,68 +24,65 @@ namespace Class_Diagram.Importers.Impl
             delay = TimeSpan.FromMilliseconds(1050);
         }
 
-        public List<Game> importGames(List<PlatformId> desiredPlatforms, int desiredAmount)
+        public List<Game> importGames(int desiredMinimumAmount)
         {
             int importedAmount = 0;
-            int foundAmount;
+            int requestAmount = 0;
             string BASE_URL = "http://www.giantbomb.com/api/games/";
-
-            var platformIds = new List<int>();
-            foreach (PlatformId id in desiredPlatforms)
-            {
-                platformIds.Add((int)id);
-            }
 
             PlatformImporter pImporter = new IGDBPlatformImporter();
             platforms = pImporter.importPlatforms();
+            List<Game> gameList = new List<Game>();
 
-
-            Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
+            while (importedAmount < desiredMinimumAmount)
             {
-                {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
-                { "format", "json" },
-                { "limit", desiredAmount < 100 ? desiredAmount.ToString() : "100" },
-                { "offset", "0" },
-                { "field_list", "name,description,image,original_release_date,original_game_rating,id" },
-                {"sort", "original_release_date:desc" },
-                {"filter", "original_release_date:2014-01-01 00:00:00|" + DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00,platforms:" + String.Join("|", platformIds)}
-            };
-            HttpClient client = WebHelper.getDefaultImporterHttpClient();
-
-            wait();
-            string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
-            JObject responseJsonObject = JObject.Parse(responseText);
-            List<JsonGame> gicList = new List<JsonGame>();
-            JsonGame gic;
-
-            foreach (JObject jro in responseJsonObject["results"].Children())
-            {
-                if (jsonIsNull(jro["description"]) || jsonIsNull(jro["original_game_rating"]))
+                Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
                 {
-                    continue;
+                    { "api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
+                    { "format", "json" },
+                    { "limit", "50" },
+                    { "offset", (50*requestAmount).ToString() },
+                    { "field_list", "name,description,image,original_release_date,original_game_rating,id" },
+                    { "sort", "original_release_date:desc" },
+                    { "filter", "original_release_date:2014-01-01 00:00:00|" + DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00,platforms:" + String.Join("|", Platforms.getPlatformIds())}
+                };
+
+                string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
+                JObject responseJsonObject = JObject.Parse(responseText);
+                List<JsonGame> gicList = new List<JsonGame>();
+                JsonGame gic;
+
+                foreach (JObject jro in responseJsonObject["results"].Children())
+                {
+                    if (jsonIsNull(jro["description"]) || jsonIsNull(jro["original_game_rating"]))
+                    {
+                        continue;
+                    }
+
+                    gic = new JsonGame();
+                    gic.ApiId = (string)jro["id"];
+                    gic.Description = Regex.Replace((string)jro["description"], "<.*?>", String.Empty);
+                    gic.GameTitle = (string)jro["name"];
+
+                    if (!jsonIsNull(jro["image"]))
+                    {
+                        gic.ImagerHref = (string)jro["image"]["thumb_url"];
+                        gic.ThumbnailImageHref = (string)jro["image"]["small_url"];
+                    }
+
+                    gic.RatingPEGI = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
+
+                    getDetailedGameData(gic);
+                    getReleases(gic, Region.EU);
+                    gicList.Add(gic);
                 }
 
-                gic = new JsonGame();
-                gic.ApiId = (string)jro["id"];
-                gic.Description = Regex.Replace((string)jro["description"], "<.*?>", String.Empty);
-                gic.GameTitle = (string)jro["name"];
-
-                if (!jsonIsNull(jro["image"]))
-                {
-                    gic.ImagerHref = (string)jro["image"]["thumb_url"];
-                    gic.ThumbnailImageHref = (string)jro["image"]["small_url"];
-                }
-
-                gic.RatingPEGI = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
-
-                getDetailedGameData(gic);
-                getReleases(platformIds, gic, Region.EU);
-                gicList.Add(gic);
+                List<Game> tmpList = createGames(gicList);
+                gameList.AddRange(tmpList);
+                requestAmount++;
+                importedAmount += tmpList.Count;
             }
 
-            List<Game> gameList = createGames(gicList);
-
-            Debug.WriteLine("Imported " + gicList.Count + " games");
             Debug.WriteLine("Imported " + gameList.Count + " game objects");
             return gameList;
         }
@@ -99,7 +96,8 @@ namespace Class_Diagram.Importers.Impl
                 foreach (JsonRelease rel in gic.Releases)
                 {
                     int rndNumber = 0;
-                    do {
+                    do
+                    {
                         rndNumber = rnd.Next(99999999);
                     } while (!generatedNumbers.Add(rndNumber));
                     Game game = new Game()
@@ -147,9 +145,7 @@ namespace Class_Diagram.Importers.Impl
                 { "format", "json" },
                 { "field_list", "publishers,genres,original_release_date" }
             };
-            HttpClient client = WebHelper.getDefaultImporterHttpClient();
-            wait();
-            string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+            string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
             JObject jro = (JObject)JObject.Parse(responseText)["results"];
 
             if (!jsonIsNull(jro["publishers"]) || !jsonIsNull(jro["platforms"]) || !jsonIsNull(jro["gernes"]))
@@ -169,7 +165,7 @@ namespace Class_Diagram.Importers.Impl
             return false;
         }
 
-        private void getReleases(List<int> platformIds, JsonGame gameData, Region region)
+        private void getReleases(JsonGame gameData, Region region)
         {
             string BASE_URL = "http://www.giantbomb.com/api/releases/";
             Dictionary<string, string> URL_PARAMETERS = new Dictionary<string, string>()
@@ -177,11 +173,9 @@ namespace Class_Diagram.Importers.Impl
                 {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
                 { "format", "json" },
                 {"field_list", "name,game_rating,minimum_players,maximum_players,platform,release_date" },
-                { "filter", "region:"+ (int)region + ",platform"+ String.Join("|", platformIds) + ",game:"+ gameData.ApiId }
+                { "filter", "region:"+ (int)region + ",platform"+ String.Join("|", Platforms.getPlatformIds()) + ",game:"+ gameData.ApiId+",platform:146|145|139|94" }
             };
-            HttpClient client = WebHelper.getDefaultImporterHttpClient();
-            wait();
-            string responseText = client.GetStringAsync(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS)).Result;
+            string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
             JArray jra = (JArray)JObject.Parse(responseText)["results"];
 
             foreach (JObject jro in jra)

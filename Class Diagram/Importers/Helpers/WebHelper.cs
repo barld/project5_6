@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Class_Diagram.Importers.Helpers
 {
     public static class WebHelper
     {
-        public static string createUrlWithParameters (string baseUrl, Dictionary<string, string> urlParameters)
+        public static string createUrlWithParameters(string baseUrl, Dictionary<string, string> urlParameters)
         {
-            if(urlParameters.Count == 0)
+            if (urlParameters.Count == 0)
             {
                 return baseUrl;
             }
 
             StringBuilder urlBuilder = new StringBuilder();
-            Dictionary<string,string>.Enumerator enumerator = urlParameters.GetEnumerator();
+            Dictionary<string, string>.Enumerator enumerator = urlParameters.GetEnumerator();
             KeyValuePair<string, string> urlParameterPair;
 
             urlBuilder.Append(baseUrl);
@@ -42,6 +43,43 @@ namespace Class_Diagram.Importers.Helpers
             client.DefaultRequestHeaders.Add("User-Agent", "HR Project5_6 App");
 
             return client;
+        }
+
+        public static void wait()
+        {
+            Thread.Sleep(1200);
+        }
+
+        public static string queryApi(string requestUrl)
+        {
+            bool success = false;
+            int count = 0;
+            string responseText = "";
+            Exception exception = new Exception();
+            HttpClient client = getDefaultImporterHttpClient();
+            while (!success && count < 3)
+            {
+                try
+                {
+                    responseText =  client.GetStringAsync(requestUrl).Result;
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                    count++;
+                }
+                wait();
+            }
+
+            if (!success)
+            {
+                throw exception;
+            }
+            else
+            {
+                return responseText;
+            }
         }
     }
 }

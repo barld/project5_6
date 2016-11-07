@@ -11,7 +11,7 @@
                 <a v-bind:href="'#product/' + product.EAN" @click="showProductDetails(product)">Bekijk meer</a>
                 <!--<img v-bind:src="product.Image" alt="">-->
             </div>
-        </div><br /><!-- End spotlight games -->
+        </div><br class="clear"/><!-- End spotlight games -->
     </div>
 </template>
 

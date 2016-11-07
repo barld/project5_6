@@ -45,10 +45,10 @@
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    if(JSON.parse(xhr.response).Succes){
+                    if(JSON.parse(xhr.response).Success){
                         base.$emit('close');
                     }else{
-                        base.warning_message = JSON.parse(xhr.response).message;
+                        base.warning_message = JSON.parse(xhr.response).Message;
                         base.showwarning = true;
                     }
                 };

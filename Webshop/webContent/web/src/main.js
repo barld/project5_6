@@ -51,7 +51,7 @@ new Vue({
         showRegister:function(){
             this.show_register = true;
         },
-        closeRegister:function () {
+        close_register:function () {
             this.show_register = false;
         },
 

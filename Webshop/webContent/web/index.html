@@ -62,7 +62,7 @@
             <search></search>
             <product></product>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
-            <register v-on:close="closeRegister"  v-if="show_register" ></register>
+            <register v-on:close="close_register"  v-if="show_register" ></register>
         </div>
     </div><!-- End container -->
 </div>

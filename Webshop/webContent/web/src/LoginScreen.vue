@@ -7,6 +7,7 @@
 <template>
     <popup v-on:close="close" id="login_screen" class="login_screen">
         <h1>Login</h1>
+        <h2 style="color: red;" v-show="showwarning">{{warning_message}}</h2>
         <form action="" method="post">
             <div class="twelve columns">
                 <label for="login_email">Uw email:</label>
@@ -27,7 +28,9 @@
         data: function() {
             return {
                 login_email: '',
-                login_password: ''
+                login_password: '',
+                showwarning:false,
+                warning_message:''
             }
         },
         methods:{
@@ -51,8 +54,11 @@
                     var result = JSON.parse(xhr.response);
                     if(result.Success)
                         base.$emit('success');
-                    else
+                    else{
+                        base.showwarning = true;
+                        base.warning_message = result.Message;
                         base.$emit('failed');
+                    }
                 };
 
                 xhr.send(userInformation);

@@ -1,8 +1,8 @@
 <template>
     <div>
         <input v-model="searchValue" list="GameSearchList" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
-        <datalist id="GameSearchList" v-for="game in searchResult">
-            <option :value="game.EAN">{{game.GameTitle}}</option>
+        <datalist id="GameSearchList">
+            <option v-for="game in searchResult" :value="game.GameTitle">{{ game.Platform.PlatformTitle }}</option>
         </datalist>
     </div>
 </template>
@@ -17,20 +17,23 @@
         },
         methods:{
             searchGame:function(){
-                var base = this;
-                var xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "/api/product/search");
+                if(this.searchValue.length >= 3){
+                    var base = this;
+                    var xhr = new XMLHttpRequest();
 
-                // The RequestHeader can be any, by the server accepted, file
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                    xhr.open("POST", "/api/product/search");
 
-                // Function to fire off when the server has send a response
-                xhr.onload = function () {
-                    base.searchResult = JSON.parse(xhr.response);
-                };
+                    // The RequestHeader can be any, by the server accepted, file
+                    xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
-                xhr.send(JSON.stringify({value: this.searchValue}));
+                    // Function to fire off when the server has send a response
+                    xhr.onload = function () {
+                        base.searchResult = JSON.parse(xhr.response);
+                    };
+
+                    xhr.send(JSON.stringify({value: this.searchValue}));
+                }
             }
         }
     }

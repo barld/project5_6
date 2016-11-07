@@ -53,24 +53,28 @@ new Vue({
         },
         close_register:function () {
             this.show_register = false;
+            this.check_login();
         },
+        check_login: function () {
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/api/user/status/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                var result = JSON.parse(xhr.response);
+                base.LogedIn = result.IsLogedIn;
+            };
+
+            xhr.send();
+        }
 
     },
     created: function () {
-        var base = this;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/api/user/status/");
-
-        // The RequestHeader can be any, by the server accepted, file
-        xhr.setRequestHeader('Content-type', "Application/JSON", true);
-
-        // Function to fire off when the server has send a response
-        xhr.onload = function () {
-            var result = JSON.parse(xhr.response);
-            base.LogedIn = result.IsLogedIn;
-        };
-
-        xhr.send();
+        this.check_login();
     }
 });

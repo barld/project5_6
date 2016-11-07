@@ -1,10 +1,8 @@
 import Vue from 'vue'
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
-import dc from './dc/dc.vue'
 import shoppingCart from './shoppingCart'
 
-Vue.component('dc', dc);
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -27,7 +25,9 @@ new Vue({
         show_register:false,
         show_product_detail: false,
         LogedIn:false,
-        shoppingcart: shoppingcart
+        shoppingcart: shoppingcart,
+        showDetails: false,
+        detailsOf:{}
     },
     methods:{
         showProductDetails:function(product){
@@ -74,6 +74,13 @@ new Vue({
             };
 
             xhr.send();
+        },
+        show_details: function (game) {
+            this.detailsOf = game;
+            this.showDetails = true;
+        },
+        back_to_overview: function () {
+            this.showDetails = false;
         }
 
     },

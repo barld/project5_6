@@ -18,6 +18,7 @@
 
     <!-- CSS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
@@ -59,10 +60,54 @@
     </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
-            <search></search>
-            <product></product>
-            <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
-            <register v-on:close="closeRegister"  v-if="show_register" ></register>
+            <div class="container"></div>
+            <div class="ten columns"><h1 align="center">Jouw winkelwagen.</h1></div>
+        </div>
+        <div class="row">
+            <div class="container"></div>
+            <div class="ten columns">
+                <div class="cart-container">
+                    <div class="cart">
+                    <form action="#">
+                        
+                    <table class="u-full-width">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Naam</th>
+                                <th width="30">Aantal</th>
+                                <th width="230">Prijs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img class="img-thumbnail" src="images/battlefield.jpg"></td>
+                                <td>Battlefield</td>
+                                <td><input type="number" value="2" min="0" max="20"></td>
+                                <td>59.95</td>
+                            </tr>
+                            <tr>
+                                <td><img class="img-thumbnail" src="images/rome.jpg"></td>
+                                <td>Rome Total War</td>
+                                <td><input type="number" value="1" min="0" max="20"></td>
+                                <td>5.95</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Totaal:</strong> 125.85,-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-btn" align="right">
+                        <input type="submit" align="right" class="button-primary" value="Proceed to checkout!">
+                    </div>
+                    </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div><!-- End container -->
 </div>

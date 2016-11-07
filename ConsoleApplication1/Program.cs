@@ -631,6 +631,8 @@ namespace DataModels
             {
                 Console.WriteLine(game.GameTitle);
             }
+
+            context.Games.InsertMany(result);
         }
     }
 }

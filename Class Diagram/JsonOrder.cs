@@ -6,6 +6,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the attributes for the orders (Email, city etc.)
     public class JsonOrder
     {
         public List<long> EAN { get; set; }

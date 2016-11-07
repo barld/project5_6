@@ -1,17 +1,27 @@
 <template>
-    <div id="games_overview">
-        <h1>Nieuwe games</h1>
-        <div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
-            <div class="three columns product" v-for="product in products">
-                <pre>{{product}}</pre>
-                <div class="product_title">{{ product.GameTitle }}</div>
-                Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
-                Genre: {{product.Genres.name}} <br />
-                <span class="product_price">EUR {{product.Price / 100}} </span>
-                <a v-bind:href="'#product/' + product.EAN" @click="showProductDetails(product)">Bekijk meer</a>
-                <!--<img v-bind:src="product.Image" alt="">-->
+    <div>
+        <div id="games_overview">
+            <h1>Nieuwe games</h1>
+            <div id="popular_games" class="spotlight_games"><!-- Start spotlight games -->
+                <div class="three columns product" v-for="product in products">
+                    <pre>{{product}}</pre>
+                    <div class="product_title">{{ product.GameTitle }}</div>
+                    Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
+                    Genre: {{product.Genres.name}} <br />
+                    <span class="product_price">EUR {{product.Price / 100}} </span>
+                    <a v-bind:href="'#product/' + product.EAN" @click="productDetails(product)">Bekijk meer</a>
+                    <!--<img v-bind:src="product.Image" alt="">-->
+                </div>
+            </div><br class="clear"/><!-- End spotlight games -->
+        </div>
+        <div v-show="showProductDetails" class="popup" ><!-- Start login screen -->
+            <div class="close_btn" @click="closeProductDetails">
+                <i class="fa fa-times fa-5x" aria-hidden="true"></i>
             </div>
-        </div><br class="clear"/><!-- End spotlight games -->
+            <div class="inner_padding">
+                {{ product }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -19,7 +29,9 @@
     export default{
         data: function(){
             return{
-                products:[]
+                products:[],
+                product: [],
+                showProductDetails: false
             }
         },
         methods: {
@@ -40,12 +52,20 @@
 
                 xhr.send();
             },
-            showProductDetails(product){
-                console.log(product.GameTitle);
+            productDetails: function(game){
+                this.product = game;
+                this.showProductDetails = true;
+            },
+            closeProductDetails: function(){
+                this.showProductDetails = false;
             }
+
         },
         created: function(){
             this.getData();
+        },
+        close: function(){
+            this.$emit('close');
         }
     }
 </script>

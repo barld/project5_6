@@ -7,6 +7,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the attributes of an address (city, street etc.)
     public class Address
     {
         public string City { get; set; }

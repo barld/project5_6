@@ -407,7 +407,7 @@ namespace DataModels
             Console.WriteLine("Displaying every game..");
             foreach (Game g in context.Games.GetAll().Result)
             {
-                Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform}");
+                Console.WriteLine($"Title: {g.GameTitle} - EAN: {g.EAN} - Price: {g.Price} - Platform: {g.Platform.PlatformTitle}");
             }
         }
 
@@ -635,6 +635,8 @@ namespace DataModels
             {
                 Console.WriteLine(game.GameTitle);
             }
+
+            context.Games.InsertMany(result);
         }
     }
 }

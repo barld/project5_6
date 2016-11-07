@@ -6,6 +6,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the order specifications (Ordernumber, date etc.)
     public class Order
     {
         public int OrderNumber { get; set; }

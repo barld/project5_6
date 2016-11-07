@@ -6,6 +6,7 @@ using MongoDB.Bson;
 
 namespace DataModels
 {
+    //Defining the attribures for the game genre (e.g. Name, Description)
     public class Genre
     {
         public string Name { get; set; }

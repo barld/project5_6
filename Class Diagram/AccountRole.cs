@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DataModels
 {
+    //Defining the different account roles that are used (e.g. Admin, User and Guest)
     public enum AccountRole
     {
         Admin,

@@ -22,7 +22,7 @@ namespace Class_Diagram.Importers.Impl
             {"api_key", "b40c4c655df8cb22f96bba9bc1e5a506acec250a" },
             { "format", "json" },
             { "field_list", "name,description,company,release_date" },
-            { "filter","release_date:2012-01-01 01:01:01|2017-01-01 01:01:01" },
+            { "filter","id:146|145|139|94" },
             { "sort", "release_date:desc" }
         };
 

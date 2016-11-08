@@ -3,9 +3,9 @@
         <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
         <ul class="submenu">
             <li v-for="cartLine in cart.CartLines">
-                {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}  &euro;{{cartLine.Product.Price*cartLine.Amount/100.0}}
+                {{cartLine.Amount}}x {{cartLine.Product.GameTitle}}  &euro;{{(cartLine.Product.Price*cartLine.Amount/100.0).toFixed(2)}}
             </li>
-            <li><u>Totaal: &euro;{{cart.TotalPrice/100.0}}</u></li>
+            <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
         </ul>
 
     </li>

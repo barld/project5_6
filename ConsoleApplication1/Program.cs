@@ -11,7 +11,8 @@ using Newtonsoft.Json;
 using System.Security.Cryptography;
 using Class_Diagram.Importers;
 using Class_Diagram.Importers.Impl;
-using static Class_Diagram.Importers.Impl.Platforms;
+using Class_Diagram.Importers.DataContainers;
+using static Class_Diagram.Importers.DataContainers.Platforms;
 
 namespace DataModels
 {
@@ -123,14 +124,16 @@ namespace DataModels
             await context.Addresses.Insert(address3);
 
             //Create platforms
-            Platform platform1 = new Platform { Brand = "SONY", Description = "Japan for the win!", PlatformTitle = "Playstation 4" };
-            Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "XBOX One" };
-            Platform platform3 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "Wii U" };
-            Platform platform4 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "3DS" };
+            Platform platform1 = new Platform { Brand = "SONY", Description = "Japan for the win!", PlatformTitle = "Playstation 4", Abbreviation = "PS4"  };
+            Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "XBOX One", Abbreviation= "XBO" };
+            Platform platform3 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "Wii U", Abbreviation = "Wii U" };
+            Platform platform4 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "3DS", Abbreviation = "3DS" };
+            Platform platform5 = new Platform { Brand = "", Description = "Japan for the win!", PlatformTitle = "PC", Abbreviation = "PC" };
             await context.Platforms.Insert(platform1);
             await context.Platforms.Insert(platform2);
             await context.Platforms.Insert(platform3);
             await context.Platforms.Insert(platform4);
+            await context.Platforms.Insert(platform5);
 
             //Create genres
             Genre genre1 = new Genre { Name = "Action", Description = "Boom boom!" };
@@ -632,6 +635,7 @@ namespace DataModels
             Platforms.addDesiredPlatform(PlatformId.PS4);
             Platforms.addDesiredPlatform(PlatformId.XBO);
             Platforms.addDesiredPlatform(PlatformId.WIU);
+            Platforms.addDesiredPlatform(PlatformId._3DS);
             var result = gameImporter.importGames(amount);
 
             Console.WriteLine("Imported " + result.Count + "games");

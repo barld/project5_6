@@ -10,7 +10,7 @@ namespace Class_Diagram.Importers.DataContainers
     {
         public enum PlatformId
         {
-            PS4 = 146, XBO = 145, WIU = 139, PC = 94
+            PS4 = 146, XBO = 145, WIU = 139, PC = 94, _3DS = 90
         }
 
         static List<PlatformId> desiredPlatforms = new List<PlatformId>();

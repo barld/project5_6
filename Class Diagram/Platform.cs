@@ -17,5 +17,6 @@ namespace DataModels
         public string PlatformTitle { get; set; }
         public string Brand { get; set; }
         public string Description { get; set; }
+        public string Abbreviation { get; set; }
     }
 }

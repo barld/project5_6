@@ -162,9 +162,19 @@ a{
     display:block;
 }
 
+.thumbnail_container{
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	vertical-align : middle;
+}
 .thumbnail{
-	width:150px;
-	height:150px;
+	position: relative;
+	max-width:150px;
+	max-height:150px;
+	display: inline;
+	top: 50%;
+	transform: 			translateY(-50%);
 }
 
 input:focus{

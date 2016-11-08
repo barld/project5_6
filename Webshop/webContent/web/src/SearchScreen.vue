@@ -1,9 +1,14 @@
 <template>
-    <div>
+    <div class="container">
         <input v-model="searchValue" list="GameSearchList" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="searchGame"/>
         <datalist id="GameSearchList">
             <option v-for="game in searchResult" :value="game.GameTitle">{{ game.Platform.PlatformTitle }}</option>
         </datalist>
+
+        <div v-show="searchResults">
+            <productbox v-for="product in searchResult" v-bind:product="product"></productbox>
+        </div>
+
     </div>
 </template>
 
@@ -13,6 +18,7 @@
             return{
                 searchValue: "",
                 searchResult:[],
+                searchResults: false
             }
         },
         methods:{

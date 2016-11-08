@@ -81,5 +81,13 @@ namespace Webshop.Controllers
             return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart deleted" });
         }
 
+        public ViewObject DeleteRemove()
+        {
+            var game = GetBodyFromJson<Game>();
+            currentShoppingCart.CartLines.ForEach(cl => { if (cl.Product.EAN == game.EAN) cl.Amount--; });
+            currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+            return Json(new Models.ActionResultViewModel { Success = true, Message = "item deleted" });
+        }
+
     }
 }

@@ -8,12 +8,6 @@ namespace Class_Diagram.Importers.DataContainers
 {
     public class JsonGame
     {
-        public JsonGame()
-        {
-            Releases = new List<JsonRelease>();
-            Publisher = new List<string>();
-            Genres = new List<string>();
-        }
         public int MinimumPlayers { get; set; }
         public int MaximumPlayers { get; set; }
         public string Eann { get; set; }
@@ -23,8 +17,15 @@ namespace Class_Diagram.Importers.DataContainers
         public int RatingPEGI { get; set; }
         public List<string> Publisher { get; set; }
         public List<string> Genres { get; set; }
-        public string ThumbnailImageHref { get; set; }
-        public string ImagerHref { get; set; }
+        public List<string> PictureUrls { get; set; }
         public string Description { get; set; }
+
+        public JsonGame()
+        {
+            Releases = new List<JsonRelease>();
+            Publisher = new List<string>();
+            Genres = new List<string>();
+            PictureUrls = new List<string>();
+        }
     }
 }

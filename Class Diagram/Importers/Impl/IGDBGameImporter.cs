@@ -66,11 +66,22 @@ namespace Class_Diagram.Importers.Impl
 
                     if (!jsonIsNull(jro["image"]))
                     {
-                        gic.ImagerHref = (string)jro["image"]["thumb_url"];
-                        gic.ThumbnailImageHref = (string)jro["image"]["small_url"];
+                        List<String> picturesUrls = gic.PictureUrls;
+                        picturesUrls.Add((string)jro["image"]["thumb_url"]);
+                        picturesUrls.Add((string)jro["image"]["tiny_url"]);
+                        picturesUrls.Add((string)jro["image"]["small_url"]);
+                        picturesUrls.Add((string)jro["image"]["medium_url"]);
                     }
 
-                    gic.RatingPEGI = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
+                    int ratingAge = 10;
+                    foreach (JObject jrao in jro["original_game_rating"].Children())
+                    {
+                        if (((string)jrao["name"]).Contains("ESRB"))
+                        {
+                            ratingAge = ratingTransformer((string)jro["original_game_rating"][0]["name"]);
+                        }
+                    }
+                    gic.RatingPEGI = ratingAge;
 
                     getDetailedGameData(gic);
                     getReleases(gic, Region.EU);
@@ -110,7 +121,7 @@ namespace Class_Diagram.Importers.Impl
                         MaxPlayers = gic.MinimumPlayers,
                         IsVRCompatible = false,
                         Platform = platforms.Find(a => a.PlatformTitle == rel.PlatformName),
-                        Image = new List<string>() { gic.ThumbnailImageHref, gic.ImagerHref },
+                        Image = gic.PictureUrls,
                         Price = rel.Price,
                         Publisher = gic.Publisher,
                         RatingPEGI = gic.RatingPEGI,
@@ -198,8 +209,13 @@ namespace Class_Diagram.Importers.Impl
         {
             Dictionary<string, int> ratingDictionary = new Dictionary<string, int>()
             {
-                { "ERSB: E", 10 },
-                { "ESRB: M", 18 }
+                { "ERSB: E", 3 },
+                { "ESRB: M", 16 },
+                { "ESRB: T", 12},
+                { "ESRB: K-A", 3},
+                { "ESRB: AO", 18 },
+                { "ESRB: EC", 3 },
+                { "ESRB: E10+", 10 }
             };
             int ratingValue = ratingDictionary.TryGetValue(originalRating, out ratingValue) ? ratingValue : 8;
 

@@ -8,7 +8,7 @@
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
             <br>
-            <span class="afrekenen" v-on:click.prevent="showShoppingScreen";>Afrekenen</span>
+            <a class="afrekenen" v-on:click.prevent="showShoppingScreen">Afrekenen</a>
         </ul>
 
     </li>

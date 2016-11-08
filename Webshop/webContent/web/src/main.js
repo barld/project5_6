@@ -24,6 +24,7 @@ new Vue({
         show_login:false,
         show_register:false,
         show_product_detail: false,
+        show_shoppingcart_screen: false,
         LogedIn:false,
         shoppingcart: shoppingcart,
         showDetails: false,

@@ -40,10 +40,8 @@
                     <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
                     <platform_menu></platform_menu>
                 </li>
-                <li class="floating_menu_component">
-                    <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-                    <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
-                </li>
+                <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
+
                 <UserNav
                         v-bind:logedin="LogedIn"
                         v-on:showlogin="showLogin"
@@ -60,7 +58,11 @@
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
             <search></search>
-            <product></product>
+            <product v-if="!(showDetails)" @show_details="show_details"></product>
+            <span v-else>
+                <a href="#" @click="back_to_overview">terug naar overzicht</a>
+                {{detailsOf}}
+            </span>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="close_register"  v-if="show_register" ></register>
         </div>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataModels;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DataModels
 {
@@ -26,7 +27,9 @@ namespace DataModels
 
         public string Description { get; set; }
 
-        public ObjectId _id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
         public long EAN { get; set; }
 

@@ -25,10 +25,7 @@ namespace Webshop.Controllers
             get
             {
                 if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, new Cart()
-                    {
-                        CartLines = context.Games.GetAll().Result.Select((g, i) => new CartLine { Amount = i + 1, Product = g })
-                     });
+                    Session.Data.Add(shoppingCartKey, new Cart());
                 return Session.Data[shoppingCartKey] as Cart;
             }
             set
@@ -49,6 +46,20 @@ namespace Webshop.Controllers
         public ViewObject Get()
         {
             return Json(currentShoppingCart);
+        }
+
+        public ViewObject PostAdd()
+        {
+            var game = this.GetBodyFromJson<Game>();
+            if(currentShoppingCart.CartLines.Count(g => g.Product.EAN == game.EAN) == 0)
+            {
+                currentShoppingCart.CartLines.Add(new CartLine { Amount = 1, Product = context.Games.GetByEAN(game.EAN).Result });
+            }
+            else
+            {
+                currentShoppingCart.CartLines.First(c => c.Product.EAN == game.EAN).Amount++;
+            }
+            return Json(new Models.ActionResultViewModel { Success = true });
         }
 
         public ViewObject Put()

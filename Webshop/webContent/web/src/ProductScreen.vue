@@ -2,16 +2,8 @@
     <div>
         <div id="games_overview">
             <h1>Nieuwe games</h1>
-            <productbox v-for="product in products" v-bind:product="product"></productbox>
+            <productbox @show_details="show_details" v-for="product in products" v-bind:product="product"></productbox>
             <br class="clear"/><!-- End spotlight games -->
-        </div>
-        <div v-show="showProductDetails" class="popup" ><!-- Start login screen -->
-            <div class="close_btn" @click="closeProductDetails">
-                <i class="fa fa-times fa-5x" aria-hidden="true"></i>
-            </div>
-            <div class="inner_padding">
-                {{ product }}
-            </div>
         </div>
     </div>
 </template>
@@ -21,7 +13,6 @@
         data: function(){
             return{
                 products:[],
-                product: [],
                 showProductDetails: false
             }
         },
@@ -38,7 +29,6 @@
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
                     base.products = JSON.parse(xhr.response);
-                    console.log(base.products);
                 };
 
                 xhr.send();
@@ -49,6 +39,9 @@
             },
             closeProductDetails: function(){
                 this.showProductDetails = false;
+            },
+            show_details: function (game) {
+                this.$emit('show_details', game)
             }
 
         },

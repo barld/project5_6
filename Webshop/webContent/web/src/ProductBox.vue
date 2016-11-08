@@ -4,7 +4,7 @@
         <span class="product_price">&euro; {{(product.Price / 100).toFixed(2)}} </span>
         <a v-bind:href="'#product/' + product.EAN" @click="show_details">Bekijk meer</a>
         <img v-bind:src="product.Image[0]" alt="" class="thumbnail">
-        <a @click.prevent="add_to_cart" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+        <a class="button" @click.prevent="add_to_cart" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
     </div>
 </template>
 

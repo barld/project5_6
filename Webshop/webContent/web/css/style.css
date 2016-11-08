@@ -1,4 +1,4 @@
-.cart-container {
+.element-container {
 	border: 1px solid black;
 	width: auto;
 	border-radius: 5px;
@@ -15,10 +15,27 @@
 }
 
 .img-thumbnail {
-	width: 50px;
-	height: 70px;
+	width: 30px;
+	height: 53px;
+}
+
+.img-cart-remove {
+	width: 60px;
+	height: 50px;
+	margin-right: 10px;
+}
+
+.img-payment {
+	height: 200px;
+}
+
+.img-payment-left {
+	height: 200px;
+	margin-left: 50px;
 }
 
 .form-btn {
 	margin-right: 30px;
 }
+
+

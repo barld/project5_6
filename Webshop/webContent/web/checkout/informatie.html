@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Dylan's Gameshop | Checkout</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+    <!-- JavaScript
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+</head>
+<body>
+<div id="app">
+    <nav><!-- Start menu -->
+        <div id="navbar">
+            <ul>
+                <li class="submenu_parent">
+                    <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
+                    <platform_menu></platform_menu>
+                </li>
+                <li class="floating_menu_component">
+                    <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
+                    <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
+                </li>
+                <UserNav
+                        v-bind:logedin="LogedIn"
+                        v-on:showlogin="showLogin"
+                        v-on:showregister="showRegister"
+                        v-on:login_succes="login_success"
+                        v-on:login_failed="login_failed"
+                        v-on:logedout="logedout"
+                >
+
+                </UserNav>
+            </ul>
+        </div>
+    </nav><!-- End menu -->
+    <div class="container margin-top"><!-- Start container -->
+        <div class="container">
+        	<div class="row">
+                <div class="ten.columns offset-by-two-columns">
+                	<h4 align="center"><a style="color: inherit; text-decoration:none" href="../winkelwagen.html">Winkelwagen</a> | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="container">
+        	<div class="row">
+	            <form action="betalingswijze.html">
+	                <div class="six columns">
+	                	<label for="voornaam">Voornaam</label>
+      					<input class="u-full-width" type="text" value="Jefaro" id="voornaam">
+      					<label for="achternaam">Achternaam</label>
+      					<input class="u-full-width" type="text" value="Constancia" id="achternaam">
+      					<label for="postcode">Postcode</label>
+      					<input class="u-full-width" type="text" value="3011AX" id="postcode">
+      					<label for="huisnummer">Huisnummer</label>
+      					<input class="u-full-width" type="text" value="422" id="huisnummer">
+      					<label for="straat">Straat</label>
+      					<input class="u-full-width" type="text" value="Pompenburg" id="straat">
+	                </div>
+	                <div class="six columns">
+	                	<label for="stad">Stad</label>
+      					<input class="u-full-width" type="text" value="Rotterdam" id="stad">
+      					<label for="land">Land</label>
+      					<input class="u-full-width" type="text" value="Nederland" id="land">
+      					<label for="email">E-mail</label>
+      					<input class="u-full-width" type="email" value="JFConstancia@hotmail.com" id="email">
+      					<label for="tel">Telefoon nummer</label>
+      					<input class="u-full-width" type="text" value="06-12345678" id="tel">
+	                </div>
+            </div>
+            <hr>
+            <br>
+	      	<input type="submit" class="button-primary" value="Verder naar betalingswijze!">
+	        </form>
+        </div>
+    </div><!-- End container -->
+</div>
+<script src="./dist/build.js"></script>
+</body>
+</html>

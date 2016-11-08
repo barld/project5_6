@@ -1,6 +1,7 @@
 ﻿using Class_Diagram.Importers.DataContainers;
 using Class_Diagram.Importers.Helpers;
 using DataModels;
+using DataModels.Gateways;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -102,6 +103,7 @@ namespace Class_Diagram.Importers.Impl
         {
             List<Game> gameList = new List<Game>();
             Random rnd = new Random();
+            PlatformGateway pg = new Context().Platforms;
             foreach (JsonGame gic in gicList)
             {
                 foreach (JsonRelease rel in gic.Releases)
@@ -120,7 +122,7 @@ namespace Class_Diagram.Importers.Impl
                         MinPlayers = gic.MinimumPlayers,
                         MaxPlayers = gic.MinimumPlayers,
                         IsVRCompatible = false,
-                        Platform = platforms.Find(a => a.PlatformTitle == rel.PlatformName),
+                        Platform = pg.GetByTitle(platformTransformer(rel.PlatformName)).Result,
                         Image = gic.PictureUrls,
                         Price = rel.Price,
                         Publisher = gic.Publisher,
@@ -228,8 +230,9 @@ namespace Class_Diagram.Importers.Impl
             {
                 { "Wii U", "Wii U"},
                 {"Xbox One", "Xbox One" },
-                {"PlayStation 4", "PlayStation 4" },
-                {"PC","PC" }
+                {"PlayStation 4", "Playstation 4" },
+                {"PC","PC" },
+                {"Nintendo 3DS", "3DS" }
             };
             string platformValue = platformDictionary.TryGetValue(originalPlatform, out platformValue) ? platformValue : "";
 

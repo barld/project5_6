@@ -125,10 +125,10 @@ namespace DataModels
 
             //Create platforms
             Platform platform1 = new Platform { Brand = "SONY", Description = "Japan for the win!", PlatformTitle = "Playstation 4", Abbreviation = "PS4"  };
-            Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "XBOX One", Abbreviation= "XBO" };
+            Platform platform2 = new Platform { Brand = "Microsoft", Description = "USA for the win!", PlatformTitle = "Xbox One", Abbreviation= "XBO" };
             Platform platform3 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "Wii U", Abbreviation = "Wii U" };
             Platform platform4 = new Platform { Brand = "Nintendo", Description = "Japan for the win!", PlatformTitle = "3DS", Abbreviation = "3DS" };
-            Platform platform5 = new Platform { Brand = "", Description = "Japan for the win!", PlatformTitle = "PC", Abbreviation = "PC" };
+            Platform platform5 = new Platform { Brand = "", Description = "World for the win!", PlatformTitle = "PC", Abbreviation = "PC" };
             await context.Platforms.Insert(platform1);
             await context.Platforms.Insert(platform2);
             await context.Platforms.Insert(platform3);

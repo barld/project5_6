@@ -7,6 +7,8 @@
                 <button @click.prevent="add(cartLine.Product)">+</button><button @click.prevent="sub(cartLine.Product)">-</button>
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
+            <br>
+            <span class="afrekenen" v-on:click.prevent="showShoppingScreen";>Afrekenen</span>
         </ul>
 
     </li>
@@ -29,6 +31,9 @@
             },
             sub:function (product) {
                 window.shoppingcart.removeFromCart(product);
+            },
+            showShoppingScreen:function () {
+                this.$emit('shoppingCartScreen');
             }
         },
         created: function () {

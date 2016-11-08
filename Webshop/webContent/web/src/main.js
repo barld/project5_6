@@ -14,6 +14,7 @@ Vue.component('register', require('./RegisterScreen.vue'));
 Vue.component('productbox', require('./ProductBox.vue'));
 Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
+Vue.component('shoppingCartScreen', require('./shoppingCartScreen.vue'));
 
 window.shoppingcart = new shoppingCart();
 

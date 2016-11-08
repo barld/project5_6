@@ -606,7 +606,7 @@ namespace DataModels
             }
         }
 
-        static async void importGames()
+        static void importGames()
         {
             int amount = 0;
             bool validInput = false; ;
@@ -648,7 +648,7 @@ namespace DataModels
                 Console.Write(game.Platform.PlatformTitle + " ");
             }
 
-            context.Games.InsertMany(result);
+            context.Games.InsertMany(result).RunSynchronously();
         }
     }
 }

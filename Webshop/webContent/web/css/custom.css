@@ -177,6 +177,11 @@ a{
 	transform: 			translateY(-50%);
 }
 
+.afrekenen{
+	text-decoration: underline;
+	font-weight: bold;
+}
+
 input:focus{
 	border:2px solid #000000 !important;
 }

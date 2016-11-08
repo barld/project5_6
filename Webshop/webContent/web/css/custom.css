@@ -164,7 +164,7 @@ a{
 
 .thumbnail{
 	width:150px;
-	height:150px;
+	height:auto;
 }
 
 input:focus{

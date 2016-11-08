@@ -9,6 +9,7 @@
 <body>
 <div id="app">
     <router-link to="/product">Product</router-link>
+    <router-link to="/product/1932903982">Specific product</router-link>
     <router-link to="/login">Login</router-link>
 
     <router-view></router-view>
@@ -17,13 +18,15 @@
 <script>
 
     // Route components
-    const ProductScreen = {template: '<div>Specific product</div>'};
+    const ProductScreen = {template: '<div>Product screen</div>'};
+    const ProductDetailsScreen = {template: '<div>Product {{ $route.params.id }}</div>'};
     const LoginScreen = {template: '<div>Login screen</div>'};
 
     // Routes
     const routes = [
         { path: '/product', component: ProductScreen},
-        { path: '/login', component: LoginScreen}
+        { path: '/product/:id', component: ProductDetailsScreen},
+        { path: '/login', component: LoginScreen},
     ];
 
     const router = new VueRouter({

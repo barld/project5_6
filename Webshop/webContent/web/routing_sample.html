@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue JS routing sample</title>
+    <script src="https://unpkg.com/vue@2.0.5/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router"></script>
+</head>
+<body>
+<div id="app">
+    <router-link to="/product">Product</router-link>
+    <router-link to="/login">Login</router-link>
+
+    <router-view></router-view>
+</div>
+
+<script>
+
+    // Route components
+    const ProductScreen = {template: '<div>Specific product</div>'};
+    const LoginScreen = {template: '<div>Login screen</div>'};
+
+    // Routes
+    const routes = [
+        { path: '/product', component: ProductScreen},
+        { path: '/login', component: LoginScreen}
+    ];
+
+    const router = new VueRouter({
+        routes
+    });
+
+    const app = new Vue({
+        router
+    }).$mount('#app');
+</script>
+</body>
+</html>

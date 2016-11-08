@@ -1,6 +1,5 @@
 <template>
     <div class="three columns product">
-        <!--<span class="product_title">{{product.GameTitle}} ({{product.Platform.PlatformTitle}})</span>-->
         Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
         <span class="product_price">&euro; {{(product.Price / 100).toFixed(2)}} </span>
         <a v-bind:href="'#product/' + product.EAN" @click="show_details">Bekijk meer</a>

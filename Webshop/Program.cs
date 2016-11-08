@@ -19,7 +19,7 @@ namespace Webshop
                 new RouteControllers("/api/", Assembly.GetEntryAssembly()),
                 //new DirectRouteAction(HttpMethodsEnum.Get, "/", () => new RawObjectView("hello world")),
                 //new DirectRouteAction(HttpMethodsEnum.Get, "/index.html", () => new RawObjectView("hello world")),
-                new RouteWebFolder("/", "./../../WebContent/"),
+                Debugger.IsAttached ? new RouteWebFolder("/", "./../../WebContent/web/") : new RouteWebFolder("/", "./WebContent/"),
             };
         }
 

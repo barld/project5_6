@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Diagram.Importers.Impl
+namespace Class_Diagram.Importers.DataContainers
 {
     public static class Platforms
     {

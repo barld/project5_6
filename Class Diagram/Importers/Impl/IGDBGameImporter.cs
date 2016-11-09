@@ -173,6 +173,8 @@ namespace Class_Diagram.Importers.Impl
                     gic.Genres.Add((string)jsonGenre["name"]);
                 }
 
+                gic.price = (new Random()).Next(30, 50);
+
                 return true;
             }
             return false;
@@ -202,7 +204,7 @@ namespace Class_Diagram.Importers.Impl
                     ReleaseName = !jsonIsNull(jro["name"]) ? (string)jro["name"] : gameData.GameTitle,
                     PlatformName = (string)jro["platform"]["name"],
                     ReleaseDate = DateTime.Parse(!jsonIsNull(jro["release_date"]) ? (string)jro["release_date"] : "12-03-2014"),
-                    Price = 5000
+                    Price = gameData.price
                 });
             }
         }

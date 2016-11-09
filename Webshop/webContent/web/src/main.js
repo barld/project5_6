@@ -14,6 +14,7 @@ Vue.component('register', require('./RegisterScreen.vue'));
 Vue.component('productbox', require('./ProductBox.vue'));
 Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
+Vue.component('product_details'), require('./ProductDetailsScreen.vue');
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 
 window.shoppingcart = new shoppingCart();
@@ -30,9 +31,11 @@ new Vue({
         shoppingcart: shoppingcart,
         showDetails: false,
         on_product_section: true,
-        detailsOf:{}
     },
     methods:{
+        close_product_details:function(){
+            this.showDetails = false;
+        },
         open_shoppingcart_screen:function(){
             this.show_shoppingcart_screen = true;
             this.on_product_section = false;

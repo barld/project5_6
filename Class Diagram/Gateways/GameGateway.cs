@@ -43,6 +43,8 @@ namespace DataModels.Gateways
                 filter &= Builders<Game>.Filter.Lt(g => g.Price, search.PriceLt);
             if (search.PriceGt > 0)
                 filter &= Builders<Game>.Filter.Gt(g => g.Price, search.PriceGt);
+            if (search.Platforms?.Count() > 0)
+                filter &= Builders<Game>.Filter.In(g => g.Platform.PlatformTitle, search.Platforms);
             return await Collection.Find(filter).ToListAsync();
         }
 

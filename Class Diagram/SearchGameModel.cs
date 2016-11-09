@@ -11,6 +11,7 @@ namespace Class_Diagram
         public string Title { get; set; }
         public int PriceLt { get; set; }
         public int PriceGt { get; set; }
+        public IEnumerable<string> Platforms { get; set; }
 
     }
 }

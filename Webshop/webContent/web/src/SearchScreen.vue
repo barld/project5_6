@@ -8,7 +8,17 @@
         <input v-model.number="min" id="minB" type="range" min="0" max="150" > {{min}}
         <label for="maxB">maximaal bedrag</label>
         <input v-model.number="max" id="maxB" type="range" min="0" max="150" > {{max}}
+
+        <p>platformen</p>
+        <p v-for="platform in platforms">
+            <input type="checkbox" :value="platform.PlatformTitle" v-model="checkedplatforms" :id="'pc_'+platform"  />
+            <label style="display: inline" :for="'pc_'+platform">{{platform.PlatformTitle}}</label>
+        </p>
+
+
         <button @click="searchGame">zoeken</button>
+
+
 
         <div v-show="searchResults">
             <productbox @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
@@ -25,7 +35,9 @@
                 searchResult:[],
                 searchResults: false,
                 min: 0,
-                max: 0
+                max: 0,
+                platforms: [],
+                checkedplatforms: []
             }
         },
         methods:{
@@ -36,6 +48,22 @@
                 else{
                     this.searchResults = false;
                 }
+            },
+            getPlatforms: function () {
+                var base = this;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/api/platform/all");
+
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    base.platforms = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
             },
             searchGame:function(){
                 var base = this;
@@ -51,7 +79,16 @@
                     base.searchResult = JSON.parse(xhr.response);
                 };
 
-                xhr.send(JSON.stringify({Title: this.searchValue, PriceLt:this.max*100, PriceGt:this.min*100}));
+                xhr.send(
+                    JSON.stringify(
+                        {
+                            Title: this.searchValue,
+                            PriceLt:this.max*100,
+                            PriceGt:this.min*100,
+                            Platforms:this.checkedplatforms
+                        }
+                    )
+                );
                 this.searchResults = true;
                 this.hide_products();
 
@@ -62,6 +99,9 @@
             hide_products: function(){
                 this.$emit('hide_products');
             }
+        },
+        created:function () {
+            this.getPlatforms();
         }
     }
 </script>

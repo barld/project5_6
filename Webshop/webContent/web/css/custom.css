@@ -192,12 +192,27 @@ input:focus{
 	border:2px solid #000000 !important;
 }
 
-.product_image_container{
+.product_detail_image_container{
+	box-sizing: border-box;
 	float: left;
+	max-width: 30%;
+	border: 1px black solid;
 }
 
-.product_info_container{
+.product_detail_image_container img{
+	position: relative;
+	max-width: 100%;
+}
+
+.product_detail_info_container{
+	box-sizing: border-box;
 	float:right;
+	max-width: 70%;
+	border: 1px black solid;
+}
+
+.product_detail_info_container h1{
+	text-size
 }
 
 .scrollable{

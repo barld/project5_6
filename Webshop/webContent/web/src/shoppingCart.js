@@ -32,6 +32,7 @@ export default
 
         registerOnChangedshoppingCart(f)
         {
+            console.log(f);
             this.OnChangedshoppingCartEvents.push(f);
         }
 
@@ -53,8 +54,26 @@ export default
             xhr.send(JSON.stringify(product));
         }
 
+        UpdateCart(cart){
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", "/api/shoppingcart/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                base._refreshData();
+            };
+
+            xhr.send(JSON.stringify(cart));
+        }
+
         _triggerOnChangedshoppingCart(){
-            this.OnChangedshoppingCartEvents.forEach(e => e(this))
+            this.OnChangedshoppingCartEvents.forEach(e => e(this));
         }
 
         removeFromCart(product){

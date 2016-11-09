@@ -16,7 +16,7 @@
                     <tr v-for="cartLine in cart.CartLines" >
                         <td><img class="img-thumbnail thumbnail" :src="cartLine.Product.Image[0]"></td>
                         <td>{{cartLine.Product.GameTitle}}</td>
-                        <td><input v-model="cartLine.Amount" type="number" min="0" max="20"></td>
+                        <td><input v-model="cartLine.Amount" type="number" min="0" max="20" @change="update"></td>
                         <td>{{(cartLine.SubTotal/100).toFixed(2)}}</td>
                     </tr>
                     <tr>
@@ -46,6 +46,10 @@
             },
             changedShoppingCart:function (sc) {
                 this.cart = sc.cart;
+                console.log('test');
+            },
+            update:function () {
+                window.shoppingcart.UpdateCart(this.cart);
             }
         },
         created: function () {

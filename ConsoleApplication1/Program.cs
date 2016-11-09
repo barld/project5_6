@@ -644,6 +644,7 @@ namespace DataModels
                 try
                 {
                     amount = Int32.Parse(Console.ReadLine());
+                    amount = amount > 100 ? 100 : amount;
                     validInput = true;
                 }
                 catch (Exception)

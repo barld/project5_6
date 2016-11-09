@@ -3,7 +3,9 @@
         Aantal spelers: {{product.MinPlayers}} - {{product.MaxPlayers}}
         <span class="product_price"><br>&euro; {{(product.Price / 100).toFixed(2)}} </span><br>
         <a v-bind:href="'#product/' + product.EAN" @click="show_details">Bekijk meer</a>
+        <div class="thumbnail_container">
         <img v-bind:src="product.Image[0]" alt="" class="thumbnail">
+        </div>
         <a class="button" @click.prevent="add_to_cart" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Voeg toe</a>
     </div>
 </template>

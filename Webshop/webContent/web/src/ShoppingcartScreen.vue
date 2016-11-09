@@ -13,23 +13,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img class="img-thumbnail" src="images/battlefield.jpg"></td>
-                        <td>Battlefield</td>
-                        <td><input type="number" value="2" min="0" max="20"></td>
-                        <td>59.95</td>
-                    </tr>
-                    <tr>
-                        <td><img class="img-thumbnail" src="images/rome.jpg"></td>
-                        <td>Rome Total War</td>
-                        <td><input type="number" value="1" min="0" max="20"></td>
-                        <td>5.95</td>
+                    <tr v-for="cartLine in cart.CartLines" >
+                        <td><img class="img-thumbnail thumbnail" :src="cartLine.Product.Image[0]"></td>
+                        <td>{{cartLine.Product.GameTitle}}</td>
+                        <td><input v-model="cartLine.Amount" type="number" min="0" max="20"></td>
+                        <td>{{(cartLine.SubTotal/100).toFixed(2)}}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><strong>Totaal:</strong> 125.85,-</td>
+                        <td><strong>Totaal:</strong> &euro;{{(cart.TotalPrice/100).toFixed(2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -45,10 +39,18 @@
             return{
                 cart: {}
             }
-        }, methods: {
+        },
+        methods: {
             close:function(){
                 this.$emit("close");
+            },
+            changedShoppingCart:function (sc) {
+                this.cart = sc.cart;
             }
+        },
+        created: function () {
+            window.shoppingcart.registerOnChangedshoppingCart(this.changedShoppingCart);
+            this.changedShoppingCart(window.shoppingcart)
         }
     }
 </script>

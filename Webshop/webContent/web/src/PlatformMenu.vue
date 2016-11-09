@@ -35,7 +35,7 @@
                 var base = this;
 
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "/api/product/gamebyplatform/" + platform);
+                xhr.open("GET", "/api/product/gamebyplatform/?pt=" + platform);
 
                 // The RequestHeader can be any, by the server accepted, file
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);

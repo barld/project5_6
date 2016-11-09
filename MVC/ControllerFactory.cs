@@ -88,7 +88,7 @@ namespace MVC
 
                 foreach (string part in parameterpart.Split('&'))
                 {
-                    parameters.Add(part.Split('=')[0], part.Split('=')[1]);
+                    parameters.Add( WebUtility.UrlDecode(part.Split('=')[0]), WebUtility.UrlDecode(part.Split('=')[1]));
                 }
             }
             

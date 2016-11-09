@@ -6,7 +6,7 @@
         </datalist>
 
         <div v-show="searchResults">
-            <productbox v-for="product in searchResult" v-bind:product="product"></productbox>
+            <productbox @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
         </div>
 
     </div>
@@ -39,7 +39,19 @@
                     };
 
                     xhr.send(JSON.stringify({value: this.searchValue}));
+                    this.searchResults = true;
+                    this.hide_products();
                 }
+                else
+                {
+                    this.searchResults = false;
+                }
+            },
+            show_details: function (game) {
+                this.$emit('show_details', game)
+            },
+            hide_products: function(){
+                this.$emit('hide_products');
             }
         }
     }

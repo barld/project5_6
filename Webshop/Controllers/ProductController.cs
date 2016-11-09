@@ -33,5 +33,13 @@ namespace Webshop.Controllers
 
             return Json(game);
         }
+
+        public object GetGamebyPlatform()
+        {
+            string platformTitle = this.Parameters.ContainsKey("pt") ? this.Parameters["pt"] : string.Empty;
+            Platform platform = context.Platforms.GetByTitle(platformTitle).Result;
+            IEnumerable<Game> games = context.Games.GetAllByPlatform(platform).Result;
+            return Json(games);
+        }
     }
 }

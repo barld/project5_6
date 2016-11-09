@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="games_overview">
+        <div id="games_overview" v-if="showProducts">
             <h1>Nieuwe games</h1>
             <productbox @show_details="show_details" v-for="product in products" v-bind:product="product"></productbox>
             <br class="clear"/><!-- End spotlight games -->
@@ -13,7 +13,8 @@
         data: function(){
             return{
                 products:[],
-                showProductDetails: false
+                showProductDetails: false,
+                showProducts: true
             }
         },
         methods: {
@@ -32,6 +33,15 @@
                 };
 
                 xhr.send();
+
+                if(this.products.count > 0)
+                {
+                    this.showProductDetails = true;
+                }
+                else
+                {
+                    this.showProductDetails = false;
+                }
             },
             productDetails: function(game){
                 this.product = game;

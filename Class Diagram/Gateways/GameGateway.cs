@@ -49,5 +49,11 @@ namespace DataModels.Gateways
             var filter = Builders<Game>.Filter.Eq(g => g.GameTitle, searchTitle);
             return await Collection.Find(filter).ToListAsync();
         }
+
+        public async Task<IEnumerable<Game>> GetAllByPlatform(Platform platform)
+        {
+            var filter = Builders<Game>.Filter.Eq(g => g.Platform, platform);
+            return await Collection.Find(filter).ToListAsync();
+        }
     }
 }

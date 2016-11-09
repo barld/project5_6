@@ -4,7 +4,7 @@
         <ul class="submenu scrollable">
             <li v-for="cartLine in cart.CartLines">
                 {{cartLine.Amount}}x {{cartLine.Product.GameTitle}} ({{cartLine.Product.Platform.Abbreviation}})  &euro;{{(cartLine.Product.Price*cartLine.Amount/100.0).toFixed(2)}}
-                <br /><button @click.prevent="add(cartLine.Product)">+</button><button @click.prevent="sub(cartLine.Product)">-</button>
+                <br /><button @click.prevent="sub(cartLine.Product)">-</button><button @click.prevent="add(cartLine.Product)">+</button>
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
             <br>

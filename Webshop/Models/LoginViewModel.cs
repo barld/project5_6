@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,18 +21,19 @@ namespace Webshop.Models
 
     public interface IUserLoginStatus
     {
-        bool IsLogedIn { get; set; }
+        bool IsLogedIn { get;  }
     }
 
     public class UserLogedInStatus : IUserLoginStatus
     {
-        public bool IsLogedIn { get { return true; } set { } }
+        public bool IsLogedIn => true;
+        public string Role { get; set; }
         public string Email { get; set; }
     }
 
     public class UserNotLogedInStatus : IUserLoginStatus
     {
-        public bool IsLogedIn { get { return false; } set { } }
+        public bool IsLogedIn => false;
     }
 
 }

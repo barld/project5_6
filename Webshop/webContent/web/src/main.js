@@ -30,7 +30,8 @@ new Vue({
         shoppingcart: shoppingcart,
         showDetails: false,
         on_product_section: true,
-        detailsOf:{}
+        detailsOf:{},
+        user_status: {}
     },
     methods:{
         open_shoppingcart_screen:function(){
@@ -46,7 +47,6 @@ new Vue({
             console.log(product.GameTitle);
         },
         showLogin:function(){
-            console.log('test');
             this.show_login = true;
         },
         closeLogin:function () {
@@ -56,8 +56,8 @@ new Vue({
             console.log('failed');
         },
         login_success:function () {
-            this.LogedIn = true;
             this.closeLogin();
+            this.check_login();
         },
         logedout:function () {
             this.LogedIn = false;
@@ -80,8 +80,8 @@ new Vue({
 
             // Function to fire off when the server has send a response
             xhr.onload = function () {
-                var result = JSON.parse(xhr.response);
-                base.LogedIn = result.IsLogedIn;
+                base.user_status = JSON.parse(xhr.response);
+                base.LogedIn = base.user_status.IsLogedIn;
             };
 
             xhr.send();

@@ -1,6 +1,6 @@
 <template>
     <li class="floating_menu_component" id="user_profile">
-        <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> Mijn profiel</a>
+        <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{status.Email}} ({{status.Role}})</a>
         <ul class="submenu">
             <li><a href="#" @click="logout"><i class="fa fa-sign-out"
                                aria-hidden="true"
@@ -11,6 +11,7 @@
 
 <script>
     export default{
+        props: ['status'],
         methods:{
             logout:function () {
                 var base = this;

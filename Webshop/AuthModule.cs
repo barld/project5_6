@@ -101,7 +101,7 @@ namespace Webshop
             //Check if the user is logged in
             if (LoggedIn)
             {
-                return new UserLogedInStatus { Email = CurrentUser.Email };
+                return new UserLogedInStatus { Email = CurrentUser.Email, Role = CurrentUser.AccountRole.ToString() };
             }
             else
             {

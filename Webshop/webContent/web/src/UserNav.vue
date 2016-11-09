@@ -1,6 +1,6 @@
 <script></script>
 <template>
-    <userlogedinnav v-if="logedin" v-on:logedout="logedout"></userlogedinnav>
+    <userlogedinnav v-if="logedin" v-on:logedout="logedout" :status="status"></userlogedinnav>
     <userlogedoutnav
             v-on:showLogin="showLogin"
             v-on:showRegister="showRegister"
@@ -12,7 +12,7 @@
 </template>
 <script>
     export default{
-        props:['logedin'],
+        props:['logedin', 'status'],
         methods:{
             showLogin : function () {
                 this.$emit('showlogin');

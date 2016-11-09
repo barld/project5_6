@@ -1,10 +1,10 @@
 <template>
     <li class="floating_menu_component">
         <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
-        <ul class="submenu">
+        <ul class="submenu scrollable">
             <li v-for="cartLine in cart.CartLines">
                 {{cartLine.Amount}}x {{cartLine.Product.GameTitle}} ({{cartLine.Product.Platform.Abbreviation}})  &euro;{{(cartLine.Product.Price*cartLine.Amount/100.0).toFixed(2)}}
-                <button @click.prevent="add(cartLine.Product)">+</button><button @click.prevent="sub(cartLine.Product)">-</button>
+                <br /><button @click.prevent="add(cartLine.Product)">+</button><button @click.prevent="sub(cartLine.Product)">-</button>
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
             <br>

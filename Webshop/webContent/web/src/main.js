@@ -14,6 +14,7 @@ Vue.component('register', require('./RegisterScreen.vue'));
 Vue.component('productbox', require('./ProductBox.vue'));
 Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
+Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 
 window.shoppingcart = new shoppingCart();
 
@@ -24,12 +25,22 @@ new Vue({
         show_register:false,
         show_products: false,
         show_product_detail: false,
+        show_shoppingcart_screen: false,
         LogedIn:false,
         shoppingcart: shoppingcart,
         showDetails: false,
+        on_product_section: true,
         detailsOf:{}
     },
     methods:{
+        open_shoppingcart_screen:function(){
+            this.show_shoppingcart_screen = true;
+            this.on_product_section = false;
+        },
+        close_shoppingcart_screen:function(){
+            this.show_shoppingcart_screen = false;
+            this.on_product_section = true;
+        },
         showProductDetails:function(product){
             this.show_product_detail = true;
             console.log(product.GameTitle);

@@ -7,8 +7,9 @@
                 <button @click.prevent="add(cartLine.Product)">+</button><button @click.prevent="sub(cartLine.Product)">-</button>
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
+            <br>
+            <a class="afrekenen" @click.prevent="shopping_screen">Details</a>
         </ul>
-
     </li>
 </template>
 
@@ -21,6 +22,9 @@
             }
         },
         methods: {
+            shopping_screen:function () {
+                this.$emit("shopping_screen");
+            },
             getData: function (s) {
                 this.cart = s.cart;
             },

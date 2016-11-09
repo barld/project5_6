@@ -43,13 +43,6 @@
                     this.showProductDetails = false;
                 }
             },
-            productDetails: function(game){
-                this.product = game;
-                this.showProductDetails = true;
-            },
-            closeProductDetails: function(){
-                this.showProductDetails = false;
-            },
             show_details: function (game) {
                 this.$emit('show_details', game)
             }

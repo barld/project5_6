@@ -67,6 +67,7 @@ namespace Webshop.Controllers
             try
             {
                 currentShoppingCart = GetBodyFromJson<Cart>();
+                currentShoppingCart.CartLines.ForEach(cl => cl.Product = context.Games.GetByEAN(cl.Product.EAN).Result);
                 return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart succesvol updated" });
             }
             catch

@@ -98,6 +98,9 @@ new Vue({
         },
         hide_products: function(){
             this.show_products = false;
+        },
+        show_games: function (games) {
+
         }
     },
     created: function () {

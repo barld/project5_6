@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Models;
+using Class_Diagram;
 
 namespace Webshop.Controllers
 {
@@ -27,9 +28,9 @@ namespace Webshop.Controllers
 
         public ViewObject PostSearch()
         {
-            var data = GetBodyFromJson<ValueModel>();
+            var data = GetBodyFromJson<SearchGameModel>();
             //Game game = context.Games.GetByTitle(data.GameTitle).Result;
-            IEnumerable<Game> game = context.Games.GetByTitleLike(data.Value).Result;
+            IEnumerable<Game> game = context.Games.GetByTitleLike(data).Result;
 
             return Json(game);
         }

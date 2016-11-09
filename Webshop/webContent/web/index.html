@@ -41,7 +41,7 @@
                     <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
                     <platform_menu></platform_menu>
                 </li>
-                <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
+                <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
                 <UserNav
                         v-bind:logedin="LogedIn"
@@ -58,14 +58,17 @@
     </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
-            <search></search>
-            <product v-if="!(showDetails)" @show_details="show_details"></product>
-            <span v-else>
-                <a href="#" @click="back_to_overview">terug naar overzicht</a>
-                {{detailsOf}}
-            </span>
+            <div id="product_screen" v-if="on_product_section">
+                <search></search>
+                <product v-if="!(showDetails)" @show_details="show_details"></product>
+                <span v-else>
+                    <a href="#" @click="back_to_overview">terug naar overzicht</a>
+                    {{detailsOf}}
+                </span>
+            </div>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="close_register"  v-if="show_register" ></register>
+            <shoppingcart_screen v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
         </div>
     </div><!-- End container -->
 </div>

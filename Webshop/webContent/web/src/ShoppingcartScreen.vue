@@ -34,7 +34,7 @@
                 </tbody>
             </table>
             <div class="form-btn" align="right">
-                <input type="submit" align="right" class="button-primary" value="Proceed to checkout!">
+                <input type="submit" align="right" class="button-primary" value="Proceed to checkout!" @click="close">
             </div>
         </div>
     </div><!-- End container -->
@@ -44,6 +44,10 @@
         data(){
             return{
                 cart: {}
+            }
+        }, methods: {
+            close:function(){
+                this.$emit("close");
             }
         }
     }

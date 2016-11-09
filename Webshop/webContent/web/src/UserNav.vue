@@ -15,6 +15,7 @@
         props:['logedin'],
         methods:{
             showLogin : function () {
+                alert("event called");
                 this.$emit('showlogin');
             },
             showRegister: function () {

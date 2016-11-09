@@ -8,9 +8,8 @@
             </li>
             <li><u>Totaal: &euro;{{(cart.TotalPrice/100.0).toFixed(2)}}</u></li>
             <br>
-            <a class="afrekenen" v-on:click.prevent="showShoppingScreen">Afrekenen</a>
+            <a class="afrekenen" @click.prevent="shopping_screen">Details</a>
         </ul>
-
     </li>
 </template>
 
@@ -23,6 +22,9 @@
             }
         },
         methods: {
+            shopping_screen:function () {
+                this.$emit("shopping_screen");
+            },
             getData: function (s) {
                 this.cart = s.cart;
             },
@@ -31,9 +33,6 @@
             },
             sub:function (product) {
                 window.shoppingcart.removeFromCart(product);
-            },
-            showShoppingScreen:function () {
-                this.$emit('shoppingCartScreen');
             }
         },
         created: function () {

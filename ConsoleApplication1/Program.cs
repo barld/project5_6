@@ -72,7 +72,8 @@ namespace DataModels
 19. Delete user by email
 20. Create sample database
 21. Import games from external API
-22. Exit application");
+22. Filter games by platform
+23. Exit application");
             Console.WriteLine("-----------------------");
             List<Action> actions = new List<Action> {
                 context.Reset,
@@ -96,6 +97,7 @@ namespace DataModels
                 deleteUserAccountByEmail,
                 createSampleDatabase,
                 importGames,
+                filterByPlatform,
                 () => {
                     Console.WriteLine("Press [ENTER] to exit..");
                     Console.ReadLine();
@@ -111,6 +113,26 @@ namespace DataModels
             Console.WriteLine("-----------------------");
             showMenuOptions();
             Console.WriteLine("-----------------------");
+        }
+
+        async static void filterByPlatform()
+        {
+            Console.WriteLine("Choose a platform (e.g. 2):");
+            IEnumerable<Platform> platforms = context.Platforms.GetAll().Result;
+            int count = 0;
+            foreach(Platform p in platforms)
+            {
+                count++;
+                Console.WriteLine($"{count}. {p.PlatformTitle}");
+            }
+            int answer = Convert.ToInt16(Console.ReadLine()) - 1;
+            Platform platform = platforms.ElementAt(answer);
+            IEnumerable<Game> listOfGames = await context.Games.GetAllByPlatform(platform);
+
+            foreach(Game game in listOfGames)
+            {
+                Console.WriteLine(game.GameTitle);
+            }
         }
 
         static async void createSampleDatabase()

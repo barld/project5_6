@@ -23,6 +23,7 @@ new Vue({
     data :{
         show_login:false,
         show_register:false,
+        show_products: false,
         show_product_detail: false,
         show_shoppingcart_screen: false,
         LogedIn:false,
@@ -91,8 +92,13 @@ new Vue({
         },
         back_to_overview: function () {
             this.showDetails = false;
+        },
+        show_products: function(){
+            this.show_products = true;
+        },
+        hide_products: function(){
+            this.show_products = false;
         }
-
     },
     created: function () {
         this.check_login();

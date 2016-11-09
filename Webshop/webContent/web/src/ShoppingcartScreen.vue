@@ -1,7 +1,7 @@
 <template>
     <div class="container margin-top"><!-- Start container -->
-        <div class="ten columns"><h1 align="center">Jouw winkelwagen.</h1></div>
         <div class="ten columns">
+            <h1 align="center">Jouw winkelwagen.</h1>
             <table class="u-full-width">
                 <thead>
                     <tr>
@@ -12,12 +12,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr v-for="cartline in cart.CartLines">
+                    <tr v-for="cartline in cart.CartLines">
                         <td><img class="table_thumbnail" v-bind:src="cartline.Product.Image[0]"></td>
                         <td>{{cartline.Product.GameTitle}}</td>
                         <td><input type="number" v-model="cartline.Amount" @change="update" min="0" max="20"></td>
                         <td>€{{((cartline.Product.Price/100)*cartline.Amount).toFixed(2)}}
-                </tr>
+                    </tr>
                     <tr>
                         <td></td>
                         <td></td>

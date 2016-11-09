@@ -208,11 +208,27 @@ input:focus{
 	box-sizing: border-box;
 	float:right;
 	max-width: 70%;
+	max-height:100%;
 	border: 1px black solid;
 }
 
+.product_detail_info_container span,p,li{
+	padding-left: 5px;
+}
+
 .product_detail_info_container h1{
-	text-size
+	font-size: xx-large;
+	margin-bottom: 0em;
+}
+
+.product_detail_info_container h2{
+	font-size: large;
+	margin-bottom: 0.5em;
+	margin-top:1em;
+}
+
+.product_detail_info_container ul{
+	list-style-type: none;
 }
 
 .scrollable{

@@ -161,7 +161,7 @@ namespace Class_Diagram.Importers.Impl
             string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
             JObject jro = (JObject)JObject.Parse(responseText)["results"];
 
-            if (!jsonIsNull(jro["publishers"]) && !jsonIsNull(jro["platforms"]) && !jsonIsNull(jro["genres"]))
+            if (!jsonIsNull(jro["publishers"]) && !jsonIsNull(jro["genres"]))
             {
                 JArray jsonPublishers = (JArray)jro["publishers"];
                 gic.Publisher.Add((string)jsonPublishers.First()["name"]);

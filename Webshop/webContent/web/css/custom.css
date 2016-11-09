@@ -89,6 +89,7 @@ a{
 	background:#FFFFFF;
 	border-radius:5px;
 	padding:10px;
+	margin:10px 5px 10px 5px;
 }
 
 .product_title{
@@ -191,7 +192,8 @@ input:focus{
 	border:2px solid #000000 !important;
 }
 
-.scrollable:hover{
-	overflow: scroll;
-	height: 100vh;
+.scrollable{
+	line-height:20px !important;
+	overflow: auto;
+	max-height: 100vh;
 }

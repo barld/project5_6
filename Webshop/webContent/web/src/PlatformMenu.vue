@@ -43,6 +43,7 @@
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
                     base.games = JSON.parse(xhr.response);
+                    base.$emit('show_games', base.games)
                 };
 
                 xhr.send();

@@ -6,6 +6,7 @@ using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using Class_Diagram;
 
 namespace DataModels.Gateways
 {
@@ -32,10 +33,18 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Game>> GetByTitleLike(string searchTitle)
+        public async Task<IEnumerable<Game>> GetByTitleLike(SearchGameModel search )
         {
             var builder = Builders<Game>.Filter;
-            var filter = builder.Regex("GameTitle", new BsonRegularExpression(searchTitle, "i"));
+            FilterDefinition<Game> filter = FilterDefinition<Game>.Empty;
+            if(search.Title.Length>0)
+                filter &= builder.Regex("GameTitle", new BsonRegularExpression(search.Title, "i"));
+            if(search.PriceLt > 0)
+                filter &= Builders<Game>.Filter.Lt(g => g.Price, search.PriceLt);
+            if (search.PriceGt > 0)
+                filter &= Builders<Game>.Filter.Gt(g => g.Price, search.PriceGt);
+            if (search.Platforms?.Count() > 0)
+                filter &= Builders<Game>.Filter.In(g => g.Platform.PlatformTitle, search.Platforms);
             return await Collection.Find(filter).ToListAsync();
         }
 

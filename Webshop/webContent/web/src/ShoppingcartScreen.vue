@@ -1,6 +1,5 @@
 <template>
     <div class="container margin-top"><!-- Start container -->
-        <div class="container"></div>
         <div class="ten columns"><h1 align="center">Jouw winkelwagen.</h1></div>
         <div class="ten columns">
             <table class="u-full-width">
@@ -13,17 +12,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="cartLine in cart.CartLines" >
-                        <td><img class="img-thumbnail thumbnail" :src="cartLine.Product.Image[0]"></td>
-                        <td>{{cartLine.Product.GameTitle}}</td>
-                        <td><input v-model="cartLine.Amount" type="number" min="0" max="20" @change="update"></td>
-                        <td>{{(cartLine.SubTotal/100).toFixed(2)}}</td>
-                    </tr>
+                <tr v-for="cartline in shoppingcart">
+                        <td><img class="img-thumbnail" v-bind:src="cartline.Product.Image[0]"></td>
+                        <td>{{cartline.Product.GameTitle}}</td>
+                        <td><input type="number" v-bind:value="cartline.Amount" min="0" max="20"></td>
+                        <td>€{{((cartline.Product.Price/100)*cartline.Amount).toFixed(2)}}
+                </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><strong>Totaal:</strong> &euro;{{(cart.TotalPrice/100).toFixed(2)}}</td>
+                        <td><strong>Totaal:</strong> €{{(cartline.TotalPrice/100).toFixed(2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -35,6 +34,7 @@
 </template>
 <script>
     export default{
+        props:["shoppingcart"],
         data(){
             return{
                 cart: {}

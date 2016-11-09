@@ -68,7 +68,7 @@
             </div>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="close_register"  v-if="show_register" ></register>
-            <shoppingcart_screen v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
+            <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
         </div>
     </div><!-- End container -->
 </div>

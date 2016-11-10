@@ -4,21 +4,26 @@
         <datalist id="GameSearchList">
             <option v-for="game in searchResult" :value="game.GameTitle">{{ game.Platform.PlatformTitle }}</option>
         </datalist>
-        <label for="minB">minimaal bedrag</label>
-        <input v-model.number="min" id="minB" type="range" min="0" max="150" > {{min}}
-        <label for="maxB">maximaal bedrag</label>
-        <input v-model.number="max" id="maxB" type="range" min="0" max="150" > {{max}}
-
-        <p>platformen</p>
-        <p v-for="platform in platforms">
-            <input type="checkbox" :value="platform.PlatformTitle" v-model="checkedplatforms" :id="'pc_'+platform"  />
-            <label style="display: inline" :for="'pc_'+platform">{{platform.PlatformTitle}}</label>
-        </p>
-
-
-        <button @click="searchGame">zoeken</button>
-
-
+        <a href="#" @click.prevent="toggle_advanced_search">Geavanceerd zoeken</a>
+        <div class="row advanced_search" v-show="advancedSearch">
+            <div class="inner_padding">
+                <div class="six columns">
+                    <h3>Bedrag</h3>
+                    <label for="minB">minimaal bedrag</label>
+                    <input v-model.number="min" id="minB" type="range" min="0" max="150" @change="searchGame"> {{min}}
+                    <label for="maxB">maximaal bedrag</label>
+                    <input v-model.number="max" id="maxB" type="range" min="0" max="150" @change="searchGame"> {{max}}
+                </div>
+                <div class="six columns">
+                    <h3>platformen</h3>
+                    <div v-for="platform in platforms">
+                        <input type="checkbox" :value="platform.PlatformTitle" v-model="checkedplatforms" :id="'pc_'+platform"  />
+                        <label style="display: inline" :for="'pc_'+platform">{{platform.PlatformTitle}}</label>
+                    </div>
+                </div>
+                <button @click="searchGame">zoeken</button>
+            </div>
+        </div>
 
         <div v-show="searchResults">
             <productbox @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
@@ -37,7 +42,8 @@
                 min: 0,
                 max: 0,
                 platforms: [],
-                checkedplatforms: []
+                checkedplatforms: [],
+                advancedSearch: false
             }
         },
         methods:{
@@ -98,6 +104,9 @@
             },
             hide_products: function(){
                 this.$emit('hide_products');
+            },
+            toggle_advanced_search: function(){
+                this.advancedSearch === false ? this.advancedSearch = true : this.advancedSearch = false;
             }
         },
         created:function () {

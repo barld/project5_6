@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DataModels
 {
@@ -14,6 +16,7 @@ namespace DataModels
         public string Password { get; set; }
         public string Email { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public DataModels.Gender Gender { get; set; }
 
         public List<MyLists> MyLists { get; set; }

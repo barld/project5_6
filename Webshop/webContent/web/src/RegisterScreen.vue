@@ -12,9 +12,9 @@
         </div>
         <div class="twelve columns">
             <label for="register_password">Geslacht</label>
-            <select id="register_gender">
-                <option value="0">Man</option>
-                <option value="1">Vrouw</option>
+            <select id="register_gender" v-model="gender">
+                <option value="Male">Man</option>
+                <option value="Female">Vrouw</option>
             </select>
         </div>
         <button class="button-primary register_button" type="submit" value="Registreren" @click="register">Registreren</button>
@@ -28,13 +28,14 @@
                 email:'',
                 password:'',
                 showwarning:false,
-                warning_message:''
+                warning_message:'',
+                gender: 'Male'
             }
         },
         methods:{
             register: function(e){
                 e.preventDefault();
-                var userInformation = {email:this.email, password:this.password};
+                var userInformation = {email:this.email, password:this.password, Gender:this.gender };
                 var base = this;
 
                 var xhr = new XMLHttpRequest();

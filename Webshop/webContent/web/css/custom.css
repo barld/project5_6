@@ -108,6 +108,7 @@ a{
 .product_price{
 	font-weight:600;
 	font-size:24px;
+	line-height: 1;
 }
 
 .popup{
@@ -168,6 +169,7 @@ a{
 	height: 150px;
 	text-align: center;
 	vertical-align : middle;
+	margin-bottom: 5px;
 }
 .thumbnail{
 	position: relative;
@@ -192,11 +194,14 @@ input:focus{
 	border:2px solid #000000 !important;
 }
 
-.product_detail_image_container{
-	box-sizing: border-box;
-	float: left;
-	max-width: 30%;
-	border: 1px black solid;
+.product_detail_title_root_container h2{
+	font-size: large;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+
+.product_detail_title_root_container ul{
+	margin-bottom: 0px;
 }
 
 .product_detail_image_container img{
@@ -204,35 +209,60 @@ input:focus{
 	max-width: 100%;
 }
 
-.product_detail_info_container{
-	box-sizing: border-box;
-	float:right;
-	max-width: 70%;
-	max-height:100%;
-	border: 1px black solid;
-}
-
 .product_detail_info_container span,p,li{
 	padding-left: 5px;
 }
 
-.product_detail_info_container h1{
+.product_detail_title h1{
 	font-size: xx-large;
 	margin-bottom: 0em;
 }
 
-.product_detail_info_container h2{
-	font-size: large;
-	margin-bottom: 0.5em;
-	margin-top:1em;
+.product_detail_title.container{
+	margin-bottom: 20px;
 }
 
 .product_detail_info_container ul{
 	list-style-type: none;
 }
 
+.product_detail_cart_container{
+	box-sizing: border-box;
+	border: 1px black solid;
+}
+
+.product_detail_cart_container h2{
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+	font-size: large;
+}
+
+.product_detail_buttonbox{
+	width:100%;
+	text-align: center;
+}
+
+.product_detail_buttonbox button{
+	display: inline;
+	width: 65%;
+}
+
 .scrollable{
 	line-height:20px !important;
 	overflow: auto;
 	max-height: 100vh;
+}
+
+.productbox_gametitle{
+	display:block;
+	height:20px;
+	margin-bottom: 0px;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.product.Platform.PlatformTitle{
+
 }

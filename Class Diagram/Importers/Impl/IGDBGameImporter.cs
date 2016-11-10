@@ -204,7 +204,7 @@ namespace Class_Diagram.Importers.Impl
                     ReleaseName = !jsonIsNull(jro["name"]) ? (string)jro["name"] : gameData.GameTitle,
                     PlatformName = (string)jro["platform"]["name"],
                     ReleaseDate = DateTime.Parse(!jsonIsNull(jro["release_date"]) ? (string)jro["release_date"] : "12-03-2014"),
-                    Price = gameData.price
+                    Price = gameData.price * 100
                 });
             }
         }

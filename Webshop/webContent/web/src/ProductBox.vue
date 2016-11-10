@@ -1,8 +1,8 @@
 <template>
     <div class="three columns product">
         <div style="margin: 0 auto;">
-            <span class="productbox_gametitle"v-bind:title="product.GameTitle">{{product.GameTitle}}</span>
-            <span class="productbox_platformtitle">({{product.Platform.PlatformTitle}})</span>
+            <span class="productbox_gametitle" v-bind:title="product.GameTitle">{{product.GameTitle}}</span>
+            <span class="productbox_platformtitle" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
             <div class="thumbnail_container">
                 <img v-bind:src="product.Image[0]" alt="" class="thumbnail">
             </div>

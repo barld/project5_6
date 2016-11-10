@@ -270,6 +270,11 @@ input:focus{
 	margin-bottom: 5px;
 }
 
+.centerbox{
+	width:100%;
+	text-align: center;
+}
+
 .advanced_search{
 	background:#FFFFFF;
 }

@@ -32,7 +32,6 @@ export default
 
         registerOnChangedshoppingCart(f)
         {
-            console.log(f);
             this.OnChangedshoppingCartEvents.push(f);
         }
 

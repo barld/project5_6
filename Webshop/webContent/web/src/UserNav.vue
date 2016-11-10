@@ -27,7 +27,6 @@
                 this.$emit('login_failed');
             },
             logedout: function () {
-                console.log('log out');
                 this.$emit('logedout');
             }
         }

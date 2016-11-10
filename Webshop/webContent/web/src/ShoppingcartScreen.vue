@@ -46,7 +46,6 @@
             },
             changedShoppingCart:function (sc) {
                 this.cart = sc.cart;
-                console.log('test');
             },
             update:function () {
                 window.shoppingcart.UpdateCart(this.cart);

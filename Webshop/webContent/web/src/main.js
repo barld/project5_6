@@ -48,7 +48,6 @@ new Vue({
         open_product_details:function(product){
             this.chosen_detail_product = product;
             this.show_product_details = true;
-            console.log(product.Genres);
         },
         showLogin:function(){
             this.show_login = true;

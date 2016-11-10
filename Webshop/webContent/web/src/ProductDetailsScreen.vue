@@ -8,7 +8,7 @@
         </div>
         <div class="container">
             <div class="four columns product_detail_image_container">
-                <img v-bind:src="product.Image[2]" class="detail_image"/>
+                <img v-bind:src="product.Image[2] ? product.Image[2] : product.Image[0]" class="detail_image"/>
             </div>
             <div class="four columns product_detail_info_container">
                 <section class="product_detail_info">

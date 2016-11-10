@@ -14,6 +14,7 @@ Vue.component('register', require('./RegisterScreen.vue'));
 Vue.component('productbox', require('./ProductBox.vue'));
 Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
+Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 
 window.shoppingcart = new shoppingCart();
@@ -24,16 +25,18 @@ new Vue({
         show_login:false,
         show_register:false,
         show_products: false,
-        show_product_detail: false,
+        show_product_details: false,
         show_shoppingcart_screen: false,
+        on_product_section: true,
         LogedIn:false,
         shoppingcart: shoppingcart,
-        showDetails: false,
-        on_product_section: true,
-        detailsOf:{},
+        chosen_detail_product:null,
         user_status: {}
     },
     methods:{
+        close_product_details:function(){
+            this.show_product_details = false;
+        },
         open_shoppingcart_screen:function(){
             this.show_shoppingcart_screen = true;
             this.on_product_section = false;
@@ -42,9 +45,10 @@ new Vue({
             this.show_shoppingcart_screen = false;
             this.on_product_section = true;
         },
-        showProductDetails:function(product){
-            this.show_product_detail = true;
-            console.log(product.GameTitle);
+        open_product_details:function(product){
+            this.chosen_detail_product = product;
+            this.show_product_details = true;
+            console.log(product.Genres);
         },
         showLogin:function(){
             this.show_login = true;
@@ -85,10 +89,6 @@ new Vue({
             };
 
             xhr.send();
-        },
-        show_details: function (game) {
-            this.detailsOf = game;
-            this.showDetails = true;
         },
         back_to_overview: function () {
             this.showDetails = false;

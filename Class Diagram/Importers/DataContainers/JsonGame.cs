@@ -19,6 +19,7 @@ namespace Class_Diagram.Importers.DataContainers
         public List<string> Genres { get; set; }
         public List<string> PictureUrls { get; set; }
         public string Description { get; set; }
+        public int price { get; set; }
 
         public JsonGame()
         {

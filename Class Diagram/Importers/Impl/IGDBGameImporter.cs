@@ -120,7 +120,7 @@ namespace Class_Diagram.Importers.Impl
                         GameTitle = rel.ReleaseName,
                         Genres = createGenres(gic),
                         MinPlayers = gic.MinimumPlayers,
-                        MaxPlayers = gic.MinimumPlayers,
+                        MaxPlayers = gic.MaximumPlayers,
                         IsVRCompatible = false,
                         Platform = pg.GetByTitle(platformTransformer(rel.PlatformName)).Result,
                         Image = gic.PictureUrls,
@@ -161,7 +161,7 @@ namespace Class_Diagram.Importers.Impl
             string responseText = WebHelper.queryApi(WebHelper.createUrlWithParameters(BASE_URL, URL_PARAMETERS));
             JObject jro = (JObject)JObject.Parse(responseText)["results"];
 
-            if (!jsonIsNull(jro["publishers"]) && !jsonIsNull(jro["platforms"]) && !jsonIsNull(jro["genres"]))
+            if (!jsonIsNull(jro["publishers"]) && !jsonIsNull(jro["genres"]))
             {
                 JArray jsonPublishers = (JArray)jro["publishers"];
                 gic.Publisher.Add((string)jsonPublishers.First()["name"]);
@@ -172,6 +172,8 @@ namespace Class_Diagram.Importers.Impl
                 {
                     gic.Genres.Add((string)jsonGenre["name"]);
                 }
+
+                gic.price = (new Random()).Next(30, 50);
 
                 return true;
             }
@@ -202,7 +204,7 @@ namespace Class_Diagram.Importers.Impl
                     ReleaseName = !jsonIsNull(jro["name"]) ? (string)jro["name"] : gameData.GameTitle,
                     PlatformName = (string)jro["platform"]["name"],
                     ReleaseDate = DateTime.Parse(!jsonIsNull(jro["release_date"]) ? (string)jro["release_date"] : "12-03-2014"),
-                    Price = 5000
+                    Price = gameData.price * 100
                 });
             }
         }

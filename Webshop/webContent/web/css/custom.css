@@ -278,3 +278,7 @@ input:focus{
 .advanced_search{
 	background:#FFFFFF;
 }
+
+.productbox_button{
+	width:100%;
+}

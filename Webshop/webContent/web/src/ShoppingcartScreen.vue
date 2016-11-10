@@ -16,7 +16,7 @@
                         <td><img class="table_thumbnail" v-bind:src="cartline.Product.Image[0]"></td>
                         <td>{{cartline.Product.GameTitle}}</td>
                         <td><input type="number" v-model="cartline.Amount" @change="update" min="0" max="20"></td>
-                        <td>€{{((cartline.Product.Price/100)*cartline.Amount).toFixed(2)}}
+                        <td>€{{((cartline.SubTotal/100)).toFixed(2)}}
                     </tr>
                     <tr>
                         <td></td>

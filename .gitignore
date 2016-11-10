@@ -241,3 +241,11 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 Webshop/webContent/web/.idea/copyright/profiles_settings.xml
+Webshop/.idea/Webshop.iml
+Webshop/.idea/copyright/profiles_settings.xml
+Webshop/.idea/modules.xml
+Webshop/.idea/workspace.xml
+Webshop/webContent/.idea/copyright/profiles_settings.xml
+Webshop/webContent/.idea/modules.xml
+Webshop/webContent/.idea/webContent.iml
+Webshop/webContent/.idea/workspace.xml

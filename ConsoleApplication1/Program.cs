@@ -171,7 +171,7 @@ namespace DataModels
 
             //Create users
             User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male).Result;
-            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female).Result;
+            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female, AccountRole.Admin).Result;
             User user3 = context.Users.Register("mynameis@jeff.nl", "geheim321", Gender.Unknown).Result;
 
             //Create order lines

@@ -62,13 +62,13 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async Task<User> Register(string email, string pwd, Gender gender)
+        public async Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User)
         {
             string salt = GetRandomPasswordSalt();
             string hash = Sha256(salt + pwd);
             var user = new User
             {
-                AccountRole = AccountRole.User,
+                AccountRole = role,
                 Email = email,
                 Gender = gender,
                 Password = hash,

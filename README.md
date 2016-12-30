@@ -3,8 +3,6 @@
 
 Project 5 for Hogeschool Rotterdam: Building a webshop
 
-repo for project 5/6
-
 ## How to run
 
 1. Open Visual Studio and open MVC.sln

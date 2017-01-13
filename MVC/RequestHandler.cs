@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace MVC
 {
@@ -27,8 +28,7 @@ namespace MVC
             try
             {
                 var deCodedRawUrl = WebUtility.UrlDecode(HttpContext.Request.RawUrl);
-                var path = deCodedRawUrl
-                    .Split('?', '#').First();
+                var path = Regex.Match(deCodedRawUrl, @"^([^\?#]+)").Value;
                 var urlParts = path
                     .Split('/')
                     .Where(s => !String.IsNullOrWhiteSpace(s))

@@ -17,5 +17,19 @@ namespace MVC.View.Tests
             var view = new JsonDataView(new { });
             Assert.AreEqual(view.StatusCode, 200);
         }
+
+        [TestMethod()]
+        public void JsonDataViewTestContent()
+        {
+            var view = new JsonDataView(new { test = "test" });
+            Assert.IsTrue(!String.IsNullOrEmpty(view.Content));
+        }
+
+        [TestMethod()]
+        public void JsonDataViewTestContentType()
+        {
+            var view = new JsonDataView(new { test = "test" });
+            Assert.IsTrue(view.ContentType.Contains("application/json"));
+        }
     }
 }

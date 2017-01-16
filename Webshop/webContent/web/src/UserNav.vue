@@ -7,7 +7,6 @@
             v-on:success="login_success"
             v-on:failed="login_failed"
             v-else>
-
     </userlogedoutnav>
 </template>
 <script>

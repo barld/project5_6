@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
@@ -67,6 +66,7 @@
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="close_register"  v-if="show_register" ></register>
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
+            <adminplotmenu v-on:close="close_plot_menu" v-if="show_plot_menu"></adminplotmenu>
         </div>
     </div><!-- End container -->
 </div>

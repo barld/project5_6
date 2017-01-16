@@ -16,6 +16,7 @@ Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
+Vue.component('adminplotmenu', require('./AdminPlotMenu.vue'));
 
 window.shoppingcart = new shoppingCart();
 
@@ -27,6 +28,7 @@ new Vue({
         show_products: false,
         show_product_details: false,
         show_shoppingcart_screen: false,
+        show_plot_menu: false,
         on_product_section: true,
         LogedIn:false,
         shoppingcart: shoppingcart,
@@ -100,6 +102,12 @@ new Vue({
         },
         show_games: function (games) {
 
+        },
+        close_plot_menu: function(){
+            this.show_plot_menu = true;
+        },
+        open_plot_menu: function(){
+            this.show_plot_menu = false;
         }
     },
     created: function () {

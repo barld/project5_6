@@ -1,4 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/barld/project5_6.png?label=ready&title=Ready)](https://waffle.io/barld/project5_6)
+[![build status](https://ci.appveyor.com/api/projects/status/github/barld/project5_6?svg=true)](https://ci.appveyor.com/api/projects/status/github/barld/project5_6?svg=true)
 # project5_6
 
 Project 5 for Hogeschool Rotterdam: Building a webshop

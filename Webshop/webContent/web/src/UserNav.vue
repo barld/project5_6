@@ -1,6 +1,5 @@
-<script></script>
 <template>
-    <userlogedinnav v-if="logedin" v-on:logedout="logedout" :status="status"></userlogedinnav>
+    <userlogedinnav v-if="logedin" v-on:logedout="logedout" v-on:showadminplots="showadminplots" :status="status"></userlogedinnav>
     <userlogedoutnav
             v-on:showLogin="showLogin"
             v-on:showRegister="showRegister"
@@ -27,8 +26,10 @@
             },
             logedout: function () {
                 this.$emit('logedout');
+            },
+            showadminplots: function(){
+                this.$emit('showadminplots');
             }
         }
     }
-
 </script>

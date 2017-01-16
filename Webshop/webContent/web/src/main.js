@@ -104,10 +104,12 @@ new Vue({
 
         },
         close_plot_menu: function(){
-            this.show_plot_menu = true;
+            this.on_product_section = true;
+            this.show_plot_menu = false;
         },
         open_plot_menu: function(){
-            this.show_plot_menu = false;
+            this.on_product_section = false;
+            this.show_plot_menu = true;
         }
     },
     created: function () {

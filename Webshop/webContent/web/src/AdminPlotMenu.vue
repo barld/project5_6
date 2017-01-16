@@ -1,23 +1,29 @@
 <template>
-    <div class="three columns product">
+    <div class="container margin-top">
         <div style="margin: 0 auto;">
             <h1>Plot menu</h1>
-            <button>Plot 1</button>
-            <button>Plot 2</button>
-            <button>Plot 3</button>
+            <button @click="ShowPlot1">Plot 1</button><br>
+            <button @click="ShowPlot2">Plot 2</button><br>
+            <button @click="ShowPlot3">Plot 3</button><br>
+            <button @click="CloseMenu">Close</button>
         </div>
     </div>
 </template>
 <script>
     export default{
-        data(){
-            return{
-                msg:'hello vue'
+        methods:{
+            CloseMenu: function(){
+                this.$emit('close');
+            },
+            ShowPlot1: function(){
+
+            },
+            ShowPlot2: function(){
+
+            },
+            ShowPlot3: function(){
+
             }
-        },
-        components:{
-            'other-component':OtherComponent,
-            HeaderComponent,
         }
     }
 </script>

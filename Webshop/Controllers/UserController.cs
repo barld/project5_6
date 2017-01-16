@@ -48,5 +48,18 @@ namespace Webshop.Controllers
         {
             return Json(this.Auth.LoginStatus());
         }
+
+        public ViewObject GetOrders()
+        {
+            if (Auth.LoggedIn)
+            {
+                User user = Auth.CurrentUser;
+                return Json(context.Orders.GetAllByEmail(user.Email).Result);
+            }
+            else
+            {
+                return Json("user not logged in");
+            }
+        }
     }
 }

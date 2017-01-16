@@ -60,8 +60,10 @@ namespace Webshop
                     //Return a succes message when the user succesfully logs in
                     return new ActionResultViewModel { Success = true, Message = "User succesfully logged in" };
                 }
-                else if (logedinUser.AccountRole == AccountRole.Admin)
+                else if (logedinUser != null && logedinUser.AccountRole == AccountRole.Admin)
                 {
+                    CurrentUser = logedinUser;
+
                     //Return a success message whenthe admin successfully logs in
                     return new ActionResultViewModel { Success = true, Message = "Admin succesfully logged in", Admin = true};
                 }

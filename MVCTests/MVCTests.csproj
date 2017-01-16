@@ -61,7 +61,10 @@
     <Compile Include="MVCAppTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\AccesDeniedViewTests.cs" />
+    <Compile Include="View\ErrorViewTests.cs" />
     <Compile Include="View\JsonDataViewTests.cs" />
+    <Compile Include="View\NotFoundViewTests.cs" />
+    <Compile Include="View\RawObjectViewTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

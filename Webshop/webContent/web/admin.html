@@ -50,6 +50,66 @@
         </div>
     </div><!-- End container -->
 </div>
+<script>
+    var game =
+    {
+        "_id" : ObjectId("587c6b859742de257459c36a"),
+        "GameTitle" : "Battlefield 1",
+        "Platform" : {
+            "_id" : ObjectId("587c6b859742de257459c362"),
+            "PlatformTitle" : "Playstation 4",
+            "Brand" : "SONY",
+            "Description" : "Japan for the win!",
+            "Abbreviation" : "PS4"
+        },
+        "RatingPEGI" : 13,
+        "Publisher" : [
+            "EA"
+        ],
+        "Genres" : [
+            {
+                "Name" : "Action",
+                "Description" : "Boom boom!",
+                "_id" : ObjectId("587c6b859742de257459c367")
+            }
+        ],
+        "Image" : [
+            "https://content.pulse.ea.com/content/battlefield-portal/nl_NL/news/battlefield-1/battlefield-1-beta-thank-you/_jcr_content/featuredImage/renditions/rendition1.img.jpg"
+        ],
+        "MinPlayers" : 1,
+        "MaxPlayers" : 12,
+        "Description" : "Full of action!",
+        "EAN" : 754348644,
+        "Price" : 4500,
+        "IsVRCompatible" : false,
+        "ReleaseDate" : "2017-01-16T06:43:17.383Z"
+    };
+
+    function Send(data, url, method){
+        return new Promise(function(resolve, reject){
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.responseType = 'json';
+
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    resolve(request.response);
+                }else{
+                    reject(`An error occurred: ${xhr.statusText}`)
+                }
+            };
+
+            xhr.onerror = function(){
+                reject('Probably a network error!');
+            };
+
+            xhr.send(JSON.stringify(data));
+        });
+    }
+
+    Send(game, 'localhost:8080/api/game/', 'POST');
+
+</script>
 <script src="./dist/admin.build.js"></script>
 </body>
 </html>

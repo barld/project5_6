@@ -56,7 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\AccesDeniedViewTests.cs" />
     <Compile Include="View\ErrorViewTests.cs" />
-    <Compile Include="View\FileView\CssFileViewTests.cs" />
     <Compile Include="View\JsonDataViewTests.cs" />
     <Compile Include="View\NotFoundViewTests.cs" />
     <Compile Include="View\RawObjectViewTests.cs" />

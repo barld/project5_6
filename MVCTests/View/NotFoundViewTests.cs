@@ -33,9 +33,10 @@ namespace MVC.View.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void NotFoundExpectArgumentNullException()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => new NotFoundView(null));
+            new NotFoundView(null);
         }
     }
 }

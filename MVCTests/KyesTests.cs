@@ -16,9 +16,10 @@ namespace MVCTests
         public partial class KeysTest
         {
             [TestMethod]
+            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRandomKeyTestNegativeInput()
             {
-                Assert.ThrowsException<ArgumentOutOfRangeException>(() => Keys.GetRandomKey(-10));
+                Keys.GetRandomKey(-10);
             } 
 
 

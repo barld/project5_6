@@ -9,5 +9,6 @@ namespace MVC.Routing
 {
     public interface IRoute
     {
+        string UrlPath { get; }
     }
 }

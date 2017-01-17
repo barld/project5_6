@@ -9,8 +9,30 @@ namespace MVC.View
 {
     public abstract class ViewObject : IDisposable
     {
+        public int StatusCode { protected set; get; } = 200;
+        public string Content { protected set; get; } = string.Empty;
+        public string ContentType { get; protected set; } = string.Empty;
 
-        public abstract void Respond(HttpListenerResponse response);
+        public virtual void Respond(HttpListenerResponse response)
+        {
+            response.StatusCode = this.StatusCode;
+            response.ContentType = "text/html";
+            if (ContentType != string.Empty) response.ContentType = ContentType;
+            WriteToStream(response);
+        }
+
+        protected virtual void WriteToStream(HttpListenerResponse response)
+        {
+            var buffer = System.Text.Encoding.UTF8.GetBytes(this.Content);
+            response.ContentLength64 = buffer.Length;
+
+            var output = response.OutputStream;
+
+            output.Write(buffer, 0, buffer.Length);
+
+            output.Close();
+        }
+
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

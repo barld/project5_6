@@ -10,25 +10,12 @@ namespace MVC.View
 {
     public class JsonDataView : DataView
     {
-
-
         public JsonDataView(object data) : base(data)
         {
+            this.ContentType = "application/json; charset=utf-8";
         }
 
-        public override void Respond(HttpListenerResponse response)
-        {
-            var json = JsonConvert.SerializeObject(data);
-            var buffer = System.Text.Encoding.UTF8.GetBytes(json);
-
-            response.AppendHeader("Content-Type", "application/json; charset=utf-8");
-            response.ContentLength64 = buffer.Length;
-
-            var output = response.OutputStream;
-
-            output.Write(buffer, 0, buffer.Length);
-
-            output.Close();
-        }
+        protected override string SerializeObject() => 
+            JsonConvert.SerializeObject(data);
     }
 }

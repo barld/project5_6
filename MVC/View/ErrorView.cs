@@ -9,19 +9,12 @@ namespace MVC.View
 {
     public class ErrorView : ViewObject
     {
-        public override void Respond(HttpListenerResponse response)
+        public ErrorView()
         {
-            var buffer = System.Text.Encoding.UTF8.GetBytes("{Succes: false}");
-
-            response.StatusCode = 500;
-            response.ContentType = "application/json";
-            response.ContentLength64 = buffer.Length;
-
-            var output = response.OutputStream;
-
-            output.Write(buffer, 0, buffer.Length);
-
-            output.Close();
+            Content = "{Succes: false}";
+            StatusCode = 500;
+            ContentType = "application/json";
         }
+
     }
 }

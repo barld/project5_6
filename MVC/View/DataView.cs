@@ -10,10 +10,12 @@ namespace MVC.View
     public abstract class DataView : ViewObject
     {
         protected readonly object data;
+        protected abstract string SerializeObject();
 
         public DataView(object data)
         {
             this.data = data;
+            this.Content = SerializeObject();
         }
     }
 }

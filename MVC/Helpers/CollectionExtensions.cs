@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Helpers
 {
-    internal static class CollectionExtensions
+    public static class CollectionExtensions
     {
         public static IEnumerable<U> PickWhereType<T,U>(this IEnumerable<T> collection) where U : class
         {

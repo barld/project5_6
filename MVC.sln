@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC", "MVC\MVC.csproj", "{662FEBCB-B68D-46A8-A4B8-C67F4C0FCC10}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld MongoDB", "ConsoleApplication1\HelloWorld MongoDB.csproj", "{3AF9A75D-4647-4497-AC06-3FB05ABADD83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop", "Webshop\Webshop.csproj", "{3875F2D9-F90E-4351-B904-61CA6874813C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCTests", "MVCTests\MVCTests.csproj", "{CD3A58DC-2596-4AA2-AA2C-2D6A0F94C407}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3875F2D9-F90E-4351-B904-61CA6874813C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3875F2D9-F90E-4351-B904-61CA6874813C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3875F2D9-F90E-4351-B904-61CA6874813C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3A58DC-2596-4AA2-AA2C-2D6A0F94C407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3A58DC-2596-4AA2-AA2C-2D6A0F94C407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3A58DC-2596-4AA2-AA2C-2D6A0F94C407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3A58DC-2596-4AA2-AA2C-2D6A0F94C407}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

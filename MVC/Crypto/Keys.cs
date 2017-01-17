@@ -7,21 +7,19 @@ using System.Threading.Tasks;
 
 namespace MVC.Crypto
 {
-    static class Keys
+    public static class Keys
     {
-
+        /// <summary>
+        /// get a random generated string key
+        /// </summary>
+        /// <param name="length">length of the return string/key</param>
+        /// <returns>a random string safe for security usage</returns>
         public static string GetRandomKey(int length)
         {
-            byte[] randBytes;
+            if (length == 0) return string.Empty;
+            if (length < 0) throw new ArgumentOutOfRangeException($"paramater {nameof(length)} does not support negative input");
 
-            if (length >= 1)
-            {
-                randBytes = new byte[length];
-            }
-            else
-            {
-                randBytes = new byte[1];
-            }
+            byte[] randBytes = new byte[length];
 
             // Create a new RNGCryptoServiceProvider.
             RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();

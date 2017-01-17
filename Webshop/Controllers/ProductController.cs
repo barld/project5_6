@@ -42,5 +42,13 @@ namespace Webshop.Controllers
             IEnumerable<Game> games = context.Games.GetAllByPlatform(platform).Result;
             return Json(games);
         }
+
+        public ViewObject PostGame()
+        {
+            Game game = this.GetBodyFromJson<Game>();
+            context.Games.Insert(game).Wait();
+
+            return Json(game);
+        }
     }
 }

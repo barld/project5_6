@@ -51,12 +51,11 @@
     </div><!-- End container -->
 </div>
 <script>
+    console.log('Test!');
     var game =
     {
-        "_id" : ObjectId("587c6b859742de257459c36a"),
-        "GameTitle" : "Battlefield 1",
+        "GameTitle" : "Dylan's Adventure 99",
         "Platform" : {
-            "_id" : ObjectId("587c6b859742de257459c362"),
             "PlatformTitle" : "Playstation 4",
             "Brand" : "SONY",
             "Description" : "Japan for the win!",
@@ -69,8 +68,7 @@
         "Genres" : [
             {
                 "Name" : "Action",
-                "Description" : "Boom boom!",
-                "_id" : ObjectId("587c6b859742de257459c367")
+                "Description" : "Boom boom!"
             }
         ],
         "Image" : [
@@ -79,7 +77,7 @@
         "MinPlayers" : 1,
         "MaxPlayers" : 12,
         "Description" : "Full of action!",
-        "EAN" : 754348644,
+        "EAN" : 854248613,
         "Price" : 4500,
         "IsVRCompatible" : false,
         "ReleaseDate" : "2017-01-16T06:43:17.383Z"
@@ -89,11 +87,11 @@
         return new Promise(function(resolve, reject){
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
-            xhr.responseType = 'json';
 
             xhr.onload = function(){
                 if(xhr.status === 200){
-                    resolve(request.response);
+                    resolve(xhr.response);
+                    console.log(JSON.stringify(xhr.responseText));
                 }else{
                     reject(`An error occurred: ${xhr.statusText}`)
                 }
@@ -107,8 +105,8 @@
         });
     }
 
-    Send(game, 'localhost:8080/api/game/', 'POST');
-
+    Send(game, 'http://localhost:8080/api/product/game/', 'POST');
+    console.log('Test 2!');
 </script>
 <script src="./dist/admin.build.js"></script>
 </body>

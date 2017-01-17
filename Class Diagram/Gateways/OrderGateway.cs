@@ -32,6 +32,36 @@ namespace DataModels.Gateways
             var filter = Builders<Order>.Filter.Eq(g => g.BillingAddress, address);
             return await Collection.Find(filter).ToListAsync();
         }
+        enum TimeGroup
+        {
+            Day,
+            Week,
+            Month
+        }
+
+        public async Task<Dictionary<DateTime, int>> GetOrderAmountData(TimeGroup timeSpan, DateTime beginDate, DateTime endDate)
+        {
+            //timeSpan.d
+
+            var filter = Builders<Order>.Filter.Where(v => v.OrderDate > beginDate && v.OrderDate < endDate);
+            var result = Collection.Find(filter).ToList();
+
+            var groupedResult = new Dictionary<DateTime, int>();
+            switch (timeSpan)
+            {
+                case TimeGroup.Day:
+                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, g.OrderDate.Day)).ToDictionary(x => x.Key, x => x.Count());
+                    break;
+                case TimeGroup.Week:
+                    break;
+                case TimeGroup.Month:
+                    break;
+                default:
+                    break;
+            }
+
+            return groupedResult;
+        }
 
         public int GetLatestOrderNumber()
         {

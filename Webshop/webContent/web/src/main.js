@@ -17,6 +17,9 @@ Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('adminplotmenu', require('./AdminPlotMenu.vue'));
+Vue.component('adminplot1', require('./AdminPlot1.vue'));
+Vue.component('adminplot2', require('./AdminPlot2.vue'));
+Vue.component('adminplot3', require('./AdminPlot3.vue'));
 
 window.shoppingcart = new shoppingCart();
 

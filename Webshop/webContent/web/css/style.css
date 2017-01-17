@@ -9,6 +9,13 @@
 	padding-left: 10px;
 }
 
+.panel {
+	width: auto;
+	padding-left: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
 .img-responsive {
 	width: auto;
 	height: auto;

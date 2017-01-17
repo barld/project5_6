@@ -16,6 +16,7 @@ Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
+Vue.component('admin_screen', require('./Adminscreen.vue'));
 
 window.shoppingcart = new shoppingCart();
 

@@ -13,3 +13,14 @@
 # do not deploy at all
 -
   configuration: Debug
+  
+version: 0.4.{build}
+nuget:
+  project_feed: true
+before_build:
+- cmd: nuget restore
+build:
+  verbosity: minimal
+artifacts:
+- path: MVC/bin/**/*
+  name: executables

@@ -1,4 +1,4 @@
-window += function Send(data, url, method){
+function Send(data, url, method){
     return new Promise(function(resolve, reject){
         var xhr = new XMLHttpRequest();
         xhr.open(method, url);
@@ -18,4 +18,30 @@ window += function Send(data, url, method){
 
         xhr.send(JSON.stringify(data));
     });
+}
+
+class DatabaseOperations{
+    constructor(url){
+        this.URL = url;
+    }
+
+    get Url(){
+        return this.URL;
+    }
+
+    static EditProduct(product){
+        Send(product, this.URL, 'PUT');
+    }
+
+    static DeleteProduct(ProductId){
+        Send(ProductId, this.URL, 'DELETE');
+    }
+
+    static InsertProduct(product){
+        Send(product, this.URL, 'POST');
+    }
+
+    static EditUser(user){
+        Send(user, this.URL, 'PUT');
+    }
 }

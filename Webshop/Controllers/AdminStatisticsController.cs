@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataModels;
 using MVC.View;
+using Class_Diagram;
 
 namespace Webshop.Controllers
 {
@@ -18,6 +19,11 @@ namespace Webshop.Controllers
             var data = GetBodyFromJson<JsonDateStatisticData>();
 
             return Json(context.Orders.GetOrderAmountDataTask(data.TimeSpan, data.BeginDate, data.EndDate));
+        }
+
+        public ViewObject GetTimeSpans()
+        {
+            return Json(Enum.GetNames(typeof(TimeGroup)));
         }
     }
 }

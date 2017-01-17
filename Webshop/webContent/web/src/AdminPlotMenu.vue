@@ -1,41 +1,33 @@
 <template>
     <div class="container margin-top">
-        <div style="margin: 0 auto;" v-if="plot_active == false">
+        <div style="margin: 0 auto;" v-if="!plot_active">
             <h1>Plot menu</h1>
-            <button @click="ShowPlot1">Plot 1</button><br>
-            <button @click="ShowPlot2">Plot 2</button><br>
-            <button @click="ShowPlot3">Plot 3</button><br>
+            <button @click="ShowPlot(1)">Plot 1</button><br>
+            <button @click="ShowPlot(2)">Plot 2</button><br>
+            <button @click="ShowPlot(3)">Plot 3</button><br>
             <button @click="CloseMenu">Close</button>
         </div>
-        <div>
-
-        </div>
+        <adminplot1 v-on:closed="ClosePlot" v-if="plot_number == 1"></adminplot1>
+        <adminplot2 v-on:closed="ClosePlot" v-if="plot_number == 2"></adminplot2>
+        <adminplot3 v-on:closed="ClosePlot" v-if="plot_number == 3"></adminplot3>
     </div>
 </template>
 <script>
     export default{
         data(){
-            return {plot_active: false}
+            return {plot_active: false, plot_number: null}
         },
         methods:{
             CloseMenu: function(){
                 this.$emit('close');
             },
-            ShowPlot1: function(){
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
-                xhr.onload = function(){
-                    alert("Done");
-                }
-
-                xhr.send(JSON.stringify({TimeSpan:"Week", BeginDate:new Date("2017-01-05"), EndDate:new Date("2017-01-18")}));
+            ShowPlot: function(plot_number){
+                this.plot_number = plot_number;
+                this.plot_active = true;
             },
-            ShowPlot2: function(){
-
-            },
-            ShowPlot3: function(){
-
+            ClosePlot: function(){
+                this.plot_active = false;
+                this.plot_number = null;
             }
         }
     }

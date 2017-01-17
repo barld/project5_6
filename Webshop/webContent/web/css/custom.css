@@ -282,3 +282,15 @@ input:focus{
 .productbox_button{
 	width:100%;
 }
+
+.statistic_send_button{
+	margin:auto 0;
+}
+
+.statistic_fill_div{
+	height:100%;
+}
+
+.statistics_radio{
+	margin-right: 5px;
+}

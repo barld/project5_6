@@ -15,14 +15,21 @@
 <script>
     export default{
         data(){
-            plot_active = false;
+            return {plot_active: false}
         },
         methods:{
             CloseMenu: function(){
                 this.$emit('close');
             },
             ShowPlot1: function(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                xhr.onload = function(){
+                    alert("Done");
+                }
 
+                xhr.send(JSON.stringify({TimeSpan:"Week", BeginDate:new Date("2017-01-05"), EndDate:new Date("2017-01-18")}));
             },
             ShowPlot2: function(){
 

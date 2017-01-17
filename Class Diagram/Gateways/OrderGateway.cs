@@ -6,6 +6,8 @@ using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using System.Globalization;
+using Class_Diagram;
 
 namespace DataModels.Gateways
 {
@@ -32,19 +34,15 @@ namespace DataModels.Gateways
             var filter = Builders<Order>.Filter.Eq(g => g.BillingAddress, address);
             return await Collection.Find(filter).ToListAsync();
         }
-        enum TimeGroup
-        {
-            Day,
-            Week,
-            Month
-        }
 
-        public async Task<Dictionary<DateTime, int>> GetOrderAmountData(TimeGroup timeSpan, DateTime beginDate, DateTime endDate)
+        public Dictionary<DateTime, int> GetOrderAmountDataTask(TimeGroup timeSpan, DateTime beginDate, DateTime endDate)
         {
             //timeSpan.d
+            CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
 
             var filter = Builders<Order>.Filter.Where(v => v.OrderDate > beginDate && v.OrderDate < endDate);
             var result = Collection.Find(filter).ToList();
+            var calander = ci.DateTimeFormat.FirstDayOfWeek;
 
             var groupedResult = new Dictionary<DateTime, int>();
             switch (timeSpan)
@@ -53,8 +51,10 @@ namespace DataModels.Gateways
                     groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, g.OrderDate.Day)).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Week:
+                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, FirstDayOfWeek(g.OrderDate))).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Month:
+                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1)).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 default:
                     break;
@@ -73,6 +73,14 @@ namespace DataModels.Gateways
             {
                 return 0;
             }
+        }
+
+        private int firstDayOfWeek(DateTime date)
+        {
+            DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            int offset = fdow - date.DayOfWeek;
+            DateTime fdowDate = date.AddDays(offset);
+            return fdowDate.Day;
         }
     }
 }

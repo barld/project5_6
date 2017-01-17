@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="css/style.css">-->
 
     <!-- JavaScript
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -59,7 +60,7 @@
     </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
-            <div id="product_screen" v-if="on_product_section">
+            <div id="product_screen" v-if="on_product_section && !IsAdmin">
                 <search v-if="!show_product_details" @show_details="open_product_details"></search>
                 <product v-if="!(show_product_details)" @show_details="open_product_details"></product>
                 <product_details v-else @close="close_product_details" v-bind:product="chosen_detail_product"></product_details>
@@ -67,10 +68,9 @@
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <register v-on:close="close_register"  v-if="show_register" ></register>
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
+            <admin_screen v-if="LogedIn && IsAdmin"></admin_screen>
         </div>
     </div><!-- End container -->
-    <admin_screen>
-    </admin_screen>
 </div>
 <script src="./dist/build.js"></script>
 </body>

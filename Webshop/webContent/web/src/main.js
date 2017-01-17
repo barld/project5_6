@@ -30,6 +30,7 @@ new Vue({
         show_shoppingcart_screen: false,
         on_product_section: true,
         LogedIn:false,
+        IsAdmin: false,
         shoppingcart: shoppingcart,
         chosen_detail_product:null,
         user_status: {}
@@ -65,6 +66,7 @@ new Vue({
         },
         logedout:function () {
             this.LogedIn = false;
+            this.IsAdmin = false;
         },
         showRegister:function(){
             this.show_register = true;
@@ -85,10 +87,23 @@ new Vue({
             // Function to fire off when the server has send a response
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
+                console.log(base.user_status);
                 base.LogedIn = base.user_status.IsLogedIn;
+                if(base.user_status.Role == "Admin"){
+                    base.IsAdmin = true;
+                }
             };
 
             xhr.send();
+        },
+        check_admin: function(){
+            if(typeof user_status ==! undefined && user_status.Role == 0){
+                window.alert("true");
+                return true;
+            }else{
+                window.alert("false");                
+                return false;
+            }
         },
         back_to_overview: function () {
             this.showDetails = false;

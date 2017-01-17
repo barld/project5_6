@@ -51,7 +51,7 @@ namespace DataModels.Gateways
                     groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, g.OrderDate.Day)).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Week:
-                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, FirstDayOfWeek(g.OrderDate))).ToDictionary(x => x.Key, x => x.Count());
+                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, firstDayOfWeek(g.OrderDate))).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Month:
                     groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1)).ToDictionary(x => x.Key, x => x.Count());

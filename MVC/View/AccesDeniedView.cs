@@ -9,19 +9,11 @@ namespace MVC.View
 {
     public class AccesDeniedView : ViewObject
     {
-        public override void Respond(HttpListenerResponse response)
+        public AccesDeniedView()
         {
-            var buffer = System.Text.Encoding.UTF8.GetBytes("<h1>Acces denied</h1>");
-
-            response.StatusCode = 403;
-            response.ContentType = "text/html";
-            response.ContentLength64 = buffer.Length;
-
-            var output = response.OutputStream;
-
-            output.Write(buffer, 0, buffer.Length);
-
-            output.Close();
+            StatusCode = 403;
+            Content = "<h1>Acces denied</h1>";
         }
+
     }
 }

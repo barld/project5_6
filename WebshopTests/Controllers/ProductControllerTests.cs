@@ -11,36 +11,36 @@ namespace Webshop.Controllers.Tests
     [TestClass()]
     public class ProductControllerTests
     {
-        ProductController productController = new ProductController();
+        //ProductController productController = new ProductController();
 
-        [TestMethod()]
-        public void GetTest()
-        {
-            productController.Get();
-        }
+        //[TestMethod()]
+        //public void GetTest()
+        //{
+        //    //productController.Get();
+        //}
 
-        [TestMethod()]
-        public void GetAllTest()
-        {
-            productController.GetAll();
-        }
+        //[TestMethod()]
+        //public void GetAllTest()
+        //{
+        //    //productController.GetAll();
+        //}
 
-        [TestMethod()]
-        public void PostSearchTest()
-        {
-            productController.PostSearch();
-        }
+        //[TestMethod()]
+        //public void PostSearchTest()
+        //{
+        //    //productController.PostSearch();
+        //}
 
-        [TestMethod()]
-        public void GetGamebyPlatformTest()
-        {
-            productController.GetGamebyPlatform();
-        }
+        //[TestMethod()]
+        //public void GetGamebyPlatformTest()
+        //{
+        //    //productController.GetGamebyPlatform();
+        //}
 
-        [TestMethod()]
-        public void PostGameTest()
-        {
-            productController.PostGame();
-        }
+        //[TestMethod()]
+        //public void PostGameTest()
+        //{
+        //    //productController.PostGame();
+        //}
     }
 }

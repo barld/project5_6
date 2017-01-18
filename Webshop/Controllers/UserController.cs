@@ -61,6 +61,8 @@ namespace Webshop.Controllers
             {
                 return Json("user not logged in");
             }
+        }
+        
         public ViewObject PostUser()
         {
             User user = this.GetBodyFromJson<User>();

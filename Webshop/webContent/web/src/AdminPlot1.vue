@@ -1,5 +1,5 @@
 <template>
-    <div class="container margin-top">
+    <div>
         <h1>Verkoopaantal statistieken</h1>
         <div class="row">
             <form>
@@ -16,8 +16,8 @@
                 <div class="six columns statistic_fill_div">
                     <fieldset>
                         <legend>Begin- en einddatum</legend>
-                        Start datum: <input type="date" name="StartDate"><br>
-                        Eind datum: <input type="date" name="EndDate"><br>
+                        Start datum: <input type="date" name="StartDate" :value="today"><br>
+                        Eind datum: <input type="date" name="EndDate" :value="today"><br>
                     </fieldset>
                 </div>
                 <div class="three columns statistic_fill_div">
@@ -26,13 +26,19 @@
                 </div>
             </form>
         </div>
+        <div class="statistics_canvas">
+            <canvas id="chartCanvas">
+                test
+            </canvas>
+        </div>
     </div>
 </template>
-<script src="Chart.js"></script>
 <script>
+    import BarChartDrawer from './BarChartDrawer'
+
     export default{
         data(){
-            return {timespans: null}
+            return {timespans: null, salesData: null, today: ""}
         },
         methods:{
             LoadTimespans: function () {
@@ -61,14 +67,28 @@
                 xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
                 xhr.onload = function(){
-                    console.log(JSON.parse(xhr.response));
+                    CreateChart(JSON.parse(xhr.response));
                 }
                 console.log(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
                 xhr.send(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
-            }
+            },
         },
         created: function () {
             this.LoadTimespans();
+            var d = new Date();
+            this.today = d.getFullYear() + "-" + ('0'+(d.getMonth() +1)).slice(-2)+"-" + ('0' + d.getDate()).slice(-2);
+            console.log(this.today);
         }
+    }
+    function CreateChart(data){
+        console.log(data);
+        if(typeof data === "undefined" || data === null){
+            alert("Geen data geladen.");
+            return;
+        }
+        var chartDrawer = new BarChartDrawer(document.getElementById("chartCanvas"));
+        chartDrawer.DrawGraph(data)
+        console.log(chartDrawer);
+        alert("Data ontvangen.");
     }
 </script>

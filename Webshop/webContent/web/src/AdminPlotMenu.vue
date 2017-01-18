@@ -1,5 +1,5 @@
 <template>
-    <div class="container margin-top">
+    <div>
         <div style="margin: 0 auto;" v-if="!plot_active">
             <h1>Plot menu</h1>
             <button @click="ShowPlot(1)">Plot 1</button><br>

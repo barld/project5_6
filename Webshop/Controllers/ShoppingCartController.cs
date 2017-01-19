@@ -77,7 +77,7 @@ namespace Webshop.Controllers
             }
         }
 
-        public ViewObject Delete()
+        public ViewObject DeleteAll()
         {
             currentShoppingCart = new Cart();
             return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart deleted" });

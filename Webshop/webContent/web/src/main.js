@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import Context from "./Gateways/context";
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
-import shoppingCart from './shoppingCart'
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -18,7 +18,7 @@ Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
 
-window.shoppingcart = new shoppingCart();
+window.context = new Context();
 
 new Vue({
     el: '#app',
@@ -31,7 +31,7 @@ new Vue({
         on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
-        shoppingcart: shoppingcart,
+        shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
         user_status: {}
     },

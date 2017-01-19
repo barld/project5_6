@@ -34,7 +34,7 @@
 </template>
 <script>
     export default{
-        props:["shoppingcart"],
+        props:['shoppingcart'],
         data(){
             return{
                 cart: {}
@@ -45,7 +45,11 @@
                 this.$emit("close");
             },
             checkout:function(){
-                this.$emit("checkout");
+                if(window.shoppingcart.cart.CartLines< 1){
+                    alert('Cant checkout with an empty cart.')
+                }else{
+                    this.$emit("checkout");
+                }
             },
             changedShoppingCart:function (sc) {
                 this.cart = sc.cart;

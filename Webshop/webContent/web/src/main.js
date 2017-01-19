@@ -95,6 +95,7 @@ new Vue({
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
+                console.log(base.LogedIn);
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
                 }
@@ -124,8 +125,13 @@ new Vue({
 
         },
         begin_checkout: function() {
-            this.show_shoppingcart_screen = false;
-            this.show_checkout_information = true;
+            if(this.LogedIn){
+                this.show_shoppingcart_screen = false;
+                this.show_checkout_information = true;
+            }else{
+                alert('Please log in to purchase our products.');
+            }
+            
         },
         begin_payment: function(inputs) {
             this.show_checkout_information = false;

@@ -21,8 +21,11 @@ namespace Webshop
 
         public ShoppingCartLogic(Session session, IContext context)
         {
-            this.session = session != null ? session : throw new ArgumentNullException(nameof(session));
-            this.context = context != null ? context : throw new ArgumentNullException(nameof(context));
+            if (session == null) throw new ArgumentNullException(nameof(session));
+            if (context == null) throw new ArgumentNullException(nameof(context));
+
+            this.session = session;
+            this.context = context;
         }       
 
         public Cart currentShoppingCart

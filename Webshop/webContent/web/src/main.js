@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import Context from "./Gateways/context";
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
-import shoppingCart from './shoppingCart'
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -17,8 +17,9 @@ Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('mylists', require('./MyLists.vue'));
+Vue.component('admin_screen', require('./Adminscreen.vue'));
 
-window.shoppingcart = new shoppingCart();
+window.context = new Context();
 
 new Vue({
     el: '#app',
@@ -31,7 +32,8 @@ new Vue({
         show_shoppingcart_screen: false,
         on_product_section: true,
         LogedIn:false,
-        shoppingcart: shoppingcart,
+        IsAdmin: false,
+        shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
         user_status: {}
     },
@@ -66,6 +68,7 @@ new Vue({
         },
         logedout:function () {
             this.LogedIn = false;
+            this.IsAdmin = false;
         },
         showFavourites: function(){
             console.log('Main function! GULULU!');
@@ -89,10 +92,23 @@ new Vue({
             // Function to fire off when the server has send a response
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
+                console.log(base.user_status);
                 base.LogedIn = base.user_status.IsLogedIn;
+                if(base.user_status.Role == "Admin"){
+                    base.IsAdmin = true;
+                }
             };
 
             xhr.send();
+        },
+        check_admin: function(){
+            if(typeof user_status ==! undefined && user_status.Role == 0){
+                window.alert("true");
+                return true;
+            }else{
+                window.alert("false");                
+                return false;
+            }
         },
         back_to_overview: function () {
             this.showDetails = false;

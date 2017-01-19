@@ -17,6 +17,7 @@ namespace Webshop.Models
     {
         public bool Success { get; set; }
         public string Message { get; set; }
+        public bool Admin { get; set; }
     }
 
     public interface IUserLoginStatus

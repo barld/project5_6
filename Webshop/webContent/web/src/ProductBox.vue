@@ -26,7 +26,7 @@
 
         methods: {
             add_to_cart:function () {
-                window.shoppingcart.addToCart(this.product);
+                window.context.ShoppingCart.addToCart(this.product);
             },
             show_details:function () {
                 this.$emit('show_details', this.product)

@@ -2,7 +2,7 @@
     <div class="container">
         <input v-model="searchValue" list="GameSearchList" type="search" id="game_search" name="game_search" class="u-full-width" placeholder="Zoeken" @keyup="stringChange"/>
         <datalist id="GameSearchList">
-            <option v-for="game in searchResult" :value="game.GameTitle">{{ game.Platform.PlatformTitle }}</option>
+            <option v-for="game in searchResult" :value="game.GameTitle" @click="Test()">{{ game.Platform.PlatformTitle }}</option>
         </datalist>
         <a href="#" @click.prevent="toggle_advanced_search">Geavanceerd zoeken</a>
         <div class="row advanced_search" v-show="advancedSearch">

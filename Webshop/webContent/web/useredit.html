@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Dylan's Gameshop | Index</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- JavaScript
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+<div id="app">
+    <nav><!-- Start menu -->
+        <div id="navbar">
+            <ul>
+                <li class="submenu_parent">
+                    <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
+                    <platform_menu></platform_menu>
+                </li>
+                <li class="floating_menu_component">
+                    <a href="#"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Winkelwagen</a>
+                    <shopcart v-bind:shoppingcart="shoppingcart"></shopcart>
+                </li>
+                <UserNav
+                        v-bind:logedin="LogedIn"
+                        v-on:showlogin="showLogin"
+                        v-on:showregister="showRegister"
+                        v-on:login_succes="login_success"
+                        v-on:login_failed="login_failed"
+                        v-on:logedout="logedout"
+                >
+
+                </UserNav>
+            </ul>
+        </div>
+    </nav><!-- End menu -->
+    <div class="container margin-top"><!-- Start container -->
+        <div class="row">
+            <div class="container">
+                <div class="ten.columns offset-by-two-columns"><h1 align="center">Admin Panel</h1></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+            <div class="ten.columns offset-by-two-columns">
+                <div class="element-container">
+                    <div class="panel">
+                        <form method="post" action="#">
+                            <table class="u-full-width">
+                                <tr>
+                                    <td>Username</td>
+                                    <td><input class="u-full-width" type="email" value="JFConstancia@hotmail.com"></td>
+                                </tr>
+                                <tr>
+                                    <td>Gender</td>
+                                    <td>
+                                        <select class="u-full-width" id="exampleRecipientInput">
+                                        <option value="Option 1">Male</option>
+                                        <option value="Option 2">Female</option>
+                                    </select>    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                    <td><a href="#"></a> <button type="button" class="button-primary">Reset password</button></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><button type="submit" class="button-primary u-full-width">Edit</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                
+            </div>
+        </div>
+    </div><!-- End container -->
+</div>
+<script src="./dist/build.js"></script>
+</body>
+</html>

@@ -9,26 +9,11 @@ namespace MVC.View
 {
     public class RawObjectView : ViewObject
     {
-        object o;
         public RawObjectView(object o)
         {
-            this.o = o;
+            Content = o?.ToString() ?? "NULL";
+            ContentType = "text/html";
         }
 
-        public override void Respond(HttpListenerResponse response)
-        {
-            if (o == null)
-                o = "NULL";
-            var buffer = System.Text.Encoding.UTF8.GetBytes(o.ToString());
-
-            response.ContentType = "text/html";
-            response.ContentLength64 = buffer.Length;
-
-            var output = response.OutputStream;
-
-            output.Write(buffer, 0, buffer.Length);
-
-            output.Close();
-        }
     }
 }

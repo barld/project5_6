@@ -11,11 +11,11 @@ using Class_Diagram;
 
 namespace Webshop.Controllers
 {
-    class ProductController : Controller
+    public class ProductController : Controller
     {
         Context context = new Context();
 
-        public ViewObject Get()
+        public JsonDataView Get()
         {
             return Json(new {IsVRCompatible = true, Price = 45.00f, Publisher = "EA", RatingPegi = ".", ReleaseDate = new DateTime()});
         }
@@ -41,6 +41,14 @@ namespace Webshop.Controllers
             Platform platform = context.Platforms.GetByTitle(platformTitle).Result;
             IEnumerable<Game> games = context.Games.GetAllByPlatform(platform).Result;
             return Json(games);
+        }
+
+        public ViewObject PostGame()
+        {
+            Game game = this.GetBodyFromJson<Game>();
+            context.Games.Insert(game).Wait();
+
+            return Json(game);
         }
     }
 }

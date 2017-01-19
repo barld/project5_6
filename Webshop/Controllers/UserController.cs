@@ -49,13 +49,5 @@ namespace Webshop.Controllers
         {
             return Json(this.Auth.LoginStatus());
         }
-
-        public ViewObject PostUser()
-        {
-            User user = this.GetBodyFromJson<User>();
-            context.Users.Insert(user).Wait();
-
-            return Json(user);
-        }
     }
 }

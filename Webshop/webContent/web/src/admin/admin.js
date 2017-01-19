@@ -34,7 +34,7 @@ class DatabaseOperations{
     }
 
     static InsertUser(user){
-        Send(user, 'api/user', 'POST');
+        Send(user, 'api/user/register', 'POST');
     }
 }
 
@@ -78,5 +78,5 @@ var user = {
     "IsActive" : true
 };
 
-DatabaseOperations.InsertProduct(product);
+// DatabaseOperations.InsertProduct(product);
 DatabaseOperations.InsertUser(user);

@@ -18,7 +18,8 @@ namespace Webshop.Controllers
         public UserController()
         {
             context = new Context();
-         }
+        }
+
         public override void AfterConstruct()
         {
             Auth = new AuthModule(Session, context);
@@ -47,6 +48,27 @@ namespace Webshop.Controllers
         public ViewObject GetStatus()
         {
             return Json(this.Auth.LoginStatus());
+        }
+        
+        public ViewObject GetOrders()
+        {
+            if (Auth.LoggedIn)
+            {
+                User user = Auth.CurrentUser;
+                return Json(context.Orders.GetAllByEmail(user.Email).Result);
+            }
+            else
+            {
+                return Json("user not logged in");
+            }
+        }
+        
+        public ViewObject PostUser()
+        {
+            User user = this.GetBodyFromJson<User>();
+            context.Users.Insert(user).Wait();
+
+            return Json(user);
         }
     }
 }

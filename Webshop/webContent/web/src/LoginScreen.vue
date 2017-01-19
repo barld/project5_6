@@ -53,7 +53,9 @@
                 xhr.onload = function () {
                     var result = JSON.parse(xhr.response);
                     if(result.Success)
+                    {
                         base.$emit('success');
+                    }
                     else{
                         base.showwarning = true;
                         base.warning_message = result.Message;

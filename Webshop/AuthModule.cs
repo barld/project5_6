@@ -54,11 +54,18 @@ namespace Webshop
             else
             {
                 var logedinUser = context.Users.Login(user.Email, user.Password).Result;
-                if (logedinUser != null)
+                if (logedinUser != null && logedinUser.AccountRole == AccountRole.User)
                 {
                     CurrentUser = logedinUser;
                     //Return a succes message when the user succesfully logs in
                     return new ActionResultViewModel { Success = true, Message = "User succesfully logged in" };
+                }
+                else if (logedinUser != null && logedinUser.AccountRole == AccountRole.Admin)
+                {
+                    CurrentUser = logedinUser;
+
+                    //Return a success message whenthe admin successfully logs in
+                    return new ActionResultViewModel { Success = true, Message = "Admin succesfully logged in", Admin = true};
                 }
                 else
                 {

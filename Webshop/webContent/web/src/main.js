@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import Context from "./Gateways/context";
 //import App from './App.vue'
 //import ShoppingcartMenu from './ShoppingcartMenu.vue'
-import shoppingCart from './shoppingCart'
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -16,23 +16,32 @@ Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
+Vue.component('mylists', require('./MyLists.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
+Vue.component('checkout_information', require('./CheckoutInformation.vue'));
+Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
+Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 
-window.shoppingcart = new shoppingCart();
+window.context = new Context();
 
 new Vue({
     el: '#app',
     data :{
         show_login:false,
+        show_favourites: true,
         show_register:false,
         show_products: false,
         show_product_details: false,
         show_shoppingcart_screen: false,
+        show_checkout_information: false,
+        show_checkout_payment: false,
+        show_checkout_confirmation: false,
         on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
-        shoppingcart: shoppingcart,
+        shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
+        tempstore_inputs:null,
         user_status: {}
     },
     methods:{
@@ -68,6 +77,9 @@ new Vue({
             this.LogedIn = false;
             this.IsAdmin = false;
         },
+        showFavourites: function(){
+            console.log('Main function! GULULU!');
+        },
         showRegister:function(){
             this.show_register = true;
         },
@@ -87,8 +99,8 @@ new Vue({
             // Function to fire off when the server has send a response
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
-                console.log(base.user_status);
                 base.LogedIn = base.user_status.IsLogedIn;
+                console.log(base.LogedIn);
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
                 }
@@ -116,6 +128,70 @@ new Vue({
         },
         show_games: function (games) {
 
+        },
+        begin_checkout: function() {
+            if(this.LogedIn){
+                this.show_shoppingcart_screen = false;
+                this.show_checkout_information = true;
+            }else{
+                alert('Please log in to purchase our products.');
+            }
+            
+        },
+        begin_payment: function(inputs) {
+            this.show_checkout_information = false;
+            this.show_checkout_payment = true;
+            this.tempstore_inputs=inputs;
+        },
+        begin_confirmation: function() {
+            this.show_checkout_payment = false;
+            this.show_checkout_confirmation = true;
+        },
+        begin_order: function() {
+            this.show_checkout_confirmation = false;
+            this.on_product_section = true;
+
+            var ean_list = [];
+            var amt_list = [];
+            var items = this.shoppingcart.cart.CartLines
+
+            items.forEach(function(item){
+                    ean_list.push(item.Product.EAN);
+                    amt_list.push(item.Amount);
+                })
+            
+            var order = {
+                EAN: ean_list,
+                Amounts: amt_list,
+                Email: this.tempstore_inputs[7],
+                DeliveryCity: this.tempstore_inputs[5],
+                DeliveryCountry: this.tempstore_inputs[6],
+                DeliveryHousenumber: this.tempstore_inputs[3],
+                DeliveryPostalCode: this.tempstore_inputs[2],
+                DeliveryStreetname: this.tempstore_inputs[4],
+                BillingCity: this.tempstore_inputs[5],
+                BillingCountry: this.tempstore_inputs[6],
+                BillingHousenumber: this.tempstore_inputs[3],
+                BillingPostalCode: this.tempstore_inputs[2],
+                BillingStreetname: this.tempstore_inputs[4],
+            }
+
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/order/submit");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                //base.user_status = JSON.parse(xhr.response);
+            };
+            xhr.send(JSON.stringify(order));
+
+            this.shoppingcart.clearCart();
+            this.tempstore_inputs = null;
         }
     },
     created: function () {

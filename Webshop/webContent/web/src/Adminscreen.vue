@@ -4,7 +4,6 @@
             <div class="row">
                 <div class="container">
                     <div class="ten.columns offset-by-two-columns">
-                        <div class="element-container">
                             <div class="panel">
                                 <table style="margin-top: 20px;" class="u-full-width">
                                     <thead>
@@ -35,7 +34,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

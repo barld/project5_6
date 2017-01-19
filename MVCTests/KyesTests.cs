@@ -29,7 +29,7 @@ namespace MVCTests
                 for (int i = 0; i < 20; i++)
                 {
                     var key = Keys.GetRandomKey(i);
-                    Assert.AreEqual(key.Length, i, $"result of Keys.GetRandomKey({i}) should have a length of {i} but key {key} hast a length of {key.Length}");
+                    Assert.AreEqual(key.Length, i, $"result of Keys.GetRandomKey({i}) should have a length of {i} but key {key} has a length of {key.Length}");
                 }
             }
 

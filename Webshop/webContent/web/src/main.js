@@ -94,7 +94,6 @@ new Vue({
             // Function to fire off when the server has send a response
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
-                console.log(base.user_status);
                 base.LogedIn = base.user_status.IsLogedIn;
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
@@ -136,6 +135,52 @@ new Vue({
         begin_confirmation: function() {
             this.show_checkout_payment = false;
             this.show_checkout_confirmation = true;
+        },
+        begin_order: function() {
+            this.show_checkout_confirmation = false;
+            this.on_product_section = true;
+
+            var ean_list = [];
+            var amt_list = [];
+            var items = this.shoppingcart.cart.CartLines
+
+            items.forEach(function(item){
+                    ean_list.push(item.Product.EAN);
+                    amt_list.push(item.Amount);
+                })
+            
+            var order = {
+                EAN: ean_list,
+                Amounts: amt_list,
+                Email: this.tempstore_inputs[7],
+                DeliveryCity: this.tempstore_inputs[5],
+                DeliveryCountry: this.tempstore_inputs[6],
+                DeliveryHousenumber: this.tempstore_inputs[3],
+                DeliveryPostalCode: this.tempstore_inputs[2],
+                DeliveryStreetname: this.tempstore_inputs[4],
+                BillingCity: this.tempstore_inputs[5],
+                BillingCountry: this.tempstore_inputs[6],
+                BillingHousenumber: this.tempstore_inputs[3],
+                BillingPostalCode: this.tempstore_inputs[2],
+                BillingStreetname: this.tempstore_inputs[4],
+            }
+
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/order/submit");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                //base.user_status = JSON.parse(xhr.response);
+            };
+            xhr.send(JSON.stringify(order));
+
+            this.shoppingcart.clearCart();
+            this.tempstore_inputs = null;
         }
     },
     created: function () {

@@ -73,6 +73,8 @@
 
                 if(IsComplete){
                     this.$emit("payment", inputs);
+                }else{
+                    alert('Please fill in all fields');
                 }
                 
             },

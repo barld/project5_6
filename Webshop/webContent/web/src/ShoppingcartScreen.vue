@@ -27,7 +27,7 @@
                 </tbody>
             </table>
             <div class="form-btn" align="right">
-                <input type="submit" align="right" class="button-primary" value="Proceed to checkout!" @click="close">
+                <input type="submit" align="right" class="button-primary" value="Proceed to checkout!" @click="checkout">
             </div>
         </div>
     </div><!-- End container -->
@@ -43,6 +43,9 @@
         methods: {
             close:function(){
                 this.$emit("close");
+            },
+            checkout:function(){
+                this.$emit("checkout");
             },
             changedShoppingCart:function (sc) {
                 this.cart = sc.cart;

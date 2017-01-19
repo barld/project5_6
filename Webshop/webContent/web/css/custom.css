@@ -117,10 +117,10 @@ a{
 	height:100%;
 	background:#FFFFFF;
 	width:      100%;
-	height:     100%; 
+	height:     100%;
 	z-index:    10;
-	top:        0; 
-	left:       0; 
+	top:        0;
+	left:       0;
 	position:   fixed;
 	overflow:auto;
 }
@@ -186,9 +186,21 @@ a{
 	max-height:150px;
 }
 
+/*.afrekenen{*/
+	/*text-decoration: underline;*/
+	/*font-weight: bold;*/
+    /*color:#2a6496 !important;*/
+    /*font-size:20px;*/
+    /*display:block !important;*/
+    /*width:100%;*/
+    /*height:100%;*/
+/*}*/
+
 .afrekenen{
-	text-decoration: underline;
-	font-weight: bold;
+    width:100%;
+    background:#FAAD69;
+    border-color:#ff0000;
+    font-weight:700;
 }
 
 input:focus{
@@ -281,4 +293,10 @@ input:focus{
 
 .productbox_button{
 	width:100%;
+}
+
+@media (max-width: 600px) {
+    #navbar{
+        display: none;
+    }
 }

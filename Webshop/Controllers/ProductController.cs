@@ -50,5 +50,18 @@ namespace Webshop.Controllers
 
             return Json(game);
         }
+
+        public ViewObject DeleteGame()
+        {
+            Game game = this.GetBodyFromJson<Game>();
+            context.Games.Delete("EAN", game.EAN.ToString()).Wait();
+            return Json(game);
+        }
+
+        public async void GetEditGame()
+        {
+            Game game = this.GetBodyFromJson<Game>();
+            await context.Games.Replace(game.EAN.ToString(), game.EAN.ToString(), game);    
+        }
     }
 }

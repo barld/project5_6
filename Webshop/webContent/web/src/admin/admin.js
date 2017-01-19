@@ -8,7 +8,7 @@ function Send(data, url, method){
                 resolve(xhr.response);
                 console.log(JSON.stringify(xhr.responseText));
             }else{
-                reject(`An error occurred: ${xhr.statusText}`)
+                reject(`An error occurred: ${xhr.statusText}`);
             }
         };
 
@@ -25,12 +25,16 @@ class DatabaseOperations{
         Send(product, '/api/product/game/edit', 'PUT');
     }
 
-    static DeleteProduct(ProductId){
-        Send(ProductId, '/api/product/game/delete/id', 'DELETE');
+    static DeleteProduct(product){
+        Send(product, '/api/product/game/delete/', 'DELETE');
     }
 
     static InsertProduct(product){
         Send(product, '/api/product/game', 'POST');
+    }
+
+    static InsertUser(user){
+        Send(user, 'api/user', 'POST');
     }
 }
 
@@ -66,4 +70,13 @@ var product =
     "ReleaseDate" : "2017-01-16T06:43:17"
 };
 
+var user = {
+    "Password" : "maarten",
+    "Email" : "maarten@maarten.nl",
+    "Gender" : 0,
+    "AccountRole" : 1,
+    "IsActive" : true
+};
+
 DatabaseOperations.InsertProduct(product);
+DatabaseOperations.InsertUser(user);

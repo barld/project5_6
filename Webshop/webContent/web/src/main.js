@@ -16,6 +16,7 @@ Vue.component('search', require('./SearchScreen.vue'));
 Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
+Vue.component('mylists', require('./MyLists.vue'));
 
 window.shoppingcart = new shoppingCart();
 
@@ -23,6 +24,7 @@ new Vue({
     el: '#app',
     data :{
         show_login:false,
+        show_favourites: true,
         show_register:false,
         show_products: false,
         show_product_details: false,
@@ -64,6 +66,9 @@ new Vue({
         },
         logedout:function () {
             this.LogedIn = false;
+        },
+        showFavourites: function(){
+            console.log('Main function! GULULU!');
         },
         showRegister:function(){
             this.show_register = true;

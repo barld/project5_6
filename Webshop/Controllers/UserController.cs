@@ -39,14 +39,34 @@ namespace Webshop.Controllers
         public ViewObject PostRegister()
         {
             var user = GetBodyFromJson<User>();
-
-
             return Json(Auth.Register(user));
         }
 
         public ViewObject GetStatus()
         {
             return Json(this.Auth.LoginStatus());
+        }
+
+        public ViewObject PostRetrieveMyLists()
+        {
+            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
+            var data = GetBodyFromJson<User>();
+            List<MyLists> myLists = context.Users.GetMyListsByEmail(data.Email).Result;
+            return Json(myLists);
+        }
+
+        private class GameUser
+        {
+            public Game Game { get; set; }
+            public User User { get; set; }
+        }
+
+        public ViewObject AddToList()
+        {
+            var data = GetBodyFromJson<GameUser>();
+            Game game = context.Games.GetByEAN(data.Game.EAN).Result;
+            User user = context.Users.GetByEmail(data.User.Email).Result;
+            return Json(game);
         }
     }
 }

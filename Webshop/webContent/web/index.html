@@ -50,9 +50,9 @@
                         v-on:login_succes="login_success"
                         v-on:login_failed="login_failed"
                         v-on:logedout="logedout"
+                        v-on:showFavourites="showFavourites"
                         :status="user_status"
                 >
-
                 </UserNav>
             </ul>
         </div>
@@ -68,6 +68,7 @@
             <register v-on:close="close_register"  v-if="show_register" ></register>
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-on:close="close_shoppingcart_screen" v-if="show_shoppingcart_screen"></shoppingcart_screen>
         </div>
+        <mylists :user_status="user_status"></mylists> 
     </div><!-- End container -->
 </div>
 <script src="./dist/build.js"></script>

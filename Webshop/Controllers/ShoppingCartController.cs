@@ -10,65 +10,48 @@ using System.Threading.Tasks;
 namespace Webshop.Controllers
 {
 
-    /// <summary>
-    /// used session key:
-    ///     - shoppingCart
-    /// </summary>
     public class ShoppingCartController : MVC.Controller.Controller
     {
-        #region logic
-        const string shoppingCartKey = "shoppingCart";
         private Context context;
-
-        Cart currentShoppingCart
-        {
-            get
-            {
-                if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, new Cart());
-                return Session.Data[shoppingCartKey] as Cart;
-            }
-            set
-            {
-                if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, value);
-                Session.Data[shoppingCartKey] = value;
-            }
-        }
-
-        #endregion
+        private ShoppingCartLogic shoppingCartLogic;
 
         public override void AfterConstruct()
         {
             this.context = new Context();
+            this.shoppingCartLogic = new ShoppingCartLogic(this.Session, this.context);
+
         }
 
+        /// <summary>
+        /// get the complete shoppingcart for the current user
+        /// </summary>
+        /// <returns></returns>
         public ViewObject Get()
         {
-            return Json(currentShoppingCart);
+            return Json(shoppingCartLogic.currentShoppingCart);
         }
 
+        /// <summary>
+        /// Add one game to the shoppingcart
+        /// </summary>
+        /// <returns></returns>
         public ViewObject PostAdd()
         {
             var game = this.GetBodyFromJson<Game>();
-            if(currentShoppingCart.CartLines.Count(g => g.Product.EAN == game.EAN) == 0)
-            {
-                currentShoppingCart.CartLines.Add(new CartLine { Amount = 1, Product = context.Games.GetByEAN(game.EAN).Result });
-            }
-            else
-            {
-                currentShoppingCart.CartLines.First(c => c.Product.EAN == game.EAN).Amount++;
-            }
+            shoppingCartLogic.AddToCart(game);
             return Json(new Models.ActionResultViewModel { Success = true });
         }
 
+        /// <summary>
+        /// Update the complete shoppingcart
+        /// </summary>
+        /// <returns></returns>
         public ViewObject Put()
         {
             try
             {
-                currentShoppingCart = GetBodyFromJson<Cart>();
-                currentShoppingCart.CartLines.ForEach(cl => { cl.Product = context.Games.GetByEAN(cl.Product.EAN).Result; cl.Amount %= 1000; });
-                currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+                var cart = GetBodyFromJson<Cart>();
+                shoppingCartLogic.ReplaceShoppingCart(cart);                
                 return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart succesvol updated" });
             }
             catch
@@ -77,17 +60,24 @@ namespace Webshop.Controllers
             }
         }
 
+        /// <summary>
+        /// clear the shopping cart
+        /// </summary>
+        /// <returns></returns>
         public ViewObject Delete()
         {
-            currentShoppingCart = new Cart();
+            shoppingCartLogic.Clear();
             return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart deleted" });
         }
 
+        /// <summary>
+        /// remove the the game by a amount of 1 item by multiple items the amount will be amount-- else the whole game is deleted
+        /// </summary>
+        /// <returns></returns>
         public ViewObject DeleteRemove()
         {
             var game = GetBodyFromJson<Game>();
-            currentShoppingCart.CartLines.ForEach(cl => { if (cl.Product.EAN == game.EAN) cl.Amount--; });
-            currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+            
             return Json(new Models.ActionResultViewModel { Success = true, Message = "item deleted" });
         }
 

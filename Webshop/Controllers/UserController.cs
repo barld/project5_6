@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using Webshop.Models;
@@ -55,18 +56,19 @@ namespace Webshop.Controllers
             return Json(myLists);
         }
 
-        private class GameUser
+        public async void PostAddToList()
         {
-            public Game Game { get; set; }
-            public User User { get; set; }
-        }
-
-        public ViewObject AddToList()
-        {
-            var data = GetBodyFromJson<GameUser>();
-            Game game = context.Games.GetByEAN(data.Game.EAN).Result;
-            User user = context.Users.GetByEmail(data.User.Email).Result;
-            return Json(game);
+            var data = GetBodyFromJson<Game>();
+            var data2 = GetBodyFromJson<MyLists>();
+            Game game = context.Games.GetByEAN(data.EAN).Result;
+            MyLists list = Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First();
+            list.Games.Add(game);
+            User updatedUser = Auth.CurrentUser;
+            updatedUser.MyLists.Where(x => x.TitleOfList == list.TitleOfList).First().Games = list.Games;
+            //updatedUser.MyLists = myListsUpdated;
+            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).GetEnumerator().Current.Games.Add(game);
+            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First().Games.Add(game);
+            await context.Users.UpdateUser(updatedUser);
         }
     }
 }

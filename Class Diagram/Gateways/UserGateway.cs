@@ -95,6 +95,19 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
+        public async Task UpdateUser(User user)
+        {
+            try
+            {
+                //user.MyLists.Where(x => x.TitleOfList == ListTitle).GetEnumerator().Current.Games.Add(gameToAdd);
+                //await Replace("MyLists", List.TitleOfList, user);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
         public override async Task Delete(string columnToMatch, string valueToMatch)
         {
             try

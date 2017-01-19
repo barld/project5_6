@@ -32,8 +32,28 @@
                 this.$emit('show_details', this.product)
             },
             add_to_wishlist:function (ean) {
+                var base = this;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/user/AddToList/");
+
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                var gameInformation = {EAN:ean, TitleOfList:'Wish List'};
+                xhr.send(JSON.stringify(gameInformation));
+                console.log("EAN is:" + ean);
+
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    if(JSON.parse(xhr.response) != null){
+                        base.MyLists = JSON.parse(xhr.response);
+                        console.log(base.MyLists);
+                    }
+                }
+            },
+            add_to_favoritelist:function (ean) {
                 console.log(`Gevonden: ${ean}`);
-            }
+            },
         }
     }
 </script>

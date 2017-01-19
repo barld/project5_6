@@ -45,8 +45,8 @@ namespace WebshopTests.ContextMock
 
         public IGameGateway Games { get; }
 
-        public PlatformGateway Platforms => throw new NotImplementedException();
+        public PlatformGateway Platforms { get { throw new NotImplementedException(); } }
 
-        public UserGateway Users => throw new NotImplementedException();
+        public UserGateway Users { get { throw new NotImplementedException(); } }
     }
 }

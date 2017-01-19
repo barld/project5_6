@@ -33,23 +33,23 @@ namespace WebshopTests.ContextMock
         public async Task<Game> GetByTitle(string searchTitle) =>
             games.Find(g => g.GameTitle == searchTitle);
 
-        public async Task<IEnumerable<Game>> GetByTitleLike(SearchGameModel search) =>
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Game>> GetByTitleLike(SearchGameModel search)
+        { throw new NotImplementedException(); }
 
-        public Task Delete(string columnToMatch, string valueToMatch) =>
-            throw new NotImplementedException();
+        public Task Delete(string columnToMatch, string valueToMatch)
+        { throw new NotImplementedException(); }
 
         public async Task<IEnumerable<Game>> GetAll() => games.ToList();
 
         public async Task<Game> GetById(string id) => games.Find(g => g._id == id);
 
-        public Task Insert(Game model) =>
-            throw new NotImplementedException();
+        public Task Insert(Game model)
+        { throw new NotImplementedException(); }
 
-        public Task InsertMany(IEnumerable<Game> collection) =>
-            throw new NotImplementedException();
+        public Task InsertMany(IEnumerable<Game> collection)
+        { throw new NotImplementedException(); }
 
-        public Task Replace(string searchField, string searchValue, Game model) =>
-            throw new NotImplementedException();
+        public Task Replace(string searchField, string searchValue, Game model)
+        { throw new NotImplementedException(); }
     }
 }

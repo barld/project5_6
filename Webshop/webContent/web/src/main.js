@@ -17,6 +17,9 @@ Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
+Vue.component('checkout_information', require('./CheckoutInformation.vue'));
+Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
+Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 
 window.shoppingcart = new shoppingCart();
 
@@ -28,11 +31,15 @@ new Vue({
         show_products: false,
         show_product_details: false,
         show_shoppingcart_screen: false,
+        show_checkout_information: false,
+        show_checkout_payment: false,
+        show_checkout_confirmation: false,
         on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
         shoppingcart: shoppingcart,
         chosen_detail_product:null,
+        tempstore_inputs:null,
         user_status: {}
     },
     methods:{
@@ -116,6 +123,19 @@ new Vue({
         },
         show_games: function (games) {
 
+        },
+        begin_checkout: function() {
+            this.show_shoppingcart_screen = false;
+            this.show_checkout_information = true;
+        },
+        begin_payment: function(inputs) {
+            this.show_checkout_information = false;
+            this.show_checkout_payment = true;
+            this.tempstore_inputs=inputs;
+        },
+        begin_confirmation: function() {
+            this.show_checkout_payment = false;
+            this.show_checkout_confirmation = true;
         }
     },
     created: function () {

@@ -298,10 +298,7 @@ input:focus{
 .statistics_canvas{
     position: relative;
 	min-height: 400px;
-	height: 800px;
+	height: 400px;
 }
 .statistics_canvas canvas{
-    height: 100%;
-    width: 100%;
-    background-color: #ac2925;
 }

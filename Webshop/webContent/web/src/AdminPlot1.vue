@@ -26,10 +26,8 @@
                 </div>
             </form>
         </div>
-        <div class="statistics_canvas">
-            <canvas id="chartCanvas">
-                test
-            </canvas>
+        <div class="statistics_canvas" id="s_canvas_div">
+            <canvas id="s_canvas"></canvas>
         </div>
     </div>
 </template>
@@ -78,6 +76,11 @@
             var d = new Date();
             this.today = d.getFullYear() + "-" + ('0'+(d.getMonth() +1)).slice(-2)+"-" + ('0' + d.getDate()).slice(-2);
             console.log(this.today);
+        },
+        mounted: function(){
+            var c = document.getElementById("s_canvas");
+            c.width = 900;
+            c.height = 400;
         }
     }
     function CreateChart(data){
@@ -86,7 +89,7 @@
             alert("Geen data geladen.");
             return;
         }
-        var chartDrawer = new BarChartDrawer(document.getElementById("chartCanvas"));
+        var chartDrawer = new BarChartDrawer(document.getElementById("s_canvas"));
         chartDrawer.DrawGraph(data)
         console.log(chartDrawer);
         alert("Data ontvangen.");

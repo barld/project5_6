@@ -90,8 +90,7 @@
             return;
         }
         var chartDrawer = new BarChartDrawer(document.getElementById("s_canvas"));
+        chartDrawer.SetBackgroundColor("#EDEDED");
         chartDrawer.DrawGraph(data)
-        console.log(chartDrawer);
-        alert("Data ontvangen.");
     }
 </script>

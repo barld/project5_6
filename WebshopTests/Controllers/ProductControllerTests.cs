@@ -17,30 +17,38 @@ namespace Webshop.Controllers.Tests
         //public void GetTest()
         //{
         //    productController.Get();
+
         //}
 
         //[TestMethod()]
         //public void GetAllTest()
         //{
+
         //    productController.GetAll();
+
         //}
 
         //[TestMethod()]
         //public void PostSearchTest()
         //{
+
         //    productController.PostSearch();
+
         //}
 
         //[TestMethod()]
         //public void GetGamebyPlatformTest()
         //{
         //    productController.GetGamebyPlatform();
+        //    //productController.GetGamebyPlatform();
+
         //}
 
         //[TestMethod()]
         //public void PostGameTest()
         //{
         //    productController.PostGame();
+
         //}
     }
 }

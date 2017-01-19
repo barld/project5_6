@@ -79,4 +79,5 @@ var user = {
 };
 
 // DatabaseOperations.InsertProduct(product);
-DatabaseOperations.InsertUser(user);
+
+//DatabaseOperations.InsertUser(user);

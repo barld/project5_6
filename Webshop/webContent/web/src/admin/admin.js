@@ -22,15 +22,15 @@ function Send(data, url, method){
 
 class DatabaseOperations{
     static EditProduct(product){
-        Send(product, '/api/product/game/edit', 'PUT');
+        Send(product, '/api/product/edit', 'PUT');
     }
 
-    static DeleteProduct(product){
-        Send(product, '/api/product/game/delete/', 'DELETE');
+    static DeleteProduct(ean){
+        Send(ean, `/api/product/?ean=${ean}`, 'DELETE');
     }
 
     static InsertProduct(product){
-        Send(product, '/api/product/game', 'POST');
+        Send(product, '/api/product/', 'POST');
     }
 
     static InsertUser(user){

@@ -43,7 +43,7 @@ namespace Webshop.Controllers
             return Json(games);
         }
 
-        public ViewObject PostGame()
+        public ViewObject Post()
         {
             Game game = this.GetBodyFromJson<Game>();
             context.Games.Insert(game).Wait();
@@ -51,14 +51,16 @@ namespace Webshop.Controllers
             return Json(game);
         }
 
-        public ViewObject DeleteGame()
+        // DELETE: /api/product/
+        public ViewObject Delete()
         {
-            Game game = this.GetBodyFromJson<Game>();
-            context.Games.Delete("EAN", game.EAN.ToString()).Wait();
-            return Json(game);
+            long gameEAN = Int64.Parse(this.Parameters.ContainsKey("ean") ? this.Parameters["ean"] : string.Empty);
+            //context.Games.Delete("GameTitle", gameEAN).Wait();
+            return Json(gameEAN);
         }
 
-        public async void GetEditGame()
+        // PUT: /api/product/game
+        public async void Put()
         {
             Game game = this.GetBodyFromJson<Game>();
             await context.Games.Replace(game.EAN.ToString(), game.EAN.ToString(), game);    

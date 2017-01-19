@@ -1,6 +1,4 @@
 import Vue from 'vue'
-//import App from './App.vue'
-//import ShoppingcartMenu from './ShoppingcartMenu.vue'
 import shoppingCart from './shoppingCart'
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
@@ -22,6 +20,7 @@ Vue.component('admin_screen', require('./Adminscreen.vue'));
 Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
+Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 
 window.shoppingcart = new shoppingCart();
 
@@ -144,12 +143,12 @@ new Vue({
 
             var ean_list = [];
             var amt_list = [];
-            var items = this.shoppingcart.cart.CartLines
+            var items = this.shoppingcart.cart.CartLines;
 
             items.forEach(function(item){
                     ean_list.push(item.Product.EAN);
                     amt_list.push(item.Amount);
-                })
+                });
             
             var order = {
                 EAN: ean_list,
@@ -164,8 +163,8 @@ new Vue({
                 BillingCountry: this.tempstore_inputs[6],
                 BillingHousenumber: this.tempstore_inputs[3],
                 BillingPostalCode: this.tempstore_inputs[2],
-                BillingStreetname: this.tempstore_inputs[4],
-            }
+                BillingStreetname: this.tempstore_inputs[4]
+            };
 
             var base = this;
 

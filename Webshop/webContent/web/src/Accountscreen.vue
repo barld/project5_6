@@ -11,11 +11,14 @@
         <div class="container">
         	<div class="row">
         		<div class="six columns">
-        		<div class="element-container">
-                    <h3 align="center">Mijn Lijsten</h3>
-                    <hr>
-                    <h1 align="center">=(</h1>
-        		</div>
+                    <div class="element-container">
+                        <h3 align="center">Mijn Lijsten</h3>
+                        <hr>
+                        <h1 align="center">=(</h1>
+                        
+                    </div>
+                    <br>
+                    <button @click="product" class="button-primary">Bekijk Producten</button>
         		</div>
 
         		<div class="six columns">
@@ -55,6 +58,9 @@
             detail:function(order)
             {
                 this.$emit("detail", order);
+            },
+            product:function(){
+                this.$emit("product");
             }
         }
     }

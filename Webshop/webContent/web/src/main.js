@@ -38,7 +38,7 @@ new Vue({
         show_checkout_confirmation: false,
         show_account: false,
         show_detail: false,
-        on_product_section: true,
+        on_product_section: false,
         LogedIn:false,
         IsAdmin: false,
         shoppingcart: shoppingcart,
@@ -101,14 +101,12 @@ new Vue({
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
-                console.log(base.LogedIn);
+                base.show_product_section();
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
                 }
                 if(base.user_status.Role == "User"){
-                    base.get_orders();
-                    base.show_account = true;
-                    base.on_product_section = false;
+                    base.show_account_page();
                 }
             };
 
@@ -210,7 +208,6 @@ new Vue({
             // Function to fire off when the server has send a response
             xhr.onload = function () {
                 base.tempstore_orders = JSON.parse(xhr.response);
-                console.log(base.tempstore_orders);
             };
 
             xhr.send();
@@ -221,9 +218,15 @@ new Vue({
             this.tempstore_order = order;
         },
         show_account_page: function(){
+            this.get_orders();
             this.show_account = true;
             this.show_detail = false;
+            this.on_product_section = false;
             this.tempstore_order = null;
+        },
+        show_product_section: function(){
+            this.on_product_section = true;
+            this.show_account = false;
         }
     },
     created: function () {

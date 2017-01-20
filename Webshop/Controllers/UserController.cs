@@ -76,8 +76,7 @@ namespace Webshop.Controllers
         {
             if (Auth.LoggedIn)
             {
-                User user = Auth.CurrentUser;
-                return Json(context.Orders.GetAllByEmail(user.Email).Result);
+                return Json(context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result);
             }
             else
             {

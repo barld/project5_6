@@ -222,16 +222,16 @@ namespace DataModels
                 Console.WriteLine("What is the the email address of the user?:");
                 User user = context.Users.GetByEmail(Console.ReadLine()).Result;
                 Console.WriteLine("What is the the id of the billing address?:");
-                Address billingAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                Address billingAddress = context.Addresses.GetById(Console.ReadLine()).Result;
                 Console.WriteLine("What is the the id of the delivery address?:");
-                Address deliveryAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                Address deliveryAddress = context.Addresses.GetById(Console.ReadLine()).Result;
 
                 List<OrderLine> listOfOrderLines = new List<OrderLine>();
                 string answer = "y";
                 while (answer == "y" || answer == "Y")
                 {
                     Console.WriteLine("What is the the id of the game?:");
-                    Game game = context.Games.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                    Game game = context.Games.GetById(Console.ReadLine()).Result;
                     Console.WriteLine("What is the amount?");
                     int amount = Convert.ToInt16(Console.ReadLine());
                     listOfOrderLines.Add(new OrderLine { Game = game, Amount = amount });
@@ -557,7 +557,7 @@ namespace DataModels
             {
                 Console.WriteLine("Type in the _id of the address that you want to look for:");
                 string id = Console.ReadLine();
-                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                Address a = context.Addresses.GetById(id).Result;
                 foreach (Order o in context.Orders.GetAllByDeliveryAddress(a).Result)
                 {
                     Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");
@@ -576,7 +576,7 @@ namespace DataModels
             {
                 Console.WriteLine("Type in the _id of the address that you want to look for:");
                 string id = Console.ReadLine();
-                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                Address a = context.Addresses.GetById(id).Result;
                 foreach (Order o in context.Orders.GetAllByBillingAddress(a).Result)
                 {
                     Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");

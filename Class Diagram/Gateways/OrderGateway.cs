@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using System.Globalization;
 using Class_Diagram;
+using System.Diagnostics;
 
 namespace DataModels.Gateways
 {
@@ -54,10 +55,10 @@ namespace DataModels.Gateways
             switch (timeSpan)
             {
                 case TimeGroup.Day:
-                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, g.OrderDate.Day)).ToDictionary(x => x.Key, x => x.Count());
+                    groupedResult = result.GroupBy(g => g.OrderDate.Date).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Week:
-                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, firstDayOfWeek(g.OrderDate))).ToDictionary(x => x.Key, x => x.Count());
+                    groupedResult = result.GroupBy(g => firstDayOfWeek(g.OrderDate)).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 case TimeGroup.Month:
                     groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1)).ToDictionary(x => x.Key, x => x.Count());
@@ -81,12 +82,13 @@ namespace DataModels.Gateways
             }
         }
 
-        private int firstDayOfWeek(DateTime date)
+        private DateTime firstDayOfWeek(DateTime date)
         {
             DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             int offset = fdow - date.DayOfWeek;
-            DateTime fdowDate = date.AddDays(offset);
-            return fdowDate.Day;
+            DateTime fdowDate = date.AddDays(offset).Date;
+            Debug.WriteLine(fdowDate);
+            return fdowDate;
         }
     }
 }

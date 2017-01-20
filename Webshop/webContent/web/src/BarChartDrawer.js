@@ -17,19 +17,26 @@ export default
             this.color = "red";
             this.margin = 5;
             this.defaultBarWidth = 50;
+            this.remainingBarSpace = 0;
+            this.remainder = 0;
         }
 
-        DrawGraph(data){
+        DrawGraph(data, _keys){
             let ctx = this.canvasCtx;
-            let keys = Object.keys(data);
+            let keys = typeof _keys == "undefined" ? Object.keys(data) : _keys;
+            let length = keys.length;
+            let barMargin = length > 50 ? Math.trunc(this.margin / 2) : length > 100 ? Math.trunc(this.margin / 4) : this.margin;
+            let barTextSize = length > 50 ? Math.trunc(this.barTextSize / 2) : length > 100 ? Math.trunc(this.barTextSize / 4) : this.barTextSize;
             let maxValue = this._getMaxValue(data, keys);
             let maxBarHeight = this.canvasHeight - this.yMargin*2 - this.yLabelHeight;
-            let barWidth = this._getBarWidth(keys.length);
+            let barWidth = this._getBarWidth(length, barMargin);
             let barHeight = null;
             let barXMargin = null;
             let barYMargin = null;
             let textBarXMargin = null;
             let textBarYMargin = null;
+
+            //console.log(keys);
 
             //Resetting the canvas
             ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -41,16 +48,17 @@ export default
             //Vertical and horizontal line
             ctx.fillStyle = "black";
             ctx.beginPath();
-            ctx.moveTo(this._getBarXMargin(0, barWidth) - this.margin, this.margin);
-            ctx.lineTo(this._getBarXMargin(0, barWidth) - this.margin, maxBarHeight + this.margin * 2);
-            ctx.lineTo(this._getBarXMargin(keys.length, barWidth) ,maxBarHeight + this.margin * 2);
+            ctx.moveTo(this._getBarXMargin(0, barWidth, barMargin) - this.margin, this.margin);
+            ctx.lineTo(this._getBarXMargin(0, barWidth, barMargin) - this.margin, maxBarHeight + this.margin + 1);
+            ctx.lineTo(this._getBarXMargin(keys.length, barWidth, barMargin) ,maxBarHeight + this.margin + 1);
             ctx.stroke();
 
             //Painting the bars and associated labels
-            for(let i = 0; i < keys.length; i++){
+            for(let i = 0; i < length; i++){
                 let value = data[keys[i]];
+
                 barHeight = this._getBarHeight(maxBarHeight, maxValue, value);
-                barXMargin = this._getBarXMargin(i, barWidth);
+                barXMargin = this._getBarXMargin(i, barWidth, barMargin);
                 barYMargin = this._getBarYMargin(barHeight, maxBarHeight);
                 textBarXMargin = this._getBarTextXMargin(barXMargin, barWidth);
                 textBarYMargin = this._getBarTextYMargin(barYMargin);
@@ -61,10 +69,12 @@ export default
                 ctx.fillRect(barXMargin, barYMargin, barWidth, barHeight);
 
                 //Painting the labels
-                ctx.font = this.barTextSize + 'pt Times New Roman';
+                ctx.font = barTextSize + 'pt Times New Roman';
                 ctx.fillStyle = "black";
                 ctx.textAlign = "center";
                 ctx.fillText(value, textBarXMargin, textBarYMargin, barWidth);
+
+                //console.log("Current item = key: " + keys[i] + " value: " + value);
             }
         }
 
@@ -76,17 +86,18 @@ export default
             this.backgroundColor = backgroundColor;
         }
 
-        _getBarXMargin(barNumber, barWidth) {
-            let totalUsedMargin = this.margin * 2 + barNumber * this.margin + this.xLabelWidth;
-            let totalUsedBarSpace = barNumber * barWidth;
+        _getBarXMargin(barNumber, barWidth, barMargin) {
+            let beginMargin = this.xLabelWidth + this.margin * 2;
+            let usedBarMargin = barNumber * barMargin;
+            let usedBarSpace = barNumber * barWidth;
 
-            return totalUsedBarSpace + totalUsedMargin;
+            //console.log("Current margin: " + (beginMargin + usedBarMargin + usedBarSpace) + " Barwidth: " + barWidth + " BarMargin: " + barMargin);
+            return beginMargin + usedBarMargin + usedBarSpace;
         }
 
         _getBarYMargin(barHeight, maxBarHeight){
             let barMargin = maxBarHeight - barHeight;
-            let totalMargin = barMargin + this.margin;
-            return totalMargin;
+            return barMargin + this.margin;
         }
 
         _getMaxValue(data, keys){
@@ -102,9 +113,16 @@ export default
             return maxvalue;
         }
 
-        _getBarWidth(barAmount){
-            let usedMarginWidth = (barAmount + 1) * this.margin + this.xLabelWidth;
-            let width = (this.canvasWidth - usedMarginWidth) / barAmount;
+        _getBarWidth(barAmount, barMargin){
+            let effectiveSpace = this.canvasWidth - this.margin * 2 - this.xLabelWidth;
+            let totalBarMargin = (barAmount - 1) * barMargin;
+            let width = Math.trunc((effectiveSpace - totalBarMargin) / barAmount);
+            let remainingSpace = effectiveSpace - (width * barAmount + totalBarMargin);
+
+            //console.log("Effective space: " + effectiveSpace);
+            //console.log("Total margin width: " + totalBarMargin);
+            //console.log("Bar width: " + width);
+            console.log("Remaining space: " + remainingSpace);
 
             return width > this.defaultBarWidth ? this.defaultBarWidth : width;
         }

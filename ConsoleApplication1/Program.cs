@@ -184,12 +184,30 @@ namespace DataModels
             OrderLine ol5 = new OrderLine { Amount = 2, Game = game2 };
             List<OrderLine> listOfOrderLines2 = new List<OrderLine>() { ol3, ol4, ol5 };
 
+
             //Create orders that connects the users to different orders, also created 1 user without any orders
             Order order1 = new Order { BillingAddress = address1, Customer = user1, DeliveryAddress = address1, OrderDate = DateTime.Now.AddDays(-1), OrderNumber = context.Orders.GetLatestOrderNumber() + 1, OrderLines = listOfOrderLines1 };
             await context.Orders.Insert(order1);
 
             Order order2 = new Order { BillingAddress = address2, Customer = user1, DeliveryAddress = address3, OrderDate = DateTime.Now.AddDays(-9), OrderNumber = context.Orders.GetLatestOrderNumber() + 1, OrderLines = listOfOrderLines2 };
             await context.Orders.Insert(order2);
+
+            int orderAmount = 4000;
+            Random rand = new Random();
+            Order order;
+
+            for(int i = 0; i < orderAmount; i++)
+            {
+                order = new Order {
+                    BillingAddress = address1,
+                    Customer = user1,
+                    DeliveryAddress = address1,
+                    OrderDate = DateTime.Now.AddDays(rand.Next(1,360) - 180),
+                    OrderNumber = context.Orders.GetLatestOrderNumber() + 1,
+                    OrderLines = listOfOrderLines1
+                };
+                await context.Orders.Insert(order);
+            }
 
 
             //Show confirmation message

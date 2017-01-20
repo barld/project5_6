@@ -20,11 +20,11 @@
                         Eind datum: <input type="date" name="EndDate" :value="today"><br>
                     </fieldset>
                 </div>
-                <div class="three columns statistic_fill_div">
-                    <button v-on:click.prevent="LoadOrderAmountStatistics" type="submit" name="isSubmitted" class="statistic_send_button">Send</button>
-                    <button @click="$emit('closed')">Close</button>
-                </div>
             </form>
+            <div class="three columns statistic_fill_div">
+                <button @click="LoadOrderAmountStatistics" name="isSubmitted" class="statistic_send_button">Send</button>
+                <button @click="$emit('closed')">Close</button>
+            </div>
         </div>
         <div class="statistics_canvas" id="s_canvas_div">
             <canvas id="s_canvas"></canvas>
@@ -65,7 +65,8 @@
                 xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
                 xhr.onload = function(){
-                    CreateChart(JSON.parse(xhr.response));
+                    var data = JSON.parse(xhr.response);
+                    CreateChart(data);
                 }
                 console.log(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
                 xhr.send(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
@@ -84,13 +85,18 @@
         }
     }
     function CreateChart(data){
-        console.log(data);
+        var keys = Object.keys(data).sort();
+
         if(typeof data === "undefined" || data === null){
             alert("Geen data geladen.");
             return;
         }
         var chartDrawer = new BarChartDrawer(document.getElementById("s_canvas"));
         chartDrawer.SetBackgroundColor("#EDEDED");
-        chartDrawer.DrawGraph(data)
+
+        //console.log(data);
+        //console.log(keys);
+
+        chartDrawer.DrawGraph(data, keys)
     }
 </script>

@@ -19,7 +19,7 @@
         },
         methods:{
             CloseMenu: function(){
-                this.$emit('close');
+                this.$emit('close_plot_menu');
             },
             ShowPlot: function(plot_number){
                 this.plot_number = plot_number;

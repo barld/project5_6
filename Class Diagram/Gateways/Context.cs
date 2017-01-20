@@ -16,7 +16,7 @@ namespace DataModels
         public IGameGateway Games { get; }
         public PlatformGateway Platforms { get; }
         public GenreGateway Genres { get; }
-        public UserGateway Users { get; }
+        public IUserGateway Users { get; }
         public OrderGateway Orders { get; }
         public AddressGateway Addresses { get; }
         public Context()

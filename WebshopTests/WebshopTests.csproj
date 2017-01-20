@@ -51,8 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AuthModuleTests.cs" />
     <Compile Include="ContextMock\MockContext.cs" />
     <Compile Include="ContextMock\MockGameGateWay.cs" />
+    <Compile Include="ContextMock\MockUserGateWay.cs" />
     <Compile Include="Controllers\ProductControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCartLogicTests.cs" />
@@ -71,7 +73,6 @@
       <Name>Webshop</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

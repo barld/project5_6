@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
@@ -74,7 +73,7 @@
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-bind:LogedIn="LogedIn" v-on:checkout="begin_checkout" v-if="show_shoppingcart_screen && !IsAdmin"></shoppingcart_screen>
             <checkout_information v-if="show_checkout_information" v-on:payment="begin_payment"></checkout_information>
             <checkout_payment v-if="show_checkout_payment" v-on:confirmation="begin_confirmation"></checkout_payment>
-            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:inputs="tempstore_inputs" v-bind:shoppingcart="shoppingcart"></checkout_payment>
+            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:inputs="tempstore_inputs" v-bind:shoppingcart="shoppingcart"></checkout_confirmation>
         </div>
         <mylists :user_status="user_status"></mylists> 
     </div><!-- End container -->

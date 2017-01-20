@@ -332,3 +332,22 @@ input:focus{
         display:block;
     }
 }
+.statistic_send_button{
+	margin: auto 0;
+}
+
+.statistic_fill_div{
+	height: 100%;
+}
+
+.statistics_radio{
+	margin-right: 5px;
+}
+
+.statistics_canvas{
+    position: relative;
+	min-height: 400px;
+	height: 400px;
+}
+.statistics_canvas canvas{
+}

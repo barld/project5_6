@@ -80,6 +80,7 @@
     <Compile Include="Importers\Impl\IGDBPlatformImporter.cs" />
     <Compile Include="Importers\Impl\ImportMode.cs" />
     <Compile Include="Importers\PlatformImporter.cs" />
+    <Compile Include="JsonDateStatisticData.cs" />
     <Compile Include="JsonOrder.cs" />
     <Compile Include="OrderLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="SearchGameModel.cs" />
     <Compile Include="ShoppingCart\Cart.cs" />
     <Compile Include="ShoppingCart\CartLine.cs" />
+    <Compile Include="TimeGroup.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserAddress.cs" />
     <Compile Include="Gateways\UserGateway.cs" />

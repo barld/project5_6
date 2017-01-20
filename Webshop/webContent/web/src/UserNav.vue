@@ -1,4 +1,3 @@
-<script></script>
 <template>
     <userlogedinnav v-if="logedin" v-on:logedout="logedout" v-on:showFavourites="showFavourites" :status="status" ></userlogedinnav>
     <userlogedoutnav
@@ -8,7 +7,6 @@
             v-on:failed="login_failed"
             v-on:showFavourites="showFavourites"
             v-else>
-
     </userlogedoutnav>
 </template>
 <script>
@@ -36,5 +34,4 @@
             }
         }
     }
-
 </script>

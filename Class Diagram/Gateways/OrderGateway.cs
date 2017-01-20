@@ -6,6 +6,9 @@ using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using System.Globalization;
+using Class_Diagram;
+using System.Diagnostics;
 
 namespace DataModels.Gateways
 {
@@ -39,6 +42,34 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).ToListAsync();
         }
 
+        public Dictionary<DateTime, int> GetOrderAmountDataTask(TimeGroup timeSpan, DateTime beginDate, DateTime endDate)
+        {
+            //timeSpan.d
+            CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
+
+            var filter = Builders<Order>.Filter.Where(v => v.OrderDate > beginDate && v.OrderDate < endDate);
+            var result = Collection.Find(filter).ToList();
+            var calander = ci.DateTimeFormat.FirstDayOfWeek;
+
+            var groupedResult = new Dictionary<DateTime, int>();
+            switch (timeSpan)
+            {
+                case TimeGroup.Day:
+                    groupedResult = result.GroupBy(g => g.OrderDate.Date).ToDictionary(x => x.Key, x => x.Count());
+                    break;
+                case TimeGroup.Week:
+                    groupedResult = result.GroupBy(g => firstDayOfWeek(g.OrderDate)).ToDictionary(x => x.Key, x => x.Count());
+                    break;
+                case TimeGroup.Month:
+                    groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1)).ToDictionary(x => x.Key, x => x.Count());
+                    break;
+                default:
+                    break;
+            }
+
+            return groupedResult;
+        }
+
         public int GetLatestOrderNumber()
         {
             try{
@@ -49,6 +80,15 @@ namespace DataModels.Gateways
             {
                 return 0;
             }
+        }
+
+        private DateTime firstDayOfWeek(DateTime date)
+        {
+            DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            int offset = fdow - date.DayOfWeek;
+            DateTime fdowDate = date.AddDays(offset).Date;
+            Debug.WriteLine(fdowDate);
+            return fdowDate;
         }
     }
 }

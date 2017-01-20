@@ -8,6 +8,6 @@ namespace MVC
 {
     public class Session
     {
-        public Dictionary<string,object> Data { get; internal set; }
+        public Dictionary<string, object> Data { get; internal set; } = new Dictionary<string, object>();
     }
 }

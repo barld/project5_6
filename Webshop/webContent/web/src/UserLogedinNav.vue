@@ -2,6 +2,7 @@
     <li class="floating_menu_component" id="user_profile">
         <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{status.Email}} ({{status.Role}})</a>
         <ul class="submenu">
+            <li><a href="#" @click="showFavourites"> My Favourites</a></li>
             <li><a href="#" @click="logout"><i class="fa fa-sign-out"
                                aria-hidden="true"
             ></i> Uitloggen</a></li>
@@ -29,6 +30,10 @@
                 };
 
                 xhr.send();
+            },
+            showFavourites:function () {
+                console.log('UserLogedinNav');
+                this.$emit('showFavourites');
             }
         }
     }

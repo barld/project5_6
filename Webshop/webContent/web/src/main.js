@@ -17,6 +17,8 @@ Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
+Vue.component('account_screen', require('./Accountscreen.vue'));
+Vue.component('detail_screen', require('./Detailscreen.vue'));
 Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
@@ -34,12 +36,16 @@ new Vue({
         show_checkout_information: false,
         show_checkout_payment: false,
         show_checkout_confirmation: false,
+        show_account: false,
+        show_detail: false,
         on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
         shoppingcart: shoppingcart,
         chosen_detail_product:null,
         tempstore_inputs:null,
+        tempstore_orders:null,
+        tempstore_order:null,
         user_status: {}
     },
     methods:{
@@ -99,6 +105,11 @@ new Vue({
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
                 }
+                if(base.user_status.Role == "User"){
+                    base.get_orders();
+                    base.show_account = true;
+                    base.on_product_section = false;
+                }
             };
 
             xhr.send();
@@ -131,7 +142,6 @@ new Vue({
             }else{
                 alert('Please log in to purchase our products.');
             }
-            
         },
         begin_payment: function(inputs) {
             this.show_checkout_information = false;
@@ -187,6 +197,33 @@ new Vue({
 
             this.shoppingcart.clearCart();
             this.tempstore_inputs = null;
+        },
+        get_orders: function(){
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/api/user/orders/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                base.tempstore_orders = JSON.parse(xhr.response);
+                console.log(base.tempstore_orders);
+            };
+
+            xhr.send();
+        },
+        show_order_detail: function(order){
+            this.show_account = false;
+            this.show_detail = true;
+            this.tempstore_order = order;
+        },
+        show_account_page: function(){
+            this.show_account = true;
+            this.show_detail = false;
+            this.tempstore_order = null;
         }
     },
     created: function () {

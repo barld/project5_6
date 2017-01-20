@@ -67,8 +67,8 @@
         					<thead>
 	        					<tr>
 									<th width="25%">&nbsp;</th>
-									<th width="25%">Naam</th>
-									<th width="25%">Aantal</th>
+									<th width="30%">Naam</th>
+									<th width="20%">Aantal</th>
 									<th width="25%">Prijs</th>
 								</tr>
         					</thead>

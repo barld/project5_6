@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace DataModels.Gateways
 {
-    public class UserGateway : Gateway<User>
+    public class UserGateway : Gateway<User>, IUserGateway
     {
         public UserGateway(IMongoDatabase database) : base("User", database)
         {

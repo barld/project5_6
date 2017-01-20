@@ -51,17 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ContextMock\MockContext.cs" />
-    <Compile Include="ContextMock\MockGameGateWay.cs" />
     <Compile Include="Controllers\ProductControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShoppingCartLogicTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Class Diagram\DataModels.csproj">
-      <Project>{33E632CF-E921-45AC-8E53-05F6B86FB8D2}</Project>
-      <Name>DataModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MVC\MVC.csproj">
       <Project>{662FEBCB-B68D-46A8-A4B8-C67F4C0FCC10}</Project>
       <Name>MVC</Name>
@@ -71,7 +64,6 @@
       <Name>Webshop</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

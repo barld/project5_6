@@ -13,7 +13,7 @@ namespace DataModels
         private readonly IMongoDatabase database;
         private readonly MongoClient mongoClient;
 
-        public IGameGateway Games { get; }
+        public GameGateway Games { get; }
         public PlatformGateway Platforms { get; }
         public GenreGateway Genres { get; }
         public UserGateway Users { get; }

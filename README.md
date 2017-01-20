@@ -2,7 +2,7 @@
 [![build status](https://ci.appveyor.com/api/projects/status/github/barld/project5_6?svg=true)](https://ci.appveyor.com/project/barld/project5-6)
 # project5_6
 
-Project 5 for Hogeschool Rotterdam: Building a webshop (The Dylan Shop)
+Project 5/6 for Hogeschool Rotterdam: Building a webshop (The Dylan Shop by Dilan and the Dilans)
 
 ## How to run
 

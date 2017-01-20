@@ -169,9 +169,23 @@ namespace DataModels
             Game game3 = new Game { GameTitle = "Fifa 2016", Description = "Soccer soccer soccer!", EAN = 3557528864, Image = new List<string>() { "http://image.sambafoot.co.uk/screenshot-fifa-2016-game.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 5000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre>{ genre2, genre1, genre3 }, Platform = platform3 };
             await context.Games.InsertMany(new List<Game> { game1, game2, game3 });
 
+            //Create custom lists
+            //Create 1 Wish Lists with 3 games for user1
+            MyLists ml1 = new MyLists() { TitleOfList = "Wish List", Games = new List<Game>() { game1, game2, game3 } };
+
+            //Create 1 Wish List with 2 games for user2
+            MyLists ml3 = new MyLists() { TitleOfList = "Wish List", Games = new List<Game>() { game3, game1 } };
+
+            //Create 1 Favourite List with 1 game for user1
+            MyLists ml2 = new MyLists() { TitleOfList = "Favourite List", Games = new List<Game>() { game3 } };
+
+            //Bundle the custom made lists per user
+            List<MyLists> listForUser1 = new List<MyLists>() { ml1, ml2 };
+            List<MyLists> listForUser2 = new List<MyLists>() { ml3 };
+
             //Create users
-            User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male).Result;
-            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female, AccountRole.Admin).Result;
+            User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male, listForUser1).Result;
+            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female, listForUser2, AccountRole.Admin).Result;
             User user3 = context.Users.Register("mynameis@jeff.nl", "geheim321", Gender.Unknown).Result;
 
             //Create order lines
@@ -226,16 +240,16 @@ namespace DataModels
                 Console.WriteLine("What is the the email address of the user?:");
                 User user = context.Users.GetByEmail(Console.ReadLine()).Result;
                 Console.WriteLine("What is the the id of the billing address?:");
-                Address billingAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                Address billingAddress = context.Addresses.GetById(Console.ReadLine()).Result;
                 Console.WriteLine("What is the the id of the delivery address?:");
-                Address deliveryAddress = context.Addresses.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                Address deliveryAddress = context.Addresses.GetById(Console.ReadLine()).Result;
 
                 List<OrderLine> listOfOrderLines = new List<OrderLine>();
                 string answer = "y";
                 while (answer == "y" || answer == "Y")
                 {
                     Console.WriteLine("What is the the id of the game?:");
-                    Game game = context.Games.GetById(ObjectId.Parse(Console.ReadLine())).Result;
+                    Game game = context.Games.GetById(Console.ReadLine()).Result;
                     Console.WriteLine("What is the amount?");
                     int amount = Convert.ToInt16(Console.ReadLine());
                     listOfOrderLines.Add(new OrderLine { Game = game, Amount = amount });
@@ -561,7 +575,7 @@ namespace DataModels
             {
                 Console.WriteLine("Type in the _id of the address that you want to look for:");
                 string id = Console.ReadLine();
-                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                Address a = context.Addresses.GetById(id).Result;
                 foreach (Order o in context.Orders.GetAllByDeliveryAddress(a).Result)
                 {
                     Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");
@@ -580,7 +594,7 @@ namespace DataModels
             {
                 Console.WriteLine("Type in the _id of the address that you want to look for:");
                 string id = Console.ReadLine();
-                Address a = context.Addresses.GetById(ObjectId.Parse(id)).Result;
+                Address a = context.Addresses.GetById(id).Result;
                 foreach (Order o in context.Orders.GetAllByBillingAddress(a).Result)
                 {
                     Console.WriteLine($"Order Nr: {o.OrderNumber} was done by: {o.Customer.Email}");

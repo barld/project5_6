@@ -1,10 +1,11 @@
 <template>
-    <userlogedinnav v-if="logedin" v-on:logedout="logedout" v-on:showadminplots="showadminplots" :status="status"></userlogedinnav>
+    <userlogedinnav v-if="logedin" v-on:logedout="logedout" v-on:showFavourites="showFavourites" :status="status" ></userlogedinnav>
     <userlogedoutnav
             v-on:showLogin="showLogin"
             v-on:showRegister="showRegister"
             v-on:success="login_success"
             v-on:failed="login_failed"
+            v-on:showFavourites="showFavourites"
             v-else>
     </userlogedoutnav>
 </template>
@@ -27,8 +28,9 @@
             logedout: function () {
                 this.$emit('logedout');
             },
-            showadminplots: function(){
-                this.$emit('showadminplots');
+            showFavourites: function(){
+                console.log('Usernav');
+                this.$emit('showFavourites');
             }
         }
     }

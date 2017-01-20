@@ -2,15 +2,10 @@
     <li class="floating_menu_component" id="user_profile">
         <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{status.Email}} ({{status.Role}})</a>
         <ul class="submenu">
-            <!-- Admin specific Items --->
-            <li v-if="status.Role == 'Admin'">
-                <a href="#" @click="showadminplots"><span class="fa fa-pie-chart" aria-hidden="true"></span> Statistieken</a>
-            </li>
-
-            <!-- Non Specific Items --->
-            <li>
-                <a href="#" @click="logout"><span class="fa fa-sign-out" aria-hidden="true"></span> Uitloggen</a>
-            </li>
+            <li><a href="#" @click="showFavourites"> My Favourites</a></li>
+            <li><a href="#" @click="logout"><i class="fa fa-sign-out"
+                               aria-hidden="true"
+            ></i> Uitloggen</a></li>
         </ul>
     </li>
 </template>
@@ -36,8 +31,9 @@
 
                 xhr.send();
             },
-            showadminplots:function(){
-                this.$emit('showadminplots');
+            showFavourites:function () {
+                console.log('UserLogedinNav');
+                this.$emit('showFavourites');
             }
         }
     }

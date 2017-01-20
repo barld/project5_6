@@ -1,7 +1,7 @@
 taskkill /F /IM Webshop.exe
 
 
-SET dest=%~dp0../test
+SET dest=%~dp0productionEnv
 
 if not exist "%dest%" mkdir "%dest%"
 xcopy /Y /s "%~dp0bin\Debug" "%dest%"

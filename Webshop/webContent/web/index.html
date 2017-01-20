@@ -68,6 +68,8 @@
             </div>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
             <admin_screen v-if="LogedIn && IsAdmin"></admin_screen>
+            <account_screen v-if="LogedIn && show_account" v-on:product="show_product_section" v-on:detail="show_order_detail" v-bind:orders="tempstore_orders"></account_screen>
+            <detail_screen v-if="show_detail" v-on:account="show_account_page" v-bind:order="tempstore_order"></detail_screen>
             <register v-on:close="close_register"  v-if="show_register" ></register>
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-bind:LogedIn="LogedIn" v-on:checkout="begin_checkout" v-if="show_shoppingcart_screen && !IsAdmin"></shoppingcart_screen>
             <checkout_information v-if="show_checkout_information" v-on:payment="begin_payment"></checkout_information>

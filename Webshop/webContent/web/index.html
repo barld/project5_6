@@ -36,6 +36,7 @@
 <body>
 <div id="app">
     <nav><!-- Start menu -->
+        <mobile_menu></mobile_menu>
         <div id="navbar">
             <ul>
                 <li class="submenu_parent">
@@ -62,7 +63,7 @@
         <div class="row">
             <div id="product_screen" v-if="on_product_section && !IsAdmin">
                 <search v-if="!show_product_details" @show_details="open_product_details"></search>
-                <product v-if="!(show_product_details)" @show_details="open_product_details"></product>
+                <product v-bind:user_status="user_status" v-if="!(show_product_details)" @show_details="open_product_details"></product>
                 <product_details v-else @close="close_product_details" v-bind:product="chosen_detail_product"></product_details>
             </div>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>

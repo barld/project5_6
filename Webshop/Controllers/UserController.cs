@@ -57,19 +57,25 @@ namespace Webshop.Controllers
             return Json(myLists);
         }
 
+        struct EANAndTitleOfList
+        {
+            public long EAN { set; get; }
+            public string TitleOfList { get; set; }
+        }
+
         public async void PostAddToList()
         {
-            var data = GetBodyFromJson<Game>();
-            var data2 = GetBodyFromJson<MyLists>();
+            var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
-            MyLists list = Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First();
+
+            //Find the correct list
+            MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
+
+            //Add game to list
             list.Games.Add(game);
-            User updatedUser = Auth.CurrentUser;
-            updatedUser.MyLists.Where(x => x.TitleOfList == list.TitleOfList).First().Games = list.Games;
-            //updatedUser.MyLists = myListsUpdated;
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).GetEnumerator().Current.Games.Add(game);
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First().Games.Add(game);
-            await context.Users.UpdateUser(updatedUser);
+            //User updatedUser = Auth.CurrentUser;
+            //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
+            await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
         }
 
         public ViewObject GetOrders()

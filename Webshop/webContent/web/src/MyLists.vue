@@ -54,7 +54,7 @@
         },
         watch : {
             user_status : function (value) {
-            this.mylists();
+                this.mylists();
             }
       }
     }

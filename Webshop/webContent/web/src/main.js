@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Context from "./Gateways/context";
 
-
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
 Vue.component('usernav', require('./UserNav.vue'));

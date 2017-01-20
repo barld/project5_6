@@ -51,11 +51,11 @@
                 this.cart = sc.cart;
             },
             update:function () {
-                window.shoppingcart.UpdateCart(this.cart);
+                window.context.ShoppingCart.UpdateCart(this.cart);
             }
         },
         created: function () {
-            window.shoppingcart.registerOnChangedshoppingCart(this.changedShoppingCart);
+            window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
             this.changedShoppingCart(window.shoppingcart)
         }
     }

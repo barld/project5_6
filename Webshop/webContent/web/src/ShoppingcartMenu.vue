@@ -32,14 +32,14 @@
                 this.cart = s.cart;
             },
             add:function (product) {
-                window.shoppingcart.addToCart(product);
+                window.context.ShoppingCart.addToCart(product);
             },
             sub:function (product) {
-                window.shoppingcart.removeFromCart(product);
+                window.context.ShoppingCart.removeFromCart(product);
             }
         },
         created: function () {
-            this.shoppingcart.registerOnChangedshoppingCart(this.getData);
+            window.context.ShoppingCart.registerOnChangedshoppingCart(this.getData);
         }
     }
 </script>

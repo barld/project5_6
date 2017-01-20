@@ -3,7 +3,7 @@
  */
 
 export default
-    class shoppingCart{
+    class ShoppingCartGateway{
         //var cartLines = [];
         constructor(){
             this._refreshData();

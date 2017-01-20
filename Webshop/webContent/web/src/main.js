@@ -1,5 +1,11 @@
 import Vue from 'vue'
+<<<<<<< HEAD
 import shoppingCart from './shoppingCart'
+=======
+import Context from "./Gateways/context";
+//import App from './App.vue'
+//import ShoppingcartMenu from './ShoppingcartMenu.vue'
+>>>>>>> development
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -22,7 +28,7 @@ Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 
-window.shoppingcart = new shoppingCart();
+window.context = new Context();
 
 new Vue({
     el: '#app',
@@ -38,7 +44,7 @@ new Vue({
         on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
-        shoppingcart: shoppingcart,
+        shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
         tempstore_inputs:null,
         user_status: {}

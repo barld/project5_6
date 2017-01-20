@@ -40,6 +40,8 @@
 </template>
 
 <script>
+
+    require('./src/Admin/admin.js');
     export default{
         data: function(){
             return{

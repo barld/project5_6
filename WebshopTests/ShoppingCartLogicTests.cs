@@ -14,6 +14,8 @@ namespace Webshop.Tests
     [TestClass()]
     public class ShoppingCartLogicTests
     {
+        private MockContext context;
+        private ShoppingCartLogic logic;
 
         [TestMethod()]
         public void ShoppingCartLogicTest()
@@ -28,30 +30,33 @@ namespace Webshop.Tests
             new ShoppingCartLogic(null, null);
         }
 
+        [TestInitialize]
+        public void Setup()
+        {
+            context = new MockContext(true);
+            logic = new ShoppingCartLogic(new MVC.Session(), context);
+        }
+
         [TestMethod()]
         public void AddToCartTestOne()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.First();
             logic.AddToCart(game1);
 
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 1");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 1");
         }
 
         [TestMethod()]
         public void AddToCartTestTwoSame()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.First();
 
             logic.AddToCart(game1);
             logic.AddToCart(game1);
 
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
-            Assert.AreEqual(2, logic.currentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 2");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
+            Assert.AreEqual(2, logic.CurrentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 2");
         }
 
         [TestMethod()]
@@ -64,35 +69,31 @@ namespace Webshop.Tests
             for(int i=0;i<50;i++)
                 logic.AddToCart(game1);
 
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
-            Assert.AreEqual(50, logic.currentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 50");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.Count, "thereshould be one cartline on the shoppingCart");
+            Assert.AreEqual(50, logic.CurrentShoppingCart.CartLines.First().Amount, "the item cartline have a amount of 50");
         }
 
         [TestMethod()]
         public void AddToCartTestTwoDifferent()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             var game2 = context.Games.GetAll().Result.ElementAt(1);
 
             logic.AddToCart(game1);
             logic.AddToCart(game2);
 
-            Assert.AreEqual(2, logic.currentShoppingCart.CartLines.Count, "thereshould be two cartline on the shoppingCart");
+            Assert.AreEqual(2, logic.CurrentShoppingCart.CartLines.Count, "thereshould be two cartline on the shoppingCart");
 
             //game1
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.First(cl => cl.Product.EAN == game1.EAN).Amount, "the item cartline have a amount of 1");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.First(cl => cl.Product.EAN == game1.EAN).Amount, "the item cartline have a amount of 1");
 
             //game2
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.First(cl => cl.Product.EAN == game2.EAN).Amount, "the item cartline have a amount of 1");
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.First(cl => cl.Product.EAN == game2.EAN).Amount, "the item cartline have a amount of 1");
         }
 
         [TestMethod()]
         public void AddToCartTestTwoTimes50Different()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             var game2 = context.Games.GetAll().Result.ElementAt(1);
 
@@ -103,29 +104,27 @@ namespace Webshop.Tests
             }
             
 
-            Assert.AreEqual(2, logic.currentShoppingCart.CartLines.Count, "thereshould be two cartline on the shoppingCart");
+            Assert.AreEqual(2, logic.CurrentShoppingCart.CartLines.Count, "thereshould be two cartline on the shoppingCart");
 
             //game1
-            Assert.AreEqual(50, logic.currentShoppingCart.CartLines.First(cl => cl.Product.EAN == game1.EAN).Amount, "the item cartline have a amount of 50");
+            Assert.AreEqual(50, logic.CurrentShoppingCart.CartLines.First(cl => cl.Product.EAN == game1.EAN).Amount, "the item cartline have a amount of 50");
 
             //game2
-            Assert.AreEqual(50, logic.currentShoppingCart.CartLines.First(cl => cl.Product.EAN == game2.EAN).Amount, "the item cartline have a amount of 50");
+            Assert.AreEqual(50, logic.CurrentShoppingCart.CartLines.First(cl => cl.Product.EAN == game2.EAN).Amount, "the item cartline have a amount of 50");
         }
 
         [TestMethod()]
         public void ReplaceShoppingCartTestWithEmptyCart()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
 
             logic.AddToCart(game1);
-            var oldCart = logic.currentShoppingCart;
+            var oldCart = logic.CurrentShoppingCart;
             var newCart = new Cart();
             logic.ReplaceShoppingCart(newCart);
 
-            Assert.AreNotEqual(oldCart, logic.currentShoppingCart);
-            Assert.AreEqual(newCart.CartLines.Count, logic.currentShoppingCart.CartLines.Count);       
+            Assert.AreNotEqual(oldCart, logic.CurrentShoppingCart);
+            Assert.AreEqual(newCart.CartLines.Count, logic.CurrentShoppingCart.CartLines.Count);       
         }
 
         /// <summary>
@@ -134,13 +133,11 @@ namespace Webshop.Tests
         [TestMethod()]
         public void ReplaceShoppingCartTestWithIligalCart()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             var game2 = context.Games.GetAll().Result.ElementAt(1);
 
             logic.AddToCart(game1);
-            var oldCart = logic.currentShoppingCart;
+            var oldCart = logic.CurrentShoppingCart;
             var newCart = new Cart {
                 CartLines =
                 {
@@ -150,19 +147,17 @@ namespace Webshop.Tests
             };
             logic.ReplaceShoppingCart(newCart);
 
-            Assert.AreNotEqual(oldCart, logic.currentShoppingCart);
-            Assert.AreEqual(0, logic.currentShoppingCart.CartLines.Count);
+            Assert.AreNotEqual(oldCart, logic.CurrentShoppingCart);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.CartLines.Count);
         }
 
         [TestMethod()]
         public void ReplaceShoppingCartTestWithSameItemsCart()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             var game2 = context.Games.GetAll().Result.ElementAt(1);
 
-            var oldCart = logic.currentShoppingCart;
+            var oldCart = logic.CurrentShoppingCart;
             var newCart = new Cart
             {
                 CartLines =
@@ -173,59 +168,119 @@ namespace Webshop.Tests
                 }
             };
             logic.ReplaceShoppingCart(newCart);
-            Assert.AreEqual(2, logic.currentShoppingCart.CartLines.Count);
+            Assert.AreEqual(2, logic.CurrentShoppingCart.CartLines.Count);
+        }
+
+        [TestMethod()]
+        public void ReplaceShoppingCartTestWithToBigAmountCart()
+        {
+            var game1 = context.Games.GetAll().Result.ElementAt(0);
+
+            var oldCart = logic.CurrentShoppingCart;
+            var newCart = new Cart
+            {
+                CartLines =
+                {
+                    new CartLine{Amount = 1000*100, Product = game1},
+                }
+            };
+            logic.ReplaceShoppingCart(newCart);
+            Assert.AreEqual(100, logic.CurrentShoppingCart.CartLines.First().Amount);
+        }
+
+        [TestMethod()]
+        public void ReplaceShoppingCartTestWithTo101AmountCart()
+        {
+            var game1 = context.Games.GetAll().Result.ElementAt(0);
+
+            var oldCart = logic.CurrentShoppingCart;
+            var newCart = new Cart
+            {
+                CartLines =
+                {
+                    new CartLine{Amount = 101, Product = game1},
+                }
+            };
+            logic.ReplaceShoppingCart(newCart);
+            Assert.AreEqual(100, logic.CurrentShoppingCart.CartLines.First().Amount);
+        }
+
+        [TestMethod()]
+        public void ReplaceShoppingCartTestWithTo100AmountCart()
+        {
+            var game1 = context.Games.GetAll().Result.ElementAt(0);
+
+            var oldCart = logic.CurrentShoppingCart;
+            var newCart = new Cart
+            {
+                CartLines =
+                {
+                    new CartLine{Amount = 100, Product = game1},
+                }
+            };
+            logic.ReplaceShoppingCart(newCart);
+            Assert.AreEqual(100, logic.CurrentShoppingCart.CartLines.First().Amount);
+        }
+
+        [TestMethod()]
+        public void ReplaceShoppingCartTestWithTo99AmountCart()
+        {
+            var game1 = context.Games.GetAll().Result.ElementAt(0);
+
+            var oldCart = logic.CurrentShoppingCart;
+            var newCart = new Cart
+            {
+                CartLines =
+                {
+                    new CartLine{Amount = 99, Product = game1},
+                }
+            };
+            logic.ReplaceShoppingCart(newCart);
+            Assert.AreEqual(99, logic.CurrentShoppingCart.CartLines.First().Amount);
         }
 
 
         [TestMethod()]
         public void ClearTest()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             logic.AddToCart(game1);
             logic.Clear();
 
-            Assert.AreEqual(0, logic.currentShoppingCart.CartLines.Count);
-            Assert.AreEqual(0, logic.currentShoppingCart.TotalPrice);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.CartLines.Count);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.TotalPrice);
         }
 
         [TestMethod()]
         public void RemoveOneItemTest_RemoveNotExistingGame()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
 
             logic.RemoveOneItem(game1);
-            Assert.AreEqual(0, logic.currentShoppingCart.TotalPrice);
-            Assert.AreEqual(0, logic.currentShoppingCart.CartLines.Count);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.TotalPrice);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.CartLines.Count);
         }
 
         [TestMethod()]
         public void RemoveOneItemTest_RemoveOneExistingGame()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             logic.AddToCart(game1);
 
             logic.RemoveOneItem(game1);
-            Assert.AreEqual(0, logic.currentShoppingCart.TotalPrice);
-            Assert.AreEqual(0, logic.currentShoppingCart.CartLines.Count);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.TotalPrice);
+            Assert.AreEqual(0, logic.CurrentShoppingCart.CartLines.Count);
         }
 
         [TestMethod()]
         public void RemoveOneItemTest_RemoveOneOfTwoExistingGame()
         {
-            var context = new MockContext(true);
-            var logic = new ShoppingCartLogic(new MVC.Session(), context);
             var game1 = context.Games.GetAll().Result.ElementAt(0);
             logic.AddToCart(game1);
             logic.AddToCart(game1);
 
             logic.RemoveOneItem(game1);
-            Assert.AreEqual(1, logic.currentShoppingCart.CartLines.Count);
+            Assert.AreEqual(1, logic.CurrentShoppingCart.CartLines.Count);
         }
     }
 }

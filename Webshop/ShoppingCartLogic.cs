@@ -28,12 +28,12 @@ namespace Webshop
             this.context = context;
         }       
 
-        public Cart currentShoppingCart
+        public Cart CurrentShoppingCart
         {
             get
             {
                 if (!session.Data.ContainsKey(shoppingCartKey))
-                    session.Data.Add(shoppingCartKey, new Cart());
+                    CurrentShoppingCart = new Cart();
                 return session.Data[shoppingCartKey] as Cart;
             }
             private set
@@ -46,13 +46,13 @@ namespace Webshop
 
         public void AddToCart(Game game)
         {
-            if (currentShoppingCart.CartLines.Count(g => g.Product.EAN == game.EAN) == 0)
+            if (CurrentShoppingCart.CartLines.Count(g => g.Product.EAN == game.EAN) == 0)
             {
-                currentShoppingCart.CartLines.Add(new CartLine { Amount = 1, Product = context.Games.GetByEAN(game.EAN).Result });
+                CurrentShoppingCart.CartLines.Add(new CartLine { Amount = 1, Product = context.Games.GetByEAN(game.EAN).Result });
             }
             else
             {
-                currentShoppingCart.CartLines.First(c => c.Product.EAN == game.EAN).Amount++;
+                CurrentShoppingCart.CartLines.First(c => c.Product.EAN == game.EAN).Amount++;
             }
         }
 
@@ -66,23 +66,24 @@ namespace Webshop
             cart.CartLines.ForEach(cl => 
             {
                 cl.Product = context.Games.GetByEAN(cl.Product.EAN).Result;
-                cl.Amount = cl.Amount < 1000 ? cl.Amount : 1000; // max 1000 items will
+                cl.Amount = cl.Amount < 100 ? cl.Amount : 100; // max 100 items will
             });
             cart.CartLines = cart.CartLines.Where(cl => cl.Amount > 0)
-                .GroupBy(cl => cl.Product.EAN).Select(group => { group.First().Amount = group.Sum(cl => cl.Amount); return group.First(); })//Group the same items
+                .GroupBy(cl => cl.Product.EAN)//Group the same items
+                .Select(group => { group.First().Amount = group.Sum(cl => cl.Amount); return group.First(); })
                 .ToList();
-            currentShoppingCart = cart;
+            CurrentShoppingCart = cart;
         }
 
         public void Clear()
         {
-            currentShoppingCart = new Cart();
+            CurrentShoppingCart = new Cart();
         }
 
         public void RemoveOneItem(Game game)
         {
-            currentShoppingCart.CartLines.ForEach(cl => { if (cl.Product.EAN == game.EAN) cl.Amount--; });
-            currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+            CurrentShoppingCart.CartLines.ForEach(cl => { if (cl.Product.EAN == game.EAN) cl.Amount--; });
+            CurrentShoppingCart.CartLines = CurrentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
         }
     }
 }

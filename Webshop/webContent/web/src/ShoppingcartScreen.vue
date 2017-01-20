@@ -34,7 +34,7 @@
 </template>
 <script>
     export default{
-        props:["shoppingcart"],
+        props:['shoppingcart'],
         data(){
             return{
                 cart: {}
@@ -45,17 +45,21 @@
                 this.$emit("close");
             },
             checkout:function(){
-                this.$emit("checkout");
+                if(window.shoppingcart.cart.CartLines< 1){
+                    alert('Cant checkout with an empty cart.')
+                }else{
+                    this.$emit("checkout");
+                }
             },
             changedShoppingCart:function (sc) {
                 this.cart = sc.cart;
             },
             update:function () {
-                window.shoppingcart.UpdateCart(this.cart);
+                window.context.ShoppingCart.UpdateCart(this.cart);
             }
         },
         created: function () {
-            window.shoppingcart.registerOnChangedshoppingCart(this.changedShoppingCart);
+            window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
             this.changedShoppingCart(window.shoppingcart)
         }
     }

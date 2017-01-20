@@ -1,9 +1,11 @@
 <template>
     <div class="row">
+        <h1>Test</h1>
         <div class="container">
             <div class="ten.columns offset-by-two-columns">
                 <div class="element-container">
                     <div class="panel">
+                        <admin_products v-show="productsLoaded" :products="products"></admin_products>
                         <table style="margin-top: 20px;" class="u-full-width">
                             <thead>
                             <th style="width: 40%">Username</th>
@@ -40,17 +42,33 @@
 </template>
 
 <script>
-
-    require('./src/Admin/admin.js');
     export default{
         data: function(){
             return{
-                products:[]
+                products:[],
+                productsLoaded: true
             }
         },
         methods:{
-            getProduct: function(){
+            getAllProducts: function(){
+                console.log('Test!');
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/product/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.products = JSON.parse(xhr.response);
+                    base.productsLoaded = true;
+                };
+
+                xhr.send();
             }
+        },
+        created: function(){
+            console.log('Created!');
+            this.getAllProducts();
         }
     }
 </script>

@@ -21,9 +21,30 @@ Vue.component('admin_screen', require('./Adminscreen.vue'));
 Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
-Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 
 window.context = new Context();
+
+window.Send = function(data, url, method){
+    return new Promise(function(resolve, reject){
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+
+        xhr.onload = function(){
+            if(xhr.status === 200){
+                resolve(xhr.response);
+                console.log(JSON.stringify(xhr.responseText));
+            }else{
+                reject(`An error occurred: ${xhr.statusText}`);
+            }
+        };
+
+        xhr.onerror = function(){
+            reject('Probably a network error!');
+        };
+
+        xhr.send(JSON.stringify(data));
+    });
+};
 
 new Vue({
     el: '#app',

@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace DataModels.Gateways
 {
-    public class UserGateway : Gateway<User>
+    public class UserGateway : Gateway<User>, IUserGateway
     {
         public UserGateway(IMongoDatabase database) : base("User", database)
         {
@@ -19,7 +19,7 @@ namespace DataModels.Gateways
         {
             var filter = Builders<User>.Filter.Eq(u => u.Email, email);
             return await Collection.Find(filter).FirstOrDefaultAsync();
-        }
+        } 
 
         string Sha256(string password)
         {
@@ -31,6 +31,19 @@ namespace DataModels.Gateways
                 hash += theByte.ToString("x2");
             }
             return hash;
+        }
+
+        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        {
+            var user = await GetByEmail(email);
+            if (user != null)
+            {
+                return user.MyLists;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<User> Login(string email, string password)
@@ -62,8 +75,10 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User)
+        public async Task<User> Register(string email, string pwd, Gender gender, List<MyLists> lists = null, AccountRole role = AccountRole.User)
         {
+            if(lists == null)
+                lists = new List<MyLists>();
             string salt = GetRandomPasswordSalt();
             string hash = Sha256(salt + pwd);
             var user = new User
@@ -73,14 +88,27 @@ namespace DataModels.Gateways
                 Gender = gender,
                 Password = hash,
                 Salt = salt,
-                MyLists = new List<MyLists>()
+                MyLists = lists
             };
             await this.Insert(user);
 
             return await GetByEmail(email);
         }
 
-        public async override Task Delete(string columnToMatch, string valueToMatch)
+        public async Task UpdateUser(User user)
+        {
+            try
+            {
+                //user.MyLists.Where(x => x.TitleOfList == ListTitle).GetEnumerator().Current.Games.Add(gameToAdd);
+                //await Replace("MyLists", List.TitleOfList, user);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        public override async Task Delete(string columnToMatch, string valueToMatch)
         {
             try
             {

@@ -10,7 +10,7 @@ using Class_Diagram;
 
 namespace DataModels.Gateways
 {
-    public class GameGateway : Gateway<Game>
+    public class GameGateway : Gateway<Game>, IGameGateway
     {
         public GameGateway(IMongoDatabase connection) : base("Game", connection)
         {

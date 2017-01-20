@@ -5,12 +5,12 @@ using System;
 
 namespace Webshop
 {
-    internal class AuthModule
+    public class AuthModule
     {
         const string currentUserKey = "currentUser";
 
         private Session session;
-        private readonly Context context;
+        private readonly IContext context;
         public User CurrentUser
         {
             get
@@ -38,10 +38,14 @@ namespace Webshop
             }
         }
 
-        public AuthModule(Session session, Context context)
+        public AuthModule(Session session, IContext context)
         {
             this.session = session;
-            this.context = new Context();
+            this.context = context;
+            if (LoggedIn) // get a new version of the user from the database
+            {
+                CurrentUser = context.Users.GetByEmail(CurrentUser.Email).Result;
+            }
         }
 
         public ActionResultViewModel Login(User user)

@@ -19,7 +19,6 @@
         },
         methods:{
             getAllProducts: function(){
-                console.log('Test!');
                 var base = this;
                 var xhr = new XMLHttpRequest();
 
@@ -35,7 +34,6 @@
             }
         },
         created: function(){
-            console.log('Created!');
             this.getAllProducts();
         }
     }

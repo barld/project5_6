@@ -1,13 +1,12 @@
 <template>
     <div>
         <h1>Products</h1>
-        <pre>
-            {{ products }}
-        </pre>
         <table>
-            <th><b>Titel</b></th>
-            <th><b>Platform</b></th>
-            <th><b>Prijs</b></th>
+            <tr>
+                <th><b>Titel</b></th>
+                <th><b>Platform</b></th>
+                <th><b>Prijs</b></th>
+            </tr>
             <tr v-for="product in products">
                 <td>{{ product.GameTitle }}</td>
                 <td>{{ product.Platform.PlatformTitle }}</td>

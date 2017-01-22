@@ -1,26 +1,26 @@
 import Vue from 'vue'
 import Context from "./Gateways/context";
 
-Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
-Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
-Vue.component('usernav', require('./UserNav.vue'));
+Vue.component('userlogedinnav', require('./Navigation/UserLogedinNav.vue'));
+Vue.component('userlogedoutnav', require('./Navigation/UserLogedoutNav.vue'));
+Vue.component('usernav', require('./Navigation/UserNav.vue'));
 Vue.component('popup', require('./popup.vue'));
-Vue.component('shopcart', require('./ShoppingcartMenu.vue'));
-Vue.component('platform_menu', require('./PlatformMenu.vue'));
-Vue.component('login', require('./LoginScreen.vue'));
-Vue.component('register', require('./RegisterScreen.vue'));
-Vue.component('productbox', require('./ProductBox.vue'));
-Vue.component('search', require('./SearchScreen.vue'));
-Vue.component('product', require('./ProductScreen.vue'));
-Vue.component('product_details', require('./ProductDetailsScreen.vue'));
-Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
-Vue.component('mylists', require('./MyLists.vue'));
+Vue.component('shopcart', require('./ShoppingCart/ShoppingcartMenu.vue'));
+Vue.component('platform_menu', require('./Navigation/PlatformMenu.vue'));
+Vue.component('login', require('./Login/LoginScreen.vue'));
+Vue.component('register', require('./Register/RegisterScreen.vue'));
+Vue.component('productbox', require('./Product/ProductBox.vue'));
+Vue.component('search', require('./Search/SearchScreen.vue'));
+Vue.component('product', require('./Product/ProductScreen.vue'));
+Vue.component('product_details', require('./Product/ProductDetailsScreen.vue'));
+Vue.component('shoppingcart_screen', require('./ShoppingCart/shoppingCartScreen.vue'));
+Vue.component('mylists', require('./Lists/MyLists.vue'));
 Vue.component('mobile_menu', require('./Mobile/MobileMenu.vue'));
 Vue.component('mobile_logged_in', require('./Mobile/Mobile_LoggedIn.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
-Vue.component('checkout_information', require('./CheckoutInformation.vue'));
-Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
-Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
+Vue.component('checkout_information', require('./Checkout/CheckoutInformation.vue'));
+Vue.component('checkout_payment', require('./Checkout/CheckoutPayment.vue'));
+Vue.component('checkout_confirmation', require('./Checkout/CheckoutConfirmation.vue'));
 
 window.context = new Context();
 

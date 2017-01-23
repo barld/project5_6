@@ -10,8 +10,10 @@ namespace WebshopTests.ContextMock
 {
     class MockContext : IContext
     {
+
         public MockContext(bool fillWithSampleData = false)
-        {
+        {            
+
             Address address1 = new Address { City = "Rotterdam", Country = "The Netherlands", Housenumber = "99XB", PostalCode = "3099PA", Streetname = "Wijnhaven" };
             Address address2 = new Address { City = "Amsterdam", Country = "The Netherlands", Housenumber = "862", PostalCode = "8629PA", Streetname = "Schiekade" };
             Address address3 = new Address { City = "Den Haag", Country = "The Netherlands", Housenumber = "301", PostalCode = "5182JW", Streetname = "Coolsingel" };
@@ -33,12 +35,24 @@ namespace WebshopTests.ContextMock
             Game game2 = new Game { GameTitle = "Battlefront", Description = "Explosions everywhere!", EAN = 8424785219, Image = new List<string>() { "https://media.starwars.ea.com/content/starwars-ea-com/nl_NL/starwars/battlefront/_jcr_content/ogimage.img.jpeg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 6000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre> { genre2, genre3 }, Platform = platform2 };
             Game game3 = new Game { GameTitle = "Fifa 2016", Description = "Soccer soccer soccer!", EAN = 3557528864, Image = new List<string>() { "http://image.sambafoot.co.uk/screenshot-fifa-2016-game.jpg" }, Publisher = new List<string> { "EA" }, IsVRCompatible = false, MinPlayers = 1, MaxPlayers = 12, Price = 5000, RatingPEGI = 13, ReleaseDate = DateTime.Now, Genres = new List<Genre> { genre2, genre1, genre3 }, Platform = platform3 };
 
-
-
             var games = new Game[] { game1, game2, game3 };
-            if(fillWithSampleData)
+
+            MyLists ml1 = new MyLists() { TitleOfList = "Wish List", Games = new List<Game>() { game1, game2, game3 } };
+
+            //Create 1 Wish List with 2 games for user2
+            MyLists ml3 = new MyLists() { TitleOfList = "Wish List", Games = new List<Game>() { game3, game1 } };
+
+            //Create 1 Favourite List with 1 game for user1
+            MyLists ml2 = new MyLists() { TitleOfList = "Favourite List", Games = new List<Game>() { game3 } };
+
+            //Bundle the custom made lists per user
+            List<MyLists> listForUser1 = new List<MyLists>() { ml1, ml2 };
+            List<MyLists> listForUser2 = new List<MyLists>() { ml3 };
+
+            if (fillWithSampleData)
             {
                 Games = new MockGameGateWay(games);
+                Users = new MockUserGateWay(new List<User>());
             }
             
         }
@@ -47,6 +61,6 @@ namespace WebshopTests.ContextMock
 
         public PlatformGateway Platforms { get { throw new NotImplementedException(); } }
 
-        public UserGateway Users { get { throw new NotImplementedException(); } }
+        public IUserGateway Users { get; }
     }
 }

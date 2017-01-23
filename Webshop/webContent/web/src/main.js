@@ -110,15 +110,16 @@ new Vue({
             xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
             // Function to fire off when the server has send a response
-            xhr.onload = function () {
+                xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
-                base.show_product_section();
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
-                }
-                if(base.user_status.Role == "User"){
-                    base.show_account_page();
+                } else if(base.user_status.Role == "User"){
+                    base.show_product_section();
+                    //base.show_account_page();
+                } else {
+                    base.show_product_section();
                 }
             };
 

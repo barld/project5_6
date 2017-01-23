@@ -1,5 +1,5 @@
 <template>
-    <userlogedinnav v-if="logedin" v-on:logedout="logedout" v-on:showFavourites="showFavourites" :status="status" ></userlogedinnav>
+    <userlogedinnav v-if="logedin" v-on:logedout="logedout" @show_account_page="show_account_page" v-on:showFavourites="showFavourites" :status="status" ></userlogedinnav>
     <userlogedoutnav
             v-on:showLogin="showLogin"
             v-on:showRegister="showRegister"
@@ -31,7 +31,12 @@
             showFavourites: function(){
                 console.log('Usernav');
                 this.$emit('showFavourites');
+            },
+            show_account_page:function(){
+                //alert("usernav");
+                this.$emit("show_account_page");
             }
+
         }
     }
 </script>

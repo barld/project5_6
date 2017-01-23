@@ -7,8 +7,8 @@ export default
             this.canvasCtx = canvas.getContext("2d");
             this.canvasHeight = canvas.clientHeight;
             this.canvasWidth = canvas.clientWidth;
-            this.yLabelHeight = 100;
-            this.xLabelWidth = 100;
+            this.yLabelHeight = 200;
+            this.xLabelWidth = 150;
             this.yMargin = 2;
             this.barTextYMargin = 5;
             this.barTextSize = 12;
@@ -19,9 +19,17 @@ export default
             this.defaultBarWidth = 50;
             this.remainingBarSpace = 0;
             this.remainder = 0;
+            this.getValueMethod;
         }
 
         DrawGraph(data, _keys, x_label, y_label){
+            //Preparing data
+            if(Array.isArray(data)){
+                this.getValueMethod = this._getValueFromArray;
+            } else{
+                this.getValueMethod = this._getValueFromObject;
+            }
+
             let ctx = this.canvasCtx;
             let keys = typeof _keys == "undefined" ? Object.keys(data) : _keys;
             let length = keys.length;
@@ -36,10 +44,10 @@ export default
             let textBarXMargin = null;
             let textBarYMargin = null;
 
-            //console.log(keys);
-
             //Resetting the canvas
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+            ctx.font = barTextSize + 'pt Times New Roman';
 
             //Background
             ctx.fillStyle = this.backgroundColor;
@@ -55,7 +63,7 @@ export default
 
             //Painting the bars and associated labels
             for(let i = 0; i < length; i++){
-                let value = data[keys[i]];
+                let value = this.getValueMethod(data, keys, i);
 
                 barHeight = this._getBarHeight(maxBarHeight, maxValue, value);
                 barXMargin = this._getBarXMargin(i, barWidth, barMargin);
@@ -69,31 +77,36 @@ export default
                 ctx.fillRect(barXMargin, barYMargin, barWidth, barHeight);
 
                 //Painting the labels
-                ctx.font = barTextSize + 'pt Times New Roman';
                 ctx.fillStyle = "black";
                 ctx.textAlign = "center";
                 ctx.fillText(value, textBarXMargin, textBarYMargin, barWidth);
 
                 //console.log("Current item = key: " + keys[i] + " value: " + value);
             }
-            //Paiting the keys
-
 
             //Painting the labels
+            ctx.textAlign = "right";
+            ctx.font = this.barTextSize + 'pt Times New Roman';
             if(x_label && typeof x_label === "string") {
-                ctx.font = this.barTextSize + 'pt Times New Roman';
-                ctx.fillStyle = "black";
-                ctx.textAlign = "right";
                 ctx.fillText(x_label, this.xLabelWidth - this.margin, this.barTextSize + 1);
             }
+
+            ctx.save();
+            ctx.rotate(Math.PI / 2);
+            ctx.textAlign = "left";
             if(y_label && typeof y_label === "string") {
-                ctx.save();
-                ctx.rotate(Math.PI / 2);
-                ctx.font = this.barTextSize + 'pt Times New Roman';
-                ctx.fillStyle = "black";
-                ctx.textAlign = "left";
-                ctx.fillText(y_label, maxBarHeight + (this.margin * 2), -50);
+                ctx.fillText(y_label, maxBarHeight + (this.margin * 2), -(this._getBarXMargin(keys.length, barWidth, barMargin) + this.margin));
             }
+
+            //Painting the keys
+            ctx.font = barTextSize + 'pt Times New Roman';
+            for(let i = 0; i < length; i++){
+                barXMargin = this._getBarXMargin(i, barWidth, barMargin);
+                ctx.fillText(keys[i], maxBarHeight + (this.margin * 2), -(barXMargin + Math.floor((barWidth - barTextSize)/2)));
+            }
+            ctx.restore();
+
+            console.log("Done drawing graph");
         }
 
         SetColor(color){
@@ -121,7 +134,7 @@ export default
         _getMaxValue(data, keys){
             let maxvalue = 0;
             for(let i = 0; i < keys.length; i++){
-                let value = data[keys[i]];
+                let value = this.getValueMethod(data, keys, i);
 
                 if(!isNaN(value) && value > maxvalue){
                     maxvalue = value;
@@ -132,14 +145,15 @@ export default
         }
 
         _getBarWidth(barAmount, barMargin){
-            let effectiveSpace = this.canvasWidth - this.margin * 2 - this.xLabelWidth;
+            let effectiveSpace = this.canvasWidth - this.margin * 2 - this.xLabelWidth - (this.barTextSize + this.margin);
             let totalBarMargin = (barAmount - 1) * barMargin;
             let width = Math.trunc((effectiveSpace - totalBarMargin) / barAmount);
             let remainingSpace = effectiveSpace - (width * barAmount + totalBarMargin);
 
-            //console.log("Effective space: " + effectiveSpace);
-            //console.log("Total margin width: " + totalBarMargin);
-            //console.log("Bar width: " + width);
+            console.log("Canvas width: " + this.canvasWidth);
+            console.log("Effective space: " + effectiveSpace);
+            console.log("Total margin width: " + totalBarMargin);
+            console.log("Bar width: " + width);
             console.log("Remaining space: " + remainingSpace);
 
             return width > this.defaultBarWidth ? this.defaultBarWidth : width;
@@ -156,6 +170,15 @@ export default
 
         _getBarTextYMargin(barYMargin){
             return barYMargin + this.barTextYMargin + this.barTextSize;
+        }
+
+        _getValueFromArray(data, keys, index){
+            console.log(data + "-"+ index + "-"+keys);
+            return data[index];
+        }
+
+        _getValueFromObject(data, keys, index){
+            return data[keys[index]];
         }
 
         //console.log("usedMarginWidth = Type: " + typeof usedMarginWidth + " Value: " + usedMarginWidth);

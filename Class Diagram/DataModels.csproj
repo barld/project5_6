@@ -87,6 +87,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="SaleStatisticDataModel.cs" />
     <Compile Include="SearchGameModel.cs" />
     <Compile Include="ShoppingCart\Cart.cs" />
     <Compile Include="ShoppingCart\CartLine.cs" />

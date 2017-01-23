@@ -6,7 +6,7 @@
                 <div class="three columns statistic_fill_div">
                     <fieldset>
                         <legend>Tijdsframe</legend>
-                        <template v-for="item in timespans">
+                        <template v-for="item in time_scale_options">
                             <div>
                                 <input type="radio" name="TimeSpan" class="statistics_radio" :value="item" ><span>{{ item }}</span>
                             </div>
@@ -36,7 +36,7 @@
 
     export default{
         data(){
-            return {timespans: null, salesData: null, today: ""}
+            return {time_scale_options: null,  today: ""}
         },
         methods:{
             LoadTimespans: function () {
@@ -44,23 +44,30 @@
             },
             ShowTimespans: function(data){
                 console.log(data);
-                this.timespans = data;
+                this.time_scale_options = data;
             },
             LoadOrderAmountStatistics: function(){
-                var elements = document.getElementsByName("TimeSpan");
-                var time_scale = "";
-                for(var i = 0; i < elements.length; i++){
+                let elements = document.getElementsByName("TimeSpan");
+                let time_scale;
+                for(let i = 0; i < elements.length; i++){
                     if(elements[i].checked){
                         time_scale = elements[i].value;
                     }
                 }
-                var begin_date = new Date(document.getElementsByName("StartDate")[0].value);
-                var end_date = new Date(document.getElementsByName("EndDate")[0].value);
+                let begin_date = new Date(document.getElementsByName("StartDate")[0].value);
+                let end_date = new Date(document.getElementsByName("EndDate")[0].value);
 
                 window.context.Statistics.LoadOrderAmountStatistics(begin_date, end_date, time_scale, this.CreateOrderAmountChart);
             },
             CreateOrderAmountChart(data){
-                var keys = Object.keys(data).sort();
+                data = data.sort(function(a,b){ return new Date(a.Date) - new Date(b.Date)});
+                let keys = [];
+                let amounts = [];
+                for(let i = 0; i < data.length; i++){
+                    keys[i] = data[i].KeyString;
+                    amounts[i] = data[i].Amount;
+                }
+
 
                 if(typeof data === "undefined" || data === null){
                     alert("Geen data geladen.");
@@ -72,7 +79,7 @@
                 //console.log(data);
                 //console.log(keys);
 
-                chartDrawer.DrawGraph(data, keys, "Aantal verkopen", "datum");
+                chartDrawer.DrawGraph(amounts, keys, "Aantal verkopen", "datum");
             }
         },
         created: function () {
@@ -84,7 +91,7 @@
         mounted: function(){
             var c = document.getElementById("s_canvas");
             c.width = 900;
-            c.height = 450;
+            c.height = 550;
         }
     }
 </script>

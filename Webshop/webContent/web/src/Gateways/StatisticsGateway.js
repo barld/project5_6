@@ -44,6 +44,7 @@ class StatisticsGateway {
         xhr.setRequestHeader('Content-type', "Application/JSON", true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.response);
+            console.log(data);
             callback(data);
         }
         xhr.send(JSON.stringify({TimeScale: time_scale, BeginDate: begin_date, EndDate: end_date}));

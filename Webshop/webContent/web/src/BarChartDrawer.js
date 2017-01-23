@@ -7,8 +7,8 @@ export default
             this.canvasCtx = canvas.getContext("2d");
             this.canvasHeight = canvas.clientHeight;
             this.canvasWidth = canvas.clientWidth;
-            this.yLabelHeight = 50;
-            this.xLabelWidth = 50;
+            this.yLabelHeight = 100;
+            this.xLabelWidth = 100;
             this.yMargin = 2;
             this.barTextYMargin = 5;
             this.barTextSize = 12;
@@ -76,6 +76,9 @@ export default
 
                 //console.log("Current item = key: " + keys[i] + " value: " + value);
             }
+
+            //Painting the labels
+
         }
 
         SetColor(color){

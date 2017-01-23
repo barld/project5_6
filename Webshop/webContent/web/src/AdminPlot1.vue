@@ -81,7 +81,7 @@
         mounted: function(){
             var c = document.getElementById("s_canvas");
             c.width = 900;
-            c.height = 400;
+            c.height = 450;
         }
     }
     function CreateChart(data){

@@ -10,7 +10,7 @@ using Class_Diagram;
 
 namespace Webshop.Controllers
 {
-    class AdminStatisticsController : Controller
+    class StatisticsController : Controller
     {
         Context context = new Context();
 
@@ -18,12 +18,12 @@ namespace Webshop.Controllers
         {
             var data = GetBodyFromJson<JsonDateStatisticData>();
 
-            return Json(context.Orders.GetOrderAmountDataTask(data.TimeSpan, data.BeginDate, data.EndDate));
+            return Json(context.Orders.GetOrderAmountDataTask(data.TimeScale, data.BeginDate, data.EndDate));
         }
 
-        public ViewObject GetTimeSpans()
+        public ViewObject GetTimeScales()
         {
-            return Json(Enum.GetNames(typeof(TimeGroup)));
+            return Json(Enum.GetNames(typeof(TimeScale)));
         }
     }
 }

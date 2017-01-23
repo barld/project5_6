@@ -40,37 +40,28 @@
         },
         methods:{
             LoadTimespans: function () {
-                var base = this;
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "/api/AdminStatistics/TimeSpans/");
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
-                xhr.onload = function(){
-                    console.log(JSON.parse(xhr.response));
-                    base.timespans = JSON.parse(xhr.response);
-                }
-                xhr.send("");
+                window.context.Statistics.LoadTimespans(this.ShowTimespans);
+            },
+            ShowTimespans: function(data){
+                console.log(data);
+                this.timespans = data;
             },
             LoadOrderAmountStatistics: function(){
                 var elements = document.getElementsByName("TimeSpan");
-                var timeSpan = "";
+                var time_scale = "";
                 for(var i = 0; i < elements.length; i++){
                     if(elements[i].checked){
-                        timeSpan = elements[i].value;
+                        time_scale = elements[i].value;
                     }
                 }
-                var startTime = new Date(document.getElementsByName("StartDate")[0].value);
-                var endTime = new Date(document.getElementsByName("EndDate")[0].value);
+                var begin_date = new Date(document.getElementsByName("StartDate")[0].value);
+                var end_date = new Date(document.getElementsByName("EndDate")[0].value);
 
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
-                xhr.onload = function(){
-                    var data = JSON.parse(xhr.response);
-                    CreateChart(data);
-                }
-                console.log(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
-                xhr.send(JSON.stringify({TimeSpan:timeSpan , BeginDate:startTime, EndDate:endTime}));
+                window.context.Statistics.LoadOrderAmountStatistics(begin_date, end_date, time_scale, this.CreateOrderAmountChart);
             },
+            CreateOrderAmountChart(data){
+                CreateChart(data);
+            }
         },
         created: function () {
             this.LoadTimespans();

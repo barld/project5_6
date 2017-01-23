@@ -42,7 +42,7 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).ToListAsync();
         }
 
-        public Dictionary<DateTime, int> GetOrderAmountDataTask(TimeGroup timeSpan, DateTime beginDate, DateTime endDate)
+        public Dictionary<DateTime, int> GetOrderAmountDataTask(TimeScale timeScale, DateTime beginDate, DateTime endDate)
         {
             //timeSpan.d
             CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
@@ -52,15 +52,15 @@ namespace DataModels.Gateways
             var calander = ci.DateTimeFormat.FirstDayOfWeek;
 
             var groupedResult = new Dictionary<DateTime, int>();
-            switch (timeSpan)
+            switch (timeScale)
             {
-                case TimeGroup.Day:
+                case TimeScale.Day:
                     groupedResult = result.GroupBy(g => g.OrderDate.Date).ToDictionary(x => x.Key, x => x.Count());
                     break;
-                case TimeGroup.Week:
+                case TimeScale.Week:
                     groupedResult = result.GroupBy(g => firstDayOfWeek(g.OrderDate)).ToDictionary(x => x.Key, x => x.Count());
                     break;
-                case TimeGroup.Month:
+                case TimeScale.Month:
                     groupedResult = result.GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1)).ToDictionary(x => x.Key, x => x.Count());
                     break;
                 default:

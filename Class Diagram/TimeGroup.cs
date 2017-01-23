@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Diagram
 {
-    public enum TimeGroup
+    public enum TimeScale
     {
         Day,
         Week,

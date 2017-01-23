@@ -9,7 +9,7 @@ namespace DataModels
 {
     public class JsonDateStatisticData
     {
-        public TimeGroup TimeSpan { get; set; }
+        public TimeScale TimeScale { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
     }

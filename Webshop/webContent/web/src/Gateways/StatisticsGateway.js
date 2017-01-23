@@ -13,6 +13,7 @@ class StatisticsGateway {
             console.log("Values passed are:");
             console.log("callback = " + callback);
             console.log("exiting function");
+            return null;
         }
 
         var xhr = new XMLHttpRequest();
@@ -35,6 +36,7 @@ class StatisticsGateway {
             console.log("time_scale = " + time_scale);
             console.log("callback = " + callback);
             console.log("exiting function");
+            return null;
         }
 
         var xhr = new XMLHttpRequest();

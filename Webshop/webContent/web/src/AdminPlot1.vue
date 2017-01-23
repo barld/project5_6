@@ -60,7 +60,19 @@
                 window.context.Statistics.LoadOrderAmountStatistics(begin_date, end_date, time_scale, this.CreateOrderAmountChart);
             },
             CreateOrderAmountChart(data){
-                CreateChart(data);
+                var keys = Object.keys(data).sort();
+
+                if(typeof data === "undefined" || data === null){
+                    alert("Geen data geladen.");
+                    return;
+                }
+                var chartDrawer = new BarChartDrawer(document.getElementById("s_canvas"));
+                chartDrawer.SetBackgroundColor("#EDEDED");
+
+                //console.log(data);
+                //console.log(keys);
+
+                chartDrawer.DrawGraph(data, keys, "Aantal verkopen", "datum");
             }
         },
         created: function () {
@@ -74,20 +86,5 @@
             c.width = 900;
             c.height = 450;
         }
-    }
-    function CreateChart(data){
-        var keys = Object.keys(data).sort();
-
-        if(typeof data === "undefined" || data === null){
-            alert("Geen data geladen.");
-            return;
-        }
-        var chartDrawer = new BarChartDrawer(document.getElementById("s_canvas"));
-        chartDrawer.SetBackgroundColor("#EDEDED");
-
-        //console.log(data);
-        //console.log(keys);
-
-        chartDrawer.DrawGraph(data, keys)
     }
 </script>

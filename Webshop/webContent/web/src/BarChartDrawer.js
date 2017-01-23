@@ -21,7 +21,7 @@ export default
             this.remainder = 0;
         }
 
-        DrawGraph(data, _keys){
+        DrawGraph(data, _keys, x_label, y_label){
             let ctx = this.canvasCtx;
             let keys = typeof _keys == "undefined" ? Object.keys(data) : _keys;
             let length = keys.length;
@@ -76,9 +76,24 @@ export default
 
                 //console.log("Current item = key: " + keys[i] + " value: " + value);
             }
+            //Paiting the keys
+
 
             //Painting the labels
-
+            if(x_label && typeof x_label === "string") {
+                ctx.font = this.barTextSize + 'pt Times New Roman';
+                ctx.fillStyle = "black";
+                ctx.textAlign = "right";
+                ctx.fillText(x_label, this.xLabelWidth - this.margin, this.barTextSize + 1);
+            }
+            if(y_label && typeof y_label === "string") {
+                ctx.save();
+                ctx.rotate(Math.PI / 2);
+                ctx.font = this.barTextSize + 'pt Times New Roman';
+                ctx.fillStyle = "black";
+                ctx.textAlign = "left";
+                ctx.fillText(y_label, maxBarHeight + (this.margin * 2), -50);
+            }
         }
 
         SetColor(color){

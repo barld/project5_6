@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataModels.Gateways
 {
-    public abstract class Gateway<Model>
+    public abstract class Gateway<Model> : IGateway<Model>
     {
         protected readonly string collectionName;
         protected readonly IMongoDatabase connection;
@@ -27,7 +27,7 @@ namespace DataModels.Gateways
             return await Collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async virtual Task<Model> GetById(ObjectId id)
+        public async virtual Task<Model> GetById(string id)
         {
             var filter = Builders<Model>.Filter.Eq("_id", id);
             return await Collection.Find(filter).FirstOrDefaultAsync();

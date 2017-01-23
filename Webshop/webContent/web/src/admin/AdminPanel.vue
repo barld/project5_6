@@ -3,7 +3,7 @@
             <div class="twelve columns">
                 <div class="panel">
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
-                    <admin_add_products v-show="addProducts"></admin_add_products>
+                    <admin_add_products v-show="addProducts" :platforms="platforms"></admin_add_products>
                     <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
@@ -38,6 +38,19 @@
 
                 xhr.send();
             },
+            getAllPlatforms: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/platform/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.platforms = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
             showProductsAddMenu: function(){
                 this.addProducts = true;
                 this.productsLoaded = false;
@@ -45,6 +58,7 @@
         },
         created: function(){
             this.getAllProducts();
+            this.getAllPlatforms();
         }
     }
 </script>

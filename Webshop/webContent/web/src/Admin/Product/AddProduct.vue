@@ -2,7 +2,7 @@
     <div>
         <h3>Maak een nieuw product</h3>
         <div v-show="platformsLoaded" class="row">
-            Test
+            {{ platforms }}
         </div>
     </div>
 </template>
@@ -10,8 +10,7 @@
     export default{
         data: function(){
             return{
-                platforms: [],
-                platformsLoaded: false
+                platformsLoaded: true
             }
         },
         methods:{
@@ -31,24 +30,6 @@
                     IsVRCompatible: false,
                     ReleaseDate: "01-01-2018"
                 }
-            },
-            loadPlatforms: function(){
-
-                var base = this;
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', `/api/platform/all`);
-
-                xhr.onload = function(){
-                    base.platforms = JSON.parse(xhr.response);
-                    console.log(base.platforms);
-                    //this.platformsLoaded = true;
-                };
-
-                xhr.send();
-            },
-            created: function(){
-                console.log('Created!');
-                this.loadPlatforms();
             }
         }
     }

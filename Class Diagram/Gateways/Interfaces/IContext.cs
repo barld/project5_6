@@ -4,8 +4,8 @@ namespace DataModels
 {
     public interface IContext
     {   
-        UserGateway Users { get; }
-        GameGateway Games { get; }
+        IUserGateway Users { get; }
+        IGameGateway Games { get; }
         PlatformGateway Platforms { get; }
     }
 }

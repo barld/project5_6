@@ -1,9 +1,10 @@
 <template>
         <div class="row">
-            <h1>Test</h1>
             <div class="twelve columns">
                 <div class="panel">
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
+                    <admin_add_products v-show="addProducts"></admin_add_products>
+                    <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
         </div>
@@ -14,10 +15,15 @@
         data: function(){
             return{
                 products:[],
-                productsLoaded: true
+                platforms:[],
+                productsLoaded: false,
+                addProducts: false
             }
         },
         methods:{
+            hideProducts: function(){
+              this.productsLoaded = false;
+            },
             getAllProducts: function(){
                 var base = this;
                 var xhr = new XMLHttpRequest();
@@ -31,6 +37,10 @@
                 };
 
                 xhr.send();
+            },
+            showProductsAddMenu: function(){
+                this.addProducts = true;
+                this.productsLoaded = false;
             }
         },
         created: function(){

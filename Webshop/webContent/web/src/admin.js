@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Context from './Gateways/context'
 
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
-Vue.component('admin_products', require('./Admin/AdminProducts.vue'));
+Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));
+Vue.component('admin_add_products', require('./Admin/Product/AddProduct.vue'));
 
 new Vue({
     el: '#app'
@@ -28,15 +29,6 @@ function Send(data, url, method){
 
         xhr.send(JSON.stringify(data));
     });
-}
-
-function GetData(url){
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-
-    xhr.onload = function(){
-        return xhr.response;
-    };
 }
 
 class DatabaseOperations{

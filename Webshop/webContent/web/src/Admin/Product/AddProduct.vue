@@ -2,12 +2,15 @@
     <div>
         <h3>Maak een nieuw product</h3>
         <div v-show="platformsLoaded" class="row">
-            {{ platforms }}
+            <div class="six columns">
+                <label for="GameTitle"><input type="text" :model="GameTitle" id="GameTitle" name="GameTitle"></label>
+            </div>
         </div>
     </div>
 </template>
 <script>
     export default{
+        props:['platforms'],
         data: function(){
             return{
                 platformsLoaded: true
@@ -31,6 +34,10 @@
                     ReleaseDate: "01-01-2018"
                 }
             }
+        },
+        created: function(){
+            console.log('Created!');
+            console.log(this.platforms);
         }
     }
 </script>

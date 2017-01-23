@@ -9,7 +9,6 @@
             </div>
         </div>
         <div class="container">
-			<button @click="close_account_screen">Sluit accountscherm</button>
         	<div class="row">
         		<div class="six columns">
                     <div class="element-container">
@@ -62,9 +61,6 @@
             },
             product:function(){
                 this.$emit("product");
-            },
-            close_account_screen:function(){
-            	this.$emit("close_account_screen");
             }
         }
     }

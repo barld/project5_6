@@ -49,7 +49,7 @@ namespace DataModels.Gateways
             CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
             Thread.CurrentThread.CurrentCulture = ci;
 
-            var filter = Builders<Order>.Filter.Where(v => v.OrderDate > beginDate && v.OrderDate < endDate);
+            var filter = Builders<Order>.Filter.Where(v => v.OrderDate >= beginDate && v.OrderDate < endDate.AddDays(1));
             var result = Collection.Find(filter).ToList();
             var calander = ci.DateTimeFormat.FirstDayOfWeek;
 

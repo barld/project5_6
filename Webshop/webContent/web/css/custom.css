@@ -349,5 +349,10 @@ input:focus{
 	min-height: 400px;
 	height: 400px;
 }
+
+.plotbutton{
+	width: 400px;
+}
+
 .statistics_canvas canvas{
 }

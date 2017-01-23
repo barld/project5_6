@@ -36,9 +36,14 @@
                     </div>
                 </div>
             </div>
-            <button @click="showPlotMenu">Webwinkel statistieken</button>
+            <h1>Admin plots</h1>
+            <button class="plotbutton" @click="ShowPlot(1)">Verkoopaantal statistieken</button><br>
+            <button class="plotbutton" @click="ShowPlot(2)">Populaire catagorien in tijdsframe</button><br>
+            <button class="plotbutton" @click="ShowPlot(3)">Geen idee</button><br>
         </div>
-        <adminplotmenu v-if="show_admin_plot_menu" @close_plot_menu="closePlotMenu"></adminplotmenu>
+        <adminplot1 v-on:closed="ClosePlots" v-if="plot_number == 1"></adminplot1>
+        <adminplot2 v-on:closed="ClosePlots" v-if="plot_number == 2"></adminplot2>
+        <adminplot3 v-on:closed="ClosePlots" v-if="plot_number == 3"></adminplot3>
     </div>
 </template>
 
@@ -47,17 +52,20 @@
         data:function(){
             return{
                 show_admin_screen: true,
-                show_admin_plot_menu: false
+                show_admin_plot_menu: false,
+                plot_number: 0
             }
         },
         methods:{
-            showPlotMenu:function(){
-                this.show_admin_screen = false;
-                this.show_admin_plot_menu = true;
+            ShowPlot:function(val){
+                if(Number.isInteger(val) && val > 0 && val < 4){
+                    this.show_admin_screen = false;
+                    this.plot_number = val;
+                }
             },
-            closePlotMenu:function(){
+            ClosePlots:function(){
                 this.show_admin_screen = true;
-                this.show_admin_plot_menu = false;
+                this.plot_number = 0;
             }
         }
     }

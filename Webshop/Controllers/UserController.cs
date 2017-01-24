@@ -53,7 +53,7 @@ namespace Webshop.Controllers
         {
             //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
             var data = GetBodyFromJson<User>();
-            List<MyLists> myLists = context.Users.GetMyListsByEmail(data.Email).Result;
+            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
             return Json(myLists);
         }
 

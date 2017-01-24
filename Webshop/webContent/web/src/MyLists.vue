@@ -8,10 +8,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <div v-for="list in listTitle.Games">
-                        <td>{{list.GameTitle}}</td>
-                    </div>
+                <tr v-for="list in listTitle.Games">
+                    <td>{{list.GameTitle}}</td>
                 </tr>
             </tbody>
         </table>
@@ -24,7 +22,6 @@
         props: ['user_status'],
         data: function() {
             return {
-                show_favourites: true,
                 MyLists: null
             }
         },

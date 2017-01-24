@@ -34,9 +34,8 @@ namespace DataModels.Gateways
             return hash;
         }
 
-        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        public async Task<List<MyLists>> GetMyLists(User user)
         {
-            var user = await GetByEmail(email);
             if (user != null)
             {
                 return user.MyLists;

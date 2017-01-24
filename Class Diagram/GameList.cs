@@ -11,10 +11,11 @@ namespace DataModels
     {
         public string TitleOfList { get; set; }
 
+        public bool IsPrivate { get; set; } = true;
+
         public List<Game> Games { get; set; }
 
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string _id { get; set; }
+        public BsonObjectId _id { get; set; } = ObjectId.GenerateNewId();
+
     }
 }

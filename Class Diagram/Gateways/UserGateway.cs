@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
@@ -95,12 +96,12 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
         {
             try
             {
-                //user.MyLists.Where(x => x.TitleOfList == ListTitle).GetEnumerator().Current.Games.Add(gameToAdd);
-                //await Replace("MyLists", List.TitleOfList, user);
+                var filter = Builders<User>.Filter.Eq(x => x._id, updatedUser._id);
+                await Collection.ReplaceOneAsync(filter, updatedUser);
             }
             catch (Exception ex)
             {

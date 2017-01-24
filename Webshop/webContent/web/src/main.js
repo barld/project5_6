@@ -169,7 +169,7 @@ new Vue({
 
             var ean_list = [];
             var amt_list = [];
-            var items = this.shoppingcart.cart.CartLines;
+            var items = window.context.ShoppingCart.cart.CartLines;
 
             items.forEach(function(item){
                     ean_list.push(item.Product.EAN);

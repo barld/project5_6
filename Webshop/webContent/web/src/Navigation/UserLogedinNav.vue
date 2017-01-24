@@ -1,6 +1,6 @@
 <template>
     <li class="floating_menu_component" id="user_profile">
-        <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{status.Email}} ({{status.Role}})</a>
+        <a href="#" @click="show_account_page"><i class="fa fa-user-circle" aria-hidden="true"></i> {{status.Email}} ({{status.Role}})</a>
         <ul class="submenu">
             <li><a href="#" @click="showFavourites"> My Favourites</a></li>
             <li><a href="#" @click="logout"><i class="fa fa-sign-out"
@@ -34,6 +34,10 @@
             showFavourites:function () {
                 console.log('UserLogedinNav');
                 this.$emit('showFavourites');
+            },
+            show_account_page:function(){
+                //alert("loggedinnav");
+                this.$emit("show_account_page");
             }
         }
     }

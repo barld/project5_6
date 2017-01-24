@@ -52,9 +52,6 @@ new Vue({
         IsAdmin: false,
         shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
-        tempstore_inputs:null,
-        tempstore_orders:null,
-        tempstore_order:null,
         user_status: {}
     },
     methods:{
@@ -154,10 +151,9 @@ new Vue({
                 alert('Please log in to purchase our products.');
             }
         },
-        begin_payment: function(inputs) {
+        begin_payment: function() {
             this.show_checkout_information = false;
             this.show_checkout_payment = true;
-            this.tempstore_inputs=inputs;
         },
         begin_confirmation: function() {
             this.show_checkout_payment = false;
@@ -166,6 +162,7 @@ new Vue({
         begin_order: function() {
             this.show_checkout_confirmation = false;
             this.on_product_section = true;
+
 
             var ean_list = [];
             var amt_list = [];
@@ -224,6 +221,7 @@ new Vue({
             };
 
             xhr.send();
+
         },
         show_order_detail: function(order){
             this.show_account = false;
@@ -231,7 +229,6 @@ new Vue({
             this.tempstore_order = order;
         },
         show_account_page: function(){
-            this.get_orders();
             this.show_account = true;
             this.show_detail = false;
             this.on_product_section = false;

@@ -12,5 +12,7 @@ namespace Class_Diagram.ShoppingCart
         public int Amount { get; set; }
         public Game Product { get; set; }
         public int SubTotal => Amount * Product.Price;
+        public OrderLine ToOrderLine() => new OrderLine{Amount = Amount, Game = Product };
+        
     }
 }

@@ -20,39 +20,31 @@
         				<tbody>
         					<tr>
         						<td><strong>Voornaam</strong></td>
-                                <td>{{ inputs[0] }}</td>
+                                <td>{{ checkoutInformation.voornaam }}</td>
         					</tr>
         					<tr>
         						<td><strong>Achternaam</strong></td>
-        						<td>{{ inputs[1] }}</td>
+        						<td>{{ checkoutInformation.achternaam }}</td>
         					</tr>
         					<tr>
         						<td><strong>Postcode</strong></td>
-        						<td>{{ inputs[2] }}</td>
+        						<td>{{ checkoutInformation.postcode }}</td>
         					</tr>
         					<tr>
         					 	<td><strong>Huisnummer</strong></td>
-        					 	<td>{{ inputs[3] }}</td>
+        					 	<td>{{ checkoutInformation.huisnummer }}</td>
         					</tr>
         					<tr>
         						<td><strong>Straat</strong></td>
-        						<td>{{ inputs[4] }}</td>
+        						<td>{{ checkoutInformation.straat }}</td>
         					</tr>
         					<tr>
         						<td><strong>Stad</strong></td>
-        						<td>{{ inputs[5] }}</td>
+        						<td>{{ checkoutInformation.stad }}</td>
         					</tr>
         					<tr>
         						<td><strong>Land</strong></td>
-        						<td>{{ inputs[6] }}</td>
-        					</tr>
-        					<tr>
-        						<td><strong>E-mail</strong></td>
-        						<td>{{ inputs[7] }}</td>
-        					</tr>
-        					<tr>
-        						<td><strong>Telefoon nummer</strong></td>
-        						<td>{{ inputs[8] }}</td>
+        						<td>{{ checkoutInformation.land }}</td>
         					</tr>
         				</tbody>
         			</table>
@@ -100,10 +92,10 @@
 
 <script>
     export default{
-        props:['inputs', 'shoppingcart'],
         data(){
             return{
-                cart: {}
+                cart: {},
+				checkoutInformation:{},
             }
         },
         methods:{
@@ -115,11 +107,13 @@
             },
 			order: function() {
 				this.$emit("order");
+				window.context.Order.CheckOut();
 			}
         },
         created:function(){
             window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
-            this.changedShoppingCart(window.context.ShoppingCart)
+            this.changedShoppingCart(window.context.ShoppingCart);
+			      this.checkoutInformation = window.context.Order.CheckoutInformation;
         }
     }
 </script>

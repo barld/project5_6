@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MongoDB.Bson;
+using Class_Diagram.ShoppingCart;
 
 namespace DataModels
 {
     //Defining the attributes for the orders (Email, city etc.)
     public class JsonOrder
     {
-        public List<long> EAN { get; set; }
-        public List<int> Amounts { get; set; }
-        public string Email { get; set; }
+        public Cart shoppingcart { get; set; }
         public string DeliveryCity { get; set; }
         public string DeliveryCountry { get; set; }
         public string DeliveryHousenumber { get; set; }

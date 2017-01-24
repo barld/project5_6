@@ -53,6 +53,7 @@
     <Compile Include="AuthorizeAttribute.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ValueModel.cs" />

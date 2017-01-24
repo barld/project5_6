@@ -19,7 +19,7 @@ Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('mylists', require('./MyLists.vue'));
 Vue.component('mobile_menu', require('./Mobile/MobileMenu.vue'));
 Vue.component('mobile_logged_in', require('./Mobile/Mobile_LoggedIn.vue'));
-Vue.component('admin_screen', require('./Adminscreen.vue'));
+Vue.component('admin_screen', require('./admin/UserAdminScreen.vue'));
 Vue.component('account_screen', require('./Accountscreen.vue'));
 Vue.component('detail_screen', require('./Detailscreen.vue'));
 Vue.component('checkout_information', require('./CheckoutInformation.vue'));

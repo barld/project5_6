@@ -2,7 +2,7 @@
     <div class="three columns product">
         <div style="margin: 0 auto;">
             <span class="productbox_gametitle" v-bind:title="product.GameTitle">
-                {{product.GameTitle}}<i @click="add_to_list(product.EAN, 'Favourite List')" v-if="user_status.Email" style="float: right;" class="fa fa-heart-o" aria-hidden="true"></i><i v-if="user_status.Email" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" class="fa fa-star-o fa-1x" aria-hidden="true"></i>
+                {{product.GameTitle}}<i @click="add_to_list(product.EAN, 'Favourite List')" v-if="user_status.Email" class="fa fa-heart-o" style="float: right;" aria-hidden="true"></i><i v-if="user_status.Email" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" class="fa fa-star-o fa-1x" aria-hidden="true"></i>
             </span>
             <span class="productbox_platformtitle" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
             <div class="thumbnail_container">
@@ -23,6 +23,7 @@
         data: function(){
             return{
                 // GameTitle = null
+                AddToListResult: false
             }
         },
 
@@ -43,13 +44,26 @@
 
                 var gameInformation = {EAN:ean, TitleOfList:listTitle};
                 xhr.send(JSON.stringify(gameInformation));
-                console.log("EAN is:" + ean);
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    if(JSON.parse(xhr.response) != null){
-                        base.MyLists = JSON.parse(xhr.response);
-                        console.log(base.MyLists);
+                    if(JSON.parse(xhr.response) != null)
+                    {
+                        console.log("------------------------------");
+                        var result = JSON.parse(xhr.response);
+                        if(result)
+                        {
+                            console.log("Added to list");
+
+                        }
+                        else
+                        {
+                            console.log("Not added to list");
+                        }
+                    }
+                    else
+                    {
+                        console.log("Response is null");
                     }
                 }
             }

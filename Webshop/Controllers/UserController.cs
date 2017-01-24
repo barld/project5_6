@@ -53,7 +53,7 @@ namespace Webshop.Controllers
         {
             //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
             var data = GetBodyFromJson<User>();
-            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
+            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser);
             return Json(myLists);
         }
 
@@ -63,7 +63,7 @@ namespace Webshop.Controllers
             public string TitleOfList { get; set; }
         }
 
-        public async void PostAddToList()
+        public ViewObject PostAddToList()
         {
             var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
@@ -106,7 +106,12 @@ namespace Webshop.Controllers
 
                 //User updatedUser = Auth.CurrentUser;
                 //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-                await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
             }
         }
 

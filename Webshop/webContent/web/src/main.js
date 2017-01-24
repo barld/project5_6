@@ -1,7 +1,5 @@
 import Vue from 'vue'
-import Context from "./Gateways/context";
-//import App from './App.vue'
-//import ShoppingcartMenu from './ShoppingcartMenu.vue'
+import Context from "./context";
 
 Vue.component('userlogedinnav', require('./UserLogedinNav.vue'));
 Vue.component('userlogedoutnav', require('./UserLogedoutNav.vue'));
@@ -17,11 +15,9 @@ Vue.component('product', require('./ProductScreen.vue'));
 Vue.component('product_details', require('./ProductDetailsScreen.vue'));
 Vue.component('shoppingcart_screen', require('./shoppingCartScreen.vue'));
 Vue.component('mylists', require('./MyLists.vue'));
-Vue.component('mobile_menu', require('./Mobile/MobileMenu.vue'));
-Vue.component('mobile_logged_in', require('./Mobile/Mobile_LoggedIn.vue'));
+Vue.component('mobile_menu', require('./MobileMenu.vue'));
+Vue.component('mobile_logged_in', require('./Mobile_LoggedIn.vue'));
 Vue.component('admin_screen', require('./Adminscreen.vue'));
-Vue.component('account_screen', require('./Accountscreen.vue'));
-Vue.component('detail_screen', require('./Detailscreen.vue'));
 Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
@@ -32,6 +28,28 @@ Vue.component('adminplot2', require('./AdminPlot2.vue'));
 Vue.component('adminplot3', require('./AdminPlot3.vue'));
 
 window.context = new Context();
+
+window.Send = function(data, url, method){
+    return new Promise(function(resolve, reject){
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+
+        xhr.onload = function(){
+            if(xhr.status === 200){
+                resolve(xhr.response);
+                console.log(JSON.stringify(xhr.responseText));
+            }else{
+                reject(`An error occurred: ${xhr.statusText}`);
+            }
+        };
+
+        xhr.onerror = function(){
+            reject('Probably a network error!');
+        };
+
+        xhr.send(JSON.stringify(data));
+    });
+};
 
 new Vue({
     el: '#app',
@@ -45,16 +63,12 @@ new Vue({
         show_checkout_information: false,
         show_checkout_payment: false,
         show_checkout_confirmation: false,
-        show_account: false,
-        show_detail: false,
-        on_product_section: false,
+        on_product_section: true,
         LogedIn:false,
         IsAdmin: false,
         shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
         tempstore_inputs:null,
-        tempstore_orders:null,
-        tempstore_order:null,
         user_status: {}
     },
     methods:{
@@ -113,6 +127,9 @@ new Vue({
                 xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
+                
+                console.log(base.LogedIn);
+
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
                 } else if(base.user_status.Role == "User"){
@@ -153,6 +170,7 @@ new Vue({
             }else{
                 alert('Please log in to purchase our products.');
             }
+            
         },
         begin_payment: function(inputs) {
             this.show_checkout_information = false;
@@ -208,38 +226,6 @@ new Vue({
 
             this.shoppingcart.clearCart();
             this.tempstore_inputs = null;
-        },
-        get_orders: function(){
-            var base = this;
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/api/user/orders/");
-
-            // The RequestHeader can be any, by the server accepted, file
-            xhr.setRequestHeader('Content-type', "Application/JSON", true);
-
-            // Function to fire off when the server has send a response
-            xhr.onload = function () {
-                base.tempstore_orders = JSON.parse(xhr.response);
-            };
-
-            xhr.send();
-        },
-        show_order_detail: function(order){
-            this.show_account = false;
-            this.show_detail = true;
-            this.tempstore_order = order;
-        },
-        show_account_page: function(){
-            this.get_orders();
-            this.show_account = true;
-            this.show_detail = false;
-            this.on_product_section = false;
-            this.tempstore_order = null;
-        },
-        show_product_section: function(){
-            this.on_product_section = true;
-            this.show_account = false;
         }
     },
     created: function () {

@@ -1,5 +1,5 @@
-class DatabaseOperations{
-    static Send(data, url, method){
+export default
+    function Send(data, url, method){
         return new Promise(function(resolve, reject){
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
@@ -21,19 +21,20 @@ class DatabaseOperations{
         });
     }
 
-    static EditProduct(product){
-        Send(product, this.URL, 'PUT');
-    }
+    class DatabaseOperations{
+        static EditProduct(product){
+            Send(product, '/api/product/edit', 'PUT');
+        }
 
-    static DeleteProduct(ProductId){
-        Send(ProductId, this.URL, 'DELETE');
-    }
+        static DeleteProduct(ean){
+            Send(ean, `/api/product/?ean=${ean}`, 'DELETE');
+        }
 
-    static InsertProduct(product){
-        Send(product, this.URL, 'POST');
-    }
+        static InsertProduct(product){
+            Send(product, '/api/product/', 'POST');
+        }
 
-    static EditUser(user){
-        Send(user, this.URL, 'PUT');
+        static InsertUser(user){
+            Send(user, 'api/user/register', 'POST');
+        }
     }
-}

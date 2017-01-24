@@ -54,8 +54,8 @@ namespace Webshop.Controllers
         // DELETE: /api/product/
         public ViewObject Delete()
         {
-            long gameEAN = Int64.Parse(this.Parameters.ContainsKey("ean") ? this.Parameters["ean"] : string.Empty);
-            //context.Games.Delete("GameTitle", gameEAN).Wait();
+            string gameEAN = this.Parameters.ContainsKey("ean") ? this.Parameters["ean"] : string.Empty;
+            context.Games.Delete("GameTitle", gameEAN).Wait();
             return Json(gameEAN);
         }
 

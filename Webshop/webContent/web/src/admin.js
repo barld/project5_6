@@ -1,3 +1,14 @@
+import Vue from 'vue'
+import Context from './context'
+
+Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
+Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));
+Vue.component('admin_add_products', require('./Admin/Product/AddProduct.vue'));
+
+new Vue({
+    el: '#app'
+});
+
 function Send(data, url, method){
     return new Promise(function(resolve, reject){
         var xhr = new XMLHttpRequest();

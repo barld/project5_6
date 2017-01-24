@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: {
     main: './src/main.js',
-    admin: './src/admin/admin.js'
+    admin: './src/admin.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),

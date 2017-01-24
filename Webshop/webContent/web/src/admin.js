@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Context from './context'
 
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));

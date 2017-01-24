@@ -2,7 +2,7 @@
     <div>
         <div id="games_overview" v-if="showProducts">
             <h1>Nieuwe games</h1>
-            <productbox @show_details="show_details" v-for="product in products" v-bind:product="product"></productbox>
+            <productbox @show_details="show_details" v-for="product in products" v-bind:product="product" v-bind:user_status="user_status"></productbox>
             <br class="clear"/><!-- End spotlight games -->
         </div>
     </div>
@@ -10,6 +10,7 @@
 
 <script>
     export default{
+        props:['user_status'],
         data: function(){
             return{
                 products:[],
@@ -49,6 +50,7 @@
 
         },
         created: function(){
+            console.log(this.user_status);
             this.getData();
         },
         close: function(){

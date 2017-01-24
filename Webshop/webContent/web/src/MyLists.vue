@@ -29,8 +29,7 @@
         {
             mylists: function()
             {
-                var base = this
-                console.log(this.user_status);
+                var base = this;
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/user/RetrieveMyLists/");
 
@@ -40,11 +39,13 @@
                 var userInformation = {email:this.user_status.Email};
                 xhr.send(JSON.stringify(userInformation));
 
+                
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
                     if(JSON.parse(xhr.response) != null){
+                        console.log("MyLists.vue: RetrieveMyLists hieronder");
+                        console.log(xhr.response);
                         base.MyLists = JSON.parse(xhr.response);
-                        console.log(base.MyLists);
                     }
                 }
             }

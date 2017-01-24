@@ -24,5 +24,6 @@ namespace DataModels
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+        public string Customer_Id { get; set; }
     }
 }

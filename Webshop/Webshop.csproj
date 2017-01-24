@@ -44,17 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="AuthModule.cs" />
     <Compile Include="AuthorizeAttribute.cs" />
+    <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ValueModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCartLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

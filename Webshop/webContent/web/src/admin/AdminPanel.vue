@@ -3,7 +3,7 @@
             <div class="twelve columns">
                 <div class="panel">
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
-                    <admin_add_products v-show="addProducts" :platforms="platforms"></admin_add_products>
+                    <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
                     <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
@@ -16,6 +16,8 @@
             return{
                 products:[],
                 platforms:[],
+                publishers:[],
+                genres:[],
                 productsLoaded: false,
                 addProducts: false
             }
@@ -51,6 +53,32 @@
 
                 xhr.send();
             },
+            getAllPublishers: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/publishers/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.publishers = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
+            getAllGenres: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/genre/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.genres = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
             showProductsAddMenu: function(){
                 this.addProducts = true;
                 this.productsLoaded = false;
@@ -59,6 +87,8 @@
         created: function(){
             this.getAllProducts();
             this.getAllPlatforms();
+            this.getAllGenres();
+            //this.getAllPublishers();
         }
     }
 </script>

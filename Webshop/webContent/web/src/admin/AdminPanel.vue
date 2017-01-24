@@ -1,54 +1,95 @@
 <template>
-    <div class="row">
-        <div class="container">
-            <div class="ten.columns offset-by-two-columns">
-                <div class="element-container">
-                    <div class="panel">
-                        <table style="margin-top: 20px;" class="u-full-width">
-                            <thead>
-                            <th style="width: 40%">Username</th>
-                            <th style="width: 20%">Gender</th>
-                            <th style="width: 20%">Edit</th>
-                            <th style="width: 20%; margin-right: 10px">Delete</th>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><p>JFConstancia@hotmail.com</p></td>
-                                <td><p>Male</p></td>
-                                <td><a href="#"><button class="button-primary">Edit</button></a></td>
-                                <td><a href="#"><button class="button-primary">Delete</button></a></td>
-                            </tr>
-                            <tr>
-                                <td><p>info@superict.nl</p></td>
-                                <td><p>Male</p></td>
-                                <td><a href="#"><button class="button-primary">Edit</button></a></td>
-                                <td><a href="#"><button class="button-primary">Delete</button></a></td>
-                            </tr>
-                            <tr>
-                                <td><p>hallo@420.com</p></td>
-                                <td><p>Female</p></td>
-                                <td><a href="#"><button class="button-primary">Edit</button></a></td>
-                                <td><a href="#"><button class="button-primary">Delete</button></a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="row">
+            Hoi
+            <div class="twelve columns">
+                <div class="panel">
+                    <admin_products v-show="productsLoaded" :products="products"></admin_products>
+                    <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
+                    <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
     export default{
         data: function(){
             return{
-                products:[]
+                products:[],
+                platforms:[],
+                publishers:[],
+                genres:[],
+                productsLoaded: false,
+                addProducts: false
             }
         },
         methods:{
-            getProduct: function(){
+            hideProducts: function(){
+              this.productsLoaded = false;
+            },
+            getAllProducts: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/product/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.products = JSON.parse(xhr.response);
+                    base.productsLoaded = true;
+                };
+
+                xhr.send();
+            },
+            getAllPlatforms: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/platform/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.platforms = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
+            getAllPublishers: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/publishers/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.publishers = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
+            getAllGenres: function(){
+                var base = this;
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "/api/genre/all");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                xhr.onload = function () {
+                    base.genres = JSON.parse(xhr.response);
+                };
+
+                xhr.send();
+            },
+            showProductsAddMenu: function(){
+                this.addProducts = true;
+                this.productsLoaded = false;
             }
+        },
+        created: function(){
+            this.getAllProducts();
+            this.getAllPlatforms();
+            this.getAllGenres();
+            //this.getAllPublishers();
         }
     }
 </script>

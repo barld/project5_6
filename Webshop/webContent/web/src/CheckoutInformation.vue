@@ -1,9 +1,9 @@
 <template>
-    <div><!-- Start container -->
+    <div class="container margin-top"><!-- Start container -->
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
-                	<h4 align="center">Winkelwagen | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
+                    <h4 align="center">Winkelwagen | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
                 </div>
                 <hr>
             </div>

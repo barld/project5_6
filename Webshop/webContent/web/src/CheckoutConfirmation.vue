@@ -3,8 +3,8 @@
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
-                	<h4 align="center">Winkelwagen |  
-                	Informatie | Betalingswijze | <strong>Bevestiging</strong></h4>
+					<h4 align="center">Winkelwagen |
+						-                	Informatie | Betalingswijze | <strong>Bevestiging</strong></h4>
                 </div>
             </div>
         </div>
@@ -59,8 +59,8 @@
         					<thead>
 	        					<tr>
 									<th width="25%">&nbsp;</th>
-									<th width="30%">Naam</th>
-									<th width="20%">Aantal</th>
+									<th width="25%">Naam</th>
+									<th width="25%">Aantal</th>
 									<th width="25%">Prijs</th>
 								</tr>
         					</thead>

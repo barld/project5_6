@@ -107,7 +107,7 @@ new Vue({
             xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
             // Function to fire off when the server has send a response
-                xhr.onload = function () {
+            xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
                 if(base.user_status.Role == "Admin"){
@@ -127,7 +127,7 @@ new Vue({
                 window.alert("true");
                 return true;
             }else{
-                window.alert("false");                
+                window.alert("false");
                 return false;
             }
         },
@@ -162,6 +162,65 @@ new Vue({
         begin_order: function() {
             this.show_checkout_confirmation = false;
             this.on_product_section = true;
+
+
+            var ean_list = [];
+            var amt_list = [];
+            var items = window.context.ShoppingCart.cart.CartLines;
+
+            items.forEach(function(item){
+                ean_list.push(item.Product.EAN);
+                amt_list.push(item.Amount);
+            });
+
+            var order = {
+                EAN: ean_list,
+                Amounts: amt_list,
+                Email: this.tempstore_inputs[7],
+                DeliveryCity: this.tempstore_inputs[5],
+                DeliveryCountry: this.tempstore_inputs[6],
+                DeliveryHousenumber: this.tempstore_inputs[3],
+                DeliveryPostalCode: this.tempstore_inputs[2],
+                DeliveryStreetname: this.tempstore_inputs[4],
+                BillingCity: this.tempstore_inputs[5],
+                BillingCountry: this.tempstore_inputs[6],
+                BillingHousenumber: this.tempstore_inputs[3],
+                BillingPostalCode: this.tempstore_inputs[2],
+                BillingStreetname: this.tempstore_inputs[4]
+            };
+
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/order/submit");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                //base.user_status = JSON.parse(xhr.response);
+            };
+            xhr.send(JSON.stringify(order));
+
+            this.shoppingcart.clearCart();
+            this.tempstore_inputs = null;
+        },
+        get_orders: function(){
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/api/user/orders/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                base.tempstore_orders = JSON.parse(xhr.response);
+            };
+
+            xhr.send();
 
         },
         show_order_detail: function(order){

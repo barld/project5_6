@@ -1,7 +1,3 @@
-/**
- * Created by barld on 7-11-2016.
- */
-
 export default
     class ShoppingCartGateway{
         //var cartLines = [];

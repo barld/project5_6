@@ -59,7 +59,7 @@
         },
         methods:{
             add_to_cart:function () {
-                window.context.shoppingcart.addToCart(this.product);
+                window.context.ShoppingCart.addToCart(this.product);
             },
             close:function(){
                 this.$emit("close");

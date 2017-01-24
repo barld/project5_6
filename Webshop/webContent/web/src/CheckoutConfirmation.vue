@@ -111,15 +111,15 @@
                 this.cart = sc.cart;
             },
             update:function () {
-                window.shoppingcart.UpdateCart(this.cart);
+                window.context.ShoppingCart.UpdateCart(this.cart);
             },
 			order: function() {
 				this.$emit("order");
 			}
         },
         created:function(){
-            window.shoppingcart.registerOnChangedshoppingCart(this.changedShoppingCart);
-            this.changedShoppingCart(window.shoppingcart)
+            window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
+            this.changedShoppingCart(window.context.ShoppingCart)
         }
     }
 </script>

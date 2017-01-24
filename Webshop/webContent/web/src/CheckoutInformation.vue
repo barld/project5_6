@@ -3,7 +3,7 @@
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
-                	<h4 align="center"><a style="color: inherit; text-decoration:none" href="../../winkelwagen.html">Winkelwagen</a> | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
+                    <h4 align="center">Winkelwagen | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
                 </div>
                 <hr>
             </div>

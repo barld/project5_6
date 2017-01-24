@@ -3,8 +3,8 @@
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
-                	<h4 align="center"><a style="color: inherit; text-decoration:none" href="#">Winkelwagen</a> |  
-                	<a href="#" style="color: inherit; text-decoration:none">Informatie</a> | <a style="color: inherit; text-decoration:none" href="#">Betalingswijze</a> | <strong>Bevestiging</strong></h4>
+					<h4 align="center">Winkelwagen |
+						-                	Informatie | Betalingswijze | <strong>Bevestiging</strong></h4>
                 </div>
             </div>
         </div>

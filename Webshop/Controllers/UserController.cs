@@ -82,27 +82,32 @@ namespace Webshop.Controllers
             //Find the correct list
             MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
 
-            //Add game to list
-            if (data.TitleOfList == "Favourite List")
+            //Make sure that the game is not already in the list to avoid duplicate games
+            if (list.Games.FirstOrDefault(x => x.EAN == game.EAN) == null)
             {
-                foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
+
+                //Add game to list
+                if (data.TitleOfList == "Favourite List")
                 {
-                    var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
-                    if (result != null)
+                    foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
                     {
-                        list.Games.Add(game);
-                        break;
+                        var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
+                        if (result != null)
+                        {
+                            list.Games.Add(game);
+                            break;
+                        }
                     }
                 }
+                else
+                {
+                    list.Games.Add(game);
+                }
+
+                //User updatedUser = Auth.CurrentUser;
+                //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
+                await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
             }
-            else
-            {
-                list.Games.Add(game);
-            }
-            
-            //User updatedUser = Auth.CurrentUser;
-            //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-            await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
         }
 
         public ViewObject GetOrders()

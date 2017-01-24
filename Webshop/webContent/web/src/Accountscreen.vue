@@ -49,9 +49,9 @@
 
 <script>
     export default{
-        props:['orders'],
         data:function(){
             return{
+                orders:{}
             }
         },
         methods:{
@@ -62,6 +62,9 @@
             product:function(){
                 this.$emit("product");
             }
-        }
+        },
+		created:function () {
+            window.context.Order.GetOrders((orders)=> this.orders = orders);
+		}
     }
 </script>

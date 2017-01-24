@@ -66,9 +66,6 @@ namespace Webshop.Controllers
             list.Games.Add(game);
             User updatedUser = Auth.CurrentUser;
             updatedUser.MyLists.Where(x => x.TitleOfList == list.TitleOfList).First().Games = list.Games;
-            //updatedUser.MyLists = myListsUpdated;
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).GetEnumerator().Current.Games.Add(game);
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First().Games.Add(game);
             await context.Users.UpdateUser(updatedUser);
         }
 
@@ -76,7 +73,7 @@ namespace Webshop.Controllers
         {
             if (Auth.LoggedIn)
             {
-                return Json(context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result);
+                return Json(context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result);
             }
             else
             {

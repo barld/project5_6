@@ -85,7 +85,7 @@ namespace Webshop.Controllers
             //Add game to list
             if (data.TitleOfList == "Favourite List")
             {
-                foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
+                foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
                 {
                     var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
                     if (result != null)

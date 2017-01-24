@@ -13,17 +13,17 @@ class StatisticsGateway {
             console.log("Values passed are:");
             console.log("callback = " + callback);
             console.log("exiting function");
-            return null;
+            return;
         }
 
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("GET", "/api/Statistics/TimeScales/");
         xhr.setRequestHeader('Content-type', "Application/JSON", true);
         xhr.onload = function () {
-            var data = JSON.parse(xhr.response);
+            let data = JSON.parse(xhr.response);
             callback(data);
             //console.log(JSON.parse(xhr.response));
-        }
+        };
         xhr.send("");
     }
 
@@ -36,17 +36,41 @@ class StatisticsGateway {
             console.log("time_scale = " + time_scale);
             console.log("callback = " + callback);
             console.log("exiting function");
-            return null;
+            return;
         }
 
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("POST", "/api/Statistics/SalesAmountStatistics/");
         xhr.setRequestHeader('Content-type', "Application/JSON", true);
         xhr.onload = function () {
-            var data = JSON.parse(xhr.response);
+            let data = JSON.parse(xhr.response);
             console.log(data);
             callback(data);
+        };
+        xhr.send(JSON.stringify({TimeScale: time_scale, BeginDate: begin_date, EndDate: end_date}));
+    }
+
+    LoadGenresStatistics(begin_date, end_date, time_scale, callback){
+        if(!begin_date || !end_date || !time_scale || typeof callback !== "function"){
+            console.log("F:LoadOrderAmountStatistics M:Warning not all parameters have been correctly filled.");
+            console.log("Values passed are:");
+            console.log("begin_date = " + begin_date);
+            console.log("end_date = " + end_date);
+            console.log("time_scale = " + time_scale);
+            console.log("callback = " + callback);
+            console.log("exiting function");
+            return;
         }
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/Statistics/GenreAmountStatistics/");
+        xhr.setRequestHeader('Content-type', "Application/JSON", true);
+        xhr.onload = function () {
+            let data = JSON.parse(xhr.response);
+            console.log(data);
+            callback(data);
+        };
+        //console.log("TimeScale = " + time_scale + "BeginDate" + begin_date + "EndDate" + end_date);
         xhr.send(JSON.stringify({TimeScale: time_scale, BeginDate: begin_date, EndDate: end_date}));
     }
 }

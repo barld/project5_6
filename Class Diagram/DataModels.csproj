@@ -71,6 +71,7 @@
     <Compile Include="Gender.cs" />
     <Compile Include="Gateways\Interfaces\IContext.cs" />
     <Compile Include="Genre.cs" />
+    <Compile Include="GenreStatisticModel.cs" />
     <Compile Include="Importers\DataContainers\JsonGame.cs" />
     <Compile Include="Importers\DataContainers\JsonRelease.cs" />
     <Compile Include="Importers\DataContainers\PlatformId.cs" />

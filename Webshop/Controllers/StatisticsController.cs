@@ -25,5 +25,12 @@ namespace Webshop.Controllers
         {
             return Json(Enum.GetNames(typeof(TimeScale)));
         }
+
+        public ViewObject PostGenreAmountStatistics()
+        {
+            var data = GetBodyFromJson<JsonDateStatisticData>();
+            var genres = context.Genres.GetAll().Result;
+            return Json(context.Orders.GetPopularGenreOfOrdersStatistics(data.BeginDate, data.EndDate, data.TimeScale, genres));
+        }
     }
 }

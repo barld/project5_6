@@ -26,6 +26,10 @@ Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
+Vue.component('adminplotmenu', require('./AdminPlotMenu.vue'));
+Vue.component('adminplot1', require('./AdminPlot1.vue'));
+Vue.component('adminplot2', require('./AdminPlot2.vue'));
+Vue.component('adminplot3', require('./AdminPlot3.vue'));
 
 window.context = new Context();
 
@@ -158,6 +162,7 @@ new Vue({
         begin_order: function() {
             this.show_checkout_confirmation = false;
             this.on_product_section = true;
+
         },
         show_order_detail: function(order){
             this.show_account = false;

@@ -113,7 +113,7 @@
         created:function(){
             window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
             this.changedShoppingCart(window.context.ShoppingCart);
-			this.checkoutInformation = window.context.Order.CheckoutInformation;
+			      this.checkoutInformation = window.context.Order.CheckoutInformation;
         }
     }
 </script>

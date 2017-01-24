@@ -8,7 +8,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^2.0.1"
+    "chart.js": "^2.4.0",
+    "vue": "^2.1.10",
+    "webpack": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

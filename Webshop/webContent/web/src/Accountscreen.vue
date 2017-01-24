@@ -15,7 +15,6 @@
                         <h3 align="center">Mijn Lijsten</h3>
                         <hr>
                         <h1 align="center">=(</h1>
-                        
                     </div>
                     <br>
                     <button @click="product" class="button-primary">Bekijk Producten</button>

@@ -1,6 +1,5 @@
 <template>
         <div class="row">
-            Hoi
             <div class="twelve columns">
                 <div class="panel">
                     <user_admin_screen></user_admin_screen>

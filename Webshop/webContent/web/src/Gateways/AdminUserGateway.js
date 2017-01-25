@@ -6,7 +6,7 @@ export default
     class AdminUserGateway{
 
         GetAllUser(callback){
-            var xhr = new XMLHttpRequest();
+            let xhr = new XMLHttpRequest();
             xhr.open("GET", "/api/userAdmin/AllUsers/");
 
             // The RequestHeader can be any, by the server accepted, file
@@ -18,5 +18,20 @@ export default
             };
 
             xhr.send();
+        }
+
+        deleteUser(user){
+            let xhr = new XMLHttpRequest();
+            xhr.open("DELETE", "/api/userAdmin/user/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                // return
+            };
+
+            xhr.send(JSON.stringify(user));
         }
     }

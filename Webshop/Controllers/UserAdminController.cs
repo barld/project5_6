@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Webshop.Models;
 
 namespace Webshop.Controllers
 {
@@ -29,6 +30,13 @@ namespace Webshop.Controllers
 
         public ViewObject GetAllUsers() 
             => Json(context.Users.GetAll().Result);
+
+        public ViewObject DeleteUser()
+        {
+            var user = GetBodyFromJson<User>();
+            context.Users.Delete(user);
+            return Json(new ActionResultViewModel { Success = true });
+        }
 
     }
 }

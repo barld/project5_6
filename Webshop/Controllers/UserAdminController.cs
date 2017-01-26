@@ -38,5 +38,12 @@ namespace Webshop.Controllers
             return Json(new ActionResultViewModel { Success = true });
         }
 
+        public ViewObject PutUser()
+        {
+            var user = GetBodyFromJson<User>();
+            context.Users.Replace("_id", user._id, user);
+            return Json(new ActionResultViewModel { Success = true });
+        }
+
     }
 }

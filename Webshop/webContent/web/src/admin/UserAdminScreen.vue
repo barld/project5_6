@@ -17,16 +17,21 @@
 
 <script>
     export default{
-        data:function(){
-            return{
-                users:[]
+        data: function () {
+            return {
+                users: []
             }
         },
-        methods:{
-
+        methods: {
+            onUserListChanged: function (users) {
+                this.users = users
+            }
         },
-        created:function () {
-            window.context.AdminUser.GetAllUser(users => this.users = users);
+
+
+        created: function () {
+            window.context.AdminUser.RegisterOnUsersListChanged(this.onUserListChanged);
+            window.context.AdminUser.UpdateAllUser();
         }
     }
 </script>

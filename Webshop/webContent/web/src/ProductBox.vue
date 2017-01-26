@@ -6,7 +6,7 @@
             </span>
             <span class="productbox_platformtitle" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
             <div class="thumbnail_container">
-                <img v-bind:src="product.Image[0]" alt="" class="thumbnail">
+                <img v-if="product.Image !== null" v-bind:src="product.Image[0]" alt="" class="thumbnail">
             </div>
             <div class="centerbox">
                 <a v-bind:href="'#product/' + product.EAN" @click="show_details">Bekijk details</a>

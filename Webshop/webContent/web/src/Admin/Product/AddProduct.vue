@@ -4,7 +4,7 @@
         <div v-show="platformsLoaded" class="row">
             <div class="row">
                 <div class="six columns">
-                    <label for="GameTitle"><b>Titel</b></label><input type="text" v-model="GameTitle" id="GameTitle" @keyup="test">
+                    <label for="GameTitle"><b>Titel</b></label><input type="text" v-model="GameTitle" id="GameTitle">
                 </div>
                 <div class="six columns">
                     Beschikbaar op:
@@ -14,7 +14,7 @@
                         </div>
                     </form>
                     <!--<div v-for="platform in platforms">-->
-                        <!--<label><input v-bind:id="platform.PlatformTitle" v-model="GamePlatform" type="checkbox" v-bind:value="platform.PlatformTitle"> {{ platform.PlatformTitle }}</label>-->
+                    <!--<label><input v-bind:id="platform.PlatformTitle" v-model="GamePlatform" type="checkbox" v-bind:value="platform.PlatformTitle"> {{ platform.PlatformTitle }}</label>-->
                     <!--</div>-->
                 </div>
             </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="row">
                 <div class="twelve columns">
-                    <label for="GameImages"><b>Afbeeldingen</b></label>
+                    <label for="GameImages"><b>Afbeeldingen</b><input type="text" v-model="GameImageValue"></label>
                 </div>
             </div>
             <div class="row">
@@ -62,7 +62,6 @@
                 </div>
             </div>
         </div>
-
         <button @click="createGame" class="button-primary">Maak product</button>
     </div>
 </template>
@@ -77,32 +76,33 @@
                 GameRatingPegi: "",
                 GamePublisher: [],
                 GameGenre: [],
-                GameImage: [],
+                GameImages: [],
+                GameImageValue: null,
                 GameMinPlayers: 0,
                 GameMaxPlayers: 0,
                 GameDescription: "",
-                GameEAN: window.crypto.getRandomValues(new Uint32Array(1)),
+                GameEAN: parseInt(window.crypto.getRandomValues(new Uint32Array(1))),
                 GamePrice: 0,
                 GameIsVRCompatible: "",
                 GameReleaseDate: ""
             }
         },
         methods:{
-            test: function(){
-                console.log(this.GameTitle);
-            },
             createGame: function(){
+
+                this.GameImages.push(this.GameImageValue);
+
                 var game = {
                     GameTitle: this.GameTitle,
                     Platform: this.GamePlatform,
                     RatingPegi: this.GameRatingPegi,
                     Publisher: [],
                     Genres: this.GameGenre,
-                    Images: [],
+                    Image: this.GameImages,
                     MinPlayers: this.GameMinPlayers,
                     MaxPlayers: this.GameMaxPlayers,
                     Description: this.GameDescription,
-                    EAN: 0,
+                    EAN: this.GameEAN,
                     Price: this.GamePrice,
                     IsVRCompatible: false,
                     ReleaseDate: "01-01-2018"
@@ -120,6 +120,7 @@
                 };
 
                 xhr.send(JSON.stringify(game));
+                console.log(JSON.stringify(game));
             }
         }
     }

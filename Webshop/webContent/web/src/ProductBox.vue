@@ -2,7 +2,7 @@
     <div class="three columns product">
         <div style="margin: 0 auto;">
             <span class="productbox_gametitle" v-bind:title="product.GameTitle">
-                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': HaveGameResultFav, 'fa fa-heart-o': !HaveGameResultFav}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="user_status" style="float: right;" aria-hidden="true"></i><i v-if="checkUserLoggedIn()" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': have_in_wishlist, 'fa fa-star-o fa-1x': !have_in_wishlist}" aria-hidden="true"></i>
+                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="user_status" style="float: right;" aria-hidden="true"></i><i v-if="checkUserLoggedIn()" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
             </span>
             <!--<span v-bind:class="{productbox_platformtitle}" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>-->
             <span v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
@@ -25,8 +25,6 @@
             return{
                 // GameTitle = null
                 AddToListResult: false,
-                HaveGameResultWish: false,
-                HaveGameResultFav: false,
             }
         },
 

@@ -63,32 +63,36 @@ namespace Webshop.Controllers
             var data = GetBodyFromJson<Game>();
             var data2 = GetBodyFromJson<MyLists>();
             List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
-            var currentList = myLists.FirstOrDefault(x => x.TitleOfList == data2.TitleOfList);
-            if (currentList != null)
+            if (myLists != null)
             {
-                var game = currentList.Games.FirstOrDefault(g => g.EAN == data.EAN);
-                if (game != null)
+                var currentList = myLists.FirstOrDefault(x => x.TitleOfList == data2.TitleOfList);
+                if (currentList != null)
                 {
-                    //Game probably exists, check EAN to be sure
-                    if (game.EAN == data.EAN)
+                    var game = currentList.Games.FirstOrDefault(g => g.EAN == data.EAN);
+                    if (game != null)
                     {
-                        return Json(true);
+                        //Game probably exists, check EAN to be sure
+                        if (game.EAN == data.EAN)
+                        {
+                            return Json(true);
+                        }
+                        else
+                        {
+                            return Json(false);
+                        }
                     }
                     else
                     {
                         return Json(false);
                     }
+                    return Json(true);
                 }
                 else
                 {
                     return Json(false);
                 }
-                return Json(true);
             }
-            else
-            {
-                return Json(false);
-            }
+            return Json(false);
         }
 
         struct EANAndTitleOfList

@@ -1,10 +1,9 @@
-Taskkill /F /IM Webshop.exe
-
 If Not Exist "%~dp0startApp.bat" (
     Echo= startApp.bat file not found
     GoTo Next
 )
 
+Taskkill /F /IM Webshop.exe
 Rem %~dp0 means the current folder where this .bat is executed from
 Set "dest=%~dp0productionEnv"
 Set "webDest=%dest%\webContent"

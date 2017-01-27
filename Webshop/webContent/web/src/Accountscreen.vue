@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <detail_screen v-if="show_detail" v-on:account="show_account_page" v-bind:order="order_to_show"></detail_screen>
+    <div v-else> 
         <div><!-- Start container -->
             <div class="container">
                 <div class="row">
@@ -49,19 +50,26 @@
 
 <script>
     export default{
-        props:['orders'],
         data:function(){
             return{
+                orders: [],
+                show_detail: false,
+                order_to_show: {}
             }
         },
         methods:{
             detail:function(order)
             {
-                this.$emit("detail", order);
+                this.order_to_show = order;
+                this.show_detail = true;
             },
             product:function(){
                 this.$emit("product");
+            },
+            show_account_page:function(){
+                this.show_detail = false;
             }
-        }
+        },
+        created: function() {window.context.Order.GetOrders(orders => this.orders = orders);}
     }
 </script>

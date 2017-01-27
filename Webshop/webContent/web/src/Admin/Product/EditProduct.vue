@@ -63,7 +63,6 @@
             </div>
         </div>
         <button @click="createGame" class="button-primary">Maak product</button>
-        <div v-if="success" class="success">{{ successMessage }}</div>
     </div>
 </template>
 <script>
@@ -71,8 +70,6 @@
         props:['platforms', 'publishers', 'genres'],
         data: function(){
             return{
-                success: false,
-                successMessage: "U heeft succesvol een product toegevoegd!",
                 platformsLoaded: true,
                 GameTitle: "",
                 GamePlatform: [],
@@ -111,7 +108,8 @@
                     ReleaseDate: "01-01-2018"
                 };
 
-                var base = this;
+                console.log(JSON.stringify(game));
+
                 var xhr = new XMLHttpRequest();
 
                 xhr.open("POST", "/api/product/");
@@ -119,15 +117,15 @@
 
                 xhr.onload = function () {
                     console.log(xhr.response);
-                    base.message = "U heeft succesvol een product toegevoegd!";
-                    base.success = true;
-
-                    setTimeout(function(){
-                        base.success = false;
-                    }, 3000);
                 };
 
                 xhr.send(JSON.stringify(game));
+                console.log(JSON.stringify(game));
+
+                this.GameTitle = "";
+                this.GamePegi = "";
+                this.GameDescription = "";
+                this.GameEAN = parseInt(window.crypto.getRandomValues(new Uint32Array(1)));
             }
         }
     }

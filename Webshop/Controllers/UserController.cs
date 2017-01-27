@@ -85,7 +85,6 @@ namespace Webshop.Controllers
                     {
                         return Json(false);
                     }
-                    return Json(true);
                 }
                 else
                 {
@@ -148,6 +147,13 @@ namespace Webshop.Controllers
             }
             else
             {
+                //Game already exists in the list, remove it
+                var item = list.Games.FirstOrDefault(g => g.EAN == game.EAN);
+                if (item != null)
+                {
+                    list.Games.Remove(item);
+                }
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
                 return Json(false);
             }
         }

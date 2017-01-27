@@ -124,14 +124,11 @@ namespace Webshop.Controllers
                 {
                     foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
                     {
-                        foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
+                        var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
+                        if (result != null)
                         {
-                            var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
-                            if (result != null)
-                            {
-                                list.Games.Add(game);
-                                break;
-                            }
+                            list.Games.Add(game);
+                            break;
                         }
                     }
                 }

@@ -26,6 +26,10 @@ Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
+Vue.component('adminplotmenu', require('./AdminPlotMenu.vue'));
+Vue.component('adminplot1', require('./AdminPlot1.vue'));
+Vue.component('adminplot2', require('./AdminPlot2.vue'));
+Vue.component('adminplot3', require('./AdminPlot3.vue'));
 
 window.context = new Context();
 
@@ -48,9 +52,6 @@ new Vue({
         IsAdmin: false,
         shoppingcart: window.context.shoppingcart,
         chosen_detail_product:null,
-        tempstore_inputs:null,
-        tempstore_orders:null,
-        tempstore_order:null,
         user_status: {}
     },
     methods:{
@@ -109,12 +110,13 @@ new Vue({
             xhr.onload = function () {
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
-                base.show_product_section();
                 if(base.user_status.Role == "Admin"){
                     base.IsAdmin = true;
-                }
-                if(base.user_status.Role == "User"){
-                    base.show_account_page();
+                } else if(base.user_status.Role == "User"){
+                    base.show_product_section();
+                    //base.show_account_page();
+                } else {
+                    base.show_product_section();
                 }
             };
 
@@ -125,7 +127,7 @@ new Vue({
                 window.alert("true");
                 return true;
             }else{
-                window.alert("false");                
+                window.alert("false");
                 return false;
             }
         },
@@ -149,10 +151,9 @@ new Vue({
                 alert('Please log in to purchase our products.');
             }
         },
-        begin_payment: function(inputs) {
+        begin_payment: function() {
             this.show_checkout_information = false;
             this.show_checkout_payment = true;
-            this.tempstore_inputs=inputs;
         },
         begin_confirmation: function() {
             this.show_checkout_payment = false;
@@ -162,15 +163,16 @@ new Vue({
             this.show_checkout_confirmation = false;
             this.on_product_section = true;
 
+
             var ean_list = [];
             var amt_list = [];
-            var items = this.shoppingcart.cart.CartLines;
+            var items = window.context.ShoppingCart.cart.CartLines;
 
             items.forEach(function(item){
-                    ean_list.push(item.Product.EAN);
-                    amt_list.push(item.Amount);
-                });
-            
+                ean_list.push(item.Product.EAN);
+                amt_list.push(item.Amount);
+            });
+
             var order = {
                 EAN: ean_list,
                 Amounts: amt_list,
@@ -219,6 +221,7 @@ new Vue({
             };
 
             xhr.send();
+
         },
         show_order_detail: function(order){
             this.show_account = false;
@@ -226,7 +229,6 @@ new Vue({
             this.tempstore_order = order;
         },
         show_account_page: function(){
-            this.get_orders();
             this.show_account = true;
             this.show_detail = false;
             this.on_product_section = false;

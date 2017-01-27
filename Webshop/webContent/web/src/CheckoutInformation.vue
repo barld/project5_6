@@ -1,9 +1,9 @@
 <template>
-    <div><!-- Start container -->
+    <div class="container margin-top"><!-- Start container -->
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
-                	<h4 align="center">Winkelwagen | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
+                    <h4 align="center">Winkelwagen | <strong>Informatie</strong> | Betalingswijze | Bevestiging</h4>
                 </div>
                 <hr>
             </div>
@@ -13,25 +13,21 @@
 	            <form action="#">
 	                <div class="six columns">
 	                	<label for="voornaam">Voornaam</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Voornaam" id="voornaam">
+      					<input class="u-full-width" required="required" type="text" placeholder="Voornaam" id="voornaam" v-model="formData.voornaam">
       					<label for="achternaam">Achternaam</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Achternaam" id="achternaam">
+      					<input class="u-full-width" required="required" type="text" placeholder="Achternaam" id="achternaam" v-model="formData.achternaam">
       					<label for="postcode">Postcode</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Postcode" id="postcode">
+      					<input class="u-full-width" required="required" type="text" placeholder="Postcode" id="postcode" v-model="formData.postcode">
       					<label for="huisnummer">Huisnummer</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Huisnummer" id="huisnummer">
+      					<input class="u-full-width" required="required" type="text" placeholder="Huisnummer" id="huisnummer" v-model="formData.huisnummer">
       					<label for="straat">Straat</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Straat" id="straat">
+      					<input class="u-full-width" required="required" type="text" placeholder="Straat" id="straat" v-model="formData.straat">
 	                </div>
 	                <div class="six columns">
 	                	<label for="stad">Stad</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Stad" id="stad">
+      					<input class="u-full-width" required="required" type="text" placeholder="Stad" id="stad" v-model="formData.stad">
       					<label for="land">Land</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Land" id="land">
-      					<label for="email">E-mail</label>
-      					<input class="u-full-width" required="required" type="email" placeholder="Email" id="email">
-      					<label for="tel">Telefoon nummer</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Telefoonnummer" id="tel">
+      					<input class="u-full-width" required="required" type="text" placeholder="Land" id="land" v-model="formData.land">
 	                </div>
             </div>
             <hr>
@@ -44,39 +40,32 @@
 
 <script>
     export default{
-        data:function(){
-            return{
-
+        data: function () {
+            return {
+                formData: {
+                    voornaam: "",
+                    achternaam: "",
+                    postcode: "",
+                    huisnummer: "",
+                    straat: "",
+                    stad: "",
+                    land: "",
+                }
             }
         },
-        methods:{
-            payment:function(){
-                var IsComplete  = true;
+        methods: {
+            payment: function () {
+                let IsComplete = this.formData.voornaam !== "" && this.formData.achternaam !== "" && this.formData.postcode !== ""
+                    && this.formData.huisnummer !== "" && this.formData.straat !== "" && this.formData.stad !== "" && this.formData.land !== "";
 
-                var inputs = [
-                    document.getElementById("voornaam").value,
-                    document.getElementById("achternaam").value,
-                    document.getElementById("postcode").value,
-                    document.getElementById("huisnummer").value,
-                    document.getElementById("straat").value,
-                    document.getElementById("stad").value,
-                    document.getElementById("land").value,
-                    document.getElementById("email").value,
-                    document.getElementById("tel").value,
-                ]
 
-                inputs.forEach(function(input){
-                    if(input == ""){
-                        IsComplete = false;
-                    }
-                })
-
-                if(IsComplete){
-                    this.$emit("payment", inputs);
-                }else{
+                if (IsComplete) {
+                    window.context.Order.CheckoutInformation = this.formData;
+                    this.$emit("payment");
+                } else {
                     alert('Please fill in all fields');
                 }
-                
+
             },
         }
     }

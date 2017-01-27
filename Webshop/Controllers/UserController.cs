@@ -57,26 +57,59 @@ namespace Webshop.Controllers
             return Json(myLists);
         }
 
+        struct EANAndTitleOfList
+        {
+            public long EAN { set; get; }
+            public string TitleOfList { get; set; }
+        }
+
         public async void PostAddToList()
         {
-            var data = GetBodyFromJson<Game>();
-            var data2 = GetBodyFromJson<MyLists>();
+            var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
-            MyLists list = Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First();
-            list.Games.Add(game);
-            User updatedUser = Auth.CurrentUser;
-            updatedUser.MyLists.Where(x => x.TitleOfList == list.TitleOfList).First().Games = list.Games;
-            //updatedUser.MyLists = myListsUpdated;
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).GetEnumerator().Current.Games.Add(game);
-            //Auth.CurrentUser.MyLists.Where(x => x.TitleOfList == data2.TitleOfList).First().Games.Add(game);
-            await context.Users.UpdateUser(updatedUser);
+
+            //Check if the user has no lists
+            if (!Auth.CurrentUser.MyLists.Any())
+            {
+                List<MyLists> newList = new List<MyLists>()
+                {
+                    new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
+                    new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
+                };
+                Auth.CurrentUser.MyLists.AddRange(newList);
+            }
+
+            //Find the correct list
+            MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
+
+            //Add game to list
+            if (data.TitleOfList == "Favourite List")
+            {
+                foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
+                {
+                    var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
+                    if (result != null)
+                    {
+                        list.Games.Add(game);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                list.Games.Add(game);
+            }
+            
+            //User updatedUser = Auth.CurrentUser;
+            //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
+            await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
         }
 
         public ViewObject GetOrders()
         {
             if (Auth.LoggedIn)
             {
-                return Json(context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result);
+                return Json(context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result);
             }
             else
             {

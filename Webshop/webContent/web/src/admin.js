@@ -1,8 +1,13 @@
 import Vue from 'vue'
+import adminContext from "./Gateways/adminContext";
 
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));
 Vue.component('admin_add_products', require('./Admin/Product/AddProduct.vue'));
+Vue.component('user_admin_screen', require('./admin/UserAdminScreen.vue'));
+Vue.component('user_admin_row', require('./admin/userAdminRow.vue'))
+
+window.context = new adminContext();
 
 new Vue({
     el: '#app'

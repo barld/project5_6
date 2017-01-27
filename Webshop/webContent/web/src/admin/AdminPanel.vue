@@ -2,6 +2,7 @@
         <div class="row">
             <div class="twelve columns">
                 <div class="panel">
+                    <user_admin_screen></user_admin_screen>
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
                     <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>

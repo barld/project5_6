@@ -52,9 +52,43 @@ namespace Webshop.Controllers
         public ViewObject PostRetrieveMyLists()
         {
             //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
-            var data = GetBodyFromJson<User>();
+            //var data = GetBodyFromJson<User>();
             List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
             return Json(myLists);
+        }
+
+        public ViewObject PostAlreadyHaveGame()
+        {
+            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
+            var data = GetBodyFromJson<Game>();
+            var data2 = GetBodyFromJson<MyLists>();
+            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
+            var currentList = myLists.FirstOrDefault(x => x.TitleOfList == data2.TitleOfList);
+            if (currentList != null)
+            {
+                var game = currentList.Games.FirstOrDefault(g => g.EAN == data.EAN);
+                if (game != null)
+                {
+                    //Game probably exists, check EAN to be sure
+                    if (game.EAN == data.EAN)
+                    {
+                        return Json(true);
+                    }
+                    else
+                    {
+                        return Json(false);
+                    }
+                }
+                else
+                {
+                    return Json(false);
+                }
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
         }
 
         struct EANAndTitleOfList

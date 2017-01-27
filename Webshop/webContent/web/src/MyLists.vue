@@ -43,8 +43,6 @@
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
                     if(JSON.parse(xhr.response) != null){
-                        console.log("MyLists.vue: RetrieveMyLists hieronder");
-                        console.log(xhr.response);
                         base.MyLists = JSON.parse(xhr.response);
                     }
                 }

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-
     <!-- Basic Page Needs
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
@@ -46,16 +45,16 @@
                 <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
                 <UserNav
-                        v-bind:logedin="LogedIn"
-                        v-on:showlogin="showLogin"
-                        v-on:showregister="showRegister"
-                        v-on:login_succes="login_success"
-                        v-on:login_failed="login_failed"
-                        v-on:logedout="logedout"
-                        v-on:showFavourites="showFavourites"
-                        @show_account_page="show_account_page"
+                v-bind:logedin="LogedIn"
+                v-on:showlogin="showLogin"
+                v-on:showregister="showRegister"
+                v-on:login_succes="login_success"
+                v-on:login_failed="login_failed"
+                v-on:logedout="logedout"
+                v-on:showFavourites="showFavourites"
+                @show_account_page="show_account_page"
 
-                        :status="user_status"
+                :status="user_status"
                 >
                 </UserNav>
             </ul>
@@ -69,14 +68,13 @@
                 <product_details v-else @close="close_product_details" v-bind:product="chosen_detail_product"></product_details>
             </div>
             <login v-on:success="login_success" v-on:failed="login_failed" v-on:close="closeLogin" v-if="show_login"></login>
-            <admin_screen v-if="LogedIn && IsAdmin"></admin_screen>
-            <account_screen v-if="LogedIn && show_account" @product="show_product_section" @detail="show_order_detail" :orders="tempstore_orders"></account_screen>
+            <account_screen v-if="LogedIn && show_account" @product="show_product_section" @detail="show_order_detail"></account_screen>
             <detail_screen v-if="show_detail" v-on:account="show_account_page" v-bind:order="tempstore_order"></detail_screen>
             <register v-on:close="close_register"  v-if="show_register" ></register>
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-bind:LogedIn="LogedIn" v-on:checkout="begin_checkout" v-if="show_shoppingcart_screen && !IsAdmin"></shoppingcart_screen>
             <checkout_information v-if="show_checkout_information" v-on:payment="begin_payment"></checkout_information>
             <checkout_payment v-if="show_checkout_payment" v-on:confirmation="begin_confirmation"></checkout_payment>
-            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:inputs="tempstore_inputs" v-bind:shoppingcart="shoppingcart"></checkout_payment>
+            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:shoppingcart="shoppingcart"></checkout_confirmation>
         </div>
         <mylists :user_status="user_status"></mylists> 
     </div><!-- End container -->

@@ -1,0 +1,46 @@
+<template>
+    <div>
+        <h1>Verkoopaantal statistieken</h1>
+        <div>
+            <form>
+                <fieldset>
+                    <input v-for="item in timespans" type="radio" name="TimeSpan" value="{{item}}">{{item}}</input>
+                </fieldset>
+            </form>
+        </div>
+        <div></div>
+        <button @click="$emit('closed')">Close</button>
+    </div>
+</template>
+<script src="Chart.js"></script>
+<script>
+    export default{
+        data(){
+            return {timespans: null}
+        },
+        methods:{
+            LoadTimespans: function () {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/api/AdminStatistics/TimeSpans/");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                xhr.onload = function(){
+                    console.log(JSON.parse(xhr.response));
+                }
+                xhr.send("");
+            },
+            LoadOrderAmountStatistics: function(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/AdminStatistics/SalesAmountStatistics/");
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+                xhr.onload = function(){
+                    console.log(JSON.parse(xhr.response));
+                }
+
+                xhr.send(JSON.stringify({TimeSpan:"Week", BeginDate:new Date("2017-01-05"), EndDate:new Date("2017-01-18")}));
+            }
+        },
+        created: function () {
+            this.LoadTimespans();
+        }
+    }
+</script>

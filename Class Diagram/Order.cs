@@ -10,6 +10,8 @@ namespace DataModels
     //Defining the order specifications (Ordernumber, date etc.)
     public class Order
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public int OrderNumber { get; set; }
 
         public DateTime OrderDate { get; set; }
@@ -24,5 +26,6 @@ namespace DataModels
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+        public string Customer_Id { get; set; }
     }
 }

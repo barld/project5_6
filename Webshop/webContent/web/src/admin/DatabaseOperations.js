@@ -1,12 +1,4 @@
 class DatabaseOperations{
-    constructor(url){
-        this.URL = url;
-    }
-
-    get Url(){
-        return this.URL;
-    }
-
     static Send(data, url, method){
         return new Promise(function(resolve, reject){
             var xhr = new XMLHttpRequest();

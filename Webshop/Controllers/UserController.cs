@@ -119,17 +119,19 @@ namespace Webshop.Controllers
             //Make sure that the game is not already in the list to avoid duplicate games
             if (list.Games.FirstOrDefault(x => x.EAN == game.EAN) == null)
             {
-
                 //Add game to list
                 if (data.TitleOfList == "Favourite List")
                 {
-                    foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
+                    foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
                     {
-                        var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
-                        if (result != null)
+                        foreach (var order in context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result)
                         {
-                            list.Games.Add(game);
-                            break;
+                            var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
+                            if (result != null)
+                            {
+                                list.Games.Add(game);
+                                break;
+                            }
                         }
                     }
                 }
@@ -153,7 +155,7 @@ namespace Webshop.Controllers
         {
             if (Auth.LoggedIn)
             {
-                return Json(context.Orders.GetAllByEmail(Auth.CurrentUser.Email).Result);
+                return Json(context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result);
             }
             else
             {

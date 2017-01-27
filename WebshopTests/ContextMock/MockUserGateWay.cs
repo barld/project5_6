@@ -16,6 +16,11 @@ namespace WebshopTests.ContextMock
             this.testUsers = testUsers.ToList();
         }
 
+        public void Delete(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Delete(string columnToMatch, string valueToMatch)
         {
             throw new NotImplementedException();

@@ -20,31 +20,31 @@
         				<tbody>
         					<tr>
         						<td><strong>Voornaam</strong></td>
-                                <td>{{ checkoutInformation.voornaam }}</td>
+                                <td>{{ checkoutInformation.FirstName }}</td>
         					</tr>
         					<tr>
         						<td><strong>Achternaam</strong></td>
-        						<td>{{ checkoutInformation.achternaam }}</td>
+        						<td>{{ checkoutInformation.LastName }}</td>
         					</tr>
         					<tr>
         						<td><strong>Postcode</strong></td>
-        						<td>{{ checkoutInformation.postcode }}</td>
+        						<td>{{ checkoutInformation.DeliveryPostalCode }}</td>
         					</tr>
         					<tr>
         					 	<td><strong>Huisnummer</strong></td>
-        					 	<td>{{ checkoutInformation.huisnummer }}</td>
+        					 	<td>{{ checkoutInformation.DeliveryHousenumber }}</td>
         					</tr>
         					<tr>
         						<td><strong>Straat</strong></td>
-        						<td>{{ checkoutInformation.straat }}</td>
+        						<td>{{ checkoutInformation.DeliveryStreetname }}</td>
         					</tr>
         					<tr>
         						<td><strong>Stad</strong></td>
-        						<td>{{ checkoutInformation.stad }}</td>
+        						<td>{{ checkoutInformation.DeliveryCity }}</td>
         					</tr>
         					<tr>
         						<td><strong>Land</strong></td>
-        						<td>{{ checkoutInformation.land }}</td>
+        						<td>{{ checkoutInformation.DeliveryCountry }}</td>
         					</tr>
         				</tbody>
         			</table>

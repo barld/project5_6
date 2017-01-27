@@ -10,6 +10,8 @@ namespace DataModels
     //Defining the attributes for the orders (Email, city etc.)
     public class JsonOrder
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public Cart shoppingcart { get; set; }
         public string DeliveryCity { get; set; }
         public string DeliveryCountry { get; set; }

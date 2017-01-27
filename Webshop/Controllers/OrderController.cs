@@ -30,6 +30,8 @@ namespace Webshop.Controllers
             Address billingAddress = new Address { City = data.BillingCity, Country = data.BillingCountry, Housenumber = data.BillingHousenumber, PostalCode = data.BillingPostalCode, Streetname = data.DeliveryStreetname };
             Order order = new Order
             {
+                FirstName = data.FirstName,
+                LastName = data.LastName,
                 OrderLines = shoppingCartModule.CurrentShoppingCart.CartLines.Select(cl => cl.ToOrderLine()),
                 OrderDate = DateTime.Now,
                 Customer_Id = customer._id,

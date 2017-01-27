@@ -45,16 +45,16 @@
                 <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
                 <UserNav
-                        v-bind:logedin="LogedIn"
-                        v-on:showlogin="showLogin"
-                        v-on:showregister="showRegister"
-                        v-on:login_succes="login_success"
-                        v-on:login_failed="login_failed"
-                        v-on:logedout="logedout"
-                        v-on:showFavourites="showFavourites"
-                        @show_account_page="show_account_page"
+                v-bind:logedin="LogedIn"
+                v-on:showlogin="showLogin"
+                v-on:showregister="showRegister"
+                v-on:login_succes="login_success"
+                v-on:login_failed="login_failed"
+                v-on:logedout="logedout"
+                v-on:showFavourites="showFavourites"
+                @show_account_page="show_account_page"
 
-                        :status="user_status"
+                :status="user_status"
                 >
                 </UserNav>
             </ul>
@@ -74,7 +74,7 @@
             <shoppingcart_screen v-bind:shoppingcart="shoppingcart" v-bind:LogedIn="LogedIn" v-on:checkout="begin_checkout" v-if="show_shoppingcart_screen && !IsAdmin"></shoppingcart_screen>
             <checkout_information v-if="show_checkout_information" v-on:payment="begin_payment"></checkout_information>
             <checkout_payment v-if="show_checkout_payment" v-on:confirmation="begin_confirmation"></checkout_payment>
-            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:inputs="tempstore_inputs" v-bind:shoppingcart="shoppingcart"></checkout_confirmation>
+            <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:shoppingcart="shoppingcart"></checkout_confirmation>
         </div>
         <mylists :user_status="user_status"></mylists> 
     </div><!-- End container -->

@@ -1,6 +1,5 @@
 <template>
         <div class="row">
-            Hoi
             <div class="twelve columns">
                 <div class="panel">
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>

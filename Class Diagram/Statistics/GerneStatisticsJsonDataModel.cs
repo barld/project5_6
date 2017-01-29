@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Diagram
+namespace DataModels.Statistics
 {
     public class GenreStatisticModel
     {

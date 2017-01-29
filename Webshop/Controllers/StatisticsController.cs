@@ -1,10 +1,7 @@
 ﻿using MVC.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataModels;
+using DataModels.Statistics;
 using MVC.View;
 using Class_Diagram;
 
@@ -16,7 +13,7 @@ namespace Webshop.Controllers
 
         public ViewObject PostSalesAmountStatistics()
         {
-            var data = GetBodyFromJson<JsonDateStatisticData>();
+            var data = GetBodyFromJson<DateJsonDataModel>();
 
             return Json(context.Orders.GetOrderAmountDataTask(data.TimeScale, data.BeginDate, data.EndDate));
         }
@@ -28,9 +25,17 @@ namespace Webshop.Controllers
 
         public ViewObject PostGenreAmountStatistics()
         {
-            var data = GetBodyFromJson<JsonDateStatisticData>();
+            var data = GetBodyFromJson<DateJsonDataModel>();
             var genres = context.Genres.GetAll().Result;
             return Json(context.Orders.GetPopularGenreOfOrdersStatistics(data.BeginDate, data.EndDate, data.TimeScale, genres));
+        }
+
+        public ViewObject PostWishListStatistics()
+        {
+            var data = GetBodyFromJson<GerneJsonDataModel>();
+            var genre = data.Gerne != "All" ? context.Genres.GetByTitle(data.Gerne).Result : null;
+            var statistics = context.Users.GetGameWishListStatistics(genre);
+            return Json(statistics);
         }
     }
 }

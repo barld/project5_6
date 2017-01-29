@@ -8,6 +8,7 @@ using System.Globalization;
 using Class_Diagram;
 using System.Diagnostics;
 using System.Threading;
+using DataModels.Statistics;
 
 namespace DataModels.Gateways
 {
@@ -41,7 +42,7 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).ToListAsync();
         }
 
-        public List<SaleStatisticDataModel> GetOrderAmountDataTask(TimeScale timeScale, DateTime beginDate, DateTime endDate)
+        public List<SaleStatisticsJsonDataModel> GetOrderAmountDataTask(TimeScale timeScale, DateTime beginDate, DateTime endDate)
         {
             //timeSpan.d
             CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
@@ -50,27 +51,27 @@ namespace DataModels.Gateways
             var result = GetOrdersBetweenDates(beginDate, endDate);
             var calander = ci.DateTimeFormat.FirstDayOfWeek;
 
-            var groupedResult = new List<SaleStatisticDataModel>();
+            var groupedResult = new List<SaleStatisticsJsonDataModel>();
             switch (timeScale)
             {
                 case TimeScale.Day:
                     groupedResult = result
                         .GroupBy(g => g.OrderDate.Date)
-                        .Select(grp => new SaleStatisticDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = grp.Key.Date.ToShortDateString() })
+                        .Select(grp => new SaleStatisticsJsonDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = grp.Key.Date.ToShortDateString() })
                         .OrderBy(x => x.Date)
                         .ToList();
                     break;
                 case TimeScale.Week:
                     groupedResult = result
                         .GroupBy(g => firstDayOfWeek(g.OrderDate))
-                        .Select(grp => new SaleStatisticDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = "W" + ci.Calendar.GetWeekOfYear(grp.Key, ci.DateTimeFormat.CalendarWeekRule, ci.DateTimeFormat.FirstDayOfWeek) + " - " + grp.Key.Year })
+                        .Select(grp => new SaleStatisticsJsonDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = "W" + ci.Calendar.GetWeekOfYear(grp.Key, ci.DateTimeFormat.CalendarWeekRule, ci.DateTimeFormat.FirstDayOfWeek) + " - " + grp.Key.Year })
                         .OrderBy(x => x.Date)
                         .ToList();
                     break;
                 case TimeScale.Month:
                     groupedResult = result
                         .GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1))
-                        .Select(grp => new SaleStatisticDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = ci.DateTimeFormat.GetMonthName(grp.Key.Month) + " - " + grp.Key.Year })
+                        .Select(grp => new SaleStatisticsJsonDataModel() { Date = grp.Key.Date, Amount = grp.Count(), KeyString = ci.DateTimeFormat.GetMonthName(grp.Key.Month) + " - " + grp.Key.Year })
                         .OrderBy(x => x.Date)
                         .ToList();
                     break;
@@ -112,7 +113,8 @@ namespace DataModels.Gateways
                     break;
             }
 
-            foreach (var ordersAtDate in ordersByDate) {
+            foreach (var ordersAtDate in ordersByDate)
+            {
                 total = 0;
                 var genreAmounts = new Dictionary<String, int>(genres.Count());
                 foreach (Genre genre in genres)
@@ -120,8 +122,10 @@ namespace DataModels.Gateways
                     genreAmounts.Add(genre.Name, 0);
                 }
 
-                foreach (Order order in ordersAtDate.Value){
-                    foreach (OrderLine line in order.OrderLines){
+                foreach (Order order in ordersAtDate.Value)
+                {
+                    foreach (OrderLine line in order.OrderLines)
+                    {
                         foreach (Genre gGenre in line.Game.Genres)
                         {
                             genreAmounts[gGenre.Name] += line.Amount;

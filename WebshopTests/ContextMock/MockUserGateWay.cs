@@ -16,6 +16,11 @@ namespace WebshopTests.ContextMock
             this.testUsers = testUsers.ToList();
         }
 
+        public void Delete(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Delete(string columnToMatch, string valueToMatch)
         {
             throw new NotImplementedException();
@@ -69,7 +74,12 @@ namespace WebshopTests.ContextMock
             throw new NotImplementedException();
         }
 
-        public Task UpdateUser(User user)
+        public Task UpdateMyLists(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateMyLists(User currentUser, string titleOfList, Game game)
         {
             throw new NotImplementedException();
         }

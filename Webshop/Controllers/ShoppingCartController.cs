@@ -16,49 +16,26 @@ namespace Webshop.Controllers
     /// </summary>
     public class ShoppingCartController : MVC.Controller.Controller
     {
-        #region logic
         const string shoppingCartKey = "shoppingCart";
         private Context context;
-
-        Cart currentShoppingCart
-        {
-            get
-            {
-                if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, new Cart());
-                return Session.Data[shoppingCartKey] as Cart;
-            }
-            set
-            {
-                if (!Session.Data.ContainsKey(shoppingCartKey))
-                    Session.Data.Add(shoppingCartKey, value);
-                Session.Data[shoppingCartKey] = value;
-            }
-        }
-
-        #endregion
+        private ShoppingCartLogic logic;
+        
 
         public override void AfterConstruct()
         {
             this.context = new Context();
+            logic = new ShoppingCartLogic(Session, context);
         }
 
         public ViewObject Get()
         {
-            return Json(currentShoppingCart);
+            return Json(logic.CurrentShoppingCart);
         }
 
         public ViewObject PostAdd()
         {
             var game = this.GetBodyFromJson<Game>();
-            if(currentShoppingCart.CartLines.Count(g => g.Product.EAN == game.EAN) == 0)
-            {
-                currentShoppingCart.CartLines.Add(new CartLine { Amount = 1, Product = context.Games.GetByEAN(game.EAN).Result });
-            }
-            else
-            {
-                currentShoppingCart.CartLines.First(c => c.Product.EAN == game.EAN).Amount++;
-            }
+            logic.AddToCart(game);
             return Json(new Models.ActionResultViewModel { Success = true });
         }
 
@@ -66,9 +43,8 @@ namespace Webshop.Controllers
         {
             try
             {
-                currentShoppingCart = GetBodyFromJson<Cart>();
-                currentShoppingCart.CartLines.ForEach(cl => { cl.Product = context.Games.GetByEAN(cl.Product.EAN).Result; cl.Amount %= 1000; });
-                currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+                var cart = GetBodyFromJson<Cart>();
+                logic.ReplaceShoppingCart(cart);
                 return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart succesvol updated" });
             }
             catch
@@ -79,15 +55,14 @@ namespace Webshop.Controllers
 
         public ViewObject DeleteAll()
         {
-            currentShoppingCart = new Cart();
+            logic.Clear();
             return Json(new Models.ActionResultViewModel { Success = true, Message = "shoppingcart deleted" });
         }
 
         public ViewObject DeleteRemove()
         {
             var game = GetBodyFromJson<Game>();
-            currentShoppingCart.CartLines.ForEach(cl => { if (cl.Product.EAN == game.EAN) cl.Amount--; });
-            currentShoppingCart.CartLines = currentShoppingCart.CartLines.Where(cl => cl.Amount > 0).ToList();
+            logic.RemoveOneItem(game);
             return Json(new Models.ActionResultViewModel { Success = true, Message = "item deleted" });
         }
 

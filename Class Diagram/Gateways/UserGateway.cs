@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
@@ -13,6 +14,12 @@ namespace DataModels.Gateways
     {
         public UserGateway(IMongoDatabase database) : base("User", database)
         {
+        }
+
+        public async override Task<IEnumerable<User>> GetAll()
+        {
+            var result = await base.GetAll();
+            return result.Where(u => u.IsActive);
         }
 
         public async Task<User> GetByEmail(string email)
@@ -51,7 +58,7 @@ namespace DataModels.Gateways
             var user = await GetByEmail(email);
             if(user != null)
             {
-                if(Sha256(user.Salt + password) == user.Password)
+                if(user.IsActive && Sha256(user.Salt + password) == user.Password)
                 {
                     return user;
                 }
@@ -95,12 +102,12 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
         {
             try
             {
-                //user.MyLists.Where(x => x.TitleOfList == ListTitle).GetEnumerator().Current.Games.Add(gameToAdd);
-                //await Replace("MyLists", List.TitleOfList, user);
+                var filter = Builders<User>.Filter.Eq(x => x._id, updatedUser._id);
+                await Collection.ReplaceOneAsync(filter, updatedUser);
             }
             catch (Exception ex)
             {
@@ -112,7 +119,7 @@ namespace DataModels.Gateways
         {
             try
             {
-                var user = GetByEmail(valueToMatch).Result;
+                var user = GetById(valueToMatch).Result;
                 user.IsActive = false;
                 await Replace(columnToMatch, valueToMatch, user);
             }
@@ -121,6 +128,11 @@ namespace DataModels.Gateways
                 Console.WriteLine("Could not delete user, make sure the email was correct");
                 Console.WriteLine("Error: " + ex.Message);
             }
+        }
+
+        public void Delete(User user)
+        {
+            this.Delete("_id", user._id).Wait();
         }
     }
 }

@@ -23,9 +23,9 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetAllByEmail(string email)
+        public async Task<IEnumerable<Order>> GetAllByCustomer_id(string id)
         {
-            var filter = Builders<Order>.Filter.Eq(o => o.Customer.Email, email);
+            var filter = Builders<Order>.Filter.Eq(o => o.Customer_Id, id);
             return await Collection.Find(filter).ToListAsync();
         }
 

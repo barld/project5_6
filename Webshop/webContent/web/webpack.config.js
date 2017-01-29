@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: {
     main: './src/main.js',
-    admin: './src/admin/admin.js'
+    admin: './src/admin.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -46,7 +46,7 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
-if (true || process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([

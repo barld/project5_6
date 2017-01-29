@@ -45,7 +45,7 @@
                 this.$emit("close");
             },
             checkout:function(){
-                if(window.shoppingcart.cart.CartLines< 1){
+                if(window.context.ShoppingCart.cart.CartLines< 1){
                     alert('Cant checkout with an empty cart.')
                 }else{
                     this.$emit("checkout");
@@ -60,7 +60,7 @@
         },
         created: function () {
             window.context.ShoppingCart.registerOnChangedshoppingCart(this.changedShoppingCart);
-            this.changedShoppingCart(window.shoppingcart)
+            this.changedShoppingCart(window.context.ShoppingCart)
         }
     }
 </script>

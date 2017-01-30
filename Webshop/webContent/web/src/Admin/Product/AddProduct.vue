@@ -60,10 +60,14 @@
                 <div class="six columns">
                     <input type="checkbox" v-model="VRReady" value="true">VR compatible<br>
                 </div>
+                <div class="six columns">
+                    <input type="date" v-model="GameReleaseDate">
+                </div>
             </div>
+            <button @click="createGame" class="button-primary">Maak product</button>
+            <div v-if="success" class="success">{{ successMessage }}</div>
         </div>
-        <button @click="createGame" class="button-primary">Maak product</button>
-        <div v-if="success" class="success">{{ successMessage }}</div>
+        <a href="/admin.html">Terug naar de producten</a>
     </div>
 </template>
 <script>
@@ -87,7 +91,7 @@
                 GameEAN: parseInt(window.crypto.getRandomValues(new Uint32Array(1))),
                 GamePrice: 0,
                 GameIsVRCompatible: "",
-                GameReleaseDate: ""
+                GameReleaseDate: this.GameReleaseDate
             }
         },
         methods:{
@@ -128,6 +132,9 @@
                 };
 
                 xhr.send(JSON.stringify(game));
+            },
+            hide: function(){
+                this.show = false;
             }
         }
     }

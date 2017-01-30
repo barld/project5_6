@@ -59,11 +59,11 @@ namespace Webshop.Controllers
             return Json(gameEAN);
         }
 
-        // PUT: /api/product/game
+        // PUT: /api/product/
         public async void Put()
         {
             Game game = this.GetBodyFromJson<Game>();
-            await context.Games.Replace(game.EAN.ToString(), game.EAN.ToString(), game);    
+            await context.Games.Update(game);
         }
     }
 }

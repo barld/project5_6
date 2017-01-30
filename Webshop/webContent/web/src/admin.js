@@ -3,6 +3,7 @@ import Vue from 'vue'
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));
 Vue.component('admin_add_products', require('./Admin/Product/AddProduct.vue'));
+Vue.component('admin_edit_products', require('./Admin/Product/Editproduct.vue'));
 
 new Vue({
     el: '#app'

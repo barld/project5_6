@@ -19,7 +19,8 @@
                 publishers:[],
                 genres:[],
                 productsLoaded: false,
-                addProducts: false
+                addProducts: false,
+                editProducts: false,
             }
         },
         methods:{

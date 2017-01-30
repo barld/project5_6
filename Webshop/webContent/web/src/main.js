@@ -138,7 +138,7 @@ new Vue({
             this.on_product_section = true;
 
         },
-        show_order_detail: function(){
+        show_order_detail: function(order){
             this.show_account = false;
             this.show_detail = true;
         },

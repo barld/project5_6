@@ -41,7 +41,7 @@ namespace WebshopTests.ContextMock
             return testUsers.Find(user => user._id == id);
         }
 
-        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        public async Task<List<MyLists>> GetMyLists(User user)
         {
             throw new NotImplementedException();
         }

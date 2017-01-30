@@ -11,5 +11,21 @@ namespace DataModels.Statistics
     {
         public string GameTitle { get; set; }
         public int Count { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var item = obj as GameWishListStatisticsJsonDataModel;
+            if(item == null)
+            {
+                return false;
+            }
+
+            return item.GameTitle.Equals(this.GameTitle);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GameTitle.GetHashCode();
+        }
     }
 }

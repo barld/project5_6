@@ -4,6 +4,9 @@ using DataModels;
 using DataModels.Statistics;
 using MVC.View;
 using Class_Diagram;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Webshop.Controllers
 {
@@ -32,9 +35,21 @@ namespace Webshop.Controllers
 
         public ViewObject PostWishListStatistics()
         {
+            ISet<Genre> genres = new HashSet<Genre>();
             var data = GetBodyFromJson<GerneJsonDataModel>();
-            var genre = data.Gerne != "All" ? context.Genres.GetByTitle(data.Gerne).Result : null;
-            var statistics = context.Users.GetGameWishListStatistics(genre);
+
+            if (data.Genre[0] == "all")
+            {
+                genres = null;
+            }else
+            {
+                for (int i = 0; i < data.Genre.Length; i++)
+                {
+                    genres.Add(context.Genres.GetByTitle(data.Genre[i]).Result);
+                }
+            }
+
+            var statistics = context.Users.GetGameWishListStatistics(data.Amount, genres);
             return Json(statistics);
         }
     }

@@ -81,21 +81,25 @@ class StatisticsGateway {
         }
         
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "/api/Genre/GetAll/");
+        xhr.open("GET", "/api/Genre/All/");
         xhr.onload = function(){
-            //console.log(JSON.parse(xhr.response));
+            console.log(JSON.parse(xhr.response));
             callback(JSON.parse(xhr.response));
         }
         xhr.send();
     }
 
-    LoadWishListStatistics(callback, genre){
-        if(typeof callback !== "function"){
+    LoadWishListStatistics(amount, genres, callback){
+        if(typeof callback !== "function" || !amount){
             console.log("Function:LoadWishListStatistics Message:Warning not all parameters have been correctly filled.");
             console.log("Values passed are:");
             console.log("callback = " + callback);
+            console.log("amount = " + amount);
             console.log("exiting function");
             return;
+        }
+        if(!Array.isArray(genres) || genres.length < 1){
+            genres = ["all"];
         }
 
         let xhr = new XMLHttpRequest();
@@ -104,6 +108,6 @@ class StatisticsGateway {
             //console.log(JSON.parse(xhr.response));
             callback(JSON.parse(xhr.response));
         }
-        xhr.send(JSON.stringify({Genre: genre}));
+        xhr.send(JSON.stringify({Genre: genres, Amount: amount}));
     }
 }

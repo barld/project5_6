@@ -42,7 +42,7 @@ namespace WebshopTests.ContextMock
             return testUsers.Find(user => user._id == id);
         }
 
-        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(Genre genre)
+        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre)
         {
             return new List<GameWishListStatisticsJsonDataModel>
             {

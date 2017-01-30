@@ -14,8 +14,8 @@
                 <div class="six columns statistic_fill_div">
                     <fieldset>
                         <legend>Begin- en einddatum</legend>
-                        Start datum: <input type="date" name="StartDate" :value="today" v-model="begin_date"><br>
-                        Eind datum: <input type="date" name="EndDate" :value="today" v-model="end_date"><br>
+                        Start datum: <input title="yyyy-mm-dd" type="date" name="StartDate" :value="today" v-model="begin_date"><br>
+                        Eind datum: <input title="yyyy-mm-dd" type="date" name="EndDate" :value="today" v-model="end_date"><br>
                     </fieldset>
                 </div>
             </form>
@@ -77,6 +77,22 @@
                     datasets[i] = inst;
                 }
 
+                var options = {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                callback: function (value) {
+                                    return value + "%"
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Percentage"
+                            }
+                        }]
+                    }
+                }
+
                 let chartData = {
                     labels: pr.labels,
                     datasets: datasets
@@ -84,7 +100,8 @@
 
                 let myChart = new Chart(ctx, {
                     type: 'line',
-                    data: chartData
+                    data: chartData,
+                    options: options
                 });
             },
 
@@ -125,7 +142,7 @@
             labels[i] = data[i].KeyString;
             for(let y = 0; y < genreKeys.length; y++){
                 console.log(i + " " + y);
-                values[y][i] = data[i].GenreAmounts[genreKeys[y]];
+                values[y][i] = (Math.round((data[i].GenreAmounts[genreKeys[y]] / data[i].DateTotal * 100) * 10) / 10);
             }
         }
 

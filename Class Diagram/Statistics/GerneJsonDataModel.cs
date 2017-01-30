@@ -8,6 +8,7 @@ namespace DataModels.Statistics
 {
     public class GerneJsonDataModel
     {
-        public string Gerne { get; set; }
+        public string[] Genre { get; set; }
+        public int Amount { get; set; }
     }
 }

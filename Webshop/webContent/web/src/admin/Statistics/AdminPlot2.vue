@@ -58,6 +58,7 @@
                 Chart.defaults.global.elements.point.hoverBorderWidth = 2;
                 Chart.defaults.global.elements.point.radius = 1;
                 Chart.defaults.global.elements.point.hitRadius = 10;
+                Chart.defaults.global.legend.display = true;
 
                 let ctx = document.getElementById("s_canvas");
                 let datasetModel = {

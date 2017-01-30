@@ -56,16 +56,23 @@
                 Chart.defaults.global.elements.point.hoverBorderWidth = 2;
                 Chart.defaults.global.elements.point.radius = 1;
                 Chart.defaults.global.elements.point.hitRadius = 10;
+                Chart.defaults.global.legend.display = false;
 
                 let ctx = document.getElementById("s_canvas");
-                let datasetModel = {
-                    label:pr.labels,
-                    data:pr.values
+                let test2={
+                    labels: pr.labels,
+                    datasets: [
+                        {
+                            data: pr.values
+                        }
+                    ]
                 };
 
+                console.log(test2);
                 let myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: datasetModel
+                    type: 'bar',
+                    data: test2,
+                    options: ""
                 });
             },
 

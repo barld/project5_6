@@ -35,28 +35,16 @@
 <body>
 <div id="app">
     <nav><!-- Start menu -->
-        <mobile_menu></mobile_menu>
         <div id="navbar">
             <ul>
-                <li class="submenu_parent">
-                    <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
-                    <platform_menu @show_games="show_games"></platform_menu>
+
+                <li class="floating_menu_component" id="user_profile">
+                    <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{user_status.Email}} ({{user_status.Role}})</a>
+                    <ul class="submenu">
+                        <li><a href="/">Back</a></li>
+                    </ul>
                 </li>
-                <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
-                <UserNav
-                        v-bind:logedin="LogedIn"
-                        v-on:showlogin="showLogin"
-                        v-on:showregister="showRegister"
-                        v-on:login_succes="login_success"
-                        v-on:login_failed="login_failed"
-                        v-on:logedout="logedout"
-                        v-on:showFavourites="showFavourites"
-                        @show_account_page="show_account_page"
-
-                        :status="user_status"
-                >
-                </UserNav>
             </ul>
         </div>
     </nav><!-- End menu -->

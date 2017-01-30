@@ -10,7 +10,31 @@ Vue.component('user_admin_row', require('./admin/userAdminRow.vue'))
 window.context = new adminContext();
 
 new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        user_status: {}
+    },
+    methods:{
+        check_login: function () {
+            var base = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/api/user/status/");
+
+            // The RequestHeader can be any, by the server accepted, file
+            xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+            // Function to fire off when the server has send a response
+            xhr.onload = function () {
+                base.user_status = JSON.parse(xhr.response);
+            };
+
+            xhr.send();
+        },
+    },
+    created : function () {
+        this.check_login();
+    }
 });
 
 function Send(data, url, method){

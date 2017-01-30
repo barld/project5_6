@@ -68,12 +68,10 @@
                         //console.log("Response is true: " + this.product.EAN);
                         if(listTitle == "Wish List")
                         {
-                            console.log("True: Wish");
                             product.HaveGameResultWish = true;
                         }
                         else
                         {
-                            console.log("True: Fav");
                             product.HaveGameResultFav = true;
                         }
                     }
@@ -82,12 +80,10 @@
                         //console.log("Response is null or false: " + this.product.EAN);
                         if(listTitle == "Wish List")
                         {
-                            console.log("False: Wish");
                             product.HaveGameResultWish = false;     
                         }
                         else
                         {
-                            console.log("False: Fav");
                             product.HaveGameResultFav = false;
                         }
                     }

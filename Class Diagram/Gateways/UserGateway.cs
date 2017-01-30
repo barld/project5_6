@@ -41,9 +41,8 @@ namespace DataModels.Gateways
             return hash;
         }
 
-        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        public async Task<List<MyLists>> GetMyLists(User user)
         {
-            var user = await GetByEmail(email);
             if (user != null)
             {
                 return user.MyLists;
@@ -103,17 +102,18 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public async Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
+        public Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
         {
             try
             {
                 var filter = Builders<User>.Filter.Eq(x => x._id, updatedUser._id);
-                await Collection.ReplaceOneAsync(filter, updatedUser);
+                return Collection.ReplaceOneAsync(filter, updatedUser);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            return null;
         }
 
         public override async Task Delete(string columnToMatch, string valueToMatch)

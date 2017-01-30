@@ -1,5 +1,5 @@
 <template>
-    <div class="container margin-top"><!-- Start container -->
+    <div>><!-- Start container -->
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">

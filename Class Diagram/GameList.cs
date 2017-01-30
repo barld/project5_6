@@ -15,7 +15,9 @@ namespace DataModels
 
         public List<Game> Games { get; set; }
 
-        public BsonObjectId _id { get; set; } = ObjectId.GenerateNewId();
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; } = ObjectId.GenerateNewId().ToString();
 
     }
 }

@@ -1,7 +1,6 @@
 <template>
     <div id="editGame">
         <h3>Product aanpassen</h3>
-        {{ game }}
         <div v-show="platformsLoaded" class="row">
             <div class="row">
                 <div class="six columns">

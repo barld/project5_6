@@ -52,8 +52,8 @@ namespace Webshop.Controllers
         public ViewObject PostRetrieveMyLists()
         {
             //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
-            var data = GetBodyFromJson<User>();
-            List<MyLists> myLists = context.Users.GetMyListsByEmail(data.Email).Result;
+            //var data = GetBodyFromJson<User>();
+            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
             return Json(myLists);
         }
 
@@ -63,7 +63,18 @@ namespace Webshop.Controllers
             public string TitleOfList { get; set; }
         }
 
-        public async void PostAddToList()
+        public ViewObject PostAlreadyHaveGame()
+        {
+            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
+            var data = GetBodyFromJson<EANAndTitleOfList>();
+            return Json(
+                context.Users.GetMyLists(Auth.CurrentUser).Result
+                ?.Find(l => l.TitleOfList == data.TitleOfList)
+                ?.Games.Find(game => game.EAN == data.EAN) != null
+            );
+        }
+
+        public ViewObject PostAddToList()
         {
             var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
@@ -82,27 +93,43 @@ namespace Webshop.Controllers
             //Find the correct list
             MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
 
-            //Add game to list
-            if (data.TitleOfList == "Favourite List")
+            //Make sure that the game is not already in the list to avoid duplicate games
+            if (list.Games.FirstOrDefault(x => x.EAN == game.EAN) == null)
             {
-                foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
+                //Add game to list
+                if (data.TitleOfList == "Favourite List")
                 {
-                    var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
-                    if (result != null)
+                    foreach (var order in context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result)
                     {
-                        list.Games.Add(game);
-                        break;
+                        var result = order.OrderLines.FirstOrDefault(x => x.Game.EAN == game.EAN);
+                        if (result != null)
+                        {
+                            list.Games.Add(game);
+                            break;
+                        }
                     }
                 }
+                else
+                {
+                    list.Games.Add(game);
+                }
+
+                //User updatedUser = Auth.CurrentUser;
+                //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                return Json(true);
             }
             else
             {
-                list.Games.Add(game);
+                //Game already exists in the list, remove it
+                var item = list.Games.FirstOrDefault(g => g.EAN == game.EAN);
+                if (item != null)
+                {
+                    list.Games.Remove(item);
+                }
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                return Json(false);
             }
-            
-            //User updatedUser = Auth.CurrentUser;
-            //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-            await context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
         }
 
         public ViewObject GetOrders()

@@ -15,7 +15,8 @@
             return{
                 products:[],
                 showProductDetails: false,
-                showProducts: true
+                showProducts: true,
+                HaveGameResultWish: false
             }
         },
         methods: {
@@ -30,7 +31,12 @@
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    base.products = JSON.parse(xhr.response);
+                    let products = JSON.parse(xhr.response);
+                    products.forEach(product => product.HaveGameResultWish = false);
+                    products.forEach(product => product.HaveGameResultFav = false);
+                    products.forEach(product => base.already_own_game(product, "Wish List"));
+                    products.forEach(product => base.already_own_game(product, "Favourite List"));
+                    base.products = products;
                 };
 
                 xhr.send();
@@ -44,13 +50,55 @@
                     this.showProductDetails = false;
                 }
             },
+            already_own_game:function(product, listTitle)
+            {
+                var base = this;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/user/AlreadyHaveGame/");
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", false);
+                var gameInformation = {EAN:product.EAN, TitleOfList:listTitle};
+                xhr.send(JSON.stringify(gameInformation));
+                
+            //    return true;
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    if(JSON.parse(xhr.response) != null && JSON.parse(xhr.response) == true)
+                    {
+                        //console.log("Response is true: " + this.product.EAN);
+                        if(listTitle == "Wish List")
+                        {
+                            console.log("True: Wish");
+                            product.HaveGameResultWish = true;
+                        }
+                        else
+                        {
+                            console.log("True: Fav");
+                            product.HaveGameResultFav = true;
+                        }
+                    }
+                    else
+                    {
+                        //console.log("Response is null or false: " + this.product.EAN);
+                        if(listTitle == "Wish List")
+                        {
+                            console.log("False: Wish");
+                            product.HaveGameResultWish = false;     
+                        }
+                        else
+                        {
+                            console.log("False: Fav");
+                            product.HaveGameResultFav = false;
+                        }
+                    }
+                }
+            },
             show_details: function (game) {
                 this.$emit('show_details', game)
             }
 
         },
         created: function(){
-            console.log(this.user_status);
             this.getData();
         },
         close: function(){

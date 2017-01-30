@@ -16,6 +16,11 @@ namespace WebshopTests.ContextMock
             this.testUsers = testUsers.ToList();
         }
 
+        public void Delete(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Delete(string columnToMatch, string valueToMatch)
         {
             throw new NotImplementedException();
@@ -36,7 +41,7 @@ namespace WebshopTests.ContextMock
             return testUsers.Find(user => user._id == id);
         }
 
-        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        public async Task<List<MyLists>> GetMyLists(User user)
         {
             throw new NotImplementedException();
         }

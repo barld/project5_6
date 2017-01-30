@@ -1,5 +1,5 @@
 <template>
-    <div class="container margin-top"><!-- Start container -->
+    <div>><!-- Start container -->
         <div class="container">
         	<div class="row">
                 <div class="ten.columns offset-by-two-columns">
@@ -13,21 +13,21 @@
 	            <form action="#">
 	                <div class="six columns">
 	                	<label for="voornaam">Voornaam</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Voornaam" id="voornaam" v-model="formData.voornaam">
+      					<input class="u-full-width" required="required" type="text" placeholder="Voornaam" id="voornaam" v-model="formData.FirstName">
       					<label for="achternaam">Achternaam</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Achternaam" id="achternaam" v-model="formData.achternaam">
+      					<input class="u-full-width" required="required" type="text" placeholder="Achternaam" id="achternaam" v-model="formData.LastName">
       					<label for="postcode">Postcode</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Postcode" id="postcode" v-model="formData.postcode">
+      					<input class="u-full-width" required="required" type="text" placeholder="Postcode" id="postcode" v-model="formData.DeliveryPostalCode">
       					<label for="huisnummer">Huisnummer</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Huisnummer" id="huisnummer" v-model="formData.huisnummer">
+      					<input class="u-full-width" required="required" type="text" placeholder="Huisnummer" id="huisnummer" v-model="formData.DeliveryHousenumber">
       					<label for="straat">Straat</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Straat" id="straat" v-model="formData.straat">
+      					<input class="u-full-width" required="required" type="text" placeholder="Straat" id="straat" v-model="formData.DeliveryStreetname">
 	                </div>
 	                <div class="six columns">
 	                	<label for="stad">Stad</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Stad" id="stad" v-model="formData.stad">
+      					<input class="u-full-width" required="required" type="text" placeholder="Stad" id="stad" v-model="formData.DeliveryCity">
       					<label for="land">Land</label>
-      					<input class="u-full-width" required="required" type="text" placeholder="Land" id="land" v-model="formData.land">
+      					<input class="u-full-width" required="required" type="text" placeholder="Land" id="land" v-model="formData.DeliveryCountry">
 	                </div>
             </div>
             <hr>
@@ -43,20 +43,20 @@
         data: function () {
             return {
                 formData: {
-                    voornaam: "",
-                    achternaam: "",
-                    postcode: "",
-                    huisnummer: "",
-                    straat: "",
-                    stad: "",
-                    land: "",
+                    FirstName: "",
+                    LastName: "",
+                    DeliveryPostalCode: "",
+                    DeliveryHousenumber: "",
+                    DeliveryStreetname: "",
+                    DeliveryCity: "",
+                    DeliveryCountry: "",
                 }
             }
         },
         methods: {
             payment: function () {
-                let IsComplete = this.formData.voornaam !== "" && this.formData.achternaam !== "" && this.formData.postcode !== ""
-                    && this.formData.huisnummer !== "" && this.formData.straat !== "" && this.formData.stad !== "" && this.formData.land !== "";
+                let IsComplete = this.formData.FirstName != "" && this.formData.LastName != "" && this.formData.DeliveryPostalCode != ""
+                    && this.formData.DeliveryHousenumber != "" && this.formData.DeliveryStreetname != "" && this.formData.DeliveryCity != "" && this.formData.DeliveryCountry != "";
 
 
                 if (IsComplete) {

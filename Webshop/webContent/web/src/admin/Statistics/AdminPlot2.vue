@@ -25,12 +25,12 @@
             </div>
         </div>
         <div class="statistics_canvas" id="s_canvas_div">
-            <canvas id="s_canvas"></canvas>
+            <canvas id="s_canvas" ></canvas>
         </div>
     </div>
 </template>
 <script>
-    import LineChartDrawer from './BarChartDrawer'
+    import Chart from 'chart.js'
 
     export default{
         data(){
@@ -47,7 +47,45 @@
             },
 
             ShowGenreStatistics: function(data){
+                console.log(data);
+                let pr = prepareData(data);
 
+                Chart.defaults.global.elements.line.fill = false;
+                Chart.defaults.global.elements.line.lineTension = 0.2;
+                Chart.defaults.global.elements.line.borderCapStyle = 'butt';
+                Chart.defaults.global.elements.point.borderWidth = 1;
+                Chart.defaults.global.elements.point.hoverRadius = 5;
+                Chart.defaults.global.elements.point.hoverBorderWidth = 2;
+                Chart.defaults.global.elements.point.radius = 1;
+                Chart.defaults.global.elements.point.hitRadius = 10;
+
+                let ctx = document.getElementById("s_canvas");
+                let datasetModel = {
+                    label: "My Second dataset",
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    data: [92, 85, 12, 21, 55, 14, 74]
+                };
+                let datasets = [];
+                let genreKeys = Object.keys(data[0].GenreAmounts);
+                for(let i = 0; i < pr.values.length; i++){
+                    let inst = Object.create(datasetModel);
+                    inst.label = genreKeys[i];
+                    inst.data = pr.values[i];
+                    datasets[i] = inst;
+                }
+
+                let chartData = {
+                    labels: pr.labels,
+                    datasets: datasets
+                };
+
+                let myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: chartData
+                });
             },
 
             PrepareForm: function(data){
@@ -66,6 +104,32 @@
         },
         created: function(){
             window.context.Statistics.LoadTimespans(this.PrepareForm);
+        },
+        mounted: function(){
+            let c = document.getElementById("s_canvas");
+            c.width = 900;
+            c.height = 550;
         }
+    }
+
+    function prepareData(data){
+        let labels = [];
+        let values = [];
+        let genreKeys = Object.keys(data[0].GenreAmounts);
+
+        for(let i = 0; i < genreKeys.length; i++){
+            values[i] = [];
+        }
+
+        for(let i = 0; i < data.length; i++){
+            labels[i] = data[i].KeyString;
+            for(let y = 0; y < genreKeys.length; y++){
+                console.log(i + " " + y);
+                values[y][i] = data[i].GenreAmounts[genreKeys[y]];
+            }
+        }
+
+        console.log({labels: labels, values: values});
+        return {labels: labels, values: values};
     }
 </script>

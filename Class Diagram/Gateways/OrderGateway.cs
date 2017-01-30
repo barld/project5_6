@@ -84,9 +84,11 @@ namespace DataModels.Gateways
 
         public List<GenreStatisticModel> GetPopularGenreOfOrdersStatistics(DateTime beginDate, DateTime endDate, TimeScale timeScale, IEnumerable<Genre> genres)
         {
-            Dictionary<DateTime, List<Order>> ordersByDate = new Dictionary<DateTime, List<Order>>();
+            Dictionary<DateTime, GenreStatisticModel> ordersByDate = new Dictionary<DateTime, GenreStatisticModel>();
             List<GenreStatisticModel> resultList = new List<GenreStatisticModel>();
             List<Order> orderList = GetOrdersBetweenDates(beginDate, endDate);
+            CultureInfo ci = CultureInfo.CreateSpecificCulture("nl-NL");
+            Thread.CurrentThread.CurrentCulture = ci;
             int total = 0;
 
             switch (timeScale)
@@ -95,54 +97,25 @@ namespace DataModels.Gateways
                     ordersByDate = orderList
                         .GroupBy(g => g.OrderDate.Date)
                         .OrderBy(g => g.Key)
-                        .ToDictionary(g => g.Key, g => g.ToList());
+                        .ToDictionary(g => g.Key, g => createGenreStatisticModel(g.Key, g.Key.Date.ToShortDateString(), g.ToList(), genres, new GenreStatisticModel()));
                     break;
                 case TimeScale.Week:
                     ordersByDate = orderList
                         .GroupBy(g => firstDayOfWeek(g.OrderDate))
                         .OrderBy(g => g.Key)
-                        .ToDictionary(g => g.Key, g => g.ToList());
+                        .ToDictionary(g => g.Key, g => createGenreStatisticModel(g.Key, "W" + ci.Calendar.GetWeekOfYear(g.Key, ci.DateTimeFormat.CalendarWeekRule, ci.DateTimeFormat.FirstDayOfWeek) + " - " + g.Key.Year, g.ToList(), genres, new GenreStatisticModel()));
                     break;
                 case TimeScale.Month:
                     ordersByDate = orderList
                         .GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1))
                         .OrderBy(g => g.Key)
-                        .ToDictionary(g => g.Key, g => g.ToList());
+                        .ToDictionary(g => g.Key, g=> createGenreStatisticModel(g.Key, ci.DateTimeFormat.GetMonthName(g.Key.Month) + " - " + g.Key.Year, g.ToList(), genres, new GenreStatisticModel()));
                     break;
                 default:
                     break;
             }
 
-            foreach (var ordersAtDate in ordersByDate)
-            {
-                total = 0;
-                var genreAmounts = new Dictionary<String, int>(genres.Count());
-                foreach (Genre genre in genres)
-                {
-                    genreAmounts.Add(genre.Name, 0);
-                }
-
-                foreach (Order order in ordersAtDate.Value)
-                {
-                    foreach (OrderLine line in order.OrderLines)
-                    {
-                        foreach (Genre gGenre in line.Game.Genres)
-                        {
-                            genreAmounts[gGenre.Name] += line.Amount;
-                            total += line.Amount;
-                        }
-                    }
-                }
-                resultList.Add(new GenreStatisticModel()
-                {
-                    Date = ordersAtDate.Key,
-                    DateTotal = total,
-                    GenreAmounts = genreAmounts,
-                    KeyString = "Test"
-                });
-            }
-
-            return resultList;
+            return ordersByDate.Values.ToList();
         }
 
         public List<Order> GetOrdersBetweenDates(DateTime beginDate, DateTime endDate)
@@ -171,6 +144,29 @@ namespace DataModels.Gateways
             DateTime fdowDate = date.AddDays(offset).Date;
             Debug.WriteLine(fdowDate);
             return fdowDate;
+        }
+
+        private GenreStatisticModel createGenreStatisticModel (DateTime dt, String keyString, IList<Order> ordersAtDate, IEnumerable<Genre> genres, GenreStatisticModel model)
+        {
+            int total = 0;
+            var genreAmounts = new Dictionary<String, int>(genres.Count());
+            foreach (Genre genre in genres)
+            {
+                genreAmounts.Add(genre.Name, 0);
+            }
+
+            foreach (Order order in ordersAtDate)
+            {
+                foreach (OrderLine line in order.OrderLines)
+                {
+                    foreach (Genre gGenre in line.Game.Genres)
+                    {
+                        genreAmounts[gGenre.Name] += line.Amount;
+                        total += line.Amount;
+                    }
+                }
+            }
+            return new GenreStatisticModel { Date = dt, DateTotal = total, GenreAmounts = genreAmounts, KeyString = keyString};
         }
     }
 }

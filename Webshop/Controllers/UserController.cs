@@ -57,47 +57,21 @@ namespace Webshop.Controllers
             return Json(myLists);
         }
 
-        public ViewObject PostAlreadyHaveGame()
-        {
-            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
-            var data = GetBodyFromJson<Game>();
-            var data2 = GetBodyFromJson<MyLists>();
-            List<MyLists> myLists = context.Users.GetMyLists(Auth.CurrentUser).Result;
-            if (myLists != null)
-            {
-                var currentList = myLists.FirstOrDefault(x => x.TitleOfList == data2.TitleOfList);
-                if (currentList != null)
-                {
-                    var game = currentList.Games.FirstOrDefault(g => g.EAN == data.EAN);
-                    if (game != null)
-                    {
-                        //Game probably exists, check EAN to be sure
-                        if (game.EAN == data.EAN)
-                        {
-                            return Json(true);
-                        }
-                        else
-                        {
-                            return Json(false);
-                        }
-                    }
-                    else
-                    {
-                        return Json(false);
-                    }
-                }
-                else
-                {
-                    return Json(false);
-                }
-            }
-            return Json(false);
-        }
-
         struct EANAndTitleOfList
         {
             public long EAN { set; get; }
             public string TitleOfList { get; set; }
+        }
+
+        public ViewObject PostAlreadyHaveGame()
+        {
+            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
+            var data = GetBodyFromJson<EANAndTitleOfList>();
+            return Json(
+                context.Users.GetMyLists(Auth.CurrentUser).Result
+                ?.Find(l => l.TitleOfList == data.TitleOfList)
+                ?.Games.Find(game => game.EAN == data.EAN) != null
+            );
         }
 
         public ViewObject PostAddToList()

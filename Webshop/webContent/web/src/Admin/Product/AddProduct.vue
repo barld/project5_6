@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="addProduct">
         <h3>Maak een nieuw product</h3>
         <div v-show="platformsLoaded" class="row">
             <div class="row">

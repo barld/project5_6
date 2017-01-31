@@ -7,9 +7,9 @@
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
                     <admin_add_platform :show="showAddPlatform"></admin_add_platform>
                     <admin_add_genre :show="showAddGenre"></admin_add_genre>
-                    <a href="#" @click="showGenresAddMenu">Genre toevoegen</a>
-                    <a href="#" @click="showPlatformsAddMenu">Platform toevoegen</a>
-                    <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
+                    <a href="#addGenre" @click="showGenresAddMenu">Genre toevoegen</a>
+                    <a href="#addPlatform" @click="showPlatformsAddMenu">Platform toevoegen</a>
+                    <a href="#addProduct" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
         </div>

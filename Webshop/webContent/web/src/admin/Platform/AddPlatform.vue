@@ -1,5 +1,5 @@
 <template>
-    <div v-if="show" class="container">
+    <div id="addPlatform" v-if="show" class="container">
         <h1>Platform toevoegen</h1>
         <div class="row">
             <div class="six columns">

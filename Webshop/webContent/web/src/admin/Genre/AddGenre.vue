@@ -1,5 +1,5 @@
 <template>
-    <div v-if="show" class="container">
+    <div id="addGenre" v-if="show" class="container">
         <h1>Genre toevoegen</h1>
         <div class="row">
             <div class="six columns">

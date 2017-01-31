@@ -116,7 +116,7 @@ namespace Webshop.Controllers
 
                 //User updatedUser = Auth.CurrentUser;
                 //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList);
                 return Json(true);
             }
             else
@@ -127,7 +127,7 @@ namespace Webshop.Controllers
                 {
                     list.Games.Remove(item);
                 }
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList);
                 return Json(false);
             }
         }
@@ -149,6 +149,45 @@ namespace Webshop.Controllers
             User user = this.GetBodyFromJson<User>();
             context.Users.Insert(user).Wait();
             return Json(user);
+        }
+
+        public ViewObject PostToggleWishList()
+        {
+            MyLists wishList = this.GetBodyFromJson<MyLists>();
+            var id = wishList._id;
+            MyLists userList = Auth.CurrentUser.MyLists.FirstOrDefault(x => x._id == id);
+            if (userList != null)
+            {
+                if (userList.IsPrivate)
+                {
+                    userList.IsPrivate = false;
+                    context.Users.UpdateMyLists(Auth.CurrentUser, "Wish List");
+                    return Json(false);
+                }
+                else
+                {
+                    userList.IsPrivate = true;
+                    context.Users.UpdateMyLists(Auth.CurrentUser, "Wish List");
+                    return Json(true);
+                }
+            }
+
+            return Json(wishList);
+        }
+
+        public ViewObject GetSharedWishList()
+        {
+            string wishListId = this.Parameters.ContainsKey("id") ? this.Parameters["id"] : string.Empty;
+
+            var userWishList =
+                context.Users.GetAll()
+                    .Result.SelectMany(user => user.MyLists)
+                    .FirstOrDefault(l =>
+                        !l.IsPrivate &&
+                        l._id == wishListId &&
+                        l.TitleOfList == "Wish List"
+                        );
+            return Json(userWishList);
         }
     }
 }

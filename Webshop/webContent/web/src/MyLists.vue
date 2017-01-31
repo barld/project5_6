@@ -4,7 +4,7 @@
         <table v-for="listTitle in MyLists" class="table table-condensed">
             <thead>
                 <tr>
-                    <th>{{listTitle.TitleOfList}}</th>
+                    <th>{{listTitle.TitleOfList}} <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +22,8 @@
         props: ['user_status'],
         data: function() {
             return {
-                MyLists: null
+                MyLists: null,
+                checked: false
             }
         },
         methods:
@@ -46,11 +47,39 @@
                         base.MyLists = JSON.parse(xhr.response);
                     }
                 }
+            },
+            togglePrivate: function(id)
+            {
+                var base = this;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/user/ToggleWishList/");
+
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                var listInformation = {_id:id};
+                xhr.send(JSON.stringify(listInformation));
+
+                
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    if(JSON.parse(xhr.response) != null){
+                        base.checked = JSON.parse(xhr.response);
+                        if(!base.checked)
+                        {
+                            window.prompt("Druk op CTRL+C", `localhost:8080/api/user/sharedwishlist/?id=${id}`);
+                        }
+                    }
+                }
             }
         },
         watch : {
             user_status : function (value) {
                 this.mylists();
+            },
+            MyLists : function (value)
+            {
+                this.checked = value[0].IsPrivate;
             }
       }
     }

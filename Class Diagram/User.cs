@@ -20,7 +20,8 @@ namespace DataModels
         public DataModels.Gender Gender { get; set; }
 
         public List<MyLists> MyLists { get; set; }
-        public DataModels.AccountRole AccountRole { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public AccountRole AccountRole { get; set; }
 
         public string Salt { get; set; }
 

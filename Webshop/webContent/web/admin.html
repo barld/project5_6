@@ -34,6 +34,20 @@
 </head>
 <body>
 <div id="app">
+    <nav><!-- Start menu -->
+        <div id="navbar">
+            <ul>
+
+                <li class="floating_menu_component" id="user_profile">
+                    <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i> {{user_status.Email}} ({{user_status.Role}})</a>
+                    <ul class="submenu">
+                        <li><a href="/">Back</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
             <div class="twelve columns">

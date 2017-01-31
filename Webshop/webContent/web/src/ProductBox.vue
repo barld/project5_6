@@ -2,9 +2,10 @@
     <div class="three columns product">
         <div style="margin: 0 auto;">
             <span class="productbox_gametitle" v-bind:title="product.GameTitle">
-                {{product.GameTitle}}<i @click="add_to_favouritelist(product.EAN)" v-if="user_status.Email" style="float: right;" class="fa fa-heart-o" aria-hidden="true"></i><i v-if="user_status.Email" @click="add_to_wishlist(product.EAN)" style="float: right;" class="fa fa-star-o fa-1x" aria-hidden="true"></i>
+                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="checkUserLoggedIn()" style="float: right;" aria-hidden="true"></i><i v-if="checkUserLoggedIn()" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
             </span>
-            <span class="productbox_platformtitle" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
+            <!--<span v-bind:class="{productbox_platformtitle}" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>-->
+            <span v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
             <div class="thumbnail_container">
                 <img v-if="product.Image !== null" v-bind:src="product.Image[0]" alt="" class="thumbnail">
             </div>
@@ -19,10 +20,11 @@
 
 <script>
     export default{
-        props:['product', 'user_status'],
+        props:['product', 'user_status', 'have_in_wishlist'],
         data: function(){
             return{
                 // GameTitle = null
+                AddToListResult: false,
             }
         },
 
@@ -33,7 +35,7 @@
             show_details:function () {
                 this.$emit('show_details', this.product)
             },
-            add_to_wishlist:function (ean) {
+            add_to_list:function (ean, listTitle) {
                 var base = this;
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/user/AddToList/");
@@ -41,38 +43,52 @@
                 // The RequestHeader can be any, by the server accepted, file
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
-                var gameInformation = {EAN:ean, TitleOfList:'Wish List'};
+                var gameInformation = {EAN:ean, TitleOfList:listTitle};
                 xhr.send(JSON.stringify(gameInformation));
-                console.log("EAN is:" + ean);
 
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    if(JSON.parse(xhr.response) != null){
-                        base.MyLists = JSON.parse(xhr.response);
-                        console.log(base.MyLists);
+                    if(JSON.parse(xhr.response) != null)
+                    {
+                        var result = JSON.parse(xhr.response);
+                        if(result)
+                        {
+                            if(listTitle == "Favourite List")
+                            {
+                                base.product.HaveGameResultFav = true;
+                            }
+                            else
+                            {
+                                base.product.HaveGameResultWish = true;
+                            }
+                        }
+                        else
+                        {
+                            if(listTitle == "Favourite List")
+                            {
+                                base.product.HaveGameResultFav = false;
+                            }
+                            else
+                            {
+                                base.product.HaveGameResultWish = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        console.log("Response is null");
                     }
                 }
             },
-            add_to_favouritelist:function (ean) {
-                var base = this;
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/user/AddToList/");
-
-                // The RequestHeader can be any, by the server accepted, file
-                xhr.setRequestHeader('Content-type', "Application/JSON", true);
-
-                var gameInformation = {EAN:ean, TitleOfList:'Favourite List'};
-                xhr.send(JSON.stringify(gameInformation));
-                console.log("EAN is:" + ean);
-
-                // Function to fire off when the server has send a response
-                xhr.onload = function () {
-                    if(JSON.parse(xhr.response) != null){
-                        base.MyLists = JSON.parse(xhr.response);
-                        console.log(base.MyLists);
-                    }
+            checkUserLoggedIn:function()
+            {
+                if(this.user_status != null)
+                {
+                    if(this.user_status.Email)
+                        return true;
                 }
-            },
+                return false;
+            }
         }
     }
 </script>

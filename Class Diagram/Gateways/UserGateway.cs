@@ -16,6 +16,12 @@ namespace DataModels.Gateways
         {
         }
 
+        public async override Task<IEnumerable<User>> GetAll()
+        {
+            var result = await base.GetAll();
+            return result.Where(u => u.IsActive);
+        }
+
         public async Task<User> GetByEmail(string email)
         {
             var filter = Builders<User>.Filter.Eq(u => u.Email, email);
@@ -34,9 +40,8 @@ namespace DataModels.Gateways
             return hash;
         }
 
-        public async Task<List<MyLists>> GetMyListsByEmail(string email)
+        public async Task<List<MyLists>> GetMyLists(User user)
         {
-            var user = await GetByEmail(email);
             if (user != null)
             {
                 return user.MyLists;
@@ -52,7 +57,7 @@ namespace DataModels.Gateways
             var user = await GetByEmail(email);
             if(user != null)
             {
-                if(Sha256(user.Salt + password) == user.Password)
+                if(user.IsActive && Sha256(user.Salt + password) == user.Password)
                 {
                     return user;
                 }
@@ -96,24 +101,25 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public async Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
+        public Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
         {
             try
             {
                 var filter = Builders<User>.Filter.Eq(x => x._id, updatedUser._id);
-                await Collection.ReplaceOneAsync(filter, updatedUser);
+                return Collection.ReplaceOneAsync(filter, updatedUser);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            return null;
         }
 
         public override async Task Delete(string columnToMatch, string valueToMatch)
         {
             try
             {
-                var user = GetByEmail(valueToMatch).Result;
+                var user = GetById(valueToMatch).Result;
                 user.IsActive = false;
                 await Replace(columnToMatch, valueToMatch, user);
             }
@@ -122,6 +128,11 @@ namespace DataModels.Gateways
                 Console.WriteLine("Could not delete user, make sure the email was correct");
                 Console.WriteLine("Error: " + ex.Message);
             }
+        }
+
+        public void Delete(User user)
+        {
+            this.Delete("_id", user._id).Wait();
         }
     }
 }

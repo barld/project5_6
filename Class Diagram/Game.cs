@@ -39,4 +39,5 @@ namespace DataModels
 
         public DateTime ReleaseDate { get; set; }
     }
+
 }

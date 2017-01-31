@@ -1,12 +1,12 @@
 <template>
     <div v-if="show" class="container">
-        <h1>Genre toevoegen</h1>
+        <h1>Platform toevoegen</h1>
         <div class="row">
             <div class="six columns">
                 <label for="PlatformTitle">Platform titel</label><input type="text" id="PlatformTitle" v-model="PlatformTitle">
             </div>
             <div class="six columns">
-                <label for="Brand"></label><input type="text" id="Brand" v-model="Brand">
+                <label for="Brand">Merk</label><input type="text" id="Brand" v-model="Brand">
             </div>
         </div>
         <div class="row">
@@ -18,7 +18,9 @@
             </div>
         </div>
 
-        <div v-if="success" class="success">{{ successMessage }}</div>
+        <button @click="createPlatform">Maak platform</button>
+
+        <div v-if="success" class="success">{{ message }}</div>
     </div>
 </template>
 
@@ -36,11 +38,11 @@
             }
         },
         methods:{
-            createGenre: function(){
+            createPlatform: function(){
                 var base = this;
                 var xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "/api/genre/");
+                xhr.open("POST", "/api/platform/");
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
                 xhr.onload = function () {
@@ -53,7 +55,7 @@
                     }, 3000);
                 };
 
-                xhr.send(JSON.stringify({}));
+                xhr.send(JSON.stringify({PlatformTitle: this.PlatformTitle, Brand: this.Brand, Description: this.Description, Abbreviation: this.Abbreviation}));
             }
         }
     }

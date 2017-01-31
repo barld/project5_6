@@ -26,6 +26,7 @@
                 addProducts: false,
                 editProducts: false,
                 showAddGenre: false,
+                showAddPlatform: false,
             }
         },
         methods:{
@@ -93,7 +94,7 @@
                 this.showAddGenre = true;
             },
             showPlatformsAddMenu: function(){
-                console.log("Show PlatformMenu!");
+                this.showAddPlatform = true;
             }
 
         },

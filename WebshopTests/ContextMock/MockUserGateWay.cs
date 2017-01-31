@@ -92,7 +92,7 @@ namespace WebshopTests.ContextMock
             throw new NotImplementedException();
         }
 
-        public Task UpdateMyLists(User currentUser, string titleOfList, Game game)
+        public Task UpdateMyLists(User currentUser, string titleOfList)
         {
             throw new NotImplementedException();
         }

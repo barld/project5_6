@@ -17,7 +17,7 @@ namespace DataModels.Gateways
         {
         }
 
-        public async override Task<IEnumerable<User>> GetAll()
+        public override async Task<IEnumerable<User>> GetAll()
         {
             var result = await base.GetAll();
             return result.Where(u => u.IsActive);
@@ -102,7 +102,7 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
+        public Task UpdateMyLists(User updatedUser, string TitleOfList)
         {
             try
             {

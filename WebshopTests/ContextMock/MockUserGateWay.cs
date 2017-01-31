@@ -79,7 +79,7 @@ namespace WebshopTests.ContextMock
             throw new NotImplementedException();
         }
 
-        public Task UpdateMyLists(User currentUser, string titleOfList)
+        public Task Update(User currentUser)
         {
             throw new NotImplementedException();
         }

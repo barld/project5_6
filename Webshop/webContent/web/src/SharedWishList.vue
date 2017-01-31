@@ -37,11 +37,29 @@
         },
         methods:
         {
+             parseQueryString: function() {
+                var str = window.location.search;
+                var objURL = {};
+
+                str.replace(
+                    new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+                    function( $0, $1, $2, $3 ){
+                        objURL[ $1 ] = $3;
+                    }
+                );
+                return objURL;
+            }
         },
         created: function(){
+        //     var searchParams = {};
+        //     window.location.search.substr(1).split("&").forEach(function(item) {searchParams[item.split("=")[0]] = item.split("=")[1]});
+        //    // var some = window.location.search;
+        //     //console.log(some);
+            var params = this.parseQueryString();
+            var id = params["id"];
             var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', `/api/user/sharedwishlist/?id=${location.search.split('id=')[1]}`);
+            
+            xhr.open('GET', `/api/user/sharedwishlist/?id=${id}`);
             xhr.setRequestHeader('Content-type', 'Application/JSON', true);
 
             var base = this;

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import adminContext from "./Gateways/adminContext";
 
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
@@ -9,6 +9,10 @@ Vue.component('user_admin_screen', require('./admin/UserAdminScreen.vue'));
 Vue.component('user_admin_row', require('./admin/userAdminRow.vue'));
 Vue.component('admin_add_platform', require('./Admin/Platform/AddPlatform.vue'));
 Vue.component('admin_add_genre', require('./Admin/Genre/AddGenre.vue'));
+Vue.component('statistics_admin_screen', require('./admin/Statistics/AdminPlotMenu.vue'));
+Vue.component('statistics_plot_1', require('./admin/Statistics/AdminPlot1.vue'));
+Vue.component('statistics_plot_2', require('./admin/Statistics/AdminPlot2.vue'));
+Vue.component('statistics_plot_3', require('./admin/Statistics/AdminPlot3.vue'));
 
 window.context = new adminContext();
 

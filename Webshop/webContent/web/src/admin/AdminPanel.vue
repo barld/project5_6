@@ -3,6 +3,8 @@
             <div class="twelve columns">
                 <div class="panel">
                     <user_admin_screen></user_admin_screen>
+                    <statistics_admin_screen v-show="statisticsScreen" @close="statisticsScreen = false"></statistics_admin_screen>
+                    <button v-show="!statisticsScreen" @click="statisticsScreen = true">Open statistics screen</button>
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
                     <admin_add_platform :show="showAddPlatform"></admin_add_platform>
@@ -28,6 +30,7 @@
                 editProducts: false,
                 showAddGenre: false,
                 showAddPlatform: false,
+                statisticsScreen: false
             }
         },
         methods:{

@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-    import BarChartDrawer from './BarChartDrawer'
+    import BarChartDrawer from '../../BarChartDrawer'
 
     export default{
         data(){

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Diagram
+namespace DataModels.Statistics
 {
-    public class SaleStatisticDataModel
+    public class GerneJsonDataModel
     {
-        public DateTime Date { get; set; }
+        public string[] Genre { get; set; }
         public int Amount { get; set; }
-        public string KeyString { get; set; }
     }
 }

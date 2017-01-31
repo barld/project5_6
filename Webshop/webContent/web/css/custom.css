@@ -347,7 +347,7 @@ input:focus{
 .statistics_canvas{
     position: relative;
 	min-height: 400px;
-	height: 400px;
+	height: 600px;
 }
 
 .plotbutton{
@@ -362,4 +362,9 @@ input:focus{
 	padding:10px;
 	background:#298A29;
 	color:#ADFCA4;
+}
+
+.genre_select{
+	resize: both !important;
+
 }

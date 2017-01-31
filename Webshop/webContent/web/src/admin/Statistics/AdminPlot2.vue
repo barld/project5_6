@@ -72,14 +72,9 @@
                 let datasets = [];
                 let genreKeys = Object.keys(data[0].GenreAmounts);
                 for(let i = 0; i < pr.values.length; i++){
-                    let color = randomColor();
                     let inst = Object.create(datasetModel);
                     inst.label = genreKeys[i];
                     inst.data = pr.values[i];
-                    inst.backgroundColor = color[1];
-                    inst.borderColor = color[0];
-                    inst.pointBorderColor= color[0];
-                    inst.pointHoverBackgroundColor = color[0];
                     datasets[i] = inst;
                 }
 
@@ -154,12 +149,5 @@
 
         console.log({labels: labels, values: values});
         return {labels: labels, values: values};
-    }
-
-    function randomColor(){
-        function r() { return Math.random() * 255; }
-        let color = Math.round(r()) + "," + Math.round(r()) + "," + Math.round(r());
-        console.log(['rgba(' + color + ',1)', 'rgba(' + color + ',0.4)']);
-        return ['rgba(' + color + ',1)', 'rgba(' + color + ',0.4)'];
     }
 </script>

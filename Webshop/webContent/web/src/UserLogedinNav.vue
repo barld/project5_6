@@ -6,6 +6,7 @@
             <li><a href="#" @click="logout"><i class="fa fa-sign-out"
                                aria-hidden="true"
             ></i> Uitloggen</a></li>
+            <li v-if="status.Role == 'Admin'"><a href="/admin.html">Admin</a> </li>
         </ul>
     </li>
 </template>

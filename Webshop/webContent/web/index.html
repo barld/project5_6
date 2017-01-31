@@ -45,16 +45,16 @@
                 <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
                 <UserNav
-                v-bind:logedin="LogedIn"
-                v-on:showlogin="showLogin"
-                v-on:showregister="showRegister"
-                v-on:login_succes="login_success"
-                v-on:login_failed="login_failed"
-                v-on:logedout="logedout"
-                v-on:showFavourites="showFavourites"
-                @show_account_page="show_account_page"
+                        v-bind:logedin="LogedIn"
+                        v-on:showlogin="showLogin"
+                        v-on:showregister="showRegister"
+                        v-on:login_succes="login_success"
+                        v-on:login_failed="login_failed"
+                        v-on:logedout="logedout"
+                        v-on:showFavourites="showFavourites"
+                        @show_account_page="show_account_page"
 
-                :status="user_status"
+                        :status="user_status"
                 >
                 </UserNav>
             </ul>

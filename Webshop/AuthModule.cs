@@ -87,7 +87,7 @@ namespace Webshop
                 //Return a succes message when the user succesfully registers a new account
                 return new ActionResultViewModel { Success = true, Message = "Succesfully registered user" };
             }
-            catch(Exception e)
+            catch
             {
                 //Return an error when the registration fails
                 return new ActionResultViewModel { Success = false, Message = "Something went wrong" };

@@ -10,7 +10,7 @@ namespace DataModels.Gateways
         Task<List<MyLists>> GetMyLists(User user);
         Task<User> Login(string email, string password);
         Task<User> Register(string email, string pwd, Gender gender, List<MyLists> lists = null, AccountRole role = AccountRole.User);
-        Task UpdateMyLists(User currentUser, string titleOfList);
+        Task Update(User currentUser);
         void Delete(User user);
     }
 }

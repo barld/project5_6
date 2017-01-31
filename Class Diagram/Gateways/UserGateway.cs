@@ -101,7 +101,7 @@ namespace DataModels.Gateways
             return await GetByEmail(email);
         }
 
-        public Task UpdateMyLists(User updatedUser, string TitleOfList)
+        public Task Update(User updatedUser)
         {
             try
             {

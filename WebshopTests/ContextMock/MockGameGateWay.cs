@@ -51,5 +51,8 @@ namespace WebshopTests.ContextMock
 
         public Task Replace(string searchField, string searchValue, Game model)
         { throw new NotImplementedException(); }
+
+        public Task Update(Game game)
+        { throw new NotImplementedException(); }
     }
 }

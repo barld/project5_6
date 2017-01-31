@@ -22,5 +22,13 @@ namespace Webshop.Controllers
         {
             return Json(context.Platforms.GetAll().Result);
         }
+
+        public ViewObject Post()
+        {
+            Platform platform = this.GetBodyFromJson<Platform>();
+            context.Platforms.Insert(platform).Wait();
+
+            return Json(platform);
+        }
     }
 }

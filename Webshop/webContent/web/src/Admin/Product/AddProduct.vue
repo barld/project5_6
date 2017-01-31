@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="addProduct">
         <h3>Maak een nieuw product</h3>
         <div v-show="platformsLoaded" class="row">
             <div class="row">
@@ -60,9 +60,14 @@
                 <div class="six columns">
                     <input type="checkbox" v-model="VRReady" value="true">VR compatible<br>
                 </div>
+                <div class="six columns">
+                    <input type="date" v-model="GameReleaseDate">
+                </div>
             </div>
+            <button @click="createGame" class="button-primary">Maak product</button>
+            <div v-if="success" class="success">{{ successMessage }}</div>
         </div>
-        <button @click="createGame" class="button-primary">Maak product</button>
+        <a href="/admin.html">Terug naar de producten</a>
     </div>
 </template>
 <script>
@@ -70,6 +75,8 @@
         props:['platforms', 'publishers', 'genres'],
         data: function(){
             return{
+                success: false,
+                successMessage: "U heeft succesvol een product toegevoegd!",
                 platformsLoaded: true,
                 GameTitle: "",
                 GamePlatform: [],
@@ -84,7 +91,7 @@
                 GameEAN: parseInt(window.crypto.getRandomValues(new Uint32Array(1))),
                 GamePrice: 0,
                 GameIsVRCompatible: "",
-                GameReleaseDate: ""
+                GameReleaseDate: this.GameReleaseDate
             }
         },
         methods:{
@@ -108,8 +115,7 @@
                     ReleaseDate: "01-01-2018"
                 };
 
-                console.log(JSON.stringify(game));
-
+                var base = this;
                 var xhr = new XMLHttpRequest();
 
                 xhr.open("POST", "/api/product/");
@@ -117,10 +123,18 @@
 
                 xhr.onload = function () {
                     console.log(xhr.response);
+                    base.message = "U heeft succesvol een product toegevoegd!";
+                    base.success = true;
+
+                    setTimeout(function(){
+                        base.success = false;
+                    }, 3000);
                 };
 
                 xhr.send(JSON.stringify(game));
-                console.log(JSON.stringify(game));
+            },
+            hide: function(){
+                this.show = false;
             }
         }
     }

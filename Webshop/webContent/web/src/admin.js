@@ -4,8 +4,11 @@ import adminContext from "./Gateways/adminContext";
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
 Vue.component('admin_products', require('./Admin/Product/ProductOverview.vue'));
 Vue.component('admin_add_products', require('./Admin/Product/AddProduct.vue'));
+Vue.component('admin_edit_products', require('./Admin/Product/Editproduct.vue'));
 Vue.component('user_admin_screen', require('./admin/UserAdminScreen.vue'));
-Vue.component('user_admin_row', require('./admin/userAdminRow.vue'))
+Vue.component('user_admin_row', require('./admin/userAdminRow.vue'));
+Vue.component('admin_add_platform', require('./Admin/Platform/AddPlatform.vue'));
+Vue.component('admin_add_genre', require('./Admin/Genre/AddGenre.vue'));
 
 window.context = new adminContext();
 

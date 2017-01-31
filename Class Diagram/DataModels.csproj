@@ -61,6 +61,7 @@
     <Compile Include="Gateways\AddressGateway.cs" />
     <Compile Include="Gateways\IGameGateway.cs" />
     <Compile Include="Gateways\IGateway.cs" />
+    <Compile Include="Gateways\IPlatformGateWay.cs" />
     <Compile Include="Gateways\IUserGateway.cs" />
     <Compile Include="Gateways\OrderGateway.cs" />
     <Compile Include="Gateways\GenreGateway.cs" />

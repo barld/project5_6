@@ -138,9 +138,32 @@
                 this.show = false;
             },
             checkLenghts: function(){
-                if(this.GameTitle.length  < 2 || this.GameRatingPegi.length < 2 || this.GameMinPlayers.length < 2  || this.GameMaxPlayers.length < 2 || this.GameDescription.length < 2 || this.GameEAN.length < 2){
-                    alert("Elk veld moet minstens 3 tekens bevatten!");
-                    throw("The minimum length for values is 3.");
+
+                var errors = 0;
+
+                if(this.GameImageValue == ""){
+                    errors++;
+                    console.log("Missing game image!");
+                }
+
+                if(this.GameTitle == ""){
+                    errors++;
+                    console.log("Missing game title!");
+                }
+
+                if(this.GameRatingPegi == ""){
+                    errors++;
+                    console.log("Missing game rating!");
+                }
+
+                if(this.GameDescription == ""){
+                    errors++;
+                    console.log("Missing game description!");
+                }
+
+                if(errors > 0){
+                    alert("Sommige velden zijn leeg!");
+                    throw("There are errors!");
                 }
             }
         }

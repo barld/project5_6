@@ -98,6 +98,7 @@
             createGame: function(){
 
                 this.GameImages.push(this.GameImageValue);
+                this.checkLenghts();
 
                 var game = {
                     GameTitle: this.GameTitle,
@@ -135,6 +136,12 @@
             },
             hide: function(){
                 this.show = false;
+            },
+            checkLenghts: function(){
+                if(this.GameTitle.length  < 2 || this.GameRatingPegi.length < 2 || this.GameMinPlayers.length < 2  || this.GameMaxPlayers.length < 2 || this.GameDescription.length < 2 || this.GameEAN.length < 2){
+                    alert("Elk veld moet minstens 3 tekens bevatten!");
+                    throw("The minimum length for values is 3.");
+                }
             }
         }
     }

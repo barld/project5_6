@@ -20,14 +20,15 @@
         props:['show'],
         data: function(){
             return{
-                Name: null,
-                Description: null,
+                Name: "",
+                Description: "",
                 success: false,
-                message: null
+                message: ""
             }
         },
         methods:{
             createGenre: function(){
+                this.checkLenghts();
                 var base = this;
                 var xhr = new XMLHttpRequest();
 
@@ -45,6 +46,12 @@
                 };
 
                 xhr.send(JSON.stringify({Name: this.Name, Description: this.Description}));
+            },
+            checkLenghts: function(){
+                if(this.Name.length  < 2 || this.Description.length < 2){
+                    alert("Elk veld moet minstens 3 tekens bevatten!");
+                    throw("The minimum length for values is 3.");
+                }
             }
         }
     }

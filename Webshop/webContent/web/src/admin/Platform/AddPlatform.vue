@@ -29,16 +29,17 @@
         props:['show'],
         data: function(){
             return{
-                PlatformTitle: null,
-                Brand: null,
-                Description: null,
-                Abbreviation: null,
+                PlatformTitle: "",
+                Brand: "",
+                Description: "",
+                Abbreviation: "",
                 success: false,
-                successMessage: null
+                successMessage: ""
             }
         },
         methods:{
             createPlatform: function(){
+                this.checkLenghts();
                 var base = this;
                 var xhr = new XMLHttpRequest();
 
@@ -56,6 +57,12 @@
                 };
 
                 xhr.send(JSON.stringify({PlatformTitle: this.PlatformTitle, Brand: this.Brand, Description: this.Description, Abbreviation: this.Abbreviation}));
+            },
+            checkLenghts: function(){
+                if(this.PlatformTitle.length  < 2 || this.Brand.length < 2 || this.Description.length < 2  || this.Abbreviation.length < 2){
+                    alert("Elk veld moet minstens 3 tekens bevatten!");
+                    throw("The minimum length for values is 3.");
+                }
             }
         }
     }

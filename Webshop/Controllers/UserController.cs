@@ -79,17 +79,6 @@ namespace Webshop.Controllers
             var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
 
-            //Check if the user has no lists
-            if (!Auth.CurrentUser.MyLists.Any())
-            {
-                List<MyLists> newList = new List<MyLists>()
-                {
-                    new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
-                    new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
-                };
-                Auth.CurrentUser.MyLists.AddRange(newList);
-            }
-
             //Find the correct list
             MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
 

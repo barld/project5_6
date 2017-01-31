@@ -61,9 +61,9 @@ namespace WebshopTests.ContextMock
             return testUsers.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
 
-        public async Task<User> Register(string email, string pwd, Gender gender, List<MyLists> lists = null, AccountRole role = AccountRole.User)
+        public async Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User)
         {
-            var user = new User { Email = email, Password = pwd, Gender = gender, MyLists = lists, AccountRole = role };
+            var user = new User { Email = email, Password = pwd, Gender = gender, AccountRole = role };
 
             testUsers.Add(user);
             return user;

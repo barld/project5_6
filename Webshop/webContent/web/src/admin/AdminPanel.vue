@@ -4,6 +4,10 @@
                 <div class="panel">
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
+                    <admin_add_platform :show="showAddPlatform"></admin_add_platform>
+                    <admin_add_genre :show="showAddGenre"></admin_add_genre>
+                    <a href="#" @click="showGenresAddMenu">Genre toevoegen</a>
+                    <a href="#" @click="showPlatformsAddMenu">Platform toevoegen</a>
                     <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
@@ -21,6 +25,7 @@
                 productsLoaded: false,
                 addProducts: false,
                 editProducts: false,
+                showAddGenre: false,
             }
         },
         methods:{
@@ -83,13 +88,19 @@
             showProductsAddMenu: function(){
                 this.addProducts = true;
                 this.productsLoaded = false;
+            },
+            showGenresAddMenu: function(){
+                this.showAddGenre = true;
+            },
+            showPlatformsAddMenu: function(){
+                console.log("Show PlatformMenu!");
             }
+
         },
         created: function(){
             this.getAllProducts();
             this.getAllPlatforms();
             this.getAllGenres();
-            //this.getAllPublishers();
         }
     }
 </script>

@@ -25,5 +25,14 @@ namespace Webshop.Controllers
             IEnumerable<Genre> genres = context.Genres.GetAll().Result;
             return Json(genres);
         }
+
+
+        public ViewObject Post()
+        {
+            Genre genre = this.GetBodyFromJson<Genre>();
+            context.Genres.Insert(genre).Wait();
+
+            return Json(genre);
+        }
     }
 }

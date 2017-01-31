@@ -19,7 +19,11 @@ namespace DataModels
         [JsonConverter(typeof(StringEnumConverter))]
         public DataModels.Gender Gender { get; set; }
 
-        public List<MyLists> MyLists { get; set; }
+        public List<MyLists> MyLists { get; set; } = new List<MyLists>()
+        {
+            new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
+            new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
+        };
         [JsonConverter(typeof(StringEnumConverter))]
         public AccountRole AccountRole { get; set; }
 

@@ -4,7 +4,7 @@
         <table v-for="listTitle in MyLists" class="table table-condensed">
             <thead>
                 <tr>
-                    <th>{{listTitle.TitleOfList}} <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></th>
+                    <th>{{listTitle.TitleOfList}} <label v-if="listTitle.TitleOfList === 'Wish List'">Uncheck to make this list public: <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></label></th>
                 </tr>
             </thead>
             <tbody>
@@ -13,7 +13,7 @@
                 </tr>
             </tbody>
         </table>
-        <button @click="mylists">Refresh list(s)</button>
+        <button style="display: block;" @click="mylists">Refresh list(s)</button>
     </div>
 </template>
 
@@ -52,7 +52,7 @@
             {
                 var base = this;
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/user/ToggleWishList/");
+                xhr.open("POST", "/api/user/ToggleSharedWishList/");
 
                 // The RequestHeader can be any, by the server accepted, file
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
@@ -67,7 +67,8 @@
                         base.checked = JSON.parse(xhr.response);
                         if(!base.checked)
                         {
-                            window.prompt("Druk op CTRL+C", `localhost:8080/api/user/sharedwishlist/?id=${id}`);
+                            var baseURL = window.location.hostname;
+                            window.prompt("Deel deze link met anderen: ", `${baseURL}:8080/share_list.html?id=${id}`);
                         }
                     }
                 }

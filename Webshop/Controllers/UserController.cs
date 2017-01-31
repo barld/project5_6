@@ -79,17 +79,6 @@ namespace Webshop.Controllers
             var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
 
-            //Check if the user has no lists
-            if (!Auth.CurrentUser.MyLists.Any())
-            {
-                List<MyLists> newList = new List<MyLists>()
-                {
-                    new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
-                    new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
-                };
-                Auth.CurrentUser.MyLists.AddRange(newList);
-            }
-
             //Find the correct list
             MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
 
@@ -116,7 +105,7 @@ namespace Webshop.Controllers
 
                 //User updatedUser = Auth.CurrentUser;
                 //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList);
+                context.Users.Update(Auth.CurrentUser);
                 return Json(true);
             }
             else
@@ -127,7 +116,7 @@ namespace Webshop.Controllers
                 {
                     list.Games.Remove(item);
                 }
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList);
+                context.Users.Update(Auth.CurrentUser);
                 return Json(false);
             }
         }
@@ -151,7 +140,7 @@ namespace Webshop.Controllers
             return Json(user);
         }
 
-        public ViewObject PostToggleWishList()
+        public ViewObject PostToggleSharedWishList()
         {
             MyLists wishList = this.GetBodyFromJson<MyLists>();
             var id = wishList._id;
@@ -161,18 +150,18 @@ namespace Webshop.Controllers
                 if (userList.IsPrivate)
                 {
                     userList.IsPrivate = false;
-                    context.Users.UpdateMyLists(Auth.CurrentUser, "Wish List");
+                    context.Users.Update(Auth.CurrentUser);
                     return Json(false);
                 }
                 else
                 {
                     userList.IsPrivate = true;
-                    context.Users.UpdateMyLists(Auth.CurrentUser, "Wish List");
+                    context.Users.Update(Auth.CurrentUser);
                     return Json(true);
                 }
             }
 
-            return Json(wishList);
+            return null;
         }
 
         public ViewObject GetSharedWishList()

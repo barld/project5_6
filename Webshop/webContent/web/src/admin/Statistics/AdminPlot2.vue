@@ -147,7 +147,6 @@
         for(let i = 0; i < data.length; i++){
             labels[i] = data[i].KeyString;
             for(let y = 0; y < genreKeys.length; y++){
-                console.log(i + " " + y);
                 values[y][i] = (Math.round((data[i].GenreAmounts[genreKeys[y]] / data[i].DateTotal * 100) * 10) / 10);
             }
         }
@@ -159,7 +158,7 @@
     function randomColor(){
         function r() { return Math.random() * 255; }
         let color = Math.round(r()) + "," + Math.round(r()) + "," + Math.round(r());
-        console.log(['rgba(' + color + ',1)', 'rgba(' + color + ',0.4)']);
+        //console.log(['rgba(' + color + ',1)', 'rgba(' + color + ',0.4)']);
         return ['rgba(' + color + ',1)', 'rgba(' + color + ',0.4)'];
     }
 </script>

@@ -35,7 +35,6 @@ namespace Webshop
 
             MVCApp app = new MVCApp(adress, getRoutes());
             app.Run();
-
         }
     }
 }

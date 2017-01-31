@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataModels
+namespace DataModels.Statistics
 {
-    public class JsonDateStatisticData
+    public class DateJsonDataModel
     {
         public TimeScale TimeScale { get; set; }
         public DateTime BeginDate { get; set; }

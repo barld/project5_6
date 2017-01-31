@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using Class_Diagram;
 
 namespace DataModels.Gateways
 {
@@ -34,6 +35,12 @@ namespace DataModels.Gateways
         {
             var filter = Builders<Genre>.Filter.Eq(g => g.Name, searchTitle);
             return await Collection.Find(filter).ToListAsync();
+        }
+
+        public ISet<Genre> GetAllGenres()
+        {
+            var filter = Builders<Genre>.Filter.Empty;
+            return new HashSet<Genre>(Collection.Find(filter).ToList());
         }
     }
 }

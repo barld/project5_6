@@ -14,7 +14,7 @@ namespace MVC.View.Tests
         [TestMethod()]
         public void JsonDataViewTestStatusCode()
         {
-            var view = new JsonDataView(new { });
+            var view = new JsonDataView(new { test = true});
             Assert.AreEqual(view.StatusCode, 200);
         }
 

@@ -81,10 +81,8 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async Task<User> Register(string email, string pwd, Gender gender, List<MyLists> lists = null, AccountRole role = AccountRole.User)
+        public async Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User)
         {
-            if(lists == null)
-                lists = new List<MyLists>();
             string salt = GetRandomPasswordSalt();
             string hash = Sha256(salt + pwd);
             var user = new User
@@ -93,8 +91,7 @@ namespace DataModels.Gateways
                 Email = email,
                 Gender = gender,
                 Password = hash,
-                Salt = salt,
-                MyLists = lists
+                Salt = salt
             };
             await this.Insert(user);
 

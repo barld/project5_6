@@ -25,6 +25,7 @@
             return{
                 // GameTitle = null
                 AddToListResult: false,
+                DisplayFavButton: false
             }
         },
 

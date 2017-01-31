@@ -27,7 +27,3 @@ Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
-Vue.component('adminplotmenu', require('./admin/Statistics/AdminPlotMenu.vue'));
-Vue.component('adminplot1', require('./admin/Statistics/AdminPlot1.vue'));
-Vue.component('adminplot2', require('./admin/Statistics/AdminPlot2.vue'));
-Vue.component('adminplot3', require('./admin/Statistics/AdminPlot3.vue'));

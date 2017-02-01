@@ -2,6 +2,8 @@
         <div class="row">
             <div class="twelve columns">
                 <div class="panel">
+                    <statistics_admin_screen v-show="statisticsScreen" @close="statisticsScreen = false"></statistics_admin_screen>
+                    <button v-show="!statisticsScreen" @click="statisticsScreen = true">Open statistics screen</button>
                     <user_admin_screen></user_admin_screen>
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
@@ -20,7 +22,8 @@
                 publishers:[],
                 genres:[],
                 productsLoaded: false,
-                addProducts: false
+                addProducts: false,
+                statisticsScreen: false
             }
         },
         methods:{

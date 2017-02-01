@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DataModels;
 using DataModels.Gateways;
 using System.Linq;
+using DataModels.Statistics;
 
 namespace WebshopTests.ContextMock
 {
@@ -80,6 +81,11 @@ namespace WebshopTests.ContextMock
         }
 
         public Task Update(User currentUser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataModels.Statistics;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataModels.Gateways
@@ -12,5 +13,6 @@ namespace DataModels.Gateways
         Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User);
         Task Update(User currentUser);
         void Delete(User user);
+        IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre);
     }
 }

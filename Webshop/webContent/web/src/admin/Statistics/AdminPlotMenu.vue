@@ -4,12 +4,12 @@
             <h1>Plot menu</h1>
             <button class="plotbutton" @click="ShowPlot(1)">Verkoopaantal statistieken</button><br>
             <button class="plotbutton" @click="ShowPlot(2)">Populaire catagorien in tijdsframe</button><br>
-            <button class="plotbutton" @click="ShowPlot(3)">Geen idee</button><br>
+            <button class="plotbutton" @click="ShowPlot(3)">Meest gewilde games</button><br>
             <button class="plotbutton" @click="CloseMenu">Close</button>
         </div>
-        <adminplot1 v-on:closed="ClosePlot" v-if="plot_number == 1"></adminplot1>
-        <adminplot2 v-on:closed="ClosePlot" v-if="plot_number == 2"></adminplot2>
-        <adminplot3 v-on:closed="ClosePlot" v-if="plot_number == 3"></adminplot3>
+        <statistics_plot_1 v-on:closed="ClosePlot" v-if="plot_number == 1"></statistics_plot_1>
+        <statistics_plot_2 v-on:closed="ClosePlot" v-if="plot_number == 2"></statistics_plot_2>
+        <statistics_plot_3 v-on:closed="ClosePlot" v-if="plot_number == 3"></statistics_plot_3>
     </div>
 </template>
 <script>
@@ -19,7 +19,7 @@
         },
         methods:{
             CloseMenu: function(){
-                this.$emit('close_plot_menu');
+                this.$emit('close');
             },
             ShowPlot: function(plot_number){
                 this.plot_number = plot_number;

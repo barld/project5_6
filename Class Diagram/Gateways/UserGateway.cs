@@ -7,6 +7,7 @@ using System.Text;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using DataModels.Statistics;
 
 namespace DataModels.Gateways
 {
@@ -130,6 +131,49 @@ namespace DataModels.Gateways
         public void Delete(User user)
         {
             this.Delete("_id", user._id).Wait();
+        }
+
+        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre)
+        {
+            var filter = Builders<User>.Filter.Eq(x => x.IsActive, true);
+            var result = Collection.Find(filter).ToList();
+            var wishLists = result
+                .SelectMany(x => x.MyLists)
+                .Where(y => y.TitleOfList == "Wish List")
+                .ToList();
+
+            var gameDictionary = new Dictionary<string, GameWishListStatisticsJsonDataModel>();
+
+            wishLists
+                .ForEach(x => x.Games
+                    .Where(y => (genre != null) ? gameHasFilteredGenre(y, genre) : true)
+                    .ToList()
+                    .ForEach(ga =>
+                    {
+                        if (gameDictionary.ContainsKey(ga.GameTitle))
+                            gameDictionary[ga.GameTitle].Count += 1;
+                        else
+                        {
+                            var g = new GameWishListStatisticsJsonDataModel() { GameTitle = ga.GameTitle, Count = 1 };
+                            gameDictionary.Add(g.GameTitle, g);
+                        }
+                    }));
+            var endResult = gameDictionary.Values.ToList().OrderBy(g => g.Count);
+            return amount > 0 ? endResult.Take(amount) : endResult;
+        }
+
+        private bool gameHasFilteredGenre(Game game, ICollection<Genre> genres)
+        {
+            var result = false;
+            foreach (var genre in game.Genres)
+            {
+                if (genres.Contains(genre))
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
     }
 }

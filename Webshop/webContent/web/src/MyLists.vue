@@ -1,10 +1,10 @@
 <template>
-    <div v-if="user_status.Email">
+    <div>
         <h1>My Lists</h1>
         <table v-for="listTitle in MyLists" class="table table-condensed">
             <thead>
                 <tr>
-                    <th>{{listTitle.TitleOfList}} <label v-if="listTitle.TitleOfList === 'Wish List'">Uncheck to make this list public: <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></label></th>
+                    <th>{{listTitle.TitleOfList}} <label v-if="listTitle.TitleOfList === 'Wish List'">Check to make this list public: <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></label></th>
                 </tr>
             </thead>
             <tbody>
@@ -13,23 +13,24 @@
                 </tr>
             </tbody>
         </table>
-        <button style="display: block;" @click="mylists">Refresh list(s)</button>
+        <div class="row">
+            <div class="container">
+                <button class="button-primary u-full-width"  @click="mylists">Refresh list(s)</button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     export default{
-        props: ['user_status'],
-        data: function() {
+        data: function () {
             return {
                 MyLists: null,
-                checked: false
+                checked: true
             }
         },
-        methods:
-        {
-            mylists: function()
-            {
+        methods: {
+            mylists: function () {
                 var base = this;
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/user/RetrieveMyLists/");
@@ -37,19 +38,17 @@
                 // The RequestHeader can be any, by the server accepted, file
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
-                var userInformation = {email:this.user_status.Email};
-                xhr.send(JSON.stringify(userInformation));
+                xhr.send();
 
-                
+
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    if(JSON.parse(xhr.response) != null){
+                    if (JSON.parse(xhr.response) != null) {
                         base.MyLists = JSON.parse(xhr.response);
                     }
                 }
             },
-            togglePrivate: function(id)
-            {
+            togglePrivate: function (id) {
                 var base = this;
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/user/ToggleSharedWishList/");
@@ -57,16 +56,15 @@
                 // The RequestHeader can be any, by the server accepted, file
                 xhr.setRequestHeader('Content-type', "Application/JSON", true);
 
-                var listInformation = {_id:id};
+                var listInformation = {_id: id};
                 xhr.send(JSON.stringify(listInformation));
 
-                
+
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
-                    if(JSON.parse(xhr.response) != null){
-                        base.checked = JSON.parse(xhr.response);
-                        if(!base.checked)
-                        {
+                    if (JSON.parse(xhr.response) != null) {
+                        base.checked = !JSON.parse(xhr.response);
+                        if (base.checked) {
                             var baseURL = window.location.hostname;
                             window.prompt("Deel deze link met anderen: ", `${baseURL}:8080/share_list.html?id=${id}`);
                         }
@@ -74,14 +72,13 @@
                 }
             }
         },
-        watch : {
-            user_status : function (value) {
-                this.mylists();
-            },
-            MyLists : function (value)
-            {
-                this.checked = value[0].IsPrivate;
+        watch: {
+            MyLists: function (value) {
+                this.checked = !value[0].IsPrivate;
             }
-      }
+        },
+        created:function () {
+            this.mylists();
+        }
     }
 </script>

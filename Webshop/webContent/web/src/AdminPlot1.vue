@@ -43,7 +43,6 @@
                 window.context.Statistics.LoadTimespans(this.ShowTimespans);
             },
             ShowTimespans: function(data){
-                console.log(data);
                 this.time_scale_options = data;
             },
             LoadOrderAmountStatistics: function(){
@@ -86,7 +85,6 @@
             this.LoadTimespans();
             var d = new Date();
             this.today = d.getFullYear() + "-" + ('0'+(d.getMonth() +1)).slice(-2)+"-" + ('0' + d.getDate()).slice(-2);
-            console.log(this.today);
         },
         mounted: function(){
             var c = document.getElementById("s_canvas");

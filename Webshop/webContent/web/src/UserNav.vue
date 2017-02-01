@@ -29,7 +29,6 @@
                 this.$emit('logedout');
             },
             showFavourites: function(){
-                console.log('Usernav');
                 this.$emit('showFavourites');
             },
             show_account_page:function(){

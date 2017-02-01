@@ -72,7 +72,6 @@
             }
         },
         created: function() {window.context.Order.GetOrders(orders => this.orders = orders);
-        console.log(this.user_status);    
         }
     }
 </script>

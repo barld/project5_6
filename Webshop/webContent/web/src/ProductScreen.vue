@@ -21,7 +21,6 @@
         },
         methods: {
             getData: function () {
-                console.log("called getdata");
                 var base = this;
 
                 var xhr = new XMLHttpRequest();
@@ -38,7 +37,6 @@
                     products.forEach(product => base.already_own_game(product, "Wish List"));
                     products.forEach(product => base.already_own_game(product, "Favourite List"));
                     base.products = products;
-                    console.log("Retrieved game data");
                 };
 
                 xhr.send();
@@ -61,7 +59,6 @@
                 xhr.setRequestHeader('Content-type', "Application/JSON", false);
                 var gameInformation = {EAN:product.EAN, TitleOfList:listTitle};
                 xhr.send(JSON.stringify(gameInformation));
-                console.log("TEST");
             //    return true;
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
@@ -97,7 +94,6 @@
 
         },
         created: function(){
-            console.log(this.event_bus);
             this.event_bus.$on('user_logged_in', function(){ this.getData();}.bind(this));
             this.event_bus.$on('user_logged_out', function(){ this.getData();}.bind(this));
             this.getData();

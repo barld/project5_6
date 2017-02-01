@@ -105,8 +105,6 @@ export default
                 ctx.fillText(keys[i], maxBarHeight + (this.margin * 2), -(barXMargin + Math.floor((barWidth - barTextSize)/2)));
             }
             ctx.restore();
-
-            console.log("Done drawing graph");
         }
 
         SetColor(color){
@@ -150,12 +148,6 @@ export default
             let width = Math.trunc((effectiveSpace - totalBarMargin) / barAmount);
             let remainingSpace = effectiveSpace - (width * barAmount + totalBarMargin);
 
-            console.log("Canvas width: " + this.canvasWidth);
-            console.log("Effective space: " + effectiveSpace);
-            console.log("Total margin width: " + totalBarMargin);
-            console.log("Bar width: " + width);
-            console.log("Remaining space: " + remainingSpace);
-
             return width > this.defaultBarWidth ? this.defaultBarWidth : width;
         }
 
@@ -173,7 +165,6 @@ export default
         }
 
         _getValueFromArray(data, keys, index){
-            console.log(data + "-"+ index + "-"+keys);
             return data[index];
         }
 

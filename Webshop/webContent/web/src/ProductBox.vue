@@ -75,15 +75,10 @@
                             }
                         }
                     }
-                    else
-                    {
-                        console.log("Response is null");
-                    }
                 }
             },
             checkUserLoggedIn:function()
             {
-                console.log(this.user_status);
                 if(this.user_status != null)
                 {
                     if(this.user_status.Email)
@@ -111,10 +106,6 @@
                         var result = JSON.parse(xhr.response);
                         base.ShowFavButton = result.result;
                     }
-                    else
-                    {
-                        console.log("Response is null");
-                    }
                 }
             }
         },
@@ -124,8 +115,8 @@
         mounted: function(){
             //console.log("User status:");
             //console.log(this.user_status);
-            this.event_bus.$on('user_logged_out', function(){ console.log("login event called");this.LoggedIn = false;}.bind(this));
-            this.event_bus.$on('user_logged_in', function(){ console.log("logout event called");this.LoggedIn = true;this.checkUserOwnsGame()}.bind(this));
+            this.event_bus.$on('user_logged_out', function(){ this.LoggedIn = false;}.bind(this));
+            this.event_bus.$on('user_logged_in', function(){ this.LoggedIn = true;this.checkUserOwnsGame()}.bind(this));
             this.checkUserLoggedIn();
             this.checkUserOwnsGame();
         }

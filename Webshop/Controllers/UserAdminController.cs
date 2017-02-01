@@ -41,6 +41,9 @@ namespace Webshop.Controllers
         public ViewObject PutUser()
         {
             var user = GetBodyFromJson<User>();
+            var dbUser = context.Users.GetById(user._id).Result;
+            user.Salt = dbUser.Salt;
+            user.Password = dbUser.Password;
             context.Users.Replace("_id", user._id, user);
             return Json(new ActionResultViewModel { Success = true });
         }

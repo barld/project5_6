@@ -15,7 +15,7 @@
                         <div class="element-container">
                             <h3 align="center">Mijn Lijsten</h3>
                             <hr>
-                            <h1 align="center">=(</h1>
+                            <mylists :user_status="user_status"></mylists>
 
                         </div>
                         <br>
@@ -50,6 +50,7 @@
 
 <script>
     export default{
+        props: ['user_status'],
         data:function(){
             return{
                 orders: [],
@@ -70,6 +71,8 @@
                 this.show_detail = false;
             }
         },
-        created: function() {window.context.Order.GetOrders(orders => this.orders = orders);}
+        created: function() {window.context.Order.GetOrders(orders => this.orders = orders);
+        console.log(this.user_status);    
+        }
     }
 </script>

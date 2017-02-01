@@ -1,7 +1,6 @@
 <template>
     <div v-if="user_status.Email">
-        <h1>My Lists</h1>
-        <table v-for="listTitle in MyLists" class="table table-condensed">
+        <table v-for="listTitle in MyLists" class="u-full-width">
             <thead>
                 <tr>
                     <th>{{listTitle.TitleOfList}} <label v-if="listTitle.TitleOfList === 'Wish List'">Uncheck to make this list public: <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></label></th>
@@ -13,7 +12,11 @@
                 </tr>
             </tbody>
         </table>
-        <button style="display: block;" @click="mylists">Refresh list(s)</button>
+        <div class="row">
+            <div class="container">
+                <button class="button-primary u-full-width"  @click="mylists">Refresh list(s)</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -73,6 +76,9 @@
                     }
                 }
             }
+        },
+        created : function() {
+            console.log(this.user_status);
         },
         watch : {
             user_status : function (value) {

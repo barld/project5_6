@@ -17,7 +17,7 @@ namespace DataModels.Gateways
         {
         }
 
-        public async override Task<IEnumerable<User>> GetAll()
+        public override async Task<IEnumerable<User>> GetAll()
         {
             var result = await base.GetAll();
             return result.Where(u => u.IsActive);
@@ -82,10 +82,8 @@ namespace DataModels.Gateways
             return randBytes.Select(b => Convert.ToChar(b)).Aggregate("", (acc, c) => acc + c);
         }
 
-        public async Task<User> Register(string email, string pwd, Gender gender, List<MyLists> lists = null, AccountRole role = AccountRole.User)
+        public async Task<User> Register(string email, string pwd, Gender gender, AccountRole role = AccountRole.User)
         {
-            if (lists == null)
-                lists = new List<MyLists>();
             string salt = GetRandomPasswordSalt();
             string hash = Sha256(salt + pwd);
             var user = new User
@@ -94,15 +92,14 @@ namespace DataModels.Gateways
                 Email = email,
                 Gender = gender,
                 Password = hash,
-                Salt = salt,
-                MyLists = lists
+                Salt = salt
             };
             await this.Insert(user);
 
             return await GetByEmail(email);
         }
 
-        public Task UpdateMyLists(User updatedUser, string TitleOfList, Game game)
+        public Task Update(User updatedUser)
         {
             try
             {

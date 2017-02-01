@@ -79,17 +79,6 @@ namespace Webshop.Controllers
             var data = GetBodyFromJson<EANAndTitleOfList>();
             Game game = context.Games.GetByEAN(data.EAN).Result;
 
-            //Check if the user has no lists
-            if (!Auth.CurrentUser.MyLists.Any())
-            {
-                List<MyLists> newList = new List<MyLists>()
-                {
-                    new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
-                    new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
-                };
-                Auth.CurrentUser.MyLists.AddRange(newList);
-            }
-
             //Find the correct list
             MyLists list = Auth.CurrentUser.MyLists.First(x => x.TitleOfList == data.TitleOfList);
 
@@ -116,7 +105,7 @@ namespace Webshop.Controllers
 
                 //User updatedUser = Auth.CurrentUser;
                 //updatedUser.MyLists.First(x => x.TitleOfList == list.TitleOfList).Games = list.Games;
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                context.Users.Update(Auth.CurrentUser);
                 return Json(true);
             }
             else
@@ -127,7 +116,7 @@ namespace Webshop.Controllers
                 {
                     list.Games.Remove(item);
                 }
-                context.Users.UpdateMyLists(Auth.CurrentUser, data.TitleOfList, game);
+                context.Users.Update(Auth.CurrentUser);
                 return Json(false);
             }
         }
@@ -149,6 +138,45 @@ namespace Webshop.Controllers
             User user = this.GetBodyFromJson<User>();
             context.Users.Insert(user).Wait();
             return Json(user);
+        }
+
+        public ViewObject PostToggleSharedWishList()
+        {
+            MyLists wishList = this.GetBodyFromJson<MyLists>();
+            var id = wishList._id;
+            MyLists userList = Auth.CurrentUser.MyLists.FirstOrDefault(x => x._id == id);
+            if (userList != null)
+            {
+                if (userList.IsPrivate)
+                {
+                    userList.IsPrivate = false;
+                    context.Users.Update(Auth.CurrentUser);
+                    return Json(false);
+                }
+                else
+                {
+                    userList.IsPrivate = true;
+                    context.Users.Update(Auth.CurrentUser);
+                    return Json(true);
+                }
+            }
+
+            return null;
+        }
+
+        public ViewObject GetSharedWishList()
+        {
+            string wishListId = this.Parameters.ContainsKey("id") ? this.Parameters["id"] : string.Empty;
+
+            var userWishList =
+                context.Users.GetAll()
+                    .Result.SelectMany(user => user.MyLists)
+                    .FirstOrDefault(l =>
+                        !l.IsPrivate &&
+                        l._id == wishListId &&
+                        l.TitleOfList == "Wish List"
+                        );
+            return Json(userWishList);
         }
     }
 }

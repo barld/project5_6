@@ -184,8 +184,12 @@ namespace DataModels
             List<MyLists> listForUser2 = new List<MyLists>() { ml3 };
 
             //Create users
-            User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male, listForUser1).Result;
-            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female, listForUser2, AccountRole.Admin).Result;
+            User user1 = context.Users.Register("info@superict.nl", "geheim123", Gender.Male).Result;
+            user1.MyLists = listForUser1;
+            await context.Users.Update(user1);
+            User user2 = context.Users.Register("hallo@barld.nl", "geheim321", Gender.Female, AccountRole.Admin).Result;
+            user2.MyLists = listForUser2;
+            await context.Users.Update(user2);
             User user3 = context.Users.Register("mynameis@jeff.nl", "geheim321", Gender.Unknown).Result;
 
             //Create order lines

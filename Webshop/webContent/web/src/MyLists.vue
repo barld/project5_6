@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>My Lists</h1>
-        <table v-for="listTitle in MyLists" class="table table-condensed">
+        <table v-for="listTitle in MyLists" class="u-full-width">
             <thead>
                 <tr>
                     <th>{{listTitle.TitleOfList}} <label v-if="listTitle.TitleOfList === 'Wish List'">Check to make this list public: <input @click="togglePrivate(listTitle._id)" v-if="listTitle.TitleOfList === 'Wish List'" type="checkbox" v-model="checked"></input></label></th>

@@ -2,7 +2,7 @@
     <div class="three columns product">
         <div style="margin: 0 auto;">
             <span class="productbox_gametitle" v-bind:title="product.GameTitle">
-                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="checkUserLoggedIn()" style="float: right;" aria-hidden="true"></i><i v-if="checkUserLoggedIn()" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
+                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="LoggedIn" style="float: right;" aria-hidden="true"></i><i v-if="LoggedIn" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
             </span>
             <!--<span v-bind:class="{productbox_platformtitle}" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>-->
             <span v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
@@ -20,12 +20,11 @@
 
 <script>
     export default{
-        props:['product', 'user_status', 'have_in_wishlist'],
+        props:['product', 'user_status', 'have_in_wishlist','event_bus'],
         data: function(){
             return{
                 // GameTitle = null
-                AddToListResult: false,
-                DisplayFavButton: false
+                LoggedIn: false
             }
         },
 
@@ -83,13 +82,24 @@
             },
             checkUserLoggedIn:function()
             {
+                console.log(this.user_status);
                 if(this.user_status != null)
                 {
                     if(this.user_status.Email)
-                        return true;
+                        this.LoggedIn= true;
+                }else{
+                    this.LoggedIn= false;
                 }
-                return false;
-            }
+            },
+        },
+        created: function(){
+                this.event_bus.$on('user_logged_out', function(){ console.log("login event called");this.LoggedIn = false;}.bind(this));
+                this.event_bus.$on('user_logged_in', function(){ console.log("logout event called");this.LoggedIn = true;}.bind(this));
+        },
+        mounted: function(){
+            //console.log("User status:");
+            //console.log(this.user_status);
+            this.checkUserLoggedIn();
         }
     }
 </script>

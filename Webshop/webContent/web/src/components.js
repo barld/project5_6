@@ -27,7 +27,4 @@ Vue.component('checkout_information', require('./CheckoutInformation.vue'));
 Vue.component('checkout_payment', require('./CheckoutPayment.vue'));
 Vue.component('checkout_confirmation', require('./CheckoutConfirmation.vue'));
 Vue.component('admin_panel', require('./Admin/AdminPanel.vue'));
-<<<<<<< HEAD
-=======
 Vue.component('shared_list', require('./SharedWishList.vue'));
->>>>>>> development

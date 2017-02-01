@@ -41,6 +41,18 @@ namespace WebshopTests.ContextMock
         {
             return testUsers.Find(user => user._id == id);
         }
+        
+        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre)
+        {
+            return new List<GameWishListStatisticsJsonDataModel>
+            {
+                new GameWishListStatisticsJsonDataModel { GameTitle = "Battlefield", Count = 35},
+                new GameWishListStatisticsJsonDataModel { GameTitle = "Rabi ribi", Count = 21},
+                new GameWishListStatisticsJsonDataModel { GameTitle = "Rimworld", Count = 30},
+                new GameWishListStatisticsJsonDataModel { GameTitle = "Civilazation VI", Count = 40},
+                new GameWishListStatisticsJsonDataModel { GameTitle = "Panty Party", Count = 16}
+            };
+        }
 
         public async Task<List<MyLists>> GetMyLists(User user)
         {

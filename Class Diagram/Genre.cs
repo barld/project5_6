@@ -15,5 +15,20 @@ namespace DataModels
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var o = obj as Genre;
+            if(o == null)
+            {
+                return false;
+            }
+            return o.Name.Equals(this.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
     }
 }

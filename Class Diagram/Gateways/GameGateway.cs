@@ -33,6 +33,12 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
+        public async Task Update(Game game)
+        {
+            var filter = Builders<Game>.Filter.Eq(x => x._id, game._id);
+            await Collection.ReplaceOneAsync(filter, game);
+        }
+
         public async Task<IEnumerable<Game>> GetByTitleLike(SearchGameModel search )
         {
             var builder = Builders<Game>.Filter;
@@ -64,5 +70,7 @@ namespace DataModels.Gateways
             var filter = Builders<Game>.Filter.Eq(g => g.Platform, platform);
             return await Collection.Find(filter).ToListAsync();
         }
+
+
     }
 }

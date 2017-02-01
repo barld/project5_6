@@ -5,9 +5,15 @@
                     <statistics_admin_screen v-show="statisticsScreen" @close="statisticsScreen = false"></statistics_admin_screen>
                     <button v-show="!statisticsScreen" @click="statisticsScreen = true">Open statistics screen</button>
                     <user_admin_screen></user_admin_screen>
+                    <statistics_admin_screen v-show="statisticsScreen" @close="statisticsScreen = false"></statistics_admin_screen>
+                    <button v-show="!statisticsScreen" @click="statisticsScreen = true">Open statistics screen</button>
                     <admin_products v-show="productsLoaded" :products="products"></admin_products>
                     <admin_add_products v-show="addProducts" :platforms="platforms" :publishers="publishers" :genres="genres"></admin_add_products>
-                    <a href="#" @click="showProductsAddMenu">Maak een nieuw product</a>
+                    <admin_add_platform :show="showAddPlatform"></admin_add_platform>
+                    <admin_add_genre :show="showAddGenre"></admin_add_genre>
+                    <a href="#addGenre" @click="showGenresAddMenu">Genre toevoegen</a>
+                    <a href="#addPlatform" @click="showPlatformsAddMenu">Platform toevoegen</a>
+                    <a href="#addProduct" @click="showProductsAddMenu">Maak een nieuw product</a>
                 </div>
             </div>
         </div>
@@ -23,6 +29,9 @@
                 genres:[],
                 productsLoaded: false,
                 addProducts: false,
+                editProducts: false,
+                showAddGenre: false,
+                showAddPlatform: false,
                 statisticsScreen: false
             }
         },
@@ -86,13 +95,19 @@
             showProductsAddMenu: function(){
                 this.addProducts = true;
                 this.productsLoaded = false;
+            },
+            showGenresAddMenu: function(){
+                this.showAddGenre = true;
+            },
+            showPlatformsAddMenu: function(){
+                this.showAddPlatform = true;
             }
+
         },
         created: function(){
             this.getAllProducts();
             this.getAllPlatforms();
             this.getAllGenres();
-            //this.getAllPublishers();
         }
     }
 </script>

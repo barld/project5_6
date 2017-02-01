@@ -9,6 +9,7 @@ namespace DataModels.Gateways
         Task<IEnumerable<Game>> GetAllByPlatform(Platform platform);
         Task<IEnumerable<Game>> GetAllByTitle(string searchTitle);
         Task<Game> GetByEAN(long EAN);
+        Task Update(Game game);
         Task<Game> GetByTitle(string searchTitle);
         Task<IEnumerable<Game>> GetByTitleLike(SearchGameModel search);
     }

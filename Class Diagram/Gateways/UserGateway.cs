@@ -27,7 +27,7 @@ namespace DataModels.Gateways
         {
             var filter = Builders<User>.Filter.Eq(u => u.Email, email);
             return await Collection.Find(filter).FirstOrDefaultAsync();
-        } 
+        }
 
         string Sha256(string password)
         {
@@ -56,9 +56,9 @@ namespace DataModels.Gateways
         public async Task<User> Login(string email, string password)
         {
             var user = await GetByEmail(email);
-            if(user != null)
+            if (user != null)
             {
-                if(user.IsActive && Sha256(user.Salt + password) == user.Password)
+                if (user.IsActive && Sha256(user.Salt + password) == user.Password)
                 {
                     return user;
                 }
@@ -121,7 +121,7 @@ namespace DataModels.Gateways
                 user.IsActive = false;
                 await Replace(columnToMatch, valueToMatch, user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Could not delete user, make sure the email was correct");
                 Console.WriteLine("Error: " + ex.Message);

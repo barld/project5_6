@@ -91,6 +91,8 @@
                 xhr.send();
             },
             showProductsAddMenu: function(){
+                this.getAllPlatforms();
+                this.getAllGenres();
                 this.addProducts = true;
                 this.productsLoaded = false;
             },

@@ -61,7 +61,7 @@
                     <input type="checkbox" v-model="VRReady" value="true">VR compatible<br>
                 </div>
                 <div class="six columns">
-                    <input type="date" v-model="GameReleaseDate">
+                    <label for="ReleaseDate">Releasedate</label><input id="ReleaseDate" type="date" v-model="GameReleaseDate">
                 </div>
             </div>
             <button @click="createGame" class="button-primary">Maak product</button>

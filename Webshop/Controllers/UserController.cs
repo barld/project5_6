@@ -76,6 +76,8 @@ namespace Webshop.Controllers
 
         public ViewObject PostOwnsGame()
         {
+            if(Auth.CurrentUser.AccountRole == AccountRole.Guest)
+                return Json(new { result = false });
             //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
             var data = GetBodyFromJson<EANAndTitleOfList>();
             var orders = context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result;

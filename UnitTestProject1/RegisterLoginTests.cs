@@ -10,6 +10,7 @@ using System.Net;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using IntegrationTests.Helper;
 
 namespace IntegrationTests
 {
@@ -39,7 +40,7 @@ namespace IntegrationTests
         {
             //ARRANGE
             var cookieContainer = new CookieContainer();
-            var httpClient = createClient(cookieContainer);
+            var httpClient = IntegrationHelper.createClient(cookieContainer);
 
             //ACT
             //Register user
@@ -52,7 +53,7 @@ namespace IntegrationTests
 
             //Check session cookie and fix cookie path
             var cookieList = cookieContainer.GetCookies(registerPath);
-            Assert.IsTrue(cookieList.Count > 0 && hasCookie(cookieList, sessionCookieName));
+            Assert.IsTrue(cookieList.Count > 0 && IntegrationHelper.hasCookie(cookieList, sessionCookieName));
             cookieContainer.Add(sessionCookiePath, new Cookie("id", cookieList[0].Value));
 
             checkLoginStatus(httpClient, true, userRole, userEmail);
@@ -62,7 +63,7 @@ namespace IntegrationTests
         {
             //ARRANGE
             var cookieContainer = new CookieContainer();
-            var httpClient = createClient(cookieContainer);
+            var httpClient = IntegrationHelper.createClient(cookieContainer);
 
             //ACT
             //Check login
@@ -75,7 +76,7 @@ namespace IntegrationTests
             Assert.IsTrue(loginJsonObject["Success"].ToString().ToLower().Equals("true"));
 
             //Check and fix cookie
-            fixCookie(cookieContainer, loginPath);
+            IntegrationHelper.fixCookie(cookieContainer, loginPath,sessionCookiePath);
 
             //Check login status
             checkLoginStatus(httpClient, true, userRole, userEmail);
@@ -105,61 +106,14 @@ namespace IntegrationTests
             //ASSERT
             if (expectedResult)
             {
-                Assert.IsTrue(getLowerString(loginCheckJsonObject["IsLogedIn"]).Equals("true"));
-                Assert.IsTrue(getLowerString(loginCheckJsonObject["Email"]).Equals(expectedEmail.ToLower()));
-                Assert.IsTrue(getLowerString(loginCheckJsonObject["Role"]).Equals(expectedRole.ToString().ToLower()));
+                Assert.IsTrue(IntegrationHelper.getLowerString(loginCheckJsonObject["IsLogedIn"]).Equals("true"));
+                Assert.IsTrue(IntegrationHelper.getLowerString(loginCheckJsonObject["Email"]).Equals(expectedEmail.ToLower()));
+                Assert.IsTrue(IntegrationHelper.getLowerString(loginCheckJsonObject["Role"]).Equals(expectedRole.ToString().ToLower()));
             }else
             {
-                Assert.IsTrue(getLowerString(loginCheckJsonObject["IsLogedIn"]).Equals("false"));
+                Assert.IsTrue(IntegrationHelper.getLowerString(loginCheckJsonObject["IsLogedIn"]).Equals("false"));
             }
 
-        }
-
-        private string getLowerString(Object obj)
-        {
-            if(obj == null)
-                return "";
-
-            return obj.ToString().ToLower();
-        }
-
-        private bool hasCookie(CookieCollection cl, string cookieName)
-        {
-            var result = false;
-            foreach(Cookie cookie in cl)
-            {
-                if (cookie.Name.Equals(cookieName)){
-                    result = true;
-                    break;
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Checks if the server correctly delivered the session cookie and fixes the session cookie for further use
-        /// </summary>
-        /// <param name="cookieContainer"></param>
-        /// <param name="path"></param>
-        private void fixCookie(CookieContainer cookieContainer, Uri path)
-        {
-            //ACT
-            var cookieList = cookieContainer.GetCookies(path);
-
-            //ASSERT
-            Assert.IsTrue(cookieList.Count > 0 && hasCookie(cookieList, sessionCookieName));
-
-            //FIX
-            cookieContainer.Add(sessionCookiePath, new Cookie("id", cookieList[0].Value));
-        }
-
-        private HttpClient createClient(CookieContainer container)
-        {
-            var handler = new HttpClientHandler();
-            handler.CookieContainer = container;
-            var httpClient = new HttpClient(handler);
-            httpClient.Timeout = TimeSpan.FromMilliseconds(999999);
-            return httpClient;
         }
     }
 }

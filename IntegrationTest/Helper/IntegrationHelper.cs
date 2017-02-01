@@ -22,7 +22,7 @@ namespace IntegrationTests.Helper
             var cookieList = cookieContainer.GetCookies(recievedCookiePath);
 
             //ASSERT
-            Assert.IsTrue(cookieList.Count > 0 && hasCookie(cookieList, targetPath.ToString()));
+            Assert.IsTrue(cookieList.Count > 0 && hasCookie(cookieList, "id"));
 
             //FIX
             cookieContainer.Add(targetPath, new Cookie("id", cookieList[0].Value));

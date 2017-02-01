@@ -55,7 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helper\IntegrationTestHelper.cs" />
+    <Compile Include="Helper\IntegrationHelper.cs" />
     <Compile Include="RegisterLoginTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -29,8 +29,26 @@ namespace Webshop.Controllers
 
         public ViewObject Post()
         {
+            bool error = false;
+            
             Genre genre = this.GetBodyFromJson<Genre>();
-            context.Genres.Insert(genre).Wait();
+
+            if(genre.Name == "")
+            {
+                error = true;
+                throw new Exception("No Name");
+            }
+
+            if(genre.Description == "")
+            {
+                error = true;
+                throw new Exception("No Description");
+            }
+
+            if (!error)
+            {
+                context.Genres.Insert(genre).Wait();
+            }
 
             return Json(genre);
         }

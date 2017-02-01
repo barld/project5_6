@@ -68,11 +68,27 @@
                     ]
                 };
 
+                let options =
+                {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                suggestedMax: 10,
+                                suggestedMin: 0
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Aanwezig op # wenslijsten."
+                            }
+                        }]
+                    }
+                };
+
                 console.log(test2);
                 let myChart = new Chart(ctx, {
                     type: 'bar',
                     data: test2,
-                    options: ""
+                    options: options
                 });
             },
 

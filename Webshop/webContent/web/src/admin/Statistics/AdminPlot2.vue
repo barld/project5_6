@@ -87,6 +87,7 @@
                     scales: {
                         yAxes: [{
                             ticks: {
+                                suggestedMin: 0,
                                 callback: function (value) {
                                     return value + "%"
                                 }

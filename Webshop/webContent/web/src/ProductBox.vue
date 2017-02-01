@@ -2,7 +2,7 @@
     <div class="three columns product">
         <div style="margin: 0 auto;">
             <span class="productbox_gametitle" v-bind:title="product.GameTitle">
-                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="LoggedIn" style="float: right;" aria-hidden="true"></i><i v-if="LoggedIn" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
+                {{product.GameTitle}}<i v-bind:class="{'fa fa-heart': product.HaveGameResultFav, 'fa fa-heart-o': !product.HaveGameResultFav,}" @click="add_to_list(product.EAN, 'Favourite List')" v-if="LoggedIn && ShowFavButton" style="float: right;" aria-hidden="true"></i><i v-if="LoggedIn" @click="add_to_list(product.EAN, 'Wish List')" style="float: right;" v-bind:class="{'fa fa-star fa-1x': product.HaveGameResultWish, 'fa fa-star-o fa-1x': !product.HaveGameResultWish}" aria-hidden="true"></i>
             </span>
             <!--<span v-bind:class="{productbox_platformtitle}" v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>-->
             <span v-bind:title="product.Platform.PlatformTitle">({{product.Platform.PlatformTitle}})</span>
@@ -24,6 +24,7 @@
         data: function(){
             return{
                 // GameTitle = null
+                ShowFavButton: false,
                 LoggedIn: false
             }
         },
@@ -91,15 +92,42 @@
                     this.LoggedIn= false;
                 }
             },
+            checkUserOwnsGame:function()
+            {
+                var base = this;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/user/OwnsGame/");
+
+                // The RequestHeader can be any, by the server accepted, file
+                xhr.setRequestHeader('Content-type', "Application/JSON", true);
+
+                var gameInformation = {EAN:this.product.EAN, TitleOfList:""};
+                xhr.send(JSON.stringify(gameInformation));
+
+                // Function to fire off when the server has send a response
+                xhr.onload = function () {
+                    if(JSON.parse(xhr.response) != null)
+                    {
+                        var result = JSON.parse(xhr.response);
+                        base.ShowFavButton = result.result;
+                    }
+                    else
+                    {
+                        console.log("Response is null");
+                    }
+                }
+            }
         },
         created: function(){
-                this.event_bus.$on('user_logged_out', function(){ console.log("login event called");this.LoggedIn = false;}.bind(this));
-                this.event_bus.$on('user_logged_in', function(){ console.log("logout event called");this.LoggedIn = true;}.bind(this));
+                
         },
         mounted: function(){
             //console.log("User status:");
             //console.log(this.user_status);
+            this.event_bus.$on('user_logged_out', function(){ console.log("login event called");this.LoggedIn = false;}.bind(this));
+            this.event_bus.$on('user_logged_in', function(){ console.log("logout event called");this.LoggedIn = true;}.bind(this));
             this.checkUserLoggedIn();
+            this.checkUserOwnsGame();
         }
     }
 </script>

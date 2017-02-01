@@ -96,5 +96,10 @@ namespace WebshopTests.ContextMock
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<GameWishListStatisticsJsonDataModel> GetGameWishListStatistics(int amount, ICollection<Genre> genre)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

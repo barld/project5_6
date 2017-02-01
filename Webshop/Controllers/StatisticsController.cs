@@ -41,7 +41,8 @@ namespace Webshop.Controllers
             if (data.Genre[0] == "all")
             {
                 genres = null;
-            }else
+            }
+            else
             {
                 for (int i = 0; i < data.Genre.Length; i++)
                 {

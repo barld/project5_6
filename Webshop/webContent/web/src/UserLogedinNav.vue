@@ -33,7 +33,6 @@
                 xhr.send();
             },
             showFavourites:function () {
-                console.log('UserLogedinNav');
                 this.$emit('showFavourites');
             },
             show_account_page:function(){

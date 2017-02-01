@@ -2,7 +2,7 @@
     <div>
         <div id="games_overview" v-if="showProducts">
             <h1>Nieuwe games</h1>
-            <productbox @show_details="show_details" v-for="product in products" v-bind:product="product" v-bind:user_status="user_status"></productbox>
+            <productbox :event_bus="event_bus" @show_details="show_details" v-for="product in products" v-bind:product="product" v-bind:user_status="user_status"></productbox>
             <br class="clear"/><!-- End spotlight games -->
         </div>
     </div>
@@ -10,7 +10,7 @@
 
 <script>
     export default{
-        props:['user_status'],
+        props:['user_status','event_bus'],
         data: function(){
             return{
                 products:[],
@@ -59,7 +59,6 @@
                 xhr.setRequestHeader('Content-type', "Application/JSON", false);
                 var gameInformation = {EAN:product.EAN, TitleOfList:listTitle};
                 xhr.send(JSON.stringify(gameInformation));
-                
             //    return true;
                 // Function to fire off when the server has send a response
                 xhr.onload = function () {
@@ -95,6 +94,8 @@
 
         },
         created: function(){
+            this.event_bus.$on('user_logged_in', function(){ this.getData();}.bind(this));
+            this.event_bus.$on('user_logged_out', function(){ this.getData();}.bind(this));
             this.getData();
         },
         close: function(){

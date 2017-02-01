@@ -74,6 +74,17 @@ namespace Webshop.Controllers
             );
         }
 
+        public ViewObject PostOwnsGame()
+        {
+            if(Auth.CurrentUser.AccountRole == AccountRole.Guest)
+                return Json(new { result = false });
+            //Retrieve My Lists from the user, this can contain lists such as Wish List/Favourite List and more custom lists
+            var data = GetBodyFromJson<EANAndTitleOfList>();
+            var orders = context.Orders.GetAllByCustomer_id(Auth.CurrentUser._id).Result;
+            var resultBool= orders.FirstOrDefault(o => o.OrderLines.FirstOrDefault(ol => ol.Game.EAN == data.EAN) != null) != null;
+            return Json(new { result = resultBool});
+        }
+
         public ViewObject PostAddToList()
         {
             var data = GetBodyFromJson<EANAndTitleOfList>();

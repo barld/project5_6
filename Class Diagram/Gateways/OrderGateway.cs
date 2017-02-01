@@ -109,7 +109,7 @@ namespace DataModels.Gateways
                     ordersByDate = orderList
                         .GroupBy(g => new DateTime(g.OrderDate.Year, g.OrderDate.Month, 1))
                         .OrderBy(g => g.Key)
-                        .ToDictionary(g => g.Key, g=> createGenreStatisticModel(g.Key, ci.DateTimeFormat.GetMonthName(g.Key.Month) + " - " + g.Key.Year, g.ToList(), genres, new GenreStatisticModel()));
+                        .ToDictionary(g => g.Key, g => createGenreStatisticModel(g.Key, ci.DateTimeFormat.GetMonthName(g.Key.Month) + " - " + g.Key.Year, g.ToList(), genres, new GenreStatisticModel()));
                     break;
                 default:
                     break;
@@ -146,7 +146,7 @@ namespace DataModels.Gateways
             return fdowDate;
         }
 
-        private GenreStatisticModel createGenreStatisticModel (DateTime dt, String keyString, IList<Order> ordersAtDate, IEnumerable<Genre> genres, GenreStatisticModel model)
+        private GenreStatisticModel createGenreStatisticModel(DateTime dt, String keyString, IList<Order> ordersAtDate, IEnumerable<Genre> genres, GenreStatisticModel model)
         {
             int total = 0;
             var genreAmounts = new Dictionary<String, int>(genres.Count());
@@ -166,7 +166,7 @@ namespace DataModels.Gateways
                     }
                 }
             }
-            return new GenreStatisticModel { Date = dt, DateTotal = total, GenreAmounts = genreAmounts, KeyString = keyString};
+            return new GenreStatisticModel { Date = dt, DateTotal = total, GenreAmounts = genreAmounts, KeyString = keyString };
         }
     }
 }

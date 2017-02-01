@@ -149,25 +149,26 @@ namespace DataModels.Gateways
                     .Where(y => (genre != null) ? gameHasFilteredGenre(y, genre) : true)
                     .ToList()
                     .ForEach(ga =>
+                    {
+                        if (gameDictionary.ContainsKey(ga.GameTitle))
+                            gameDictionary[ga.GameTitle].Count += 1;
+                        else
                         {
-                            if (gameDictionary.ContainsKey(ga.GameTitle))
-                                gameDictionary[ga.GameTitle].Count += 1;
-                            else
-                            {
-                                var g = new GameWishListStatisticsJsonDataModel() { GameTitle = ga.GameTitle, Count = 1 };
-                                gameDictionary.Add(g.GameTitle, g);
-                            }
-                        }));
+                            var g = new GameWishListStatisticsJsonDataModel() { GameTitle = ga.GameTitle, Count = 1 };
+                            gameDictionary.Add(g.GameTitle, g);
+                        }
+                    }));
             var endResult = gameDictionary.Values.ToList().OrderBy(g => g.Count);
             return amount > 0 ? endResult.Take(amount) : endResult;
         }
 
         private bool gameHasFilteredGenre(Game game, ICollection<Genre> genres)
         {
-            var result = false; 
-            foreach(var genre in game.Genres)
+            var result = false;
+            foreach (var genre in game.Genres)
             {
-                if (genres.Contains(genre)){
+                if (genres.Contains(genre))
+                {
                     result = true;
                     break;
                 }

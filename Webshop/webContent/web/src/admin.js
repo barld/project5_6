@@ -52,7 +52,6 @@ function Send(data, url, method){
         xhr.onload = function(){
             if(xhr.status === 200){
                 resolve(xhr.response);
-                console.log(JSON.stringify(xhr.responseText));
             }else{
                 reject(`An error occurred: ${xhr.statusText}`);
             }

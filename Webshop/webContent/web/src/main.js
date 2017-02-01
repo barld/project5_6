@@ -87,7 +87,8 @@ new Vue({
                 base.user_status = JSON.parse(xhr.response);
                 base.LogedIn = base.user_status.IsLogedIn;
                 if(base.user_status.Role == "Admin"){
-                    base.IsAdmin = true;
+                    //base.IsAdmin = true;
+                    base.show_product_section();
                 } else if(base.user_status.Role == "User"){
                     base.show_product_section();
                     //base.show_account_page();

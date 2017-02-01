@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="gameOverview">
         <h1>Products</h1>
         <table>
             <tr>
@@ -11,10 +11,11 @@
                 <td>{{ product.GameTitle }}</td>
                 <td>{{ product.Platform.PlatformTitle }}</td>
                 <td>{{ product.Price }}</td>
-                <td><a href="#" class="button-primary" @click="editGame(product)">Aanpassen</a></td>
+                <td><a href="#editGame" class="button-primary" @click="editGame(product)">Aanpassen</a></td>
                 <td><a href="#" class="button-primary" @click="deleteGame(product.GameTitle)">Verwijderen</a></td>
             </tr>
         </table>
+        <admin_edit_products v-if="showGameEdit" :game="game"></admin_edit_products>
     </div>
 </template>
 <script>
@@ -22,6 +23,8 @@
         props:['products'],
         data: function(){
             return{
+                game: [],
+                showGameEdit:false
             }
         },
         methods:{
@@ -39,19 +42,10 @@
                     xhr.send();
                 }
             },
-            editGame(game){
-                game.GameTitle = this.GameTitle;
-                game.Platform.PlatformTitle = this.PlatformTitle;
-                game.Price = this.ProductPrice;
+            editGame(game_product){
 
-                var xhr = new XMLHttpRequest();
-                xhr.open('PUT', `/api/product/game`);
-
-                xhr.onload = function(){
-                    console.log(xhr.response);
-                };
-
-                xhr.send(game);
+                this.game = game_product;
+                this.showGameEdit = true;
             }
         }
     }

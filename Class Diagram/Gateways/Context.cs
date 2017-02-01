@@ -25,7 +25,7 @@ namespace DataModels
             mongoClient = new MongoClient("mongodb://localhost:27017");
             database = mongoClient.GetDatabase(databaseName);
             createContraints();
-            Games = new Gateways.GameGateway(database);
+            Games = new GameGateway(database);
             Users = new UserGateway(database);
             Platforms = new PlatformGateway(database);
             Genres = new GenreGateway(database);

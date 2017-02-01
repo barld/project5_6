@@ -22,5 +22,38 @@ namespace Webshop.Controllers
         {
             return Json(context.Platforms.GetAll().Result);
         }
+
+        public ViewObject Post()
+        {
+            bool error= false;
+
+            Platform platform = this.GetBodyFromJson<Platform>();
+
+            if(platform.Abbreviation == "")
+            {
+                error = true;
+                throw new Exception("No Abbrevation");
+            }
+
+            if(platform.Brand == "")
+            {
+                error = true;
+                throw new Exception("No Brand");
+            }
+
+            if(platform.Description == "")
+            {
+                error = true;
+                throw new Exception("No Description");
+            }
+
+            
+            if(!error)
+            {
+                context.Platforms.Insert(platform).Wait();
+            }
+
+            return Json(platform);
+        }
     }
 }

@@ -45,8 +45,26 @@ namespace Webshop.Controllers
 
         public ViewObject Post()
         {
+            bool error = true;
+
             Game game = this.GetBodyFromJson<Game>();
-            context.Games.Insert(game).Wait();
+
+            if(game.GameTitle == "")
+            {
+                error = true;
+                throw new Exception("No GameTitle filled in!");
+            }
+
+            if(game.Description == "")
+            {
+                error = true;
+                throw new Exception("No Description filled in!");
+            }
+
+            if(!error)
+            {
+                context.Games.Insert(game).Wait();
+            }
 
             return Json(game);
         }
@@ -59,11 +77,11 @@ namespace Webshop.Controllers
             return Json(gameEAN);
         }
 
-        // PUT: /api/product/game
+        // PUT: /api/product/
         public async void Put()
         {
             Game game = this.GetBodyFromJson<Game>();
-            await context.Games.Replace(game.EAN.ToString(), game.EAN.ToString(), game);    
+            await context.Games.Update(game);
         }
     }
 }

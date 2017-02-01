@@ -26,7 +26,7 @@
         </div>
 
         <div v-show="searchResults">
-            <productbox :event_bus="event_bus" @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
+            <productbox :event_bus="event_bus" :user_status="user_status" @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
         </div>
 
     </div>
@@ -35,9 +35,9 @@
 <script>
     import Vue from 'vue'
     export default{
+        props: ['user_status', 'event_bus'],
         data:function(){
             return{
-                event_bus: new Vue(),
                 searchValue: "",
                 searchResult:[],
                 searchResults: false,

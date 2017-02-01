@@ -35,6 +35,12 @@
         methods:{
             register: function(e){
                 e.preventDefault();
+                var regex = /^\w{3,}@\w{3,}\.\w{2,}$/g;
+                if(!regex.test(this.email)){
+                    window.alert("Geen geldig email-adres ingevoerd");
+                    return;
+                }
+
                 var userInformation = {email:this.email, password:this.password, Gender:this.gender };
                 var base = this;
 

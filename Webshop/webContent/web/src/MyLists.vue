@@ -13,7 +13,11 @@
                 </tr>
             </tbody>
         </table>
-        <button style="display: block;" @click="mylists">Refresh list(s)</button>
+        <div class="row">
+            <div class="container">
+                <button class="button-primary u-full-width"  @click="mylists">Refresh list(s)</button>
+            </div>
+        </div>
     </div>
 </template>
 

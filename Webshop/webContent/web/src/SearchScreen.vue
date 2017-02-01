@@ -26,16 +26,18 @@
         </div>
 
         <div v-show="searchResults">
-            <productbox @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
+            <productbox :event_bus="event_bus" @show_details="show_details" v-for="product in searchResult" v-bind:product="product"></productbox>
         </div>
 
     </div>
 </template>
 
 <script>
+    import Vue from 'vue'
     export default{
         data:function(){
             return{
+                event_bus: new Vue(),
                 searchValue: "",
                 searchResult:[],
                 searchResults: false,

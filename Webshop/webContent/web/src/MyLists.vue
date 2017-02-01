@@ -62,7 +62,7 @@
                         base.checked = !JSON.parse(xhr.response);
                         if (base.checked) {
                             var baseURL = window.location.hostname;
-                            window.prompt("Deel deze link met anderen: ", `${baseURL}:8080/share_list.html?id=${id}`);
+                            window.prompt("Deel deze link met anderen: ", `${baseURL}:8080/?id=${id}`);
                         }
                     }
                 }

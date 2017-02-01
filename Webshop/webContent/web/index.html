@@ -62,6 +62,7 @@
     </nav><!-- End menu -->
     <div class="container margin-top"><!-- Start container -->
         <div class="row">
+            <shared_list></shared_list>
             <div id="product_screen" v-if="on_product_section && !IsAdmin">
                 <search v-if="!show_product_details" @show_details="open_product_details"></search>
                 <product v-bind:user_status="user_status" v-if="!(show_product_details)" @show_details="open_product_details"></product>

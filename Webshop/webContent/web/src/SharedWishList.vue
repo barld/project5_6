@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <div v-if="showProducts">
+    <div v-if="showProducts">
+        <h1>wish list</h1>
+        <div>
             <table class="u-full-width">
                 <thead>
                     <tr>
@@ -17,6 +18,7 @@
                                 <td>{{ product.GameTitle }}</td>
                                 <td>&euro;{{(product.Price / 100).toFixed(2)}} </td>
                                 <td>{{ product.Platform.PlatformTitle }}</td>
+                                <td><a class="button productbox_button" @click.prevent="add_to_cart(product)" href="#">Voeg toe</a></td>
                             </tr>
                         </tbody>
                     </tr>
@@ -37,6 +39,9 @@
         },
         methods:
         {
+            add_to_cart:function (product) {
+                window.context.ShoppingCart.addToCart(product);
+            },
              parseQueryString: function() {
                 var str = window.location.search;
                 var objURL = {};
@@ -57,19 +62,22 @@
         //     //console.log(some);
             var params = this.parseQueryString();
             var id = params["id"];
-            var xhr = new XMLHttpRequest();
-            
-            xhr.open('GET', `/api/user/sharedwishlist/?id=${id}`);
-            xhr.setRequestHeader('Content-type', 'Application/JSON', true);
+            if(id !== undefined){
+                var xhr = new XMLHttpRequest();
 
-            var base = this;
+                xhr.open('GET', `/api/user/sharedwishlist/?id=${id}`);
+                xhr.setRequestHeader('Content-type', 'Application/JSON', true);
 
-            xhr.onload = function(){
-                base.products = JSON.parse(xhr.response);
-                base.showProducts = true;
+                var base = this;
+
+                xhr.onload = function(){
+                    base.products = JSON.parse(xhr.response);
+                    base.showProducts = true;
+                };
+
+                xhr.send();
             }
 
-            xhr.send();
         }
     }
 </script>

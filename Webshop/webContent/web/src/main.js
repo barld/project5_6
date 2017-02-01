@@ -10,6 +10,7 @@ window.context = new Context();
 new Vue({
     el: '#app',
     data :{
+        event_bus: new Vue(),
         show_login:false,
         show_favourites: true,
         show_register:false,
@@ -56,10 +57,12 @@ new Vue({
         login_success:function () {
             this.closeLogin();
             this.check_login();
+            this.event_bus.$emit("user_logged_in",1);
         },
         logedout:function () {
             this.LogedIn = false;
             this.IsAdmin = false;
+            this.event_bus.$emit("user_logged_out",1);
         },
         showFavourites: function(){
             console.log('Main function! GULULU!');

@@ -75,7 +75,6 @@
             <checkout_payment v-if="show_checkout_payment" v-on:confirmation="begin_confirmation"></checkout_payment>
             <checkout_confirmation v-if="show_checkout_confirmation" v-on:order="begin_order" v-bind:shoppingcart="shoppingcart"></checkout_confirmation>
         </div>
-         
     </div><!-- End container -->
 </div>
 <script src="./dist/main.build.js"></script>

@@ -15,7 +15,7 @@
                         <div class="element-container">
                             <h3 align="center">Mijn Lijsten</h3>
                             <hr>
-                            <mylists :user_status="user_status"></mylists>
+                            <mylists></mylists>
 
                         </div>
                         <br>

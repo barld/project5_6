@@ -15,7 +15,7 @@
                         <div class="element-container">
                             <h3 align="center">Mijn Lijsten</h3>
                             <hr>
-                            <h1 align="center">=(</h1>
+                            <mylists></mylists>
 
                         </div>
                         <br>

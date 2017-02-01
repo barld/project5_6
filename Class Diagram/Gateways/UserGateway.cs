@@ -86,12 +86,18 @@ namespace DataModels.Gateways
         {
             string salt = GetRandomPasswordSalt();
             string hash = Sha256(salt + pwd);
+            List<MyLists> newList = new List<MyLists>
+            {
+                new MyLists() {TitleOfList = "Wish List", Games = new List<Game>()},
+                new MyLists() {TitleOfList = "Favourite List", Games = new List<Game>()}
+            };
             var user = new User
             {
                 AccountRole = role,
                 Email = email,
                 Gender = gender,
                 Password = hash,
+                MyLists = newList,
                 Salt = salt
             };
             await this.Insert(user);

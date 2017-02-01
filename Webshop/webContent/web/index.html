@@ -38,10 +38,6 @@
         <mobile_menu></mobile_menu>
         <div id="navbar">
             <ul>
-                <li class="submenu_parent">
-                    <a href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> Platformen</a>
-                    <platform_menu @show_games="show_games"></platform_menu>
-                </li>
                 <shopcart v-bind:shoppingcart="shoppingcart" v-on:shopping_screen="open_shoppingcart_screen"></shopcart>
 
                 <UserNav

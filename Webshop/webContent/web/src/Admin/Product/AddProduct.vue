@@ -186,9 +186,8 @@
             },
             getPrice(val){
                 let regex = /^\d+(\,\d{2}){0,1}$/;
-                if(val < 1){
-                    return false
-                }else if(regex.test(val)){
+                if(regex.test(val)){
+                    val = val.replace(',','.');
                     return val * 100;
                 } else{
                     return false;

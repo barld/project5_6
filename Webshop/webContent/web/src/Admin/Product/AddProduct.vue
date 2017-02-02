@@ -53,7 +53,7 @@
                     <label for="GameEAN"><b>EAN</b></label><input type="number" v-model="GameEAN" id="GameEAN" v-bind:value="GameEAN">
                 </div>
                 <div class="six columns">
-                    <label for="GamePrice"><b>Prijs</b></label><input type="number" v-model="GamePrice" id="GamePrice">
+                    <label for="GamePrice"><b>Prijs</b></label><input type="text" v-model="GamePrice" id="GamePrice">
                 </div>
             </div>
             <div class="row">
@@ -64,10 +64,10 @@
                     <label for="ReleaseDate">Releasedate</label><input id="ReleaseDate" type="date" v-model="GameReleaseDate">
                 </div>
             </div>
-            <button @click="createGame" class="button-primary">Maak product</button>
+            <button v-show="!success" @click="createGame" class="admin_button button-primary line_break">Maak product</button>
+            <button @click="$emit('close')" class="admin_button button-primary line_break">Terug</button>
             <div v-if="success" class="success">{{ successMessage }}</div>
         </div>
-        <a href="/admin.html">Terug naar de producten</a>
     </div>
 </template>
 <script>
@@ -76,7 +76,7 @@
         data: function(){
             return{
                 success: false,
-                successMessage: "U heeft succesvol een product toegevoegd!",
+                successMessage: "U heeft succesvol een product toegevoegd! U wordt nu teruggestuurd.",
                 platformsLoaded: true,
                 GameTitle: "",
                 GamePlatform: [],
@@ -99,6 +99,21 @@
 
                 this.GameImages.push(this.GameImageValue);
                 this.checkLenghts();
+                var price = this.getPrice(this.GamePrice);
+                if(price === false){
+                    window.alert("Geen geldige prijs ingevuld. De prijs is of een heel getal of een getal met 2 decimalen gescheiden met een komma.");
+                    return;
+                }
+                //console.log(price);\
+
+                if(this.GameMinPlayers < 1 || this.GameMaxPlayers < 1){
+                    window.alert("Het maximaal of minimaal aantal spelers kan niet kleiner zijn dan nul.");
+                    return;
+                }
+                if(this.GameMinPlayers > this.GameMaxPlayers){
+                    window.alert("De maximaal aantal spelers kan niet kleiner zijn dan het minimum.");
+                    return;
+                }
 
                 var game = {
                     GameTitle: this.GameTitle,
@@ -111,7 +126,7 @@
                     MaxPlayers: this.GameMaxPlayers,
                     Description: this.GameDescription,
                     EAN: this.GameEAN,
-                    Price: this.GamePrice,
+                    Price: price,
                     IsVRCompatible: false,
                     ReleaseDate: "01-01-2018"
                 };
@@ -128,8 +143,11 @@
                     base.success = true;
 
                     setTimeout(function(){
-                        base.success = false;
+                        base.$emit("close");
                     }, 3000);
+                    setTimeout(function(){
+                        base.success = false;
+                    }, 3100);
                 };
 
                 xhr.send(JSON.stringify(game));
@@ -164,6 +182,16 @@
                 if(errors > 0){
                     alert("Sommige velden zijn leeg!");
                     throw("There are errors!");
+                }
+            },
+            getPrice(val){
+                let regex = /^\d+(\,\d{2}){0,1}$/;
+                if(val < 1){
+                    return false
+                }else if(regex.test(val)){
+                    return val * 100;
+                } else{
+                    return false;
                 }
             }
         }

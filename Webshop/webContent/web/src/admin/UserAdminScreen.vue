@@ -12,6 +12,7 @@
                 <user_admin_row :user="user" v-for="user in users" ></user_admin_row>
             </tbody>
         </table>
+        <button class="admin_button button-primary line_break" @click="$emit('close')">close</button>
     </div>
 </template>
 
@@ -25,7 +26,7 @@
         methods: {
             onUserListChanged: function (users) {
                 this.users = users
-            }
+            },
         },
 
 

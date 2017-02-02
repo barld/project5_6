@@ -1,5 +1,5 @@
 <template>
-    <div id="addPlatform" v-if="show" class="container">
+    <div id="addPlatform" class="container">
         <h1>Platform toevoegen</h1>
         <div class="row">
             <div class="six columns">
@@ -18,7 +18,8 @@
             </div>
         </div>
 
-        <button @click="createPlatform">Maak platform</button>
+        <button class="admin_button button-primary line_break" v-if="!success" @click="createPlatform">Maak platform</button>
+        <button @click="$emit('close')" class="admin_button button-primary line_break">Terug</button>
 
         <div v-if="success" class="success">{{ message }}</div>
     </div>
@@ -26,7 +27,6 @@
 
 <script>
     export default{
-        props:['show'],
         data: function(){
             return{
                 PlatformTitle: "",
@@ -48,10 +48,11 @@
 
                 xhr.onload = function () {
                     console.log(xhr.response);
-                    base.message = "U heeft succesvol een platform toegevoegd!";
+                    base.message = "U heeft succesvol een platform toegevoegd! U wordt nu teruggestuurd.";
                     base.success = true;
 
                     setTimeout(function(){
+                        base.$emit("close");
                         base.success = false;
                     }, 3000);
                 };

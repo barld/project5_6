@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Webshop.Models;
 using Class_Diagram;
+using DataModels.Gateways;
 
 namespace Webshop.Controllers
 {
@@ -73,7 +74,7 @@ namespace Webshop.Controllers
         public ViewObject Delete()
         {
             string gameEAN = this.Parameters.ContainsKey("ean") ? this.Parameters["ean"] : string.Empty;
-            context.Games.Delete("GameTitle", gameEAN).Wait();
+            (context.Games as GameGateway).DeleteOnEan(Int64.Parse(gameEAN));
             return Json(gameEAN);
         }
 

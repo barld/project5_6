@@ -71,6 +71,11 @@ namespace DataModels.Gateways
             return await Collection.Find(filter).ToListAsync();
         }
 
+        public void DeleteOnEan(long ean)
+        {
+            var filter = Builders<Game>.Filter.Eq(g => g.EAN, ean);
+            Collection.DeleteOne(filter);
+        }
 
     }
 }

@@ -13,7 +13,7 @@
                     <td>{{ product.Platform.PlatformTitle }}</td>
                     <td>{{ stylePrice(product.Price) }}</td>
                     <td><button class="tiny_admin_button button-primary" @click="editGame(product)">Aanpassen</button></td>
-                    <td><button class="tiny_admin_button button-primary" @click="deleteGame(product.GameTitle)">Verwijderen</button></td>
+                    <td><button class="tiny_admin_button button-primary" @click="deleteGame(product.EAN)">Verwijderen</button></td>
                 </tr>
             </table>
             <br>
@@ -49,13 +49,13 @@
             }
         },
         methods:{
-            deleteGame: function(game_title){
+            deleteGame: function(ean){
                 var deleteConfirmation = window.confirm('Weet u zeker dat u deze game wilt verwijderen?');
 
                 if(deleteConfirmation){
                     var base = this;
                     var xhr = new XMLHttpRequest();
-                    xhr.open('DELETE', `/api/product/?ean=${game_title}`);
+                    xhr.open('DELETE', `/api/product/?ean=${ean}`);
 
                     xhr.onload = function(){
                         console.log(xhr.response);

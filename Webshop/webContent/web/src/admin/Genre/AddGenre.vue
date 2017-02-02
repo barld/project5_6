@@ -1,5 +1,5 @@
 <template>
-    <div id="addGenre" v-if="show" class="container">
+    <div id="addGenre" class="container">
         <h1>Genre toevoegen</h1>
         <div class="row">
             <div class="six columns">
@@ -9,7 +9,8 @@
                 <label for="Description">Beschrijving</label><textarea id="Description" cols="30" rows="10" v-model="Description"></textarea>
             </div>
         </div>
-        <button @click="createGenre">Maak genre</button>
+        <button @click="createGenre" v-if="!success" class="admin_button button-primary line_break">Maak genre</button>
+        <button @click="$emit('close')" class="admin_button button-primary line_break">Terug</button>
 
         <div v-if="success" class="success">{{ message }}</div>
     </div>
@@ -17,7 +18,6 @@
 
 <script>
     export default{
-        props:['show'],
         data: function(){
             return{
                 Name: "",
@@ -37,10 +37,11 @@
 
                 xhr.onload = function () {
                     console.log(xhr.response);
-                    base.message = "U heeft succesvol een genre toegevoegd!";
+                    base.message = "U heeft succesvol een genre toegevoegd! U wordt nu teruggestuurd.";
                     base.success = true;
 
                     setTimeout(function(){
+                        base.$emit("close");
                         base.success = false;
                     }, 3000);
                 };

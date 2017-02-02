@@ -45,7 +45,7 @@ namespace Webshop.Controllers
 
         public ViewObject Post()
         {
-            bool error = true;
+            bool error = false;
 
             Game game = this.GetBodyFromJson<Game>();
 

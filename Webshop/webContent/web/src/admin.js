@@ -13,6 +13,7 @@ Vue.component('statistics_admin_screen', require('./admin/Statistics/AdminPlotMe
 Vue.component('statistics_plot_1', require('./admin/Statistics/AdminPlot1.vue'));
 Vue.component('statistics_plot_2', require('./admin/Statistics/AdminPlot2.vue'));
 Vue.component('statistics_plot_3', require('./admin/Statistics/AdminPlot3.vue'));
+Vue.component('admin_menu', require('./admin/AdminMenu.vue'));
 
 window.context = new adminContext();
 

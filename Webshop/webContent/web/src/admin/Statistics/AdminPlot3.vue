@@ -19,8 +19,8 @@
                 </div>
             </form>
             <div class="three columns statistic_fill_div">
-                <button @click="loadGenreStatistics" name="isSubmitted" class="statistic_send_button">Send</button>
-                <button @click="$emit('closed')">Close</button>
+                <button @click="loadGenreStatistics" name="isSubmitted" class="button-primary statistic_send_button">Send</button>
+                <button @click="$emit('closed')" class="button-primary statistic_send_button">Close</button>
             </div>
         </div>
         <div class="statistics_canvas" id="s_canvas_div">

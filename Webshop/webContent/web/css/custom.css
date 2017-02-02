@@ -366,5 +366,23 @@ input:focus{
 
 .genre_select{
 	resize: both !important;
-
+	width: 250px;
+	height: 100px;
 }
+
+.admin_button{
+	width: 500px;
+}
+
+.small_admin_button{
+	width: 350px;
+}
+.tiny_admin_button{
+	width: 150px;
+}
+
+.line_break{
+	line-break: normal;
+}
+
+.centerTable { margin: 0px auto; }
